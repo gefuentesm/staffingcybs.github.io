@@ -1,0 +1,1873 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 160px;
+  height:120px;
+  font-size: 10pt;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 100%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+header {
+    background:#333;
+    color:#eee;
+    width:100%;
+}
+
+input#abrir-cerrar {
+    visibility:hidden;
+    position: absolute;
+    top: -9999px;
+}
+
+
+label[for="abrir-cerrar"] {
+    cursor:pointer;
+    padding: 1rem;
+    background-color:#333;
+    color:#fff;
+    display:inline-block;
+    width:200%;
+
+}
+
+.cerrar {
+    display:none;
+}
+
+#sidebar {
+    width:0;
+}
+
+#contenido {
+    margin-left:0;
+}
+
+input#abrir-cerrar:checked ~ #sidebar {
+    width:206px;
+}
+
+input#abrir-cerrar:checked + label[for="abrir-cerrar"], input#abrir-cerrar:checked ~ #contenido {
+    margin-left:206px;
+    transition: margin-left .4s;
+}
+
+
+input#abrir-cerrar:checked + label[for="abrir-cerrar"] .cerrar {
+    display:inline;
+}
+
+input#abrir-cerrar:checked + label[for="abrir-cerrar"] .abrir {
+    display:none;
+}
+.name{
+    width: 100px;
+}
+.sidebar {
+    position: fixed;
+    height: 100%;
+    width: 0;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background-color: #00324b;
+    overflow-x: hidden;
+    transition: 0.4s;
+    padding: 1rem 0;    
+    box-sizing:border-box;
+}
+
+.sidebar .boton-cerrar {
+    position: absolute;
+    top: 0.5rem;
+    right: 1rem;
+    font-size: 2rem;
+    display: block;
+    padding: 0;
+    line-height: 1.5rem;
+    margin: 0;
+    height: 32px;
+    width: 32px;
+    text-align: center;
+    vertical-align: top;
+}
+
+.sidebar ul, .sidebar li{
+    margin:0;
+    padding:0;
+    list-style:none inside;
+}
+
+
+h1 {
+    color:#f90;
+    font-size:180%;
+    font-weight:normal;
+}
+#contenido {
+    transition: margin-left .4s;
+    padding: 1rem;
+}
+
+.abrir-cerrar {
+    color: #2E88C7;
+    font-size:1rem;   
+}
+button{
+    background-color: #006080;
+    color:white;
+}
+body{
+    background-color: #9999ff;
+    border:0;
+    margin:0;
+}
+.totales{
+    background-color: #cccccc;
+    vertical-align: top;
+    padding: 6px;
+}
+input{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 9pt;  
+}
+.cardmini{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 9pt;
+    width: 98%;
+}
+.bad{
+    background-color: red;
+    color: white;
+    border: 1px solid white;
+}
+span.nb{
+    display:inline-block;
+    width:150px;
+}
+th{
+    font-family: Arial, Helvetica, sans-serif;
+    color:white;
+}
+input{
+    border:1px solid lightgray;
+}
+input.dedi{
+    display:inline-block;
+    width:20px;
+}
+.good{
+    background-color: green;
+    color: white;
+    border: 1px solid white;
+    display:none;
+}
+.mes{
+    background-color: #cccccc;
+    height: 100%;
+    padding-top: 2px;
+    padding-bottom: 10px;
+}
+#team{
+    background-color: black;
+    height: 100%;
+    padding: 3px;
+    width: 200px;
+    margin: 2pxpx;
+}
+.teamWrapper{
+    display: none;
+}
+.sidebar::-webkit-scrollbar {
+    display: none;  /* Ocultar scroll */
+}
+.card{
+    border:1px solid lightgray;
+    display: block;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 2px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 8pt;
+    background-color: #e6f9ff;
+}
+.carddup{
+    border:1px solid lightgray;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    background-color: dimgrey;
+}
+.proyecto {
+  width: 200px;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid silver;
+  vertical-align: top;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 9pt;
+  background-color: white;
+  color:#006080;
+}
+#div1, #div2, #div4, #div5 {
+  width: 200px;
+  height: 235px;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid black;
+  vertical-align: top;
+}
+</style>
+<script>
+var globId=1;
+const GOODTHRESHOLD=100;
+var dataArr=[];
+var mesStruct=Array.from({length: 12}, function() { return ""; });
+var teamStruct=[]
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+function dup(elem,data){
+    try{
+    	var el=document.getElementById(data);
+        var proy=document.getElementById(elem);
+        var h=proy.style.height;
+        var hh=h.replace("px","");
+        var hh=parseInt(hh)+50;
+        //proy.style.height=hh+"px";
+        var nb=el.childNodes[1].value;
+        var por=el.childNodes[3].value;
+		var div=document.createElement("div");
+        div.id="d"+data+globId;
+        globId=globId+1;
+        var inp=document.createElement("input");
+        inp.type="text";
+        inp.value=nb;
+		var inp2=document.createElement("input");
+        inp2.type="text";
+        inp2.value="0%";
+        div.draggable="true";
+        div.className="carddup";
+        div.ondragstart=drag;
+        div.appendChild(inp);
+        div.appendChild(inp2);
+        document.getElementById(elem).appendChild(div)
+    }catch(err){
+    	alert(err);
+    }    
+}
+
+function drag(ev) {
+  ev.dataTransfer.setData("text", ev.target.id);
+  document.getElementById("div3").innerHTML =document.getElementById("div3").innerHTML+document.getElementById(ev.target.id).parentNode.id+" " +ev.target.id+","
+}
+
+function agregarTotal(mes,nombre,dedica){
+    //console.log("Agregar total")
+    var id="mes"+parseInt(mes)+"totales";
+    //console.log(mes);
+    //console.log(nombre);
+    mesStruct[mes-1].persona.push({nombre:nombre,dedicacion:0});
+    //console.log(mesStruct);
+    var estrucTot=document.getElementById(id);
+    var div=document.createElement("div");
+    var clase="good";
+    div.className="cardmini "+clase;                    
+    //var texto=document.createTextNode(pers[p].nombre+" -->"+pers[p].dedicacion);
+    var sp1=document.createElement("span");
+    var sp2=document.createElement("input");
+    var sp3=document.createElement("span");
+    var nb=document.createTextNode(nombre);
+    //var dedica=document.createTextNode(pers[p].dedicacion);
+    var por=document.createTextNode("%");
+    sp1.appendChild(nb);
+    //sp2.appendChild(dedica);
+    sp2.value="0"
+    sp3.appendChild(por);
+    sp1.className="nb";
+    sp1.readOnly="true";
+    sp2.className="dedi";
+    sp2.id="sp-"+nombre+"-"+mes;
+    div.appendChild(sp1);
+    div.appendChild(sp2);
+    div.appendChild(sp3);
+    estrucTot.appendChild(div);
+}
+function drop(ev) {
+	try{
+      ev.preventDefault();
+      var idPersona=ev.target.childNodes[1].id;
+      console.log("drop ",ev.target.id);
+      var arr=ev.target.id.split('.');
+      var mes=arr[2];
+      var proj=arr[0];
+      var phase=arr[1];
+      var cod=idPersona.split('-');
+      var proyid=cod[2];
+      var data = ev.dataTransfer.getData("text");
+      var nuevo=document.getElementById(data)
+      var separa=nuevo.id.split('-');
+      //console.log("separa",separa)
+      //console.log("sp-"+separa[1]+"-"+mes);
+      if(document.getElementById("sp-"+separa[1]+"-"+mes)==null){
+          //console.log("No existe el total. Hay que reconstruirlo");
+          agregarTotal(mes,separa[1],0)
+      }      
+      nuevo.id=separa[0]+"-"+separa[1]+"-"+proyid;
+      if(separa[0]=="t"){
+          var bott=document.getElementById("b-"+separa[1]);
+          //console.log("el boton",bott);
+          //console.log("nuevo id",separa[1]+"-"+proj+"."+mes+"-"+mes);
+          bott.id=separa[1]+"-"+proj+"."+phase+"."+mes+"-"+mes;
+          bott.name=separa[1]+"-"+proj+"."+phase+"."+mes+"-"+mes;
+          nuevo.id=separa[0]+"-"+separa[1]+"-"+proj+"."+phase+"."+mes+"-"+mes;
+      }
+      ev.target.appendChild(nuevo);
+      var h=ev.target.style.height;
+      var hh=h.replace("px","");
+      var hh=parseInt(hh)+50;
+      ev.target.style.height=hh+"px"
+      var el=document.getElementById(nuevo.id)
+      for(let c in el.childNodes){              
+            let name=el.childNodes[c].name;   
+            if(typeof name!="undefined" ){
+                console.log("name",name);
+                let part=name.split("-");
+                if(part[0]=="f" || part[0]=="b"){    
+                    console.log("borrar",el.childNodes[c])                         
+                    elemt=el.childNodes[c];
+                    elemt.remove();                    
+                }
+            }  
+          }
+  	}catch(err){ 
+          console.log(err);
+    }
+}
+function drop2(ev) {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("text");
+  console.log("al trash",data);
+  ev.target.appendChild(document.getElementById(data));
+  let elemt=document.getElementById(data);
+  alert("se eliminará permanentemente");
+  elemt.remove()
+}
+function setVisibilityToProy(nb,filtrar){
+    var arr=document.getElementsByClassName("proyecto");
+    var disp="block"
+    if(filtrar){
+        disp="none"
+    }
+    for(let i in arr){
+        if( typeof arr[i].id !="undefined") arr[i].style.display=disp;
+    }
+    if(filtrar){
+        for(let j in dataArr){
+            var idProj=dataArr[j].IDp+"."+dataArr[j].fase+"."+dataArr[j].mes;
+            var team=dataArr[j].equipo;
+            for(let k in team){
+
+                if(team[k].nombre==nb){
+                    var div=document.getElementById(idProj);
+                    div.style.display="block"
+                }
+            }
+        }
+    }
+}
+function setDataProy(id,proy,fase,mes,hr){
+    return {
+        IDp:id,
+        proyecto: proy,
+        fase:fase,
+        mes:mes,
+        horas:hr,
+        equipo:[]
+    }
+}
+function setDataTeam(nombr,dedica){
+    return {
+        nombre:nombr,
+        dedicacion:dedica
+    }
+}
+function BotonDuplicar(pid, m, nb){
+    console.log("pid",pid);
+    var proy=document.getElementById(pid);
+    var wrp=document.getElementById("w-"+pid);
+    var person=document.getElementById(m);
+    var div=document.createElement("div");        
+    div.id="d-"+nb+"-"+pid+"-"+m;
+    globId=globId+1;
+    var inp=document.createElement("input");
+    inp.type="text";
+    inp.readOnly="true";
+    inp.value=nb;
+    inp.name="nombre";
+    var inp2=document.createElement("input");
+    inp2.type="text";
+    inp2.value="0";
+    inp2.name=nb+"-"+m;
+    inp2.style.width="20px";
+    div.draggable="true";
+    div.className="carddup";
+    div.ondragstart=drag;
+    div.appendChild(inp);
+    div.appendChild(inp2);
+    wrp.appendChild(div);
+}
+function buildProject(dtaArr){
+    dataArr=dtaArr;
+    for(let i in dataArr){
+        var contenedor=document.getElementById("mes"+dataArr[i].mes);       
+        var divProy=document.createElement("div");
+        divProy.id=dataArr[i].IDp+"."+dataArr[i].fase+"."+dataArr[i].mes;
+        var projId=divProy.id;
+        var divTeamWrap=document.createElement("div");
+        divTeamWrap.className="teamWrapper"; 
+        divProy.style.height=dataArr[i].equipo.length*100;
+        divProy.className="proyecto";
+        
+        teamArr=dataArr[i].equipo;
+        var teamText=" (";
+        var teamTooltip=" - "
+        for(let ii in teamArr){
+            teamText=teamText+ teamArr[ii].nombre;
+            teamTooltip=teamTooltip+teamArr[ii].nombre+" ("+teamArr[ii].dedicacion+") ";
+        }
+        teamText=teamText+")";
+        teamTooltip=teamTooltip+" - ";
+        teamTooltip=dataArr[i].IDp+"-"+dataArr[i].proyecto+"   - Team:  "+teamTooltip;
+        var nodeTexto=dataArr[i].IDp+"-"+dataArr[i].proyecto.substring(0,28)+"... fase "+dataArr[i].fase+" mes "+dataArr[i].mes+" horas "+dataArr[i].horas+" ";
+        var texto=document.createTextNode(nodeTexto);
+        var divtooltip=document.createElement("div");
+        divtooltip.className="tooltip"
+        var divTooltipTxt=document.createElement("span");
+        divTooltipTxt.className="tooltiptext";
+        var textoTooltips=document.createTextNode(teamTooltip);
+        var hover=document.createTextNode("[Info]-");        
+        divTooltipTxt.appendChild(textoTooltips);
+        divtooltip.appendChild(hover);
+        divtooltip.appendChild(divTooltipTxt);
+        divProy.appendChild(texto);
+        divProy.appendChild(divtooltip);
+        divProy.ondrop=drop;
+        divProy.ondragover=allowDrop;
+        var botonw=document.createElement("button");
+        botonw.type="button";
+        botonw.name="bw-"+projId;  
+        botonw.id="bw-"+projId; 
+        var textow=document.createTextNode("v");
+        botonw.appendChild(textow);
+        divProy.appendChild(botonw);
+        
+        for(let j in teamArr ){
+            var div=document.createElement("div");
+            div.id="c-"+teamArr[j].nombre+"-"+dataArr[i].IDp+"."+dataArr[i].fase+"-"+dataArr[i].mes;
+            var consId=div.id;
+            globId=globId+1;
+            var inp=document.createElement("input");
+            inp.type="text";
+            inp.name="nombre"
+            inp.readOnly="true";
+            inp.style.width="120px";
+            inp.value=teamArr[j].nombre;
+            var inp2=document.createElement("input");
+            inp2.type="text";
+            inp2.style.width="20px"
+            inp2.name=teamArr[j].nombre+"-"+dataArr[i].mes;
+            inp2.value=teamArr[j].dedicacion;
+            div.draggable="true";
+            div.className="card";
+            div.ondragstart=drag;
+            div.appendChild(inp);
+            div.appendChild(inp2);
+            
+            var boton=document.createElement("button");
+            boton.type="button";
+            boton.name=teamArr[j].nombre+"-"+projId+"-"+dataArr[i].mes;
+            boton.id=teamArr[j].nombre+"-"+projId+"-"+dataArr[i].mes;
+            var texto2=document.createTextNode("+");
+            boton.appendChild(texto2);
+            div.appendChild(boton);
+            //divProy.appendChild(div);
+            divTeamWrap.appendChild(div);
+            divTeamWrap.id="w-"+projId;                      
+            divProy.appendChild(divTeamWrap);  
+            contenedor.appendChild(divProy);
+            document.getElementById(boton.id).addEventListener("click", function() {
+                var dat=this.name.split("-");
+                BotonDuplicar(dat[1], dat[2], dat[0]);
+            });
+          
+        }  
+        document.getElementById(botonw.id).addEventListener("click", function() {
+                var dat=this.name.split("-");
+                let wrp=document.getElementById("w-"+dat[1]);
+                //console.log("display",wrp.style.display.length);
+                let bwrp=document.getElementById("bw-"+dat[1]);
+                if(wrp.style.display=="none"||wrp.style.display.length==0){
+                    wrp.style.display="block";
+                    bwrp.innerHTML="i"
+                }else{
+                    wrp.style.display="none";
+                    bwrp.innerHTML="v"
+                }
+            });  
+    }
+
+}
+function getMonStruct(nb,mes){
+    for(let i in mesStruct[mes-1].persona){
+        if(mesStruct[mes-1].persona[i].nombre==nb){
+            console.log("mesStruct[mes-1].persona[i].dedicacion",mesStruct[mes-1].persona[i].dedicacion)
+            return mesStruct[mes-1].persona[i].dedicacion;
+        }
+    }  
+}
+function actualizarDatos(mes){
+    var divmes=document.getElementById("mes"+mes+"totales");
+    //console.log("divmes",divmes);
+    for(let h in divmes.childNodes){
+        if(divmes.childNodes[h].className=="cardmini bad" || divmes.childNodes[h].className=="cardmini good"){
+            var nodeTot=divmes.childNodes[h].childNodes;
+            for(let k in nodeTot){
+                if(nodeTot[k].className=="dedi"){
+                    console.log("id--",nodeTot[k].id);
+                    var parms=nodeTot[k].id.split("-");
+                    console.log("params",parms);
+                    var tot=parseInt(getMonStruct(parms[1],parms[2]));
+                    console.log("tot",tot)
+                    if(parseInt(tot)>GOODTHRESHOLD){
+                        document.getElementById(nodeTot[k].id).value=tot;
+                        divmes.childNodes[h].className="cardmini bad"
+                    }else{
+                        document.getElementById(nodeTot[k].id).value=tot;
+                        divmes.childNodes[h].className="cardmini good"
+                    }
+                }
+            }
+        }
+    }
+}
+function setMonStruct(nb,dedica,mes){
+    for(let i in mesStruct[mes-1].persona){
+        if(mesStruct[mes-1].persona[i].nombre==nb){
+            var t=mesStruct[mes-1].persona[i].dedicacion;
+            mesStruct[mes-1].persona[i].dedicacion=parseInt(t)+parseInt(dedica);
+        }
+    }  
+}
+function cleanMonStruct(mes){
+    for(let i in mesStruct[mes-1].persona){
+        mesStruct[mes-1].persona[i].dedicacion="0";
+    }
+}
+function recalcular(m){
+    console.log("recalcular",m)
+    var hijos=document.getElementById(m).childNodes;
+    console.log("hijos",hijos);
+    cleanMonStruct(m.substring(3));
+    for(let i in hijos ){
+        if(typeof hijos[i].id != 'undefined'){
+            if(hijos[i].className=="proyecto"){
+                console.log("en proyecto",hijos[i].id)
+                var proylist=hijos[i].childNodes;
+                for(let j in proylist){
+                    console.log("en proylist",proylist[j].className);
+                    if(typeof proylist[j].className != 'undefined' && proylist[j].className=="teamWrapper"){
+                        console.log("teamWrapper",proylist[j]);
+                    
+                        var teamW=proylist[j].childNodes;
+                        for(let k in teamW){
+                            if(teamW[k].className=="card" || teamW[k].className=="carddup"){
+                                //console.log("proy",proylist[j]);
+                                var textos=teamW[k].childNodes;
+                                var cons=[];
+                                var ded=[];
+                                for(let k in textos){
+                                    if(textos[k].type=="text" && textos[k].name!="nombre"){  
+                                        var dup=textos[k].name.split('-');      
+                                        console.log("text",dup[0]);                    
+                                        console.log("text",textos[k].value);
+                                        console.log("mes",m.substring(3))
+                                        setMonStruct(dup[0],textos[k].value,m.substring(3));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }         
+    }
+    //console.log("mesStruct",mesStruct);
+    actualizarDatos(m.substring(3));
+}
+function createMonStruct(datarr){
+    //mesStruct=Array.from({length: 12}, function() { return ""; });
+    for(let i in datarr){
+        var m=datarr[i].mes-1;
+        var vacio=true;
+        var esta=false;
+        if(mesStruct[m]== "")
+            mesStruct[m]={mes:m+1,persona:[]}
+        for(let j in datarr[i].equipo ){
+            vacio=true;
+            esta=false;
+            for(let k in mesStruct[m].persona){
+                vacio=false;
+                if(mesStruct[m].persona[k].nombre==datarr[i].equipo[j].nombre){
+                    var deda=mesStruct[m].persona[k].dedicacion;
+                    var dedb=datarr[i].equipo[j].dedicacion;
+                    mesStruct[m].persona[k].dedicacion=parseInt(deda)+parseInt(dedb);
+                    esta=true;
+                }
+            }
+            if(vacio || !esta){
+                mesStruct[m].persona.push({nombre:datarr[i].equipo[j].nombre,dedicacion:datarr[i].equipo[j].dedicacion});
+            }
+        }
+    }
+    for(let r in mesStruct){
+        if(mesStruct[r]!= ""){
+            //console.log("r",r)
+            var m=parseInt(r)+1;
+            var id="mes"+parseInt(m)+"totales";
+            var mon=document.getElementById(id);
+            var rec=document.createElement("button");
+            rec.type="button";
+            rec.id="b-mes"+parseInt(m);
+            var texto=document.createTextNode("Recalcular");
+            rec.appendChild(texto);
+            mon.appendChild(rec);
+            //console.log("mon",id);
+            document.getElementById(rec.id).addEventListener("click", function() {
+                var dat=this.id.split("-");
+                recalcular(dat[1]);
+            });
+            var pers=mesStruct[r].persona
+            for(let p in pers){
+                var div=document.createElement("div");
+                var clase="good";
+                if(pers[p].dedicacion>GOODTHRESHOLD){
+                    clase="bad";
+                }
+                div.className="cardmini "+clase;                    
+                //var texto=document.createTextNode(pers[p].nombre+" -->"+pers[p].dedicacion);
+                var sp1=document.createElement("span");
+                var sp2=document.createElement("input");
+                var sp3=document.createElement("span");
+                var nb=document.createTextNode(pers[p].nombre);
+                //var dedica=document.createTextNode(pers[p].dedicacion);
+                var por=document.createTextNode("%");
+                sp1.appendChild(nb);
+                //sp2.appendChild(dedica);
+                sp2.value=pers[p].dedicacion
+                sp3.appendChild(por);
+                sp1.className="nb";
+                sp2.className="dedi";
+                sp2.readOnly="true";
+                sp2.id="sp-"+pers[p].nombre+"-"+m;
+                div.appendChild(sp1);
+                div.appendChild(sp2);
+                div.appendChild(sp3);
+                mon.appendChild(div);                
+            }
+        }
+    }
+}
+
+function getDataFromServer(){
+    return [{
+        "IDp": 40,
+        "proyecto": "Surinam - Transformación de Mercado",
+        "fase": 2,
+        "mes": 1,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "FEDERICO GONZALEZ",
+            "dedicacion": "75"
+        }, {
+            "nombre": "BEATRIZ HO",
+            "dedicacion": "75"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "10"
+        }, {
+            "nombre": "OSCAR CHACON",
+            "dedicacion": "75"
+        }, {
+            "nombre": "RICHARD ALBAN",
+            "dedicacion": "75"
+        }]
+    }, {
+        "IDp": 60,
+        "proyecto": "BanEcuador - Habilitación EMV",
+        "fase": 1,
+        "mes": 6,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "LEOPOLDO RAMIREZ",
+            "dedicacion": "225"
+        }, {
+            "nombre": "OSCAR CHACON",
+            "dedicacion": "137.5"
+        }, {
+            "nombre": "PABLO MORALES",
+            "dedicacion": "237.5"
+        }, {
+            "nombre": "ANTONIO GONZALEZ",
+            "dedicacion": "50"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "137.5"
+        }, {
+            "nombre": "ALEJANDRO SANABRIA",
+            "dedicacion": "225"
+        }]
+    }, {
+        "IDp": 60,
+        "proyecto": "BanEcuador - Habilitación EMV",
+        "fase": 2,
+        "mes": 7,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "ALEJANDRO SANABRIA",
+            "dedicacion": "150"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "100"
+        }, {
+            "nombre": "ANTONIO GONZALEZ",
+            "dedicacion": "37.5"
+        }, {
+            "nombre": "PABLO MORALES",
+            "dedicacion": "137.5"
+        }, {
+            "nombre": "OSCAR CHACON",
+            "dedicacion": "100"
+        }, {
+            "nombre": "LEOPOLDO RAMIREZ",
+            "dedicacion": "150"
+        }]
+    }, {
+        "IDp": 60,
+        "proyecto": "BanEcuador - Habilitación EMV",
+        "fase": 2,
+        "mes": 8,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "ALEJANDRO SANABRIA",
+            "dedicacion": "150"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "100"
+        }, {
+            "nombre": "ANTONIO GONZALEZ",
+            "dedicacion": "37.5"
+        }, {
+            "nombre": "PABLO MORALES",
+            "dedicacion": "137.5"
+        }, {
+            "nombre": "OSCAR CHACON",
+            "dedicacion": "100"
+        }, {
+            "nombre": "LEOPOLDO RAMIREZ",
+            "dedicacion": "150"
+        }]
+    }, {
+        "IDp": 60,
+        "proyecto": "BanEcuador - Habilitación EMV",
+        "fase": 2,
+        "mes": 9,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "ALEJANDRO SANABRIA",
+            "dedicacion": "150"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "100"
+        }, {
+            "nombre": "ANTONIO GONZALEZ",
+            "dedicacion": "37.5"
+        }, {
+            "nombre": "PABLO MORALES",
+            "dedicacion": "137.5"
+        }, {
+            "nombre": "OSCAR CHACON",
+            "dedicacion": "100"
+        }, {
+            "nombre": "LEOPOLDO RAMIREZ",
+            "dedicacion": "150"
+        }]
+    }, {
+        "IDp": 72,
+        "proyecto": "Bancamiga - Conexión Directa",
+        "fase": 2,
+        "mes": 2,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "LEOPOLDO RAMIREZ",
+            "dedicacion": "100"
+        }, {
+            "nombre": "OSCAR CHACON",
+            "dedicacion": "25"
+        }, {
+            "nombre": "ANTONIO GONZALEZ",
+            "dedicacion": "7.5"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "50"
+        }]
+    }, {
+        "IDp": 72,
+        "proyecto": "Bancamiga - Conexión Directa",
+        "fase": 2,
+        "mes": 3,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "LEOPOLDO RAMIREZ",
+            "dedicacion": "100"
+        }, {
+            "nombre": "OSCAR CHACON",
+            "dedicacion": "25"
+        }, {
+            "nombre": "ANTONIO GONZALEZ",
+            "dedicacion": "7.5"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "50"
+        }]
+    }, {
+        "IDp": 72,
+        "proyecto": "Bancamiga - Conexión Directa",
+        "fase": 2,
+        "mes": 4,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "LEOPOLDO RAMIREZ",
+            "dedicacion": "100"
+        }, {
+            "nombre": "OSCAR CHACON",
+            "dedicacion": "25"
+        }, {
+            "nombre": "ANTONIO GONZALEZ",
+            "dedicacion": "7.5"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "50"
+        }]
+    }, {
+        "IDp": 72,
+        "proyecto": "Bancamiga - Conexión Directa",
+        "fase": 2,
+        "mes": 5,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "LEOPOLDO RAMIREZ",
+            "dedicacion": "100"
+        }, {
+            "nombre": "OSCAR CHACON",
+            "dedicacion": "25"
+        }, {
+            "nombre": "ANTONIO GONZALEZ",
+            "dedicacion": "7.5"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "50"
+        }]
+    }, {
+        "IDp": 72,
+        "proyecto": "Bancamiga - Conexión Directa",
+        "fase": 2,
+        "mes": 6,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "LEOPOLDO RAMIREZ",
+            "dedicacion": "100"
+        }, {
+            "nombre": "OSCAR CHACON",
+            "dedicacion": "25"
+        }, {
+            "nombre": "ANTONIO GONZALEZ",
+            "dedicacion": "7.5"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "50"
+        }]
+    }, {
+        "IDp": 97,
+        "proyecto": "FirstBank - Migración Portafolio Santander",
+        "fase": 1,
+        "mes": 2,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "OSCAR CHACON",
+            "dedicacion": "25"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "14.95"
+        }, {
+            "nombre": "LEOPOLDO RAMIREZ",
+            "dedicacion": "100"
+        }, {
+            "nombre": "RICHARD ALBAN",
+            "dedicacion": "50"
+        }, {
+            "nombre": "SILENE RISQUEZ",
+            "dedicacion": "100"
+        }]
+    }, {
+        "IDp": 97,
+        "proyecto": "FirstBank - Migración Portafolio Santander",
+        "fase": 1,
+        "mes": 3,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "OSCAR CHACON",
+            "dedicacion": "25"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "14.95"
+        }, {
+            "nombre": "LEOPOLDO RAMIREZ",
+            "dedicacion": "100"
+        }, {
+            "nombre": "RICHARD ALBAN",
+            "dedicacion": "50"
+        }, {
+            "nombre": "SILENE RISQUEZ",
+            "dedicacion": "100"
+        }]
+    }, {
+        "IDp": 97,
+        "proyecto": "FirstBank - Migración Portafolio Santander",
+        "fase": 1,
+        "mes": 4,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "OSCAR CHACON",
+            "dedicacion": "25"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "14.95"
+        }, {
+            "nombre": "LEOPOLDO RAMIREZ",
+            "dedicacion": "100"
+        }, {
+            "nombre": "RICHARD ALBAN",
+            "dedicacion": "50"
+        }, {
+            "nombre": "SILENE RISQUEZ",
+            "dedicacion": "100"
+        }]
+    }, {
+        "IDp": 97,
+        "proyecto": "FirstBank - Migración Portafolio Santander",
+        "fase": 1,
+        "mes": 5,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "OSCAR CHACON",
+            "dedicacion": "25"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "14.95"
+        }, {
+            "nombre": "LEOPOLDO RAMIREZ",
+            "dedicacion": "100"
+        }, {
+            "nombre": "RICHARD ALBAN",
+            "dedicacion": "50"
+        }, {
+            "nombre": "SILENE RISQUEZ",
+            "dedicacion": "100"
+        }]
+    }, {
+        "IDp": 97,
+        "proyecto": "FirstBank - Migración Portafolio Santander",
+        "fase": 2,
+        "mes": 8,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "SILENE RISQUEZ",
+            "dedicacion": "200"
+        }, {
+            "nombre": "RICHARD ALBAN",
+            "dedicacion": "125"
+        }, {
+            "nombre": "LEOPOLDO RAMIREZ",
+            "dedicacion": "200"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "4.95"
+        }, {
+            "nombre": "OSCAR CHACON",
+            "dedicacion": "50"
+        }]
+    }, {
+        "IDp": 97,
+        "proyecto": "FirstBank - Migración Portafolio Santander",
+        "fase": 2,
+        "mes": 9,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "SILENE RISQUEZ",
+            "dedicacion": "200"
+        }, {
+            "nombre": "RICHARD ALBAN",
+            "dedicacion": "125"
+        }, {
+            "nombre": "LEOPOLDO RAMIREZ",
+            "dedicacion": "200"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "4.95"
+        }, {
+            "nombre": "OSCAR CHACON",
+            "dedicacion": "50"
+        }]
+    }, {
+        "IDp": 97,
+        "proyecto": "FirstBank - Migración Portafolio Santander",
+        "fase": 2,
+        "mes": 10,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "SILENE RISQUEZ",
+            "dedicacion": "200"
+        }, {
+            "nombre": "RICHARD ALBAN",
+            "dedicacion": "125"
+        }, {
+            "nombre": "LEOPOLDO RAMIREZ",
+            "dedicacion": "200"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "4.95"
+        }, {
+            "nombre": "OSCAR CHACON",
+            "dedicacion": "50"
+        }]
+    }, {
+        "IDp": 97,
+        "proyecto": "FirstBank - Migración Portafolio Santander",
+        "fase": 3,
+        "mes": 8,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "OSCAR CHACON",
+            "dedicacion": "50"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "4.95"
+        }, {
+            "nombre": "LEOPOLDO RAMIREZ",
+            "dedicacion": "150"
+        }, {
+            "nombre": "RICHARD ALBAN",
+            "dedicacion": "112.5"
+        }, {
+            "nombre": "SILENE RISQUEZ",
+            "dedicacion": "150"
+        }]
+    }, {
+        "IDp": 97,
+        "proyecto": "FirstBank - Migración Portafolio Santander",
+        "fase": 3,
+        "mes": 9,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "OSCAR CHACON",
+            "dedicacion": "50"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "4.95"
+        }, {
+            "nombre": "LEOPOLDO RAMIREZ",
+            "dedicacion": "150"
+        }, {
+            "nombre": "RICHARD ALBAN",
+            "dedicacion": "112.5"
+        }, {
+            "nombre": "SILENE RISQUEZ",
+            "dedicacion": "150"
+        }]
+    }, {
+        "IDp": 97,
+        "proyecto": "FirstBank - Migración Portafolio Santander",
+        "fase": 3,
+        "mes": 10,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "OSCAR CHACON",
+            "dedicacion": "50"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "4.95"
+        }, {
+            "nombre": "LEOPOLDO RAMIREZ",
+            "dedicacion": "150"
+        }, {
+            "nombre": "RICHARD ALBAN",
+            "dedicacion": "112.5"
+        }, {
+            "nombre": "SILENE RISQUEZ",
+            "dedicacion": "150"
+        }]
+    }, {
+        "IDp": 118,
+        "proyecto": "St Kitts National",
+        "fase": 1,
+        "mes": 3,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "RICHARD ALBAN",
+            "dedicacion": "74.975"
+        }, {
+            "nombre": "OSCAR CHACON",
+            "dedicacion": "74.887"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "25"
+        }, {
+            "nombre": "GONZALO GUZMAN",
+            "dedicacion": "125"
+        }, {
+            "nombre": "CRISTIAN IRIGOYEN",
+            "dedicacion": "75"
+        }]
+    }, {
+        "IDp": 118,
+        "proyecto": "St Kitts National",
+        "fase": 1,
+        "mes": 4,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "RICHARD ALBAN",
+            "dedicacion": "74.975"
+        }, {
+            "nombre": "OSCAR CHACON",
+            "dedicacion": "74.887"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "25"
+        }, {
+            "nombre": "GONZALO GUZMAN",
+            "dedicacion": "125"
+        }, {
+            "nombre": "CRISTIAN IRIGOYEN",
+            "dedicacion": "75"
+        }]
+    }, {
+        "IDp": 118,
+        "proyecto": "St Kitts National",
+        "fase": 1,
+        "mes": 5,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "RICHARD ALBAN",
+            "dedicacion": "74.975"
+        }, {
+            "nombre": "OSCAR CHACON",
+            "dedicacion": "74.887"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "25"
+        }, {
+            "nombre": "GONZALO GUZMAN",
+            "dedicacion": "125"
+        }, {
+            "nombre": "CRISTIAN IRIGOYEN",
+            "dedicacion": "75"
+        }]
+    }, {
+        "IDp": 118,
+        "proyecto": "St Kitts National",
+        "fase": 2,
+        "mes": 8,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "CRISTIAN IRIGOYEN",
+            "dedicacion": "70"
+        }, {
+            "nombre": "GONZALO GUZMAN",
+            "dedicacion": "75"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "24.998"
+        }, {
+            "nombre": "OSCAR CHACON",
+            "dedicacion": "50"
+        }, {
+            "nombre": "RICHARD ALBAN",
+            "dedicacion": "74.998"
+        }]
+    }, {
+        "IDp": 137,
+        "proyecto": "BdCh / Acompañamiento Adquirencia",
+        "fase": 1,
+        "mes": 3,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "LEOPOLDO RAMIREZ",
+            "dedicacion": "7.5"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "2.5"
+        }, {
+            "nombre": "TAMARA ANDRADE",
+            "dedicacion": "40"
+        }, {
+            "nombre": "KEILA MACHADO",
+            "dedicacion": "37.52"
+        }]
+    }, {
+        "IDp": 137,
+        "proyecto": "BdCh / Acompañamiento Adquirencia",
+        "fase": 1,
+        "mes": 4,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "LEOPOLDO RAMIREZ",
+            "dedicacion": "7.5"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "2.5"
+        }, {
+            "nombre": "TAMARA ANDRADE",
+            "dedicacion": "40"
+        }, {
+            "nombre": "KEILA MACHADO",
+            "dedicacion": "37.52"
+        }]
+    }, {
+        "IDp": 137,
+        "proyecto": "BdCh / Acompañamiento Adquirencia",
+        "fase": 1,
+        "mes": 5,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "LEOPOLDO RAMIREZ",
+            "dedicacion": "7.5"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "2.5"
+        }, {
+            "nombre": "TAMARA ANDRADE",
+            "dedicacion": "40"
+        }, {
+            "nombre": "KEILA MACHADO",
+            "dedicacion": "37.52"
+        }]
+    }, {
+        "IDp": 137,
+        "proyecto": "BdCh / Acompañamiento Adquirencia",
+        "fase": 1,
+        "mes": 6,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "LEOPOLDO RAMIREZ",
+            "dedicacion": "7.5"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "2.5"
+        }, {
+            "nombre": "TAMARA ANDRADE",
+            "dedicacion": "40"
+        }, {
+            "nombre": "KEILA MACHADO",
+            "dedicacion": "37.52"
+        }]
+    }, {
+        "IDp": 137,
+        "proyecto": "BdCh / Acompañamiento Adquirencia",
+        "fase": 1,
+        "mes": 7,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "LEOPOLDO RAMIREZ",
+            "dedicacion": "7.5"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "2.5"
+        }, {
+            "nombre": "TAMARA ANDRADE",
+            "dedicacion": "40"
+        }, {
+            "nombre": "KEILA MACHADO",
+            "dedicacion": "37.52"
+        }]
+    }, {
+        "IDp": 137,
+        "proyecto": "BdCh / Acompañamiento Adquirencia",
+        "fase": 2,
+        "mes": 5,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "KEILA MACHADO",
+            "dedicacion": "37.5"
+        }, {
+            "nombre": "TAMARA ANDRADE",
+            "dedicacion": "40"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "2.5"
+        }, {
+            "nombre": "LEOPOLDO RAMIREZ",
+            "dedicacion": ""
+        }]
+    }, {
+        "IDp": 137,
+        "proyecto": "BdCh / Acompañamiento Adquirencia",
+        "fase": 2,
+        "mes": 6,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "KEILA MACHADO",
+            "dedicacion": "37.5"
+        }, {
+            "nombre": "TAMARA ANDRADE",
+            "dedicacion": "40"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "2.5"
+        }, {
+            "nombre": "LEOPOLDO RAMIREZ",
+            "dedicacion": ""
+        }]
+    }, {
+        "IDp": 137,
+        "proyecto": "BdCh / Acompañamiento Adquirencia",
+        "fase": 2,
+        "mes": 7,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "KEILA MACHADO",
+            "dedicacion": "37.5"
+        }, {
+            "nombre": "TAMARA ANDRADE",
+            "dedicacion": "40"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "2.5"
+        }, {
+            "nombre": "LEOPOLDO RAMIREZ",
+            "dedicacion": ""
+        }]
+    }, {
+        "IDp": 137,
+        "proyecto": "BdCh / Acompañamiento Adquirencia",
+        "fase": 2,
+        "mes": 8,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "KEILA MACHADO",
+            "dedicacion": "37.5"
+        }, {
+            "nombre": "TAMARA ANDRADE",
+            "dedicacion": "40"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "2.5"
+        }, {
+            "nombre": "LEOPOLDO RAMIREZ",
+            "dedicacion": ""
+        }]
+    }, {
+        "IDp": 147,
+        "proyecto": "Itau Conexión Directa",
+        "fase": 1,
+        "mes": 7,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "ARLEEN APONTE",
+            "dedicacion": "100"
+        }, {
+            "nombre": "NARDY SULBARÁN",
+            "dedicacion": "109.367"
+        }, {
+            "nombre": "ZULEIMA SILVA",
+            "dedicacion": "100"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "25"
+        }, {
+            "nombre": "OSCAR CHACON",
+            "dedicacion": "60"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "65"
+        }]
+    }, {
+        "IDp": 147,
+        "proyecto": "Itau Conexión Directa",
+        "fase": 1,
+        "mes": 8,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "ARLEEN APONTE",
+            "dedicacion": "100"
+        }, {
+            "nombre": "NARDY SULBARÁN",
+            "dedicacion": "109.367"
+        }, {
+            "nombre": "ZULEIMA SILVA",
+            "dedicacion": "100"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "25"
+        }, {
+            "nombre": "OSCAR CHACON",
+            "dedicacion": "60"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "65"
+        }]
+    }, {
+        "IDp": 157,
+        "proyecto": "Itaú Argentina - Pre-Pago",
+        "fase": 1,
+        "mes": 6,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "7.5"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "37.5"
+        }, {
+            "nombre": "NARDY SULBARAN",
+            "dedicacion": "75"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "50"
+        }, {
+            "nombre": "FEDERICO GONZALEZ",
+            "dedicacion": "25"
+        }, {
+            "nombre": "PILAR NORAMBUENA",
+            "dedicacion": "50"
+        }]
+    }, {
+        "IDp": 157,
+        "proyecto": "Itaú Argentina - Pre-Pago",
+        "fase": 2,
+        "mes": 7,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "PILAR NORAMBUENA",
+            "dedicacion": "25"
+        }, {
+            "nombre": "FEDERICO GONZALEZ",
+            "dedicacion": "52.161"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "25"
+        }, {
+            "nombre": "NARDY SULBARAN",
+            "dedicacion": "100"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "25"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "12.5"
+        }]
+    }, {
+        "IDp": 157,
+        "proyecto": "Itaú Argentina - Pre-Pago",
+        "fase": 3,
+        "mes": 8,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "2.5"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "12.5"
+        }, {
+            "nombre": "NARDY SULBARAN",
+            "dedicacion": "25"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "25"
+        }, {
+            "nombre": "FEDERICO GONZALEZ",
+            "dedicacion": "25"
+        }, {
+            "nombre": "PILAR NORAMBUENA",
+            "dedicacion": "25"
+        }]
+    }, {
+        "IDp": 163,
+        "proyecto": "BdCh - Apoyo en selección de proveedor PSP para Adquirencia",
+        "fase": 1,
+        "mes": 8,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "PILAR NORAMBUENA",
+            "dedicacion": "12.5"
+        }, {
+            "nombre": "BEATRIZ HO",
+            "dedicacion": "50"
+        }, {
+            "nombre": "KEILA MACHADO",
+            "dedicacion": "7.5"
+        }, {
+            "nombre": "YAEL VELASQUEZ",
+            "dedicacion": "37.5"
+        }, {
+            "nombre": "YULIA FORNES",
+            "dedicacion": "15"
+        }, {
+            "nombre": "PABLO MORALES",
+            "dedicacion": "5"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "12.5"
+        }]
+    }]
+}
+function createTeamStruct(){
+    var contenedor=document.getElementById("team");
+    for(let j in teamStruct){
+        var div=document.createElement("div");
+        div.id="t-"+teamStruct[j].nombre;
+        var inp=document.createElement("input");
+        inp.type="text";
+        inp.name="nombre"
+        inp.readOnly="true";
+        //inp.style.width="120px";
+        inp.value=teamStruct[j].nombre;
+        inp.className="name";
+        var inp2=document.createElement("input");
+        inp2.type="text";
+        inp2.style.width="20px"
+        inp2.name=teamStruct[j].nombre;
+        inp2.value=0;
+        div.draggable="true";
+        div.className="card";
+        div.ondragstart=drag;
+        div.appendChild(inp);
+        div.appendChild(inp2);        
+        var boton=document.createElement("button");
+        boton.type="button";
+        boton.name="b-"+teamStruct[j].nombre;
+        boton.id="b-"+teamStruct[j].nombre;
+        var botonfiltro=document.createElement("button");
+        botonfiltro.type="button";
+        botonfiltro.name="f-"+teamStruct[j].nombre;
+        botonfiltro.id="f-"+teamStruct[j].nombre;        
+        var texto2=document.createTextNode("+");
+        boton.appendChild(texto2);
+        var textofiltro=document.createTextNode("f");
+        botonfiltro.appendChild(textofiltro);
+        div.appendChild(boton);
+        div.appendChild(botonfiltro);
+        contenedor.appendChild(div);
+        document.getElementById(boton.id).addEventListener("click", function() {
+            var dat=this.name.split("-");
+            if(dat[0]=="b"){
+                alert("Arrastre el consultor hacia un proyecto")
+            }else{
+                BotonDuplicar(dat[1], dat[2], dat[0]);
+            }
+        });
+        document.getElementById(botonfiltro.id).addEventListener("click", function() {
+            var dat=this.name.split("-");
+            var tit=this.innerHTML;
+            if(tit=="f"){
+                setVisibilityToProy(dat[1],true);
+                this.innerHTML="b";
+            }else{
+                setVisibilityToProy("",false);
+                this.innerHTML="f";
+            }
+
+        });
+    }
+}
+function setProy(){    
+    var obj=setDataProy(60,"Banecuador - Habilitación EMV","2","7","320");
+    obj.equipo.push(setDataTeam("Alejandro",50));
+    obj.equipo.push(setDataTeam("Tamara",40));
+    dataArr.push(obj); 
+    var obj4=setDataProy(60,"Banecuador - Habilitación EMV","2","8","320");
+    obj4.equipo.push(setDataTeam("Alejandro",50));
+    dataArr.push(obj4); 
+
+    var obj1=setDataProy(155,"Banco Atlantida - Internacionalización Procesamiento","1","7","120");
+    obj1.equipo.push(setDataTeam("Alejandro",50));
+    obj1.equipo.push(setDataTeam("Yulia",20));
+    dataArr.push(obj1);    
+
+    var obj2=setDataProy(155,"Banco Atlantida - Internacionalización Procesamiento 2","2","8","120");
+    obj2.equipo.push(setDataTeam("Alejandro",50));
+    obj2.equipo.push(setDataTeam("Yulia",20));
+    dataArr.push(obj2);   
+    var obj3=setDataProy(155,"Banco Atlantida - Internacionalización Procesamiento","3","9","120");
+    obj3.equipo.push(setDataTeam("Alejandro",50));
+    obj3.equipo.push(setDataTeam("Yulia",20));
+    dataArr.push(obj3);    
+    //console.log(getDataFromServer());
+    //console.log(dataArr);
+
+    //buildProject(dataArr);
+    buildProject(getDataFromServer())
+    //createMonStruct(dataArr);
+    createMonStruct(getDataFromServer());
+
+
+    teamStruct.push(setDataTeam("ALEXEIS PERERA",0));
+    teamStruct.push(setDataTeam("ANTONIO GONZALEZ",0));
+    teamStruct.push(setDataTeam("OSCAR CHACON",0));
+    teamStruct.push(setDataTeam("JULIO MARCANO",0));
+    teamStruct.push(setDataTeam("EGLANTINA NORATO",0));
+    teamStruct.push(setDataTeam("RODOLFO VILLAFUERTE",0));
+    teamStruct.push(setDataTeam("RICHARD ALBAN",0));
+    teamStruct.push(setDataTeam("ARLEEN APONTE",0));
+    teamStruct.push(setDataTeam("PABLO MORALES",0));
+    teamStruct.push(setDataTeam("SERGIO NUÑEZ",0));
+    teamStruct.push(setDataTeam("ZULEIMA",0));
+    teamStruct.push(setDataTeam("NARDY SULBARAN",0));
+    teamStruct.push(setDataTeam("GONZALO GUZMAN",0));
+    teamStruct.push(setDataTeam("GUSTAVO FUENTES",0));
+    teamStruct.push(setDataTeam("LEOPOLDO RAMIREZ",0));
+    teamStruct.push(setDataTeam("ALEJANDRO SANABRIA",0));
+    teamStruct.push(setDataTeam("CRISTIAN IRIGOYEN",0));
+    teamStruct.push(setDataTeam("SILENE RISQUEZ",0));
+    teamStruct.push(setDataTeam("KEILA MACHADO",0));
+    teamStruct.push(setDataTeam("BEATRIZ HO",0));
+    teamStruct.push(setDataTeam("YULIA FORNES",0));
+    teamStruct.push(setDataTeam("FEDERICO GONZALEZ",0));
+    teamStruct.push(setDataTeam("TAMARA ANDRADE",0));
+
+    createTeamStruct();
+
+}
+function mostrar() {
+    document.getElementById("sidebar").style.width = "200px";
+    document.getElementById("contenido").style.marginLeft = "200px";
+    document.getElementById("abrir").style.display = "none";
+    document.getElementById("cerrar").style.display = "inline";
+}
+
+function ocultar() {
+    document.getElementById("sidebar").style.width = "0";
+    document.getElementById("contenido").style.marginLeft = "0";
+    document.getElementById("abrir").style.display = "inline";
+    document.getElementById("cerrar").style.display = "none";
+}
+
+</script>
+</head>
+<body>
+
+<div ><span style="color:white">LOGO</span><span style="width: 95%;text-align: center;"><h2 style="color:white">Staffing - prototipo</h2></span></div>
+<input type="checkbox" id="abrir-cerrar" name="abrir-cerrar" value="">
+<label for="abrir-cerrar">☰ <span class="abrir">Abrir</span><span class="cerrar">Cerrar</span>&nbsp;&nbsp;<button type="button" style="color:white" href="">Guardar</button>
+</label>
+
+<div id="sidebar" class="sidebar">
+    <div style="color:white;vertical-align: top;padding-bottom: 150px;text-align:left">LOGO</div>
+    <div style="text-align: center;">  <h4 style="color:white">EQUIPO CYBS</h4></div>
+
+    <div id="trash"  ondrop="drop2(event)" ondragover="allowDrop(event)" style="border:1px solid #a31aff;color:#f5e6ff; width: 90%; height: 100px; ">
+        trash
+    </div>
+    <div id="team">
+
+    </div>
+
+</div>
+<div id="contenido">
+    <table>
+        <thead>
+            <tr>
+                <th>Enero</th>
+                <th>Febrero</th>
+                <th>Marzo</th>
+                <th>Abril</th>
+                <th>Mayo</th>
+                <th>Junio</th>   
+                <th>Julio</th>
+                <th>Agosto</th>
+                <th>Septiembre</th>   
+                <th>Octubre</th>
+                <th>Noviembre</th>
+                <th>Diciembre</th>                                
+            </tr>
+        </thead>
+        <tbody>
+            <tr>        
+                <td class="totales">
+                    <div id="mes1totales">
+
+                    </div>
+                </td>
+                <td class="totales">
+                    <div id="mes2totales">
+
+                    </div>
+                </td>
+                <td class="totales">
+                    <div id="mes3totales">
+
+                    </div>
+                </td>
+                <td class="totales">
+                    <div id="mes4totales">
+
+                    </div>
+                </td>
+                <td class="totales">
+                    <div id="mes5totales">
+
+                    </div>
+                </td>  
+                <td class="totales">
+                    <div id="mes6totales">
+
+                    </div>
+                </td>
+                <td class="totales">
+                    <div id="mes7totales">
+
+                    </div>
+                </td>   
+                <td class="totales">
+                    <div id="mes8totales">
+
+                    </div>
+                </td>  
+                <td class="totales">
+                    <div id="mes9totales">
+
+                    </div>
+                </td>
+                <td class="totales">
+                    <div id="mes10totales">
+
+                    </div>
+                </td>   
+                <td class="totales">
+                    <div id="mes11totales">
+
+                    </div>
+                </td>
+                <td class="totales">
+                    <div id="mes12totales">
+
+                    </div>
+                </td>                                                       
+            </tr>        
+            <tr>
+                <td style="vertical-align: top;">
+                    <div id="mes1" class="mes">
+
+                    </div>
+                </td>
+                <td style="vertical-align: top;">
+                    <div id="mes2" class="mes">
+
+                    </div>
+                </td>
+                <td style="vertical-align: top;">
+                    <div id="mes3" class="mes">
+
+                    </div>
+                </td>
+                <td style="vertical-align: top;">
+                    <div id="mes4" class="mes">
+
+                    </div>
+                </td>
+                <td style="vertical-align: top;">
+                    <div id="mes5" class="mes">
+
+                    </div>
+                </td>
+                <td style="vertical-align: top;">
+                    <div id="mes6" class="mes">
+
+                    </div>
+                </td>          
+                <td style="vertical-align: top;">
+                    <div id="mes7" class="mes">
+
+                    </div>
+                </td>    
+                <td style="vertical-align: top;">
+                    <div id="mes8" class="mes">
+
+                    </div>
+                </td>   
+                <td style="vertical-align: top;">
+                    <div id="mes9" class="mes">
+
+                    </div>
+                </td> 
+                <td style="vertical-align: top;">
+                    <div id="mes10" class="mes">
+
+                    </div>
+                </td>    
+                <td style="vertical-align: top;">
+                    <div id="mes11" class="mes">
+
+                    </div>
+                </td>   
+                <td style="vertical-align: top;">
+                    <div id="mes12" class="mes">
+
+                    </div>
+                </td>                                                                       
+            </tr>
+        </tbody>
+    </table>
+    <div id="div3" style="display: none;" ></div>
+</div>
+    <script>setProy();</script>
+</body>
+</html>
