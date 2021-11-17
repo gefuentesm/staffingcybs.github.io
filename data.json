@@ -1,0 +1,3917 @@
+{
+    "data": [{
+        "IDp": 40,
+        "proyecto": "Surinam - Transformación de Mercado",
+        "fase": 2,
+        "year": 2021,
+        "mes": 1,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "FEDERICO GONZÁLEZ",
+            "dedicacion": "42.86",
+            "original": "42.86",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "BEATRIZ HO",
+            "dedicacion": "42.86",
+            "original": "42.86",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "5.71",
+            "original": "5.71",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "42.86",
+            "original": "42.86",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "RICHARD ALBÁN",
+            "dedicacion": "42.86",
+            "original": "42.86",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 40,
+        "proyecto": "Surinam - Transformación de Mercado",
+        "fase": 3,
+        "year": 2021,
+        "mes": 7,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "RICHARD ALBÁN",
+            "dedicacion": "12.82",
+            "original": "12.82",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "6.87",
+            "original": "6.87",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "1.54",
+            "original": "1.54",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "BEATRIZ HO",
+            "dedicacion": "15.38",
+            "original": "15.38",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "FEDERICO GONZÁLEZ",
+            "dedicacion": "15.38",
+            "original": "15.38",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 40,
+        "proyecto": "Surinam - Transformación de Mercado",
+        "fase": 3,
+        "year": 2021,
+        "mes": 8,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "RICHARD ALBÁN",
+            "dedicacion": "12.82",
+            "original": "12.82",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "6.87",
+            "original": "6.87",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "1.54",
+            "original": "1.54",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "BEATRIZ HO",
+            "dedicacion": "15.38",
+            "original": "15.38",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "FEDERICO GONZÁLEZ",
+            "dedicacion": "15.38",
+            "original": "15.38",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 40,
+        "proyecto": "Surinam - Transformación de Mercado",
+        "fase": 3,
+        "year": 2021,
+        "mes": 9,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "RICHARD ALBÁN",
+            "dedicacion": "12.82",
+            "original": "12.82",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "6.87",
+            "original": "6.87",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "1.54",
+            "original": "1.54",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "BEATRIZ HO",
+            "dedicacion": "15.38",
+            "original": "15.38",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "FEDERICO GONZÁLEZ",
+            "dedicacion": "15.38",
+            "original": "15.38",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 60,
+        "proyecto": "BanEcuador - Habilitación EMV",
+        "fase": 1,
+        "year": 2021,
+        "mes": 6,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "ALEJANDRO SANABRIA",
+            "dedicacion": "150.00",
+            "original": "150.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "91.67",
+            "original": "91.67",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "PABLO MORALES",
+            "dedicacion": "158.33",
+            "original": "158.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ANTONIO GONZÁLEZ",
+            "dedicacion": "33.33",
+            "original": "33.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "91.67",
+            "original": "91.67",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "150.00",
+            "original": "150.00",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 60,
+        "proyecto": "BanEcuador - Habilitación EMV",
+        "fase": 2,
+        "year": 2021,
+        "mes": 7,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "22.22",
+            "original": "22.22",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "14.81",
+            "original": "14.81",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ANTONIO GONZÁLEZ",
+            "dedicacion": "5.56",
+            "original": "5.56",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "PABLO MORALES",
+            "dedicacion": "20.37",
+            "original": "20.37",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "14.81",
+            "original": "14.81",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEJANDRO SANABRIA",
+            "dedicacion": "22.22",
+            "original": "22.22",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 60,
+        "proyecto": "BanEcuador - Habilitación EMV",
+        "fase": 2,
+        "year": 2021,
+        "mes": 8,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "22.22",
+            "original": "22.22",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "14.81",
+            "original": "14.81",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ANTONIO GONZÁLEZ",
+            "dedicacion": "5.56",
+            "original": "5.56",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "PABLO MORALES",
+            "dedicacion": "20.37",
+            "original": "20.37",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "14.81",
+            "original": "14.81",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEJANDRO SANABRIA",
+            "dedicacion": "22.22",
+            "original": "22.22",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 60,
+        "proyecto": "BanEcuador - Habilitación EMV",
+        "fase": 2,
+        "year": 2021,
+        "mes": 9,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "22.22",
+            "original": "22.22",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "14.81",
+            "original": "14.81",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ANTONIO GONZÁLEZ",
+            "dedicacion": "5.56",
+            "original": "5.56",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "PABLO MORALES",
+            "dedicacion": "20.37",
+            "original": "20.37",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "14.81",
+            "original": "14.81",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEJANDRO SANABRIA",
+            "dedicacion": "22.22",
+            "original": "22.22",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 72,
+        "proyecto": "Bancamiga - Conexión Directa",
+        "fase": 1,
+        "year": 2020,
+        "mes": 1,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "5.13",
+            "original": "5.13",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "5.13",
+            "original": "5.13",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ANTONIO GONZÁLEZ",
+            "dedicacion": "0.26",
+            "original": "0.26",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "6.41",
+            "original": "6.41",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 72,
+        "proyecto": "Bancamiga - Conexión Directa",
+        "fase": 2,
+        "year": 2021,
+        "mes": 2,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "13.33",
+            "original": "13.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ANTONIO GONZÁLEZ",
+            "dedicacion": "1.00",
+            "original": "1.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "6.67",
+            "original": "6.67",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "3.33",
+            "original": "3.33",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 72,
+        "proyecto": "Bancamiga - Conexión Directa",
+        "fase": 2,
+        "year": 2021,
+        "mes": 3,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "13.33",
+            "original": "13.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ANTONIO GONZÁLEZ",
+            "dedicacion": "1.00",
+            "original": "1.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "6.67",
+            "original": "6.67",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "3.33",
+            "original": "3.33",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 72,
+        "proyecto": "Bancamiga - Conexión Directa",
+        "fase": 2,
+        "year": 2021,
+        "mes": 4,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "13.33",
+            "original": "13.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ANTONIO GONZÁLEZ",
+            "dedicacion": "1.00",
+            "original": "1.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "6.67",
+            "original": "6.67",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "3.33",
+            "original": "3.33",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 72,
+        "proyecto": "Bancamiga - Conexión Directa",
+        "fase": 2,
+        "year": 2021,
+        "mes": 5,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "13.33",
+            "original": "13.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ANTONIO GONZÁLEZ",
+            "dedicacion": "1.00",
+            "original": "1.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "6.67",
+            "original": "6.67",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "3.33",
+            "original": "3.33",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 72,
+        "proyecto": "Bancamiga - Conexión Directa",
+        "fase": 2,
+        "year": 2021,
+        "mes": 6,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "13.33",
+            "original": "13.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ANTONIO GONZÁLEZ",
+            "dedicacion": "1.00",
+            "original": "1.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "6.67",
+            "original": "6.67",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "3.33",
+            "original": "3.33",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 72,
+        "proyecto": "Bancamiga - Conexión Directa",
+        "fase": 2,
+        "year": 2021,
+        "mes": 7,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "13.33",
+            "original": "13.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ANTONIO GONZÁLEZ",
+            "dedicacion": "1.00",
+            "original": "1.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "6.67",
+            "original": "6.67",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "3.33",
+            "original": "3.33",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 72,
+        "proyecto": "Bancamiga - Conexión Directa",
+        "fase": 3,
+        "year": 2021,
+        "mes": 7,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "28.57",
+            "original": "28.57",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "28.57",
+            "original": "28.57",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ANTONIO GONZÁLEZ",
+            "dedicacion": "1.43",
+            "original": "1.43",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "35.71",
+            "original": "35.71",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 72,
+        "proyecto": "Bancamiga - Conexión Directa",
+        "fase": 4,
+        "year": 2021,
+        "mes": 7,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "57.14",
+            "original": "57.14",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ANTONIO GONZÁLEZ",
+            "dedicacion": "4.29",
+            "original": "4.29",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "28.57",
+            "original": "28.57",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "14.29",
+            "original": "14.29",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 75,
+        "proyecto": "GBTI-Selección de procesador y habilitación EMV",
+        "fase": 1,
+        "year": 2020,
+        "mes": 1,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "3.29",
+            "original": "3.29",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "7.89",
+            "original": "7.89",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "GONZALO GUZMÁN",
+            "dedicacion": "3.95",
+            "original": "3.95",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "PABLO MORALES",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "YULIA FORNÉS",
+            "dedicacion": "8.55",
+            "original": "8.55",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "3.95",
+            "original": "3.95",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 75,
+        "proyecto": "GBTI-Selección de procesador y habilitación EMV",
+        "fase": 1,
+        "year": 2020,
+        "mes": 2,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "3.29",
+            "original": "3.29",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "7.89",
+            "original": "7.89",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "GONZALO GUZMÁN",
+            "dedicacion": "3.95",
+            "original": "3.95",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "PABLO MORALES",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "YULIA FORNÉS",
+            "dedicacion": "8.55",
+            "original": "8.55",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "3.95",
+            "original": "3.95",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 75,
+        "proyecto": "GBTI-Selección de procesador y habilitación EMV",
+        "fase": 1,
+        "year": 2020,
+        "mes": 3,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "3.29",
+            "original": "3.29",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "7.89",
+            "original": "7.89",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "GONZALO GUZMÁN",
+            "dedicacion": "3.95",
+            "original": "3.95",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "PABLO MORALES",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "YULIA FORNÉS",
+            "dedicacion": "8.55",
+            "original": "8.55",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "3.95",
+            "original": "3.95",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 75,
+        "proyecto": "GBTI-Selección de procesador y habilitación EMV",
+        "fase": 1,
+        "year": 2020,
+        "mes": 4,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "3.29",
+            "original": "3.29",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "7.89",
+            "original": "7.89",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "GONZALO GUZMÁN",
+            "dedicacion": "3.95",
+            "original": "3.95",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "PABLO MORALES",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "YULIA FORNÉS",
+            "dedicacion": "8.55",
+            "original": "8.55",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "3.95",
+            "original": "3.95",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 75,
+        "proyecto": "GBTI-Selección de procesador y habilitación EMV",
+        "fase": 1,
+        "year": 2020,
+        "mes": 5,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "3.29",
+            "original": "3.29",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "7.89",
+            "original": "7.89",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "GONZALO GUZMÁN",
+            "dedicacion": "3.95",
+            "original": "3.95",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "PABLO MORALES",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "YULIA FORNÉS",
+            "dedicacion": "8.55",
+            "original": "8.55",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "3.95",
+            "original": "3.95",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 75,
+        "proyecto": "GBTI-Selección de procesador y habilitación EMV",
+        "fase": 1,
+        "year": 2020,
+        "mes": 6,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "3.29",
+            "original": "3.29",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "7.89",
+            "original": "7.89",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "GONZALO GUZMÁN",
+            "dedicacion": "3.95",
+            "original": "3.95",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "PABLO MORALES",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "YULIA FORNÉS",
+            "dedicacion": "8.55",
+            "original": "8.55",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "3.95",
+            "original": "3.95",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 75,
+        "proyecto": "GBTI-Selección de procesador y habilitación EMV",
+        "fase": 2,
+        "year": 2021,
+        "mes": 7,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "88.89",
+            "original": "88.89",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "72.22",
+            "original": "72.22",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "YULIA FORNÉS",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "PABLO MORALES",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "GONZALO GUZMÁN",
+            "dedicacion": "72.22",
+            "original": "72.22",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 75,
+        "proyecto": "GBTI-Selección de procesador y habilitación EMV",
+        "fase": 3,
+        "year": 2021,
+        "mes": 7,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "GONZALO GUZMÁN",
+            "dedicacion": "22.22",
+            "original": "22.22",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "PABLO MORALES",
+            "dedicacion": "55.56",
+            "original": "55.56",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "YULIA FORNÉS",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "22.22",
+            "original": "22.22",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 97,
+        "proyecto": "FirstBank - Migración Portafolio Santander",
+        "fase": 1,
+        "year": 2021,
+        "mes": 2,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "RICHARD ALBÁN",
+            "dedicacion": "8.33",
+            "original": "8.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "SILENE RÍSQUEZ",
+            "dedicacion": "16.67",
+            "original": "16.67",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "16.67",
+            "original": "16.67",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "2.49",
+            "original": "2.49",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "4.17",
+            "original": "4.17",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 97,
+        "proyecto": "FirstBank - Migración Portafolio Santander",
+        "fase": 1,
+        "year": 2021,
+        "mes": 3,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "RICHARD ALBÁN",
+            "dedicacion": "8.33",
+            "original": "8.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "SILENE RÍSQUEZ",
+            "dedicacion": "16.67",
+            "original": "16.67",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "16.67",
+            "original": "16.67",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "2.49",
+            "original": "2.49",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "4.17",
+            "original": "4.17",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 97,
+        "proyecto": "FirstBank - Migración Portafolio Santander",
+        "fase": 1,
+        "year": 2021,
+        "mes": 4,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "RICHARD ALBÁN",
+            "dedicacion": "8.33",
+            "original": "8.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "SILENE RÍSQUEZ",
+            "dedicacion": "16.67",
+            "original": "16.67",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "16.67",
+            "original": "16.67",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "2.49",
+            "original": "2.49",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "4.17",
+            "original": "4.17",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 97,
+        "proyecto": "FirstBank - Migración Portafolio Santander",
+        "fase": 1,
+        "year": 2021,
+        "mes": 5,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "RICHARD ALBÁN",
+            "dedicacion": "8.33",
+            "original": "8.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "SILENE RÍSQUEZ",
+            "dedicacion": "16.67",
+            "original": "16.67",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "16.67",
+            "original": "16.67",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "2.49",
+            "original": "2.49",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "4.17",
+            "original": "4.17",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 97,
+        "proyecto": "FirstBank - Migración Portafolio Santander",
+        "fase": 1,
+        "year": 2021,
+        "mes": 6,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "RICHARD ALBÁN",
+            "dedicacion": "8.33",
+            "original": "8.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "SILENE RÍSQUEZ",
+            "dedicacion": "16.67",
+            "original": "16.67",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "16.67",
+            "original": "16.67",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "2.49",
+            "original": "2.49",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "4.17",
+            "original": "4.17",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 97,
+        "proyecto": "FirstBank - Migración Portafolio Santander",
+        "fase": 2,
+        "year": 2021,
+        "mes": 8,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "6.06",
+            "original": "6.06",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "0.60",
+            "original": "0.60",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "24.24",
+            "original": "24.24",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "SILENE RÍSQUEZ",
+            "dedicacion": "24.24",
+            "original": "24.24",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "RICHARD ALBÁN",
+            "dedicacion": "15.15",
+            "original": "15.15",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 97,
+        "proyecto": "FirstBank - Migración Portafolio Santander",
+        "fase": 2,
+        "year": 2021,
+        "mes": 9,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "6.06",
+            "original": "6.06",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "0.60",
+            "original": "0.60",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "24.24",
+            "original": "24.24",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "SILENE RÍSQUEZ",
+            "dedicacion": "24.24",
+            "original": "24.24",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "RICHARD ALBÁN",
+            "dedicacion": "15.15",
+            "original": "15.15",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 97,
+        "proyecto": "FirstBank - Migración Portafolio Santander",
+        "fase": 2,
+        "year": 2021,
+        "mes": 10,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "6.06",
+            "original": "6.06",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "0.60",
+            "original": "0.60",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "24.24",
+            "original": "24.24",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "SILENE RÍSQUEZ",
+            "dedicacion": "24.24",
+            "original": "24.24",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "RICHARD ALBÁN",
+            "dedicacion": "15.15",
+            "original": "15.15",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 97,
+        "proyecto": "FirstBank - Migración Portafolio Santander",
+        "fase": 3,
+        "year": 2021,
+        "mes": 8,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "RICHARD ALBÁN",
+            "dedicacion": "13.64",
+            "original": "13.64",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "SILENE RÍSQUEZ",
+            "dedicacion": "18.18",
+            "original": "18.18",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "18.18",
+            "original": "18.18",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "0.60",
+            "original": "0.60",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "6.06",
+            "original": "6.06",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 97,
+        "proyecto": "FirstBank - Migración Portafolio Santander",
+        "fase": 3,
+        "year": 2021,
+        "mes": 9,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "RICHARD ALBÁN",
+            "dedicacion": "13.64",
+            "original": "13.64",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "SILENE RÍSQUEZ",
+            "dedicacion": "18.18",
+            "original": "18.18",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "18.18",
+            "original": "18.18",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "0.60",
+            "original": "0.60",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "6.06",
+            "original": "6.06",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 97,
+        "proyecto": "FirstBank - Migración Portafolio Santander",
+        "fase": 3,
+        "year": 2021,
+        "mes": 10,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "RICHARD ALBÁN",
+            "dedicacion": "13.64",
+            "original": "13.64",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "SILENE RÍSQUEZ",
+            "dedicacion": "18.18",
+            "original": "18.18",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "18.18",
+            "original": "18.18",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "0.60",
+            "original": "0.60",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "6.06",
+            "original": "6.06",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 97,
+        "proyecto": "FirstBank - Migración Portafolio Santander",
+        "fase": 4,
+        "year": 2021,
+        "mes": 7,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "2.56",
+            "original": "2.56",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "5.13",
+            "original": "5.13",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "SILENE RÍSQUEZ",
+            "dedicacion": "5.13",
+            "original": "5.13",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "RICHARD ALBÁN",
+            "dedicacion": "5.13",
+            "original": "5.13",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 97,
+        "proyecto": "FirstBank - Migración Portafolio Santander",
+        "fase": 4,
+        "year": 2021,
+        "mes": 8,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "2.56",
+            "original": "2.56",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "5.13",
+            "original": "5.13",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "SILENE RÍSQUEZ",
+            "dedicacion": "5.13",
+            "original": "5.13",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "RICHARD ALBÁN",
+            "dedicacion": "5.13",
+            "original": "5.13",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 97,
+        "proyecto": "FirstBank - Migración Portafolio Santander",
+        "fase": 4,
+        "year": 2021,
+        "mes": 9,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "2.56",
+            "original": "2.56",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "5.13",
+            "original": "5.13",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "SILENE RÍSQUEZ",
+            "dedicacion": "5.13",
+            "original": "5.13",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "RICHARD ALBÁN",
+            "dedicacion": "5.13",
+            "original": "5.13",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 111,
+        "proyecto": "Bancoop Continuación de Apoyo",
+        "fase": 1,
+        "year": 2021,
+        "mes": 4,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "7.69",
+            "original": "7.69",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "RODOLFO VILLAFUERTE",
+            "dedicacion": "15.38",
+            "original": "15.38",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "17.31",
+            "original": "17.31",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "17.31",
+            "original": "17.31",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ARLEEN APONTE",
+            "dedicacion": "30.77",
+            "original": "30.77",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "SILENE RÍSQUEZ",
+            "dedicacion": "30.77",
+            "original": "30.77",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "30.77",
+            "original": "30.77",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 111,
+        "proyecto": "Bancoop Continuación de Apoyo",
+        "fase": 1,
+        "year": 2021,
+        "mes": 5,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "7.69",
+            "original": "7.69",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "RODOLFO VILLAFUERTE",
+            "dedicacion": "15.38",
+            "original": "15.38",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "17.31",
+            "original": "17.31",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "17.31",
+            "original": "17.31",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ARLEEN APONTE",
+            "dedicacion": "30.77",
+            "original": "30.77",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "SILENE RÍSQUEZ",
+            "dedicacion": "30.77",
+            "original": "30.77",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "30.77",
+            "original": "30.77",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 111,
+        "proyecto": "Bancoop Continuación de Apoyo",
+        "fase": 1,
+        "year": 2021,
+        "mes": 6,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "7.69",
+            "original": "7.69",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "RODOLFO VILLAFUERTE",
+            "dedicacion": "15.38",
+            "original": "15.38",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "17.31",
+            "original": "17.31",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "17.31",
+            "original": "17.31",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ARLEEN APONTE",
+            "dedicacion": "30.77",
+            "original": "30.77",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "SILENE RÍSQUEZ",
+            "dedicacion": "30.77",
+            "original": "30.77",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "30.77",
+            "original": "30.77",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 111,
+        "proyecto": "Bancoop Continuación de Apoyo",
+        "fase": 2,
+        "year": 2021,
+        "mes": 7,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "26.39",
+            "original": "26.39",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "SILENE RÍSQUEZ",
+            "dedicacion": "26.39",
+            "original": "26.39",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ARLEEN APONTE",
+            "dedicacion": "25.04",
+            "original": "25.04",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "7.64",
+            "original": "7.64",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "7.64",
+            "original": "7.64",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "RODOLFO VILLAFUERTE",
+            "dedicacion": "22.22",
+            "original": "22.22",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "2.78",
+            "original": "2.78",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 111,
+        "proyecto": "Bancoop Continuación de Apoyo",
+        "fase": 2,
+        "year": 2021,
+        "mes": 8,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "26.39",
+            "original": "26.39",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "SILENE RÍSQUEZ",
+            "dedicacion": "26.39",
+            "original": "26.39",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ARLEEN APONTE",
+            "dedicacion": "25.04",
+            "original": "25.04",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "7.64",
+            "original": "7.64",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "7.64",
+            "original": "7.64",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "RODOLFO VILLAFUERTE",
+            "dedicacion": "22.22",
+            "original": "22.22",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "2.78",
+            "original": "2.78",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 111,
+        "proyecto": "Bancoop Continuación de Apoyo",
+        "fase": 2,
+        "year": 2021,
+        "mes": 9,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "26.39",
+            "original": "26.39",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "SILENE RÍSQUEZ",
+            "dedicacion": "26.39",
+            "original": "26.39",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ARLEEN APONTE",
+            "dedicacion": "25.04",
+            "original": "25.04",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "7.64",
+            "original": "7.64",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "7.64",
+            "original": "7.64",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "RODOLFO VILLAFUERTE",
+            "dedicacion": "22.22",
+            "original": "22.22",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "2.78",
+            "original": "2.78",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 118,
+        "proyecto": "St Kitts National",
+        "fase": 1,
+        "year": 2021,
+        "mes": 3,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "14.26",
+            "original": "14.26",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "RICHARD ALBÁN",
+            "dedicacion": "14.28",
+            "original": "14.28",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "4.76",
+            "original": "4.76",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "GONZALO GUZMÁN",
+            "dedicacion": "23.81",
+            "original": "23.81",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "CRISTIAN IRIGOYEN",
+            "dedicacion": "14.29",
+            "original": "14.29",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 118,
+        "proyecto": "St Kitts National",
+        "fase": 1,
+        "year": 2021,
+        "mes": 4,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "14.26",
+            "original": "14.26",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "RICHARD ALBÁN",
+            "dedicacion": "14.28",
+            "original": "14.28",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "4.76",
+            "original": "4.76",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "GONZALO GUZMÁN",
+            "dedicacion": "23.81",
+            "original": "23.81",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "CRISTIAN IRIGOYEN",
+            "dedicacion": "14.29",
+            "original": "14.29",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 118,
+        "proyecto": "St Kitts National",
+        "fase": 1,
+        "year": 2021,
+        "mes": 5,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "14.26",
+            "original": "14.26",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "RICHARD ALBÁN",
+            "dedicacion": "14.28",
+            "original": "14.28",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "4.76",
+            "original": "4.76",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "GONZALO GUZMÁN",
+            "dedicacion": "23.81",
+            "original": "23.81",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "CRISTIAN IRIGOYEN",
+            "dedicacion": "14.29",
+            "original": "14.29",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 118,
+        "proyecto": "St Kitts National",
+        "fase": 1,
+        "year": 2021,
+        "mes": 6,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "14.26",
+            "original": "14.26",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "RICHARD ALBÁN",
+            "dedicacion": "14.28",
+            "original": "14.28",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "4.76",
+            "original": "4.76",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "GONZALO GUZMÁN",
+            "dedicacion": "23.81",
+            "original": "23.81",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "CRISTIAN IRIGOYEN",
+            "dedicacion": "14.29",
+            "original": "14.29",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 118,
+        "proyecto": "St Kitts National",
+        "fase": 2,
+        "year": 2021,
+        "mes": 8,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "CRISTIAN IRIGOYEN",
+            "dedicacion": "25.45",
+            "original": "25.45",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "GONZALO GUZMÁN",
+            "dedicacion": "27.27",
+            "original": "27.27",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "9.09",
+            "original": "9.09",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "RICHARD ALBÁN",
+            "dedicacion": "27.27",
+            "original": "27.27",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "18.18",
+            "original": "18.18",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 118,
+        "proyecto": "St Kitts National",
+        "fase": 2,
+        "year": 2021,
+        "mes": 9,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "CRISTIAN IRIGOYEN",
+            "dedicacion": "25.45",
+            "original": "25.45",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "GONZALO GUZMÁN",
+            "dedicacion": "27.27",
+            "original": "27.27",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "9.09",
+            "original": "9.09",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "RICHARD ALBÁN",
+            "dedicacion": "27.27",
+            "original": "27.27",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "18.18",
+            "original": "18.18",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 133,
+        "proyecto": "Nexus - BIN de 8 Dígitos",
+        "fase": 1,
+        "year": 2021,
+        "mes": 3,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "3.33",
+            "original": "3.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "YULIA FORNÉS",
+            "dedicacion": "50.00",
+            "original": "50.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "SERGIO NÚÑEZ",
+            "dedicacion": "16.67",
+            "original": "16.67",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "NARDY SULBARÁN",
+            "dedicacion": "83.33",
+            "original": "83.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ZULEIMA SILVA",
+            "dedicacion": "83.33",
+            "original": "83.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "33.33",
+            "original": "33.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "CRISTIAN IRIGOYEN",
+            "dedicacion": "33.33",
+            "original": "33.33",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 133,
+        "proyecto": "Nexus - BIN de 8 Dígitos",
+        "fase": 1,
+        "year": 2021,
+        "mes": 4,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "3.33",
+            "original": "3.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "YULIA FORNÉS",
+            "dedicacion": "50.00",
+            "original": "50.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "SERGIO NÚÑEZ",
+            "dedicacion": "16.67",
+            "original": "16.67",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "NARDY SULBARÁN",
+            "dedicacion": "83.33",
+            "original": "83.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ZULEIMA SILVA",
+            "dedicacion": "83.33",
+            "original": "83.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "33.33",
+            "original": "33.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "CRISTIAN IRIGOYEN",
+            "dedicacion": "33.33",
+            "original": "33.33",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 133,
+        "proyecto": "Nexus - BIN de 8 Dígitos",
+        "fase": 2,
+        "year": 2021,
+        "mes": 5,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "CRISTIAN IRIGOYEN",
+            "dedicacion": "16.67",
+            "original": "16.67",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "33.33",
+            "original": "33.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ZULEIMA SILVA",
+            "dedicacion": "66.67",
+            "original": "66.67",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "NARDY SULBARÁN",
+            "dedicacion": "50.00",
+            "original": "50.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "SERGIO NÚÑEZ",
+            "dedicacion": "16.67",
+            "original": "16.67",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "YULIA FORNÉS",
+            "dedicacion": "33.33",
+            "original": "33.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "3.33",
+            "original": "3.33",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 133,
+        "proyecto": "Nexus - BIN de 8 Dígitos",
+        "fase": 3,
+        "year": 2021,
+        "mes": 6,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "2.50",
+            "original": "2.50",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "YULIA FORNÉS",
+            "dedicacion": "50.00",
+            "original": "50.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "SERGIO NÚÑEZ",
+            "dedicacion": "25.00",
+            "original": "25.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "NARDY SULBARÁN",
+            "dedicacion": "48.96",
+            "original": "48.96",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ZULEIMA SILVA",
+            "dedicacion": "30.00",
+            "original": "30.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "50.00",
+            "original": "50.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "CRISTIAN IRIGOYEN",
+            "dedicacion": "25.00",
+            "original": "25.00",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 137,
+        "proyecto": "BdCh / Acompañamiento Adquirencia",
+        "fase": 1,
+        "year": 2021,
+        "mes": 3,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "KEILA MACHADO",
+            "dedicacion": "5.56",
+            "original": "5.56",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "TAMARA ANDRADE",
+            "dedicacion": "5.93",
+            "original": "5.93",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "0.37",
+            "original": "0.37",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "1.11",
+            "original": "1.11",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 137,
+        "proyecto": "BdCh / Acompañamiento Adquirencia",
+        "fase": 1,
+        "year": 2021,
+        "mes": 4,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "KEILA MACHADO",
+            "dedicacion": "5.56",
+            "original": "5.56",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "TAMARA ANDRADE",
+            "dedicacion": "5.93",
+            "original": "5.93",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "0.37",
+            "original": "0.37",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "1.11",
+            "original": "1.11",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 137,
+        "proyecto": "BdCh / Acompañamiento Adquirencia",
+        "fase": 1,
+        "year": 2021,
+        "mes": 5,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "KEILA MACHADO",
+            "dedicacion": "5.56",
+            "original": "5.56",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "TAMARA ANDRADE",
+            "dedicacion": "5.93",
+            "original": "5.93",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "0.37",
+            "original": "0.37",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "1.11",
+            "original": "1.11",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 137,
+        "proyecto": "BdCh / Acompañamiento Adquirencia",
+        "fase": 1,
+        "year": 2021,
+        "mes": 6,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "KEILA MACHADO",
+            "dedicacion": "5.56",
+            "original": "5.56",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "TAMARA ANDRADE",
+            "dedicacion": "5.93",
+            "original": "5.93",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "0.37",
+            "original": "0.37",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "1.11",
+            "original": "1.11",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 137,
+        "proyecto": "BdCh / Acompañamiento Adquirencia",
+        "fase": 1,
+        "year": 2021,
+        "mes": 7,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "KEILA MACHADO",
+            "dedicacion": "5.56",
+            "original": "5.56",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "TAMARA ANDRADE",
+            "dedicacion": "5.93",
+            "original": "5.93",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "0.37",
+            "original": "0.37",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "1.11",
+            "original": "1.11",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 137,
+        "proyecto": "BdCh / Acompañamiento Adquirencia",
+        "fase": 2,
+        "year": 2021,
+        "mes": 5,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "0.50",
+            "original": "0.50",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "TAMARA ANDRADE",
+            "dedicacion": "8.00",
+            "original": "8.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "KEILA MACHADO",
+            "dedicacion": "7.50",
+            "original": "7.50",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 137,
+        "proyecto": "BdCh / Acompañamiento Adquirencia",
+        "fase": 2,
+        "year": 2021,
+        "mes": 6,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "0.50",
+            "original": "0.50",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "TAMARA ANDRADE",
+            "dedicacion": "8.00",
+            "original": "8.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "KEILA MACHADO",
+            "dedicacion": "7.50",
+            "original": "7.50",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 137,
+        "proyecto": "BdCh / Acompañamiento Adquirencia",
+        "fase": 2,
+        "year": 2021,
+        "mes": 7,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "0.50",
+            "original": "0.50",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "TAMARA ANDRADE",
+            "dedicacion": "8.00",
+            "original": "8.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "KEILA MACHADO",
+            "dedicacion": "7.50",
+            "original": "7.50",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 137,
+        "proyecto": "BdCh / Acompañamiento Adquirencia",
+        "fase": 2,
+        "year": 2021,
+        "mes": 8,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "0.50",
+            "original": "0.50",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "TAMARA ANDRADE",
+            "dedicacion": "8.00",
+            "original": "8.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "KEILA MACHADO",
+            "dedicacion": "7.50",
+            "original": "7.50",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 137,
+        "proyecto": "BdCh / Acompañamiento Adquirencia",
+        "fase": 3,
+        "year": 2021,
+        "mes": 7,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "KEILA MACHADO",
+            "dedicacion": "5.38",
+            "original": "5.38",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "TAMARA ANDRADE",
+            "dedicacion": "12.31",
+            "original": "12.31",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "0.77",
+            "original": "0.77",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 137,
+        "proyecto": "BdCh / Acompañamiento Adquirencia",
+        "fase": 3,
+        "year": 2021,
+        "mes": 8,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "KEILA MACHADO",
+            "dedicacion": "5.38",
+            "original": "5.38",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "TAMARA ANDRADE",
+            "dedicacion": "12.31",
+            "original": "12.31",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "0.77",
+            "original": "0.77",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 137,
+        "proyecto": "BdCh / Acompañamiento Adquirencia",
+        "fase": 4,
+        "year": 2021,
+        "mes": 7,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "1.54",
+            "original": "1.54",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "0.77",
+            "original": "0.77",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "TAMARA ANDRADE",
+            "dedicacion": "12.31",
+            "original": "12.31",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "KEILA MACHADO",
+            "dedicacion": "5.38",
+            "original": "5.38",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 137,
+        "proyecto": "BdCh / Acompañamiento Adquirencia",
+        "fase": 4,
+        "year": 2021,
+        "mes": 8,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "1.54",
+            "original": "1.54",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "0.77",
+            "original": "0.77",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "TAMARA ANDRADE",
+            "dedicacion": "12.31",
+            "original": "12.31",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "KEILA MACHADO",
+            "dedicacion": "5.38",
+            "original": "5.38",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 137,
+        "proyecto": "BdCh / Acompañamiento Adquirencia",
+        "fase": 5,
+        "year": 2021,
+        "mes": 7,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "KEILA MACHADO",
+            "dedicacion": "5.38",
+            "original": "5.38",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "TAMARA ANDRADE",
+            "dedicacion": "12.31",
+            "original": "12.31",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "0.77",
+            "original": "0.77",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 137,
+        "proyecto": "BdCh / Acompañamiento Adquirencia",
+        "fase": 5,
+        "year": 2021,
+        "mes": 8,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "KEILA MACHADO",
+            "dedicacion": "5.38",
+            "original": "5.38",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "TAMARA ANDRADE",
+            "dedicacion": "12.31",
+            "original": "12.31",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "0.77",
+            "original": "0.77",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 137,
+        "proyecto": "BdCh / Acompañamiento Adquirencia",
+        "fase": 6,
+        "year": 2021,
+        "mes": 7,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "0.77",
+            "original": "0.77",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "TAMARA ANDRADE",
+            "dedicacion": "12.31",
+            "original": "12.31",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "KEILA MACHADO",
+            "dedicacion": "10.77",
+            "original": "10.77",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 137,
+        "proyecto": "BdCh / Acompañamiento Adquirencia",
+        "fase": 6,
+        "year": 2021,
+        "mes": 8,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "0.77",
+            "original": "0.77",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "TAMARA ANDRADE",
+            "dedicacion": "12.31",
+            "original": "12.31",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "KEILA MACHADO",
+            "dedicacion": "10.77",
+            "original": "10.77",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 147,
+        "proyecto": "Itau Conexión Directa",
+        "fase": 1,
+        "year": 2021,
+        "mes": 7,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "ZULEIMA SILVA",
+            "dedicacion": "33.33",
+            "original": "33.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ARLEEN APONTE",
+            "dedicacion": "33.33",
+            "original": "33.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "NARDY SULBARÁN",
+            "dedicacion": "36.46",
+            "original": "36.46",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "21.67",
+            "original": "21.67",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "8.33",
+            "original": "8.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "20.00",
+            "original": "20.00",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 147,
+        "proyecto": "Itau Conexión Directa",
+        "fase": 1,
+        "year": 2021,
+        "mes": 8,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "ZULEIMA SILVA",
+            "dedicacion": "33.33",
+            "original": "33.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ARLEEN APONTE",
+            "dedicacion": "33.33",
+            "original": "33.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "NARDY SULBARÁN",
+            "dedicacion": "36.46",
+            "original": "36.46",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "21.67",
+            "original": "21.67",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "8.33",
+            "original": "8.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "20.00",
+            "original": "20.00",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 147,
+        "proyecto": "Itau Conexión Directa",
+        "fase": 1,
+        "year": 2021,
+        "mes": 9,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "ZULEIMA SILVA",
+            "dedicacion": "33.33",
+            "original": "33.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ARLEEN APONTE",
+            "dedicacion": "33.33",
+            "original": "33.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "NARDY SULBARÁN",
+            "dedicacion": "36.46",
+            "original": "36.46",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "21.67",
+            "original": "21.67",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "8.33",
+            "original": "8.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "20.00",
+            "original": "20.00",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 155,
+        "proyecto": "Banco Atlántida - Internalización Procesamiento",
+        "fase": 1,
+        "year": 2021,
+        "mes": 4,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "6.67",
+            "original": "6.67",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "50.00",
+            "original": "50.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEJANDRO SANABRIA",
+            "dedicacion": "100.00",
+            "original": "100.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "FEDERICO GONZÁLEZ",
+            "dedicacion": "100.00",
+            "original": "100.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "83.33",
+            "original": "83.33",
+            "newDedi": "23.33"
+        }, {
+            "nombre": "RODOLFO VILLAFUERTE",
+            "dedicacion": "NaN",
+            "original": "NaN",
+            "newDedi": "60.00"
+        }]
+    }, {
+        "IDp": 155,
+        "proyecto": "Banco Atlántida - Internalización Procesamiento",
+        "fase": 2,
+        "year": 2021,
+        "mes": 5,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "33.33",
+            "original": "33.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "FEDERICO GONZÁLEZ",
+            "dedicacion": "33.33",
+            "original": "33.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEJANDRO SANABRIA",
+            "dedicacion": "33.33",
+            "original": "33.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "33.33",
+            "original": "33.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "6.67",
+            "original": "6.67",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 155,
+        "proyecto": "Banco Atlántida - Internalización Procesamiento",
+        "fase": 3,
+        "year": 2021,
+        "mes": 6,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "20.00",
+            "original": "20.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "25.00",
+            "original": "25.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEJANDRO SANABRIA",
+            "dedicacion": "50.00",
+            "original": "50.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "FEDERICO GONZÁLEZ",
+            "dedicacion": "50.00",
+            "original": "50.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "25.00",
+            "original": "25.00",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 155,
+        "proyecto": "Banco Atlántida - Internalización Procesamiento",
+        "fase": 4,
+        "year": 2021,
+        "mes": 7,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "50.00",
+            "original": "50.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "FEDERICO GONZÁLEZ",
+            "dedicacion": "50.00",
+            "original": "50.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEJANDRO SANABRIA",
+            "dedicacion": "50.00",
+            "original": "50.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "27.78",
+            "original": "27.78",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "10.00",
+            "original": "10.00",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 156,
+        "proyecto": "Banco Di Caribe",
+        "fase": 1,
+        "year": 2021,
+        "mes": 9,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "8.57",
+            "original": "8.57",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ARLEEN APONTE",
+            "dedicacion": "31.43",
+            "original": "31.43",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "CAMILO MORENO",
+            "dedicacion": "25.71",
+            "original": "25.71",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ZULEIMA SILVA",
+            "dedicacion": "28.57",
+            "original": "28.57",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "BEATRIZ HO",
+            "dedicacion": "25.57",
+            "original": "25.57",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 157,
+        "proyecto": "Itaú Argentina - Pre-Pago",
+        "fase": 1,
+        "year": 2021,
+        "mes": 6,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "10.00",
+            "original": "10.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "50.00",
+            "original": "50.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "FEDERICO GONZÁLEZ",
+            "dedicacion": "33.33",
+            "original": "33.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "NARDY SULBARÁN",
+            "dedicacion": "100.00",
+            "original": "100.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "66.67",
+            "original": "66.67",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "PILAR NORAMBUENA",
+            "dedicacion": "66.67",
+            "original": "66.67",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 157,
+        "proyecto": "Itaú Argentina - Pre-Pago",
+        "fase": 2,
+        "year": 2021,
+        "mes": 7,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "PILAR NORAMBUENA",
+            "dedicacion": "20.00",
+            "original": "20.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "20.00",
+            "original": "20.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "NARDY SULBARÁN",
+            "dedicacion": "80.00",
+            "original": "80.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "FEDERICO GONZÁLEZ",
+            "dedicacion": "41.73",
+            "original": "41.73",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "20.00",
+            "original": "20.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "10.00",
+            "original": "10.00",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 157,
+        "proyecto": "Itaú Argentina - Pre-Pago",
+        "fase": 3,
+        "year": 2021,
+        "mes": 8,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "10.00",
+            "original": "10.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "50.00",
+            "original": "50.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "FEDERICO GONZÁLEZ",
+            "dedicacion": "100.00",
+            "original": "100.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "NARDY SULBARÁN",
+            "dedicacion": "100.00",
+            "original": "100.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "100.00",
+            "original": "100.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "PILAR NORAMBUENA",
+            "dedicacion": "100.00",
+            "original": "100.00",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 159,
+        "proyecto": "BUH Haití - Habilitación de MC Débito",
+        "fase": 1,
+        "year": 2021,
+        "mes": 10,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "GONZALO GUZMÁN",
+            "dedicacion": "7.69",
+            "original": "7.69",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "CAMILO MORENO",
+            "dedicacion": "38.46",
+            "original": "38.46",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "YULIA FORNÉS",
+            "dedicacion": "38.46",
+            "original": "38.46",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "7.34",
+            "original": "7.34",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "23.08",
+            "original": "23.08",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "38.46",
+            "original": "38.46",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ARLEEN APONTE",
+            "dedicacion": "38.46",
+            "original": "38.46",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 159,
+        "proyecto": "BUH Haití - Habilitación de MC Débito",
+        "fase": 1,
+        "year": 2021,
+        "mes": 11,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "GONZALO GUZMÁN",
+            "dedicacion": "7.69",
+            "original": "7.69",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "CAMILO MORENO",
+            "dedicacion": "38.46",
+            "original": "38.46",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "YULIA FORNÉS",
+            "dedicacion": "38.46",
+            "original": "38.46",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "7.34",
+            "original": "7.34",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "23.08",
+            "original": "23.08",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "38.46",
+            "original": "38.46",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ARLEEN APONTE",
+            "dedicacion": "38.46",
+            "original": "38.46",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 163,
+        "proyecto": "BdCh - Apoyo en selección de proveedor PSP para Adquirencia",
+        "fase": 1,
+        "year": 2021,
+        "mes": 6,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "PILAR NORAMBUENA",
+            "dedicacion": "25.00",
+            "original": "25.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "YAEL VELASQUEZ",
+            "dedicacion": "75.00",
+            "original": "75.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "KEILA MACHADO",
+            "dedicacion": "15.00",
+            "original": "15.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "BEATRIZ HO",
+            "dedicacion": "100.00",
+            "original": "100.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "YULIA FORNÉS",
+            "dedicacion": "30.00",
+            "original": "30.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "PABLO MORALES",
+            "dedicacion": "10.00",
+            "original": "10.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "25.00",
+            "original": "25.00",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 163,
+        "proyecto": "BdCh - Apoyo en selección de proveedor PSP para Adquirencia",
+        "fase": 2,
+        "year": 2021,
+        "mes": 10,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "PABLO MORALES",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "YULIA FORNÉS",
+            "dedicacion": "50.00",
+            "original": "50.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "BEATRIZ HO",
+            "dedicacion": "50.00",
+            "original": "50.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "15.00",
+            "original": "15.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "KEILA MACHADO",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "YAEL VELASQUEZ",
+            "dedicacion": "50.00",
+            "original": "50.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "PILAR NORAMBUENA",
+            "dedicacion": "30.00",
+            "original": "30.00",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 163,
+        "proyecto": "BdCh - Apoyo en selección de proveedor PSP para Adquirencia",
+        "fase": 3,
+        "year": 2021,
+        "mes": 11,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "PILAR NORAMBUENA",
+            "dedicacion": "24.31",
+            "original": "24.31",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "YAEL VELASQUEZ",
+            "dedicacion": "50.00",
+            "original": "50.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "KEILA MACHADO",
+            "dedicacion": "5.00",
+            "original": "5.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "EGLANTINA NORATO",
+            "dedicacion": "15.00",
+            "original": "15.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "BEATRIZ HO",
+            "dedicacion": "50.00",
+            "original": "50.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "YULIA FORNÉS",
+            "dedicacion": "25.00",
+            "original": "25.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "PABLO MORALES",
+            "dedicacion": "15.00",
+            "original": "15.00",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 173,
+        "proyecto": "Itau Chile Conversión Maestro a MCD",
+        "fase": 1,
+        "year": 2021,
+        "mes": 10,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "25.00",
+            "original": "25.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ARLEEN APONTE",
+            "dedicacion": "25.00",
+            "original": "25.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "12.50",
+            "original": "12.50",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "BEATRIZ HO",
+            "dedicacion": "25.00",
+            "original": "25.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "RODOLFO VILLAFUERTE",
+            "dedicacion": "25.00",
+            "original": "25.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "CRISTIAN IRIGOYEN",
+            "dedicacion": "25.00",
+            "original": "25.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "25.00",
+            "original": "25.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "SERGIO NÚÑEZ",
+            "dedicacion": "12.50",
+            "original": "12.50",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 173,
+        "proyecto": "Itau Chile Conversión Maestro a MCD",
+        "fase": 2,
+        "year": 2021,
+        "mes": 12,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "SERGIO NÚÑEZ",
+            "dedicacion": "3.85",
+            "original": "3.85",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "CRISTIAN IRIGOYEN",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "RODOLFO VILLAFUERTE",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "BEATRIZ HO",
+            "dedicacion": "14.62",
+            "original": "14.62",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ARLEEN APONTE",
+            "dedicacion": "19.23",
+            "original": "19.23",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "19.23",
+            "original": "19.23",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 173,
+        "proyecto": "Itau Chile Conversión Maestro a MCD",
+        "fase": 3,
+        "year": 2022,
+        "mes": 4,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "11.11",
+            "original": "11.11",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ARLEEN APONTE",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "11.11",
+            "original": "11.11",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "BEATRIZ HO",
+            "dedicacion": "33.33",
+            "original": "33.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "RODOLFO VILLAFUERTE",
+            "dedicacion": "44.44",
+            "original": "44.44",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "CRISTIAN IRIGOYEN",
+            "dedicacion": "33.33",
+            "original": "33.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "11.11",
+            "original": "11.11",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "SERGIO NÚÑEZ",
+            "dedicacion": "44.44",
+            "original": "44.44",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 180,
+        "proyecto": "Oriental Bank  Apoyo en la Habilitación de un BIN para USA",
+        "fase": 1,
+        "year": 2021,
+        "mes": 10,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "2.86",
+            "original": "2.86",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "14.29",
+            "original": "14.29",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEJANDRO SANABRIA",
+            "dedicacion": "28.57",
+            "original": "28.57",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "28.57",
+            "original": "28.57",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ARLEEN APONTE",
+            "dedicacion": "28.57",
+            "original": "28.57",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "GONZALO GUZMÁN",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "CAMILO MORENO",
+            "dedicacion": "28.57",
+            "original": "28.57",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 180,
+        "proyecto": "Oriental Bank  Apoyo en la Habilitación de un BIN para USA",
+        "fase": 2,
+        "year": 2021,
+        "mes": 11,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "CAMILO MORENO",
+            "dedicacion": "22.22",
+            "original": "22.22",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "GONZALO GUZMÁN",
+            "dedicacion": "5.56",
+            "original": "5.56",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ARLEEN APONTE",
+            "dedicacion": "11.11",
+            "original": "11.11",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "5.56",
+            "original": "5.56",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEJANDRO SANABRIA",
+            "dedicacion": "22.22",
+            "original": "22.22",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "JULIO MARCANO",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "2.22",
+            "original": "2.22",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 181,
+        "proyecto": "Torzsas Advisory- Apoyo a Neo Banco",
+        "fase": 1,
+        "year": 2021,
+        "mes": 10,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "ZULEIMA SILVA",
+            "dedicacion": "37.50",
+            "original": "37.50",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "YULIA FORNÉS",
+            "dedicacion": "37.50",
+            "original": "37.50",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "10.71",
+            "original": "10.71",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "25.00",
+            "original": "25.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ARLEEN APONTE",
+            "dedicacion": "37.50",
+            "original": "37.50",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OLENA VARZAR",
+            "dedicacion": "37.50",
+            "original": "37.50",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 182,
+        "proyecto": "Aruba Bank, Apoyo con Consolidación de Procesamiento",
+        "fase": 1,
+        "year": 2021,
+        "mes": 11,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "28.57",
+            "original": "28.57",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "YULIA FORNÉS",
+            "dedicacion": "28.57",
+            "original": "28.57",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OLENA VARSZAR",
+            "dedicacion": "28.57",
+            "original": "28.57",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "9.52",
+            "original": "9.52",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "RODOLFO VILLAFUERTE",
+            "dedicacion": "19.05",
+            "original": "19.05",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ARLEEN APONTE",
+            "dedicacion": "19.05",
+            "original": "19.05",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "8.57",
+            "original": "8.57",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "28.57",
+            "original": "28.57",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "YULIA FORNÉS",
+            "dedicacion": "28.57",
+            "original": "28.57",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OLENA VARSZAR",
+            "dedicacion": "28.57",
+            "original": "28.57",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "9.52",
+            "original": "9.52",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "RODOLFO VILLAFUERTE",
+            "dedicacion": "19.05",
+            "original": "19.05",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ARLEEN APONTE",
+            "dedicacion": "19.05",
+            "original": "19.05",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "8.57",
+            "original": "8.57",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 201,
+        "proyecto": "Banco Security - Maestro a Mastercard Debit",
+        "fase": 1,
+        "year": 2021,
+        "mes": 12,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "16.67",
+            "original": "16.67",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "16.67",
+            "original": "16.67",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "CRISTIAN IRIGOYEN",
+            "dedicacion": "33.33",
+            "original": "33.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "GONZALO GUZMÁN",
+            "dedicacion": "33.33",
+            "original": "33.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "33.33",
+            "original": "33.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "SERGIO NÚÑEZ",
+            "dedicacion": "16.67",
+            "original": "16.67",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "16.67",
+            "original": "16.67",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "16.67",
+            "original": "16.67",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "CRISTIAN IRIGOYEN",
+            "dedicacion": "33.33",
+            "original": "33.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "GONZALO GUZMÁN",
+            "dedicacion": "33.33",
+            "original": "33.33",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "SERGIO NÚÑEZ",
+            "dedicacion": "16.67",
+            "original": "16.67",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "33.33",
+            "original": "33.33",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 201,
+        "proyecto": "Banco Security - Maestro a Mastercard Debit",
+        "fase": 2,
+        "year": 2022,
+        "mes": 1,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "18.18",
+            "original": "18.18",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "SERGIO NÚÑEZ",
+            "dedicacion": "4.55",
+            "original": "4.55",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "GONZALO GUZMÁN",
+            "dedicacion": "18.18",
+            "original": "18.18",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "CRISTIAN IRIGOYEN",
+            "dedicacion": "18.18",
+            "original": "18.18",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "2.48",
+            "original": "2.48",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "4.55",
+            "original": "4.55",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "SERGIO NÚÑEZ",
+            "dedicacion": "4.55",
+            "original": "4.55",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "18.18",
+            "original": "18.18",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "GONZALO GUZMÁN",
+            "dedicacion": "18.18",
+            "original": "18.18",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "CRISTIAN IRIGOYEN",
+            "dedicacion": "18.18",
+            "original": "18.18",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "2.48",
+            "original": "2.48",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "4.55",
+            "original": "4.55",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 201,
+        "proyecto": "Banco Security - Maestro a Mastercard Debit",
+        "fase": 2,
+        "year": 2022,
+        "mes": 2,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "18.18",
+            "original": "18.18",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "SERGIO NÚÑEZ",
+            "dedicacion": "4.55",
+            "original": "4.55",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "GONZALO GUZMÁN",
+            "dedicacion": "18.18",
+            "original": "18.18",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "CRISTIAN IRIGOYEN",
+            "dedicacion": "18.18",
+            "original": "18.18",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "2.48",
+            "original": "2.48",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "4.55",
+            "original": "4.55",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "SERGIO NÚÑEZ",
+            "dedicacion": "4.55",
+            "original": "4.55",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "18.18",
+            "original": "18.18",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "GONZALO GUZMÁN",
+            "dedicacion": "18.18",
+            "original": "18.18",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "CRISTIAN IRIGOYEN",
+            "dedicacion": "18.18",
+            "original": "18.18",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "2.48",
+            "original": "2.48",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "4.55",
+            "original": "4.55",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 201,
+        "proyecto": "Banco Security - Maestro a Mastercard Debit",
+        "fase": 2,
+        "year": 2022,
+        "mes": 3,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "18.18",
+            "original": "18.18",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "SERGIO NÚÑEZ",
+            "dedicacion": "4.55",
+            "original": "4.55",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "GONZALO GUZMÁN",
+            "dedicacion": "18.18",
+            "original": "18.18",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "CRISTIAN IRIGOYEN",
+            "dedicacion": "18.18",
+            "original": "18.18",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "2.48",
+            "original": "2.48",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "4.55",
+            "original": "4.55",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "SERGIO NÚÑEZ",
+            "dedicacion": "4.55",
+            "original": "4.55",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "18.18",
+            "original": "18.18",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "GONZALO GUZMÁN",
+            "dedicacion": "18.18",
+            "original": "18.18",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "CRISTIAN IRIGOYEN",
+            "dedicacion": "18.18",
+            "original": "18.18",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "2.48",
+            "original": "2.48",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "4.55",
+            "original": "4.55",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 201,
+        "proyecto": "Banco Security - Maestro a Mastercard Debit",
+        "fase": 2,
+        "year": 2022,
+        "mes": 4,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "18.18",
+            "original": "18.18",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "SERGIO NÚÑEZ",
+            "dedicacion": "4.55",
+            "original": "4.55",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "GONZALO GUZMÁN",
+            "dedicacion": "18.18",
+            "original": "18.18",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "CRISTIAN IRIGOYEN",
+            "dedicacion": "18.18",
+            "original": "18.18",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "2.48",
+            "original": "2.48",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "4.55",
+            "original": "4.55",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "SERGIO NÚÑEZ",
+            "dedicacion": "4.55",
+            "original": "4.55",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "18.18",
+            "original": "18.18",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "GONZALO GUZMÁN",
+            "dedicacion": "18.18",
+            "original": "18.18",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "CRISTIAN IRIGOYEN",
+            "dedicacion": "18.18",
+            "original": "18.18",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "2.48",
+            "original": "2.48",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "4.55",
+            "original": "4.55",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 201,
+        "proyecto": "Banco Security - Maestro a Mastercard Debit",
+        "fase": 2,
+        "year": 2022,
+        "mes": 5,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "18.18",
+            "original": "18.18",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "SERGIO NÚÑEZ",
+            "dedicacion": "4.55",
+            "original": "4.55",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "GONZALO GUZMÁN",
+            "dedicacion": "18.18",
+            "original": "18.18",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "CRISTIAN IRIGOYEN",
+            "dedicacion": "18.18",
+            "original": "18.18",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "2.48",
+            "original": "2.48",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "4.55",
+            "original": "4.55",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "SERGIO NÚÑEZ",
+            "dedicacion": "4.55",
+            "original": "4.55",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "18.18",
+            "original": "18.18",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "GONZALO GUZMÁN",
+            "dedicacion": "18.18",
+            "original": "18.18",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "CRISTIAN IRIGOYEN",
+            "dedicacion": "18.18",
+            "original": "18.18",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "2.48",
+            "original": "2.48",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "4.55",
+            "original": "4.55",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 202,
+        "proyecto": "Banco Continental - Procesamiento",
+        "fase": 1,
+        "year": 2021,
+        "mes": 11,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "ZULEIMA SILVA",
+            "dedicacion": "28.57",
+            "original": "28.57",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "42.86",
+            "original": "42.86",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "FEDERICO GONZÁLEZ",
+            "dedicacion": "42.86",
+            "original": "42.86",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "GONZALO GUZMÁN",
+            "dedicacion": "42.86",
+            "original": "42.86",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "SERGIO NU?EZ",
+            "dedicacion": "28.57",
+            "original": "28.57",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ARLEEN APONTE",
+            "dedicacion": "57.14",
+            "original": "57.14",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "28.57",
+            "original": "28.57",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "27.57",
+            "original": "27.57",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "CAMILO MORENO",
+            "dedicacion": "42.86",
+            "original": "42.86",
+            "newDedi": "NaN"
+        }]
+    }, {
+        "IDp": 203,
+        "proyecto": "Banco Regional Paraguay - Assessment Mastercard Debit",
+        "fase": 1,
+        "year": 2021,
+        "mes": 12,
+        "horas": 0,
+        "equipo": [{
+            "nombre": "RODOLFO VILLAFUERTE",
+            "dedicacion": "50.00",
+            "original": "50.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "OSCAR CHACÓN",
+            "dedicacion": "20.00",
+            "original": "20.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ARLEEN APONTE",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "LEOPOLDO RAMÍREZ",
+            "dedicacion": "50.00",
+            "original": "50.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "BEATRIZ HO",
+            "dedicacion": "50.00",
+            "original": "50.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "SERGIO NU?EZ",
+            "dedicacion": "42.48",
+            "original": "42.48",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "ALEXEIS PERERA",
+            "dedicacion": "10.00",
+            "original": "10.00",
+            "newDedi": "NaN"
+        }, {
+            "nombre": "CRISTIAN IRIGOYEN",
+            "dedicacion": "0.00",
+            "original": "0.00",
+            "newDedi": "NaN"
+        }]
+    }]
+}
