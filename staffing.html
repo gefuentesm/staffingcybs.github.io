@@ -1108,7 +1108,7 @@ async function getClockiDetail(feIni,feFinal,page){
   return fetchDetail;
 }
 async function sendData(objToSend){
-    const fetchDetail = fetch(`http://localhost:3000/setStaff`, {
+    const fetchDetail = fetch(`https://setstaffinghttp.azurewebsites.net/api/setstaffinghttp`, {
         method: 'POST',
         body:JSON.stringify(objToSend),
         headers: {
