@@ -259,12 +259,15 @@ input.dedi{
 <script>
 var globId=1;
 const GOODTHRESHOLD=100;
-var INITIALMONTH=1;
+var INITIALMONTH=new Date().getMonth()+1;
 var MONTHTOSHOW=12;
+var INITIALYEAR=new Date().getFullYear();
+var YEARTOSHOW=new Date().getFullYear()+1;
+console.log(INITIALYEAR,YEARTOSHOW);
 cantidad=10
 titulo=["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
 var dataArr=[];
-var mesStruct=Array.from({length: 12}, function() { return ""; });
+var mesStruct=Array.from({length: 24}, function() { return ""; });
 var teamStruct=[]
 function allowDrop(ev) {
   ev.preventDefault();
@@ -279,9 +282,12 @@ function createBaseTable() {
   document.getElementById("tmeses").appendChild(nombres);
   for(let i=INITIALMONTH;i<INITIALMONTH+MONTHTOSHOW;i++){
   	var z = document.createElement("TD");
-    var numes=i;
-    if(i>12) numes=i-12-1;
-  	var t = document.createTextNode(titulo[numes-1]);
+    var numes=i-1;
+    if(i>12){
+        numes=i-12-1;
+        console.log(numes,titulo[numes]);
+    }
+  	var t = document.createTextNode(titulo[numes]);
   	z.appendChild(t);
   	document.getElementById("titulo").appendChild(z);
   }
@@ -467,7 +473,7 @@ function setVisibilityToProy(nb,filtrar){
     }
     if(filtrar){
         for(let j in dataArr){
-            if(dataArr[j].mes>=INITIALMONTH && dataArr[j].mes<=INITIALMONTH+MONTHTOSHOW){
+            if(INITIALYEAR<=dataArr[j].year && YEARTOSHOW>=dataArr[j].year && dataArr[j].mes>=INITIALMONTH && dataArr[j].mes<=INITIALMONTH+MONTHTOSHOW){
                 var idProj=dataArr[j].IDp+"."+dataArr[j].fase+"."+dataArr[j].mes;
                 var team=dataArr[j].equipo;
                 //console.log("buscando en",team)
@@ -495,7 +501,7 @@ function setDataProy(id,proy,fase,mes,hr){
 }
 function setDataTeam(nombr,dedica){
     return {
-        nombre:nombr,
+        name:nombr,
         dedicacion:dedica
     }
 }
@@ -526,13 +532,21 @@ function BotonDuplicar(pid, m, nb){
 }
 function buildProject(dtaArr){
     console.log("En buildProject",dtaArr);
+    console.log("year",INITIALYEAR);
     dataArr=dtaArr;    
     for(let i in dataArr){
         dataArr[i].dirty=0;
-        if(dataArr[i].mes>=INITIALMONTH && dataArr[i].mes<=INITIALMONTH+MONTHTOSHOW){            
-            var contenedor=document.getElementById("mes"+dataArr[i].mes);       
+        var currMo=dataArr[i].mes;
+        var currYear=dataArr[i].year;
+        var diffYears=currYear-INITIALYEAR;
+        var idMo=currMo+diffYears*12;        
+        if(INITIALYEAR<=dataArr[i].year && dataArr[i].year<=YEARTOSHOW && idMo>=INITIALMONTH && idMo<=INITIALMONTH+MONTHTOSHOW){            
+
+            console.log("mes",currMo);
+            console.log(currYear,idMo);
+            var contenedor=document.getElementById("mes"+idMo);       
             var divProy=document.createElement("div");
-            divProy.id=dataArr[i].IDp+"."+dataArr[i].fase+"."+dataArr[i].mes;
+            divProy.id=dataArr[i].IDp+"."+dataArr[i].fase+"."+idMo;
             var projId=divProy.id;
             var divTeamWrap=document.createElement("div");
             divTeamWrap.className="teamWrapper"; 
@@ -542,14 +556,29 @@ function buildProject(dtaArr){
             teamArr=dataArr[i].equipo;
             var teamText=" (";
             var teamTooltip=" - "
+            var totDedicaProy=0.0;
             for(let ii in teamArr){
                 teamText=teamText+ teamArr[ii].nombre;
                 teamTooltip=teamTooltip+teamArr[ii].nombre+" ("+teamArr[ii].dedicacion+") ";
+                totDedicaProy=totDedicaProy+Number(parseFloat(teamArr[ii].dedicacion).toFixed(2))
             }
+            const sp=String.fromCharCode(160);
+            var sep=document.createElement("span");
+            var separa=document.createTextNode(sp+sp+"cambio por:"+sp+sp);
+            var frameTotal=document.createElement("span");
+            frameTotal.style.color="green";
+            var totalProj=document.createTextNode(totDedicaProy.toFixed(2));
+            frameTotal.appendChild(totalProj);
+            var changed=document.createElement("span");
+            changed.style.color="orange";
+            changed.id="chg-"+divProy.id;
+            var totalChg=document.createTextNode("");            
+            changed.appendChild(totalChg);
+
             teamText=teamText+")";
             teamTooltip=teamTooltip+" - ";
             teamTooltip=dataArr[i].IDp+"-"+dataArr[i].proyecto+"   - Team:  "+teamTooltip;
-            var nodeTexto=dataArr[i].IDp+"-"+dataArr[i].proyecto.substring(0,28)+"... fase "+dataArr[i].fase+" mes "+dataArr[i].mes+" horas "+dataArr[i].horas+" ";
+            var nodeTexto=dataArr[i].IDp+"-"+dataArr[i].proyecto.substring(0,28)+"... fase "+dataArr[i].fase+" mes "+dataArr[i].mes+" año "+dataArr[i].year+" ";
             var texto=document.createTextNode(nodeTexto);
             var divtooltip=document.createElement("div");
             divtooltip.className="tooltip"
@@ -571,10 +600,13 @@ function buildProject(dtaArr){
             var textow=document.createTextNode("v");
             botonw.appendChild(textow);
             divProy.appendChild(botonw);
+            divProy.appendChild(frameTotal);
+            divProy.appendChild(separa);
+            divProy.appendChild(changed);
             
             for(let j in teamArr ){
                 var div=document.createElement("div");
-                div.id="c-"+teamArr[j].nombre+"-"+dataArr[i].IDp+"."+dataArr[i].fase+"-"+dataArr[i].mes;
+                div.id="c-"+teamArr[j].nombre+"-"+dataArr[i].IDp+"."+dataArr[i].fase+"-"+idMo;
                 var consId=div.id;
                 globId=globId+1;
                 var inp=document.createElement("input");
@@ -586,8 +618,8 @@ function buildProject(dtaArr){
                 var inp2=document.createElement("input");
                 inp2.type="text";
                 inp2.style.width="39px"
-                inp2.name=teamArr[j].nombre+"-"+projId+"-"+dataArr[i].mes;
-                inp2.id="id-"+teamArr[j].nombre+"-"+projId+"-"+dataArr[i].mes;
+                inp2.name=teamArr[j].nombre+"-"+projId+"-"+idMo;
+                inp2.id="id-"+teamArr[j].nombre+"-"+projId+"-"+idMo;
                 var newDedi=teamArr[j].newDedi;
                 if(!isNaN(newDedi))
                     teamArr[j].dedicacion=newDedi;
@@ -605,14 +637,18 @@ function buildProject(dtaArr){
                 }
                     
                 div.className="card";
+                console.log("inOnSite",teamArr[j].inOnSite);
+                if(teamArr[j].inOnSite==1){
+                    div.style.backgroundColor="blue";
+                }
                 
                 div.appendChild(inp);
                 div.appendChild(inp2);
                 
                 var boton=document.createElement("button");
                 boton.type="button";
-                boton.name=teamArr[j].nombre+"-"+projId+"-"+dataArr[i].mes;
-                boton.id=teamArr[j].nombre+"-"+projId+"-"+dataArr[i].mes;
+                boton.name=teamArr[j].nombre+"-"+projId+"-"+idMo;
+                boton.id=teamArr[j].nombre+"-"+projId+"-"+idMo;
                 var texto2=document.createTextNode("+");
                 boton.appendChild(texto2);
                 div.appendChild(boton);
@@ -706,26 +742,54 @@ function cleanMonStruct(mes){
 }
 function setNewDedication(proy,fase,mes,usr_name,usr_dedic){
     // buscar el proyecto
+    console.log("setNewDedication-parametros",mes);
+    var pmes=mes;
+    if(parseInt(mes)>12) pmes=parseInt(mes)-12;
     var existe=false;
     for(let i in dataArr){
-        if(dataArr[i].IDp==proy && dataArr[i].fase==fase && dataArr[i].mes==mes){
+        if(dataArr[i].IDp==proy && dataArr[i].fase==fase && dataArr[i].mes==pmes){
             dataArr[i].dirty=1;
+            var totChg=0.0;
+            var totOrig=0.0;
             for(let j in dataArr[i].equipo){
                 // se existe, se cambia.Sino se agrega
+                totOrig=totOrig+parseFloat(dataArr[i].equipo[j].original);
                 if(usr_name==dataArr[i].equipo[j].nombre){
                     existe=true;
                     dataArr[i].equipo[j].dedicacion=usr_dedic;
+                    console.log("setNewDedication 1",usr_dedic);
                 }
+                totChg=totChg+parseFloat(dataArr[i].equipo[j].dedicacion);
             }
             if(!existe){
                 var newUsr={nombre:"",dedicacion:"",original:0}
                 newUsr.nombre=usr_name;
                 newUsr.dedicacion=usr_dedic;
+                console.log("setNewDedication 2",usr_dedic);
+                console.log("setNewDedication 2",newUsr.dedicacion);
                 dataArr[i].equipo.push(newUsr);
+                totChg=totChg+parseFloat(usr_dedic);
             }
         }
     } 
-    console.log("datarr-->",dataArr)   
+    console.log("datarr-->",dataArr);
+    var id="chg-"+proy+"."+fase+"."+mes
+    var totChngEnPag=document.getElementById(id);
+    console.log("id del total chg",id)
+    console.log("valor",totChg);
+    console.log("orig",totOrig);
+    var color="orange";
+    if(totOrig.toFixed(2)==totChg.toFixed(2)) {
+        console.log(totChg.toFixed(2),totOrig.toFixed(2));
+        color="orange";
+    }else{
+        console.log(totChg.toFixed(2),totOrig.toFixed(2));
+        color="red";
+    } 
+
+    console.log("color",color);
+    totChngEnPag.innerText=totChg.toFixed(2);
+    totChngEnPag.style.color=color;
 }
 function sumarEnTeamW(teamW,m){
     //console.log("en SumarEn",m)
@@ -801,9 +865,16 @@ function createMonStruct(datarr){
     console.log("initial",INITIALMONTH);
     console.log("a mostrar",MONTHTOSHOW);
     for(let i in datarr){
-        if(dataArr[i].mes>=INITIALMONTH && dataArr[i].mes<=INITIALMONTH+MONTHTOSHOW){
-          //  console.log("mes",dataArr[i].mes);
-            var m=datarr[i].mes-1;
+        var currMo=dataArr[i].mes;
+        var currYear=dataArr[i].year;
+        var diffYears=currYear-INITIALYEAR;
+        var idMo=currMo+diffYears*12;        
+        if(INITIALYEAR<=dataArr[i].year && dataArr[i].year<=YEARTOSHOW && idMo>=INITIALMONTH && idMo<=INITIALMONTH+MONTHTOSHOW){ 
+        //if(INITIALYEAR==dataArr[i].year && dataArr[i].mes>=INITIALMONTH && dataArr[i].mes<=INITIALMONTH+MONTHTOSHOW){
+            console.log("mes",dataArr[i].mes);
+            console.log("idMo",idMo);
+            //var m=datarr[i].mes-1;
+            var m=idMo-1;
             var vacio=true;
             var esta=false;
             if(mesStruct[m]== "")
@@ -811,6 +882,7 @@ function createMonStruct(datarr){
             for(let j in datarr[i].equipo ){
                 vacio=true;
                 esta=false;
+                try{
                 for(let k in mesStruct[m].persona){
                     vacio=false;
                     if(mesStruct[m].persona[k].nombre==datarr[i].equipo[j].nombre){
@@ -823,6 +895,12 @@ function createMonStruct(datarr){
                         esta=true;
                     }
                 }
+                }catch(err){
+                    console.log("ERROR",m);
+                    console.log(i,datarr[i].equipo);
+                    console.log(mesStruct[m]);
+                    console.log("ERROR");
+                }
                 if(vacio || !esta){
                     mesStruct[m].persona.push({nombre:datarr[i].equipo[j].nombre,dedicacion:datarr[i].equipo[j].dedicacion});
                 }
@@ -831,9 +909,11 @@ function createMonStruct(datarr){
     }
     for(let r in mesStruct){
         if(mesStruct[r]!= ""){
-            //console.log("r",r)
-            var m=parseInt(r)+1;
+            console.log("r",mesStruct[r].mes)
+            //var m=parseInt(r)+1;
+            var m=mesStruct[r].mes;
             var id="mes"+parseInt(m)+"totales";
+            console.log("mon",id);
             var mon=document.getElementById(id);
             var rec=document.createElement("button");
             rec.type="button";
@@ -841,7 +921,7 @@ function createMonStruct(datarr){
             var texto=document.createTextNode("Recalcular");
             rec.appendChild(texto);
             mon.appendChild(rec);
-            //console.log("mon",id);
+            //
             document.getElementById(rec.id).addEventListener("click", function() {
                 var dat=this.id.split("-");
                 recalcular(dat[1]);
@@ -949,12 +1029,12 @@ function createTeamStruct(){
         inp.name="nombre"
         inp.readOnly="true";
         //inp.style.width="120px";
-        inp.value=teamStruct[j].nombre;
+        inp.value=teamStruct[j].name;
         inp.className="name";
         var inp2=document.createElement("input");
         inp2.type="text";
         inp2.style.width="20px"
-        inp2.name=teamStruct[j].nombre;
+        inp2.name=teamStruct[j].name;
         inp2.value=0;
         div.draggable="true";
         div.className="card";
@@ -963,12 +1043,12 @@ function createTeamStruct(){
         div.appendChild(inp2);        
         var boton=document.createElement("button");
         boton.type="button";
-        boton.name="b-"+teamStruct[j].nombre;
-        boton.id="b-"+teamStruct[j].nombre;
+        boton.name="b-"+teamStruct[j].name;
+        boton.id="b-"+teamStruct[j].name;
         var botonfiltro=document.createElement("button");
         botonfiltro.type="button";
-        botonfiltro.name="f-"+teamStruct[j].nombre;
-        botonfiltro.id="f-"+teamStruct[j].nombre;        
+        botonfiltro.name="f-"+teamStruct[j].name;
+        botonfiltro.id="f-"+teamStruct[j].name;        
         var texto2=document.createTextNode("+");
         boton.appendChild(texto2);
         var textofiltro=document.createTextNode("f");
@@ -998,6 +1078,30 @@ function createTeamStruct(){
         });
     }
 }
+let asynGetConsultant = async () => { 
+    const fetchData= await fetch(`https://getconsultant.azurewebsites.net/api/getconsultant`, {
+        method: 'GET',
+        headers: {
+            //'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Type': 'application/json',
+        }
+    }).then(r => r.json()).catch((error) => {
+        console.error(error);
+    });
+    return fetchData;
+}
+let asynGetStaffing = async () => { 
+    const fetchData= await fetch(`https://getstaffinghttp.azurewebsites.net/api/getstaffinghttp`, {
+        method: 'GET',
+        headers: {
+            //'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Type': 'application/json',
+        }
+    }).then(r => r.json()).catch((error) => {
+        console.error(error);
+    });
+    return fetchData;
+}
 function setProy(){    
     createBaseTable();
    
@@ -1008,51 +1112,24 @@ function setProy(){
     //servidor local:http://localhost:3000/getStaff
     //servidor azure:https://getstaffinghttp.azurewebsites.net/api/getstaffinghttp
     //               se requiere configurar CORS
-    (async () => {
-    const fetchData= await fetch(`https://setstaffinghttp.azurewebsites.net/api/getstaffinghttp`, {
-        method: 'GET',
-        headers: {
-            //'Content-Type': 'application/x-www-form-urlencoded',
-            'Content-Type': 'application/json',
-        }
-    }).then(r => r.json()).catch((error) => {
-        console.error(error);
-    });
-    console.log("fetch data",fetchData);
-    buildProject(fetchData.data)
-    //createMonStruct(dataArr);
-    createMonStruct(fetchData.data);
-    })()
+    //https://getstaffinghttp.azurewebsites.net/api/getstaffinghttp
+
+    asynGetStaffing().then(function(fetchData){
+        console.log("fetch data",fetchData);
+        buildProject(fetchData.data)
+        //createMonStruct(dataArr);
+        createMonStruct(fetchData.data);
+        })
 
 
-
-    teamStruct.push(setDataTeam("ALEXEIS PERERA",0));
-    teamStruct.push(setDataTeam("ANTONIO GONZÁLEZ",0));
-    teamStruct.push(setDataTeam("OSCAR CHACÓN",0));
-    teamStruct.push(setDataTeam("JULIO MARCANO",0));
-    teamStruct.push(setDataTeam("EGLANTINA NORATO",0));
-    teamStruct.push(setDataTeam("RODOLFO VILLAFUERTE",0));
-    teamStruct.push(setDataTeam("RICHARD ALBÁN",0));
-    teamStruct.push(setDataTeam("ARLEEN APONTE",0));
-    teamStruct.push(setDataTeam("PABLO MORALES",0));
-    teamStruct.push(setDataTeam("SERGIO NÚÑEZ",0));
-    teamStruct.push(setDataTeam("ZULEIMA SILVA",0));
-    teamStruct.push(setDataTeam("NARDY SULBARÁN",0));
-    teamStruct.push(setDataTeam("GONZALO GUZMÁN",0));
-    teamStruct.push(setDataTeam("GUSTAVO FUENTES",0));
-    teamStruct.push(setDataTeam("LEOPOLDO RAMÍREZ",0));
-    teamStruct.push(setDataTeam("ALEJANDRO SANABRIA",0));
-    teamStruct.push(setDataTeam("CRISTIAN IRIGOYEN",0));
-    teamStruct.push(setDataTeam("SILENE RÍSQUEZ",0));
-    teamStruct.push(setDataTeam("KEILA MACHADO",0));
-    teamStruct.push(setDataTeam("BEATRIZ HO",0));
-    teamStruct.push(setDataTeam("YULIA FORNÉS",0));
-    teamStruct.push(setDataTeam("FEDERICO GONZÁLEZ",0));
-    teamStruct.push(setDataTeam("TAMARA ANDRADE",0));
-    teamStruct.push(setDataTeam("CAMILO MORENO",0));
-    teamStruct.push(setDataTeam("OLENA VARZAR",0));
-
-    createTeamStruct();
+    
+    asynGetConsultant().then(function(fetchData){
+        console.log("fetch data",fetchData);
+        teamStruct=fetchData.data
+        teamStruct.push(setDataTeam("CAMILO MORENO",0));
+        teamStruct.push(setDataTeam("OLENA VARZAR",0));
+        createTeamStruct();
+    })
 
 }
 function mostrar() {
@@ -1108,6 +1185,7 @@ async function getClockiDetail(feIni,feFinal,page){
   return fetchDetail;
 }
 async function sendData(objToSend){
+    console.log("sendData",JSON.stringify(objToSend));
     const fetchDetail = fetch(`https://setstaffinghttp.azurewebsites.net/api/setstaffinghttp`, {
         method: 'POST',
         body:JSON.stringify(objToSend),
@@ -1126,13 +1204,14 @@ function sendToServer(){
     for(let i in dataArr){
         if(dataArr[i].dirty==1){
             var mod=dataArr[i];
+            console.log("modificar",dataArr[i].dedicacion)
             modifyData.push(mod);
             hayData=true;
         }
     }
     if(hayData){
         var objToSend={data:modifyData}
-        console.log(objToSend);
+        console.log("enviar a server",objToSend);
         sendData(objToSend).then((fetchDetail)=>{  
             console.log("retorno fetchdetail",fetchDetail);
             //var ret= JSON.parse(fetchDetail);
