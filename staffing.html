@@ -12,8 +12,8 @@
 .tooltip .tooltiptext {
   visibility: hidden;
   width: 160px;
-  height:180px;
-  font-size: 10pt;
+  height:220px;
+  font-size: 8pt;
   background-color: #555;
   color: #fff;
   text-align: center;
@@ -255,6 +255,7 @@ input.dedi{
   border: 1px solid black;
   vertical-align: top;
 }
+
 </style>
 <script>
 var globId=1;
@@ -275,6 +276,7 @@ function allowDrop(ev) {
 function createBaseTable() {
   var x = document.createElement("TABLE");
   x.setAttribute("id", "tmeses");
+
   document.getElementById("contenido").appendChild(x);
 
   var nombres = document.createElement("TR"); // el encabezado con los nombres de los meses
@@ -285,7 +287,7 @@ function createBaseTable() {
     var numes=i-1;
     if(i>12){
         numes=i-12-1;
-        console.log(numes,titulo[numes]);
+        //console.log(numes,titulo[numes]);
     }
   	var t = document.createTextNode(titulo[numes]);
   	z.appendChild(t);
@@ -402,7 +404,7 @@ function drop(ev) {
       var nuevo=document.getElementById(data)
       var separa=nuevo.id.split('-');
       var nombre=separa[1];
-      //console.log("separa",separa)
+      console.log("separa",separa)
       //console.log("sp-"+separa[1]+"-"+mes);
       if(document.getElementById("sp-"+separa[1]+"-"+mes)==null){
           //console.log("No existe el total. Hay que reconstruirlo");
@@ -413,6 +415,7 @@ function drop(ev) {
           var bott=document.getElementById("b-"+separa[1]);
           //console.log("el boton",bott);
           //console.log("nuevo id",separa[1]+"-"+proj+"."+mes+"-"+mes);
+          //console.log("id",nombre+"-"+proj+"."+phase+"."+mes+"-"+mes);
           bott.id=nombre+"-"+proj+"."+phase+"."+mes+"-"+mes;
           bott.name=nombre+"-"+proj+"."+phase+"."+mes+"-"+mes;
           nuevo.id=separa[0]+"-"+nombre+"-"+proj+"."+phase+"."+mes+"-"+mes;
@@ -462,7 +465,7 @@ function drop2(ev) {
   elemt.remove()
 }
 function setVisibilityToProy(nb,filtrar){
-    console.log("filtrar",nb)
+    //console.log("filtrar",nb)
     var arr=document.getElementsByClassName("proyecto");
     var disp="block"
     if(filtrar){
@@ -531,8 +534,8 @@ function BotonDuplicar(pid, m, nb){
     wrp.appendChild(div);
 }
 function buildProject(dtaArr){
-    console.log("En buildProject",dtaArr);
-    console.log("year",INITIALYEAR);
+    //console.log("En buildProject",dtaArr);
+    //console.log("year",INITIALYEAR);
     dataArr=dtaArr;    
     for(let i in dataArr){
         dataArr[i].dirty=0;
@@ -542,8 +545,8 @@ function buildProject(dtaArr){
         var idMo=currMo+diffYears*12;        
         if(INITIALYEAR<=dataArr[i].year && dataArr[i].year<=YEARTOSHOW && idMo>=INITIALMONTH && idMo<=INITIALMONTH+MONTHTOSHOW){            
 
-            console.log("mes",currMo);
-            console.log(currYear,idMo);
+            //console.log("mes",currMo);
+            //console.log(currYear,idMo);
             var contenedor=document.getElementById("mes"+idMo);       
             var divProy=document.createElement("div");
             divProy.id=dataArr[i].IDp+"."+dataArr[i].fase+"."+idMo;
@@ -637,7 +640,7 @@ function buildProject(dtaArr){
                 }
                     
                 div.className="card";
-                console.log("inOnSite",teamArr[j].inOnSite);
+                //console.log("inOnSite",teamArr[j].inOnSite);
                 if(teamArr[j].inOnSite==1){
                     div.style.backgroundColor="blue";
                 }
@@ -692,7 +695,7 @@ function buildProject(dtaArr){
                 });  
         }
     }
-    console.log(dataArr);
+    //console.log(dataArr);
 }
 function getMonStruct(nb,mes){
     for(let i in mesStruct[mes-1].persona){
@@ -742,7 +745,7 @@ function cleanMonStruct(mes){
 }
 function setNewDedication(proy,fase,mes,usr_name,usr_dedic){
     // buscar el proyecto
-    console.log("setNewDedication-parametros",mes);
+    //console.log("setNewDedication-parametros",mes);
     var pmes=mes;
     if(parseInt(mes)>12) pmes=parseInt(mes)-12;
     var existe=false;
@@ -751,13 +754,15 @@ function setNewDedication(proy,fase,mes,usr_name,usr_dedic){
             dataArr[i].dirty=1;
             var totChg=0.0;
             var totOrig=0.0;
+            var totDed=0.0
             for(let j in dataArr[i].equipo){
                 // se existe, se cambia.Sino se agrega
                 totOrig=totOrig+parseFloat(dataArr[i].equipo[j].original);
+                totDed=totDed+parseFloat(dataArr[i].equipo[j].dedicacion);
                 if(usr_name==dataArr[i].equipo[j].nombre){
                     existe=true;
                     dataArr[i].equipo[j].dedicacion=usr_dedic;
-                    console.log("setNewDedication 1",usr_dedic);
+                    //console.log("setNewDedication 1",usr_dedic);
                 }
                 totChg=totChg+parseFloat(dataArr[i].equipo[j].dedicacion);
             }
@@ -765,8 +770,8 @@ function setNewDedication(proy,fase,mes,usr_name,usr_dedic){
                 var newUsr={nombre:"",dedicacion:"",original:0}
                 newUsr.nombre=usr_name;
                 newUsr.dedicacion=usr_dedic;
-                console.log("setNewDedication 2",usr_dedic);
-                console.log("setNewDedication 2",newUsr.dedicacion);
+                //console.log("setNewDedication 2",usr_dedic);
+                //console.log("setNewDedication 2",newUsr.dedicacion);
                 dataArr[i].equipo.push(newUsr);
                 totChg=totChg+parseFloat(usr_dedic);
             }
@@ -778,6 +783,7 @@ function setNewDedication(proy,fase,mes,usr_name,usr_dedic){
     console.log("id del total chg",id)
     console.log("valor",totChg);
     console.log("orig",totOrig);
+    console.log("totDed",totDed);
     var color="orange";
     if(totOrig.toFixed(2)==totChg.toFixed(2)) {
         console.log(totChg.toFixed(2),totOrig.toFixed(2));
@@ -862,8 +868,8 @@ function recalcular(m){
 }
 function createMonStruct(datarr){
     //mesStruct=Array.from({length: 12}, function() { return ""; });
-    console.log("initial",INITIALMONTH);
-    console.log("a mostrar",MONTHTOSHOW);
+    //console.log("initial",INITIALMONTH);
+    //console.log("a mostrar",MONTHTOSHOW);
     for(let i in datarr){
         var currMo=dataArr[i].mes;
         var currYear=dataArr[i].year;
@@ -871,8 +877,8 @@ function createMonStruct(datarr){
         var idMo=currMo+diffYears*12;        
         if(INITIALYEAR<=dataArr[i].year && dataArr[i].year<=YEARTOSHOW && idMo>=INITIALMONTH && idMo<=INITIALMONTH+MONTHTOSHOW){ 
         //if(INITIALYEAR==dataArr[i].year && dataArr[i].mes>=INITIALMONTH && dataArr[i].mes<=INITIALMONTH+MONTHTOSHOW){
-            console.log("mes",dataArr[i].mes);
-            console.log("idMo",idMo);
+            //console.log("mes",dataArr[i].mes);
+            //console.log("idMo",idMo);
             //var m=datarr[i].mes-1;
             var m=idMo-1;
             var vacio=true;
@@ -909,11 +915,11 @@ function createMonStruct(datarr){
     }
     for(let r in mesStruct){
         if(mesStruct[r]!= ""){
-            console.log("r",mesStruct[r].mes)
+            //console.log("r",mesStruct[r].mes)
             //var m=parseInt(r)+1;
             var m=mesStruct[r].mes;
             var id="mes"+parseInt(m)+"totales";
-            console.log("mon",id);
+            //console.log("mon",id);
             var mon=document.getElementById(id);
             var rec=document.createElement("button");
             rec.type="button";
@@ -961,7 +967,7 @@ function createMonStruct(datarr){
 
 function addElementIntoTeamStruct(tsnombre){
     var partesNombre=tsnombre.split("-");
-    console.log("addElementIntoTeamStruct",partesNombre);
+    //console.log("addElementIntoTeamStruct",partesNombre);
     tsnombre=partesNombre[1];
     var contenedor=document.getElementById("team");
     var div=document.createElement("div");
@@ -1023,7 +1029,7 @@ function createTeamStruct(){
     var contenedor=document.getElementById("team");
     for(let j in teamStruct){
         var div=document.createElement("div");
-        div.id="t-"+teamStruct[j].nombre;
+        div.id="t-"+teamStruct[j].name;
         var inp=document.createElement("input");
         inp.type="text";
         inp.name="nombre"
@@ -1115,7 +1121,7 @@ function setProy(){
     //https://getstaffinghttp.azurewebsites.net/api/getstaffinghttp
 
     asynGetStaffing().then(function(fetchData){
-        console.log("fetch data",fetchData);
+        //console.log("fetch data",fetchData);
         buildProject(fetchData.data)
         //createMonStruct(dataArr);
         createMonStruct(fetchData.data);
@@ -1124,7 +1130,7 @@ function setProy(){
 
     
     asynGetConsultant().then(function(fetchData){
-        console.log("fetch data",fetchData);
+        //console.log("fetch data",fetchData);
         teamStruct=fetchData.data
         teamStruct.push(setDataTeam("CAMILO MORENO",0));
         teamStruct.push(setDataTeam("OLENA VARZAR",0));
@@ -1217,7 +1223,7 @@ function sendToServer(){
             //var ret= JSON.parse(fetchDetail);
             console.log("fetchDetail",fetchDetail.code)
             if(fetchDetail.code==0){
-                console.log("entro a limpiar dirty")
+                //console.log("entro a limpiar dirty")
                 // si todo ok, poner dirty en 0
                 // esto permite que se no se reprocesen cambios a la base de datos que ya se ejecutaron
                 for(let i in dataArr){
@@ -1242,7 +1248,8 @@ function sendToServer(){
 </head>
 <body>
 
-<div ><img src="image/cybs-llogo-new-blanco.png" style="padding-top: 15px;" width="80px"></img><span style="width: 95%;text-align: center;"><h2 style="color:white">Staffing - prototipo</h2></span></div>
+<div ><img src="image/cybs-llogo-new-blanco.png" style="padding-top: 15px;" width="80px"></img><span style="width: 95%;text-align: center;"><h2 style="color:white">Staffing - prototipo</h2></span>
+</div>
 <input type="checkbox" id="abrir-cerrar" name="abrir-cerrar" value="">
 <label for="abrir-cerrar">☰ <span class="abrir">Abrir</span><span class="cerrar">Cerrar</span>&nbsp;&nbsp;
     <button type="button" style="color:white" onclick="sendToServer()">Guardar</button>
