@@ -439,8 +439,11 @@ function drop(ev) {
                         var datvalue=this.value;
                         //console.log("onChange",datvalue);
                         //var proy=datname[1].split(".");
-                        //console.log("proy",proy);                        
+                        //console.log("proy",proy);         
+                        console.log("va a recalcular",mes);
+                        recalcular(mes);                                       
                         setNewDedication(proj,phase,mes,nombre,datvalue);
+
                     });
                 }
                 let part=name.split("-");
@@ -671,6 +674,8 @@ function buildProject(dtaArr){
                     var proy=datname[1].split(".");
                     //console.log("proy",proy);
                     //console.log("onChange",datname);
+                    console.log("va a recalcular",proy[2]);
+                    recalcular(proy[2]);                        
                     setNewDedication(proy[0],proy[1],proy[2],datname[0],datvalue);
                     if(parseInt(datvalue)==0){
                         // armar el id tomando el datname y actualizar 
@@ -834,7 +839,9 @@ function sumarEnInputs(inputs,m){
 
 }
 function recalcular(m){
-    //console.log("recalcular",m)
+    if(!isNaN(m))
+        m="mes"+m;
+    console.log("recalcular",m)
     var hijos=document.getElementById(m).childNodes;
     //console.log("hijos",hijos);
     cleanMonStruct(m.substring(3));
@@ -926,12 +933,12 @@ function createMonStruct(datarr){
             rec.id="b-mes"+parseInt(m);
             var texto=document.createTextNode("Recalcular");
             rec.appendChild(texto);
-            mon.appendChild(rec);
+            //mon.appendChild(rec);
             //
-            document.getElementById(rec.id).addEventListener("click", function() {
+            /*document.getElementById(rec.id).addEventListener("click", function() {
                 var dat=this.id.split("-");
                 recalcular(dat[1]);
-            });
+            });*/
             var pers=mesStruct[r].persona
             for(let p in pers){
                 var div=document.createElement("div");
