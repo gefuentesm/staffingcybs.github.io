@@ -511,7 +511,7 @@ function setDataTeam(nombr,dedica){
         dedicacion:dedica
     }
 }
-function BotonDuplicar(pid, m, nb){
+function BotonDuplicar(pid, m, nb, inOnSite){
     //console.log("pid",pid);
     var proy=document.getElementById(pid);
     var wrp=document.getElementById("w-"+pid);
@@ -625,7 +625,7 @@ function buildProject(dtaArr){
                 inp2.type="text";
                 inp2.style.width="39px"
                 inp2.name=teamArr[j].nombre+"-"+projId+"-"+idMo;
-                inp2.id="id-"+teamArr[j].nombre+"-"+projId+"-"+idMo;
+                inp2.id="id-"+teamArr[j].nombre+"-"+projId+"-"+idMo+"-"+teamArr[j].inOnSite;
                 var newDedi=teamArr[j].newDedi;
                 if(!isNaN(newDedi))
                     teamArr[j].dedicacion=newDedi;
@@ -653,8 +653,8 @@ function buildProject(dtaArr){
                 
                 var boton=document.createElement("button");
                 boton.type="button";
-                boton.name=teamArr[j].nombre+"-"+projId+"-"+idMo;
-                boton.id=teamArr[j].nombre+"-"+projId+"-"+idMo;
+                boton.name=teamArr[j].nombre+"-"+projId+"-"+idMo+"-"+teamArr[j].inOnSite;
+                boton.id=teamArr[j].nombre+"-"+projId+"-"+idMo+"-"+teamArr[j].inOnSite;
                 var texto2=document.createTextNode("+");
                 boton.appendChild(texto2);
                 div.appendChild(boton);
@@ -665,7 +665,7 @@ function buildProject(dtaArr){
                 contenedor.appendChild(divProy);
                 document.getElementById(boton.id).addEventListener("click", function() {
                     var dat=this.name.split("-");
-                    BotonDuplicar(dat[1], dat[2], dat[0]);
+                    BotonDuplicar(dat[1], dat[2], dat[0],dat[3]);
                 });
                 document.getElementById(inp2.id).addEventListener("change", function() {
                     var datname=this.name.split("-");
@@ -676,7 +676,7 @@ function buildProject(dtaArr){
                     //console.log("onChange",datname);
                     console.log("va a recalcular",proy[2]);
                     recalcular(proy[2]);                        
-                    setNewDedication(proy[0],proy[1],proy[2],datname[0],datvalue);
+                    setNewDedication(proy[0],proy[1],proy[2],datname[0],datname[3],datvalue);
                     if(parseInt(datvalue)==0){
                         // armar el id tomando el datname y actualizar 
                         //  
@@ -748,7 +748,7 @@ function cleanMonStruct(mes){
         mesStruct[mes-1].persona[i].dedicacion="0";
     }    
 }
-function setNewDedication(proy,fase,mes,usr_name,usr_dedic){
+function setNewDedication(proy,fase,mes,usr_name,inOnSite,usr_dedic){
     // buscar el proyecto
     //console.log("setNewDedication-parametros",mes);
     var pmes=mes;
