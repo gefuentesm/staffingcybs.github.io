@@ -404,6 +404,7 @@ function drop(ev) {
       var nuevo=document.getElementById(data)
       var separa=nuevo.id.split('-');
       var nombre=separa[1];
+      var inOnSite="0";
       console.log("separa",separa)
       //console.log("sp-"+separa[1]+"-"+mes);
       if(document.getElementById("sp-"+separa[1]+"-"+mes)==null){
@@ -412,13 +413,17 @@ function drop(ev) {
       }      
       nuevo.id=separa[0]+"-"+nombre+"-"+proyid;
       if(separa[0]=="t"){
-          var bott=document.getElementById("b-"+separa[1]);
-          //console.log("el boton",bott);
-          //console.log("nuevo id",separa[1]+"-"+proj+"."+mes+"-"+mes);
-          //console.log("id",nombre+"-"+proj+"."+phase+"."+mes+"-"+mes);
-          bott.id=nombre+"-"+proj+"."+phase+"."+mes+"-"+mes;
-          bott.name=nombre+"-"+proj+"."+phase+"."+mes+"-"+mes;
-          nuevo.id=separa[0]+"-"+nombre+"-"+proj+"."+phase+"."+mes+"-"+mes;
+            var bott=document.getElementById("b-"+separa[1]);
+            //console.log("el boton",bott);
+            //console.log("nuevo id",separa[1]+"-"+proj+"."+mes+"-"+mes);
+            //console.log("id",nombre+"-"+proj+"."+phase+"."+mes+"-"+mes);          
+            bott.id=nombre+"-"+proj+"."+phase+"."+mes+"-"+inOnSite;
+            bott.name=nombre+"-"+proj+"."+phase+"."+mes+"-"+inOnSite;
+            nuevo.id=separa[0]+"-"+nombre+"-"+proj+"."+phase+"."+mes+"-"+inOnSite;
+            var check = document.createElement("INPUT");
+            check.id="cb-"+nombre+"-"+proj+"."+phase+"."+mes+"-"+inOnSite;
+            check.setAttribute("type", "checkbox");
+            nuevo.appendChild(check);
       }
       ev.target.appendChild(nuevo);
       var h=ev.target.style.height;
@@ -432,18 +437,35 @@ function drop(ev) {
             if(typeof name!="undefined" ){
                 //console.log("name",name);
                 if(name==nombre){
-                    el.childNodes[c].id="id-"+nombre+"-"+proj+"."+phase+"."+mes+"-"+mes;
+                    el.childNodes[c].id="id-"+nombre+"-"+proj+"."+phase+"."+mes+"-"+inOnSite;
                     document.getElementById(el.childNodes[c].id).addEventListener("change", function() {
                         //console.log("onChange",nombre+proj+phase+mes);
                         var datname=this.name;
                         var datvalue=this.value;
-                        //console.log("onChange",datvalue);
+                        console.log("onChange id",this.id);
                         //var proy=datname[1].split(".");
                         //console.log("proy",proy);         
+                        var datid=this.id;
+                        var sep=datid.split("-");
+                        var checkid="cb-"+sep[1]+"-"+sep[2]+"-"+inOnSite;
+                        var wrappid="t-"+sep[1]+"-"+sep[2]+"-"+inOnSite;
+                        console.log("check ",document.getElementById(checkid));
+                        if(document.getElementById(checkid)!==null){
+                            if(document.getElementById(checkid).checked){
+                                console.log("wrappid",wrappid);
+                                console.log(document.getElementById(wrappid))
+                                document.getElementById(wrappid).style.backgroundColor="blue";
+                                inOnSite=1;
+                            }else{
+                                document.getElementById(wrappid).style="";
+                                inOnSite=0;
+                            }
+                        }
                         console.log("va a recalcular",mes);
-                        recalcular(mes);                                       
-                        setNewDedication(proj,phase,mes,nombre,datvalue);
-
+                        recalcular(mes);             
+                        console.log("antes de setNewDedication inOnSite",inOnSite)                          
+                        setNewDedication(proj,phase,mes,nombre,inOnSite,datvalue);
+                        inOnSite=0;
                     });
                 }
                 let part=name.split("-");
@@ -624,7 +646,7 @@ function buildProject(dtaArr){
                 var inp2=document.createElement("input");
                 inp2.type="text";
                 inp2.style.width="39px"
-                inp2.name=teamArr[j].nombre+"-"+projId+"-"+idMo;
+                inp2.name=teamArr[j].nombre+"-"+projId+"-"+idMo+"-"+teamArr[j].inOnSite;
                 inp2.id="id-"+teamArr[j].nombre+"-"+projId+"-"+idMo+"-"+teamArr[j].inOnSite;
                 var newDedi=teamArr[j].newDedi;
                 if(!isNaN(newDedi))
@@ -657,23 +679,23 @@ function buildProject(dtaArr){
                 boton.id=teamArr[j].nombre+"-"+projId+"-"+idMo+"-"+teamArr[j].inOnSite;
                 var texto2=document.createTextNode("+");
                 boton.appendChild(texto2);
-                div.appendChild(boton);
+                //div.appendChild(boton);
                 //divProy.appendChild(div);
                 divTeamWrap.appendChild(div);
                 divTeamWrap.id="w-"+projId;                      
                 divProy.appendChild(divTeamWrap);  
                 contenedor.appendChild(divProy);
-                document.getElementById(boton.id).addEventListener("click", function() {
+                /*document.getElementById(boton.id).addEventListener("click", function() {
                     var dat=this.name.split("-");
                     BotonDuplicar(dat[1], dat[2], dat[0],dat[3]);
-                });
+                });*/
                 document.getElementById(inp2.id).addEventListener("change", function() {
                     var datname=this.name.split("-");
                     var datvalue=this.value;
                     //console.log("onChange",datvalue);
                     var proy=datname[1].split(".");
                     //console.log("proy",proy);
-                    //console.log("onChange",datname);
+                    console.log("onChange",datname);
                     console.log("va a recalcular",proy[2]);
                     recalcular(proy[2]);                        
                     setNewDedication(proy[0],proy[1],proy[2],datname[0],datname[3],datvalue);
@@ -764,17 +786,18 @@ function setNewDedication(proy,fase,mes,usr_name,inOnSite,usr_dedic){
                 // se existe, se cambia.Sino se agrega
                 totOrig=totOrig+parseFloat(dataArr[i].equipo[j].original);
                 totDed=totDed+parseFloat(dataArr[i].equipo[j].dedicacion);
-                if(usr_name==dataArr[i].equipo[j].nombre){
+                if(usr_name==dataArr[i].equipo[j].nombre && dataArr[i].equipo[j].inOnSite==inOnSite){
                     existe=true;
                     dataArr[i].equipo[j].dedicacion=usr_dedic;
-                    //console.log("setNewDedication 1",usr_dedic);
+                    console.log("setNewDedication 1",usr_dedic);
                 }
                 totChg=totChg+parseFloat(dataArr[i].equipo[j].dedicacion);
             }
             if(!existe){
-                var newUsr={nombre:"",dedicacion:"",original:0}
+                var newUsr={nombre:"",dedicacion:"",original:0, inOnSite:0}
                 newUsr.nombre=usr_name;
                 newUsr.dedicacion=usr_dedic;
+                newUsr.inOnSite=inOnSite;
                 //console.log("setNewDedication 2",usr_dedic);
                 //console.log("setNewDedication 2",newUsr.dedicacion);
                 dataArr[i].equipo.push(newUsr);
@@ -1066,17 +1089,17 @@ function createTeamStruct(){
         boton.appendChild(texto2);
         var textofiltro=document.createTextNode("f");
         botonfiltro.appendChild(textofiltro);
-        div.appendChild(boton);
+        //div.appendChild(boton);
         div.appendChild(botonfiltro);
         contenedor.appendChild(div);
-        document.getElementById(boton.id).addEventListener("click", function() {
+        /*document.getElementById(boton.id).addEventListener("click", function() {
             var dat=this.name.split("-");
             if(dat[0]=="b"){
                 alert("Arrastre el consultor hacia un proyecto")
             }else{
                 BotonDuplicar(dat[1], dat[2], dat[0]);
             }
-        });
+        });*/
         document.getElementById(botonfiltro.id).addEventListener("click", function() {
             var dat=this.name.split("-");
             var tit=this.innerHTML;
