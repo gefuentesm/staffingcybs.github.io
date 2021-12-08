@@ -96,7 +96,7 @@ input#abrir-cerrar:checked + label[for="abrir-cerrar"] .abrir {
     display:none;
 }
 .name{
-    width: 100px;
+    width: 120px;
 }
 .sidebar {
     position: fixed;
@@ -255,12 +255,55 @@ input.dedi{
   border: 1px solid black;
   vertical-align: top;
 }
+table.paleBlueRows {
+  font-family: "Times New Roman", Times, serif;
+  border: 1px solid #FFFFFF;
+  width: 350px;
+  height: 200px;
+  text-align: center;
+  border-collapse: collapse;
+}
+table.paleBlueRows td, table.paleBlueRows th {
+  border: 1px solid #FFFFFF;
+  padding: 3px 2px;
+}
+table.paleBlueRows tbody td {
+  font-size: 13px;
+}
+table.paleBlueRows tr:nth-child(even) {
+  background: #D0E4F5;
+}
+table.paleBlueRows thead {
+  background: #0B6FA4;
+  border-bottom: 5px solid #FFFFFF;
+}
+table.paleBlueRows thead th {
+  font-size: 17px;
+  font-weight: bold;
+  color: #FFFFFF;
+  text-align: center;
+  border-left: 2px solid #FFFFFF;
+}
+table.paleBlueRows thead th:first-child {
+  border-left: none;
+}
 
+table.paleBlueRows tfoot {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333333;
+  background: #D0E4F5;
+  border-top: 3px solid #444444;
+}
+table.paleBlueRows tfoot td {
+  font-size: 14px;
+}
 </style>
 <script>
 var globId=1;
 const GOODTHRESHOLD=100;
-var INITIALMONTH=new Date().getMonth()+1;
+//var INITIALMONTH=new Date().getMonth()+1; <-- esta es la correcta
+var INITIALMONTH=new Date().getMonth();
 var MONTHTOSHOW=12;
 var INITIALYEAR=new Date().getFullYear();
 var YEARTOSHOW=new Date().getFullYear()+1;
@@ -270,6 +313,7 @@ titulo=["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto"
 var dataArr=[];
 var mesStruct=Array.from({length: 24}, function() { return ""; });
 var teamStruct=[]
+var projStrtSumm=[]
 function allowDrop(ev) {
   ev.preventDefault();
 }
@@ -283,44 +327,44 @@ function createBaseTable() {
   nombres.setAttribute("id", "titulo");
   document.getElementById("tmeses").appendChild(nombres);
   for(let i=INITIALMONTH;i<INITIALMONTH+MONTHTOSHOW;i++){
-  	var z = document.createElement("TD");
-    var numes=i-1;
-    if(i>12){
-        numes=i-12-1;
-        //console.log(numes,titulo[numes]);
-    }
-  	var t = document.createTextNode(titulo[numes]);
-  	z.appendChild(t);
-  	document.getElementById("titulo").appendChild(z);
+        var z = document.createElement("TD");
+        var numes=i-1;
+        if(i>12){
+            numes=i-12-1;
+            //console.log(numes,titulo[numes]);
+        }
+        var t = document.createTextNode(titulo[numes]);
+        z.appendChild(t);
+        document.getElementById("titulo").appendChild(z);
   }
   var totales = document.createElement("TR"); // area de totales
   totales.setAttribute("id", "totales");
   document.getElementById("tmeses").appendChild(totales);
   for(let j=INITIALMONTH;j<INITIALMONTH+MONTHTOSHOW;j++){
-  	var td = document.createElement("TD");
-    td.setAttribute("class", "totales");
-    var numes=j;
-    //if(j>12) numes=j-12-1
-  	var div = document.createElement("DIV")
-    let titulodiv="mes"+numes+"totales"
-    div.setAttribute("id", titulodiv);
-  	td.appendChild(div);
-  	document.getElementById("totales").appendChild(td);
+        var td = document.createElement("TD");
+        td.setAttribute("class", "totales");
+        var numes=j;
+        //if(j>12) numes=j-12-1
+        var div = document.createElement("DIV")
+        let titulodiv="mes"+numes+"totales"
+        div.setAttribute("id", titulodiv);
+        td.appendChild(div);
+        document.getElementById("totales").appendChild(td);
   }
   var detalle = document.createElement("TR"); // area de detalle
   detalle.setAttribute("id", "detalle");
   document.getElementById("tmeses").appendChild(detalle);
   for(let k=INITIALMONTH;k<INITIALMONTH+MONTHTOSHOW;k++){
-  	var td = document.createElement("TD");
-    td.setAttribute("style", "vertical-align: top;");
-    var numes=k;
-    //if(j>12) numes=j-12-1
-  	var div = document.createElement("DIV")
-    let titulodiv="mes"+numes
-    div.setAttribute("id", titulodiv);
-    div.setAttribute("class", "mes");
-  	td.appendChild(div);
-  	document.getElementById("detalle").appendChild(td);
+        var td = document.createElement("TD");
+        td.setAttribute("style", "vertical-align: top;");
+        var numes=k;
+        //if(j>12) numes=j-12-1
+        var div = document.createElement("DIV")
+        let titulodiv="mes"+numes
+        div.setAttribute("id", titulodiv);
+        div.setAttribute("class", "mes");
+        td.appendChild(div);
+        document.getElementById("detalle").appendChild(td);
   }  
 }
 function dup(elem,data){
@@ -405,7 +449,7 @@ function drop(ev) {
       var separa=nuevo.id.split('-');
       var nombre=separa[1];
       var inOnSite="0";
-      console.log("separa",separa)
+      //console.log("separa",separa)
       //console.log("sp-"+separa[1]+"-"+mes);
       if(document.getElementById("sp-"+separa[1]+"-"+mes)==null){
           //console.log("No existe el total. Hay que reconstruirlo");
@@ -413,12 +457,12 @@ function drop(ev) {
       }      
       nuevo.id=separa[0]+"-"+nombre+"-"+proyid;
       if(separa[0]=="t"){
-            var bott=document.getElementById("b-"+separa[1]);
+            //var bott=document.getElementById("b-"+separa[1]);
             //console.log("el boton",bott);
             //console.log("nuevo id",separa[1]+"-"+proj+"."+mes+"-"+mes);
             //console.log("id",nombre+"-"+proj+"."+phase+"."+mes+"-"+mes);          
-            bott.id=nombre+"-"+proj+"."+phase+"."+mes+"-"+inOnSite;
-            bott.name=nombre+"-"+proj+"."+phase+"."+mes+"-"+inOnSite;
+           // bott.id=nombre+"-"+proj+"."+phase+"."+mes+"-"+inOnSite;
+           // bott.name=nombre+"-"+proj+"."+phase+"."+mes+"-"+inOnSite;
             nuevo.id=separa[0]+"-"+nombre+"-"+proj+"."+phase+"."+mes+"-"+inOnSite;
             var check = document.createElement("INPUT");
             check.id="cb-"+nombre+"-"+proj+"."+phase+"."+mes+"-"+inOnSite;
@@ -442,18 +486,18 @@ function drop(ev) {
                         //console.log("onChange",nombre+proj+phase+mes);
                         var datname=this.name;
                         var datvalue=this.value;
-                        console.log("onChange id",this.id);
+                        //console.log("onChange id",this.id);
                         //var proy=datname[1].split(".");
                         //console.log("proy",proy);         
                         var datid=this.id;
                         var sep=datid.split("-");
                         var checkid="cb-"+sep[1]+"-"+sep[2]+"-"+inOnSite;
                         var wrappid="t-"+sep[1]+"-"+sep[2]+"-"+inOnSite;
-                        console.log("check ",document.getElementById(checkid));
+                        //console.log("check ",document.getElementById(checkid));
                         if(document.getElementById(checkid)!==null){
                             if(document.getElementById(checkid).checked){
-                                console.log("wrappid",wrappid);
-                                console.log(document.getElementById(wrappid))
+                                //console.log("wrappid",wrappid);
+                                //console.log(document.getElementById(wrappid))
                                 document.getElementById(wrappid).style.backgroundColor="blue";
                                 inOnSite=1;
                             }else{
@@ -461,9 +505,9 @@ function drop(ev) {
                                 inOnSite=0;
                             }
                         }
-                        console.log("va a recalcular",mes);
+                        //console.log("va a recalcular",mes);
                         recalcular(mes);             
-                        console.log("antes de setNewDedication inOnSite",inOnSite)                          
+                        //console.log("antes de setNewDedication inOnSite",inOnSite)                          
                         setNewDedication(proj,phase,mes,nombre,inOnSite,datvalue);
                         inOnSite=0;
                     });
@@ -587,7 +631,7 @@ function buildProject(dtaArr){
             var totDedicaProy=0.0;
             for(let ii in teamArr){
                 teamText=teamText+ teamArr[ii].nombre;
-                teamTooltip=teamTooltip+teamArr[ii].nombre+" ("+teamArr[ii].dedicacion+") ";
+                teamTooltip=teamTooltip+" "+teamArr[ii].nombre+" ("+teamArr[ii].dedicacion+") ";
                 totDedicaProy=totDedicaProy+Number(parseFloat(teamArr[ii].dedicacion).toFixed(2))
             }
             const sp=String.fromCharCode(160);
@@ -605,7 +649,7 @@ function buildProject(dtaArr){
 
             teamText=teamText+")";
             teamTooltip=teamTooltip+" - ";
-            teamTooltip=dataArr[i].IDp+"-"+dataArr[i].proyecto+"   - Team:  "+teamTooltip;
+            teamTooltip=dataArr[i].IDp+"-"+dataArr[i].proyecto+"   - Team:   "+teamTooltip;
             var nodeTexto=dataArr[i].IDp+"-"+dataArr[i].proyecto.substring(0,28)+"... fase "+dataArr[i].fase+" mes "+dataArr[i].mes+" año "+dataArr[i].year+" ";
             var texto=document.createTextNode(nodeTexto);
             var divtooltip=document.createElement("div");
@@ -641,7 +685,7 @@ function buildProject(dtaArr){
                 inp.type="text";
                 inp.name="nombre"
                 inp.readOnly="true";
-                inp.style.width="115px";
+                inp.style.width="120px";
                 inp.value=teamArr[j].nombre;
                 var inp2=document.createElement("input");
                 inp2.type="text";
@@ -695,8 +739,8 @@ function buildProject(dtaArr){
                     //console.log("onChange",datvalue);
                     var proy=datname[1].split(".");
                     //console.log("proy",proy);
-                    console.log("onChange",datname);
-                    console.log("va a recalcular",proy[2]);
+                    //console.log("onChange",datname);
+                    //console.log("va a recalcular",proy[2]);
                     recalcular(proy[2]);                        
                     setNewDedication(proy[0],proy[1],proy[2],datname[0],datname[3],datvalue);
                     if(parseInt(datvalue)==0){
@@ -710,14 +754,18 @@ function buildProject(dtaArr){
             document.getElementById(botonw.id).addEventListener("click", function() {
                     var dat=this.name.split("-");
                     let wrp=document.getElementById("w-"+dat[1]);
+                    let prj=dat[1].split(".");
                     //console.log("display",wrp.style.display.length);
                     let bwrp=document.getElementById("bw-"+dat[1]);
                     if(wrp.style.display=="none"||wrp.style.display.length==0){
                         wrp.style.display="block";
-                        bwrp.innerHTML="i"
+                        bwrp.innerHTML="i";
+                        fillProjSumm(prj[0]);
                     }else{
                         wrp.style.display="none";
-                        bwrp.innerHTML="v"
+                        bwrp.innerHTML="v";
+                        var tabla=document.getElementById("projSumm");
+                        tabla.innerHTML = "";
                     }
                 });  
         }
@@ -789,7 +837,7 @@ function setNewDedication(proy,fase,mes,usr_name,inOnSite,usr_dedic){
                 if(usr_name==dataArr[i].equipo[j].nombre && dataArr[i].equipo[j].inOnSite==inOnSite){
                     existe=true;
                     dataArr[i].equipo[j].dedicacion=usr_dedic;
-                    console.log("setNewDedication 1",usr_dedic);
+                    //console.log("setNewDedication 1",usr_dedic);
                 }
                 totChg=totChg+parseFloat(dataArr[i].equipo[j].dedicacion);
             }
@@ -805,23 +853,23 @@ function setNewDedication(proy,fase,mes,usr_name,inOnSite,usr_dedic){
             }
         }
     } 
-    console.log("datarr-->",dataArr);
+    //console.log("datarr-->",dataArr);
     var id="chg-"+proy+"."+fase+"."+mes
     var totChngEnPag=document.getElementById(id);
-    console.log("id del total chg",id)
-    console.log("valor",totChg);
-    console.log("orig",totOrig);
-    console.log("totDed",totDed);
+    //console.log("id del total chg",id)
+    //console.log("valor",totChg);
+    //console.log("orig",totOrig);
+    //console.log("totDed",totDed);
     var color="orange";
     if(totOrig.toFixed(2)==totChg.toFixed(2)) {
-        console.log(totChg.toFixed(2),totOrig.toFixed(2));
+        //console.log(totChg.toFixed(2),totOrig.toFixed(2));
         color="orange";
     }else{
-        console.log(totChg.toFixed(2),totOrig.toFixed(2));
+        //console.log(totChg.toFixed(2),totOrig.toFixed(2));
         color="red";
     } 
 
-    console.log("color",color);
+    //console.log("color",color);
     totChngEnPag.innerText=totChg.toFixed(2);
     totChngEnPag.style.color=color;
 }
@@ -864,7 +912,7 @@ function sumarEnInputs(inputs,m){
 function recalcular(m){
     if(!isNaN(m))
         m="mes"+m;
-    console.log("recalcular",m)
+    //console.log("recalcular",m)
     var hijos=document.getElementById(m).childNodes;
     //console.log("hijos",hijos);
     cleanMonStruct(m.substring(3));
@@ -934,8 +982,7 @@ function createMonStruct(datarr){
                 }catch(err){
                     console.log("ERROR",m);
                     console.log(i,datarr[i].equipo);
-                    console.log(mesStruct[m]);
-                    console.log("ERROR");
+                    //console.log(mesStruct[m]);
                 }
                 if(vacio || !esta){
                     mesStruct[m].persona.push({nombre:datarr[i].equipo[j].nombre,dedicacion:datarr[i].equipo[j].dedicacion});
@@ -1011,7 +1058,7 @@ function addElementIntoTeamStruct(tsnombre){
     inp.className="name";
     var inp2=document.createElement("input");
     inp2.type="text";
-    inp2.style.width="20px"
+    inp2.style.width="30px"
     inp2.name=tsnombre;
     inp2.value=0;
     div.draggable="true";
@@ -1019,32 +1066,22 @@ function addElementIntoTeamStruct(tsnombre){
     div.ondragstart=drag;
     div.appendChild(inp);
     div.appendChild(inp2);        
-    var boton=document.createElement("button");
-    boton.type="button";
-    boton.name="b-"+tsnombre;
-    boton.id="b-"+tsnombre;
+ 
     var botonfiltro=document.createElement("button");
     botonfiltro.type="button";
     botonfiltro.name="f-"+tsnombre;
     botonfiltro.id="f-"+tsnombre;        
-    var texto2=document.createTextNode("+");
-    boton.appendChild(texto2);
+
     var textofiltro=document.createTextNode("f");
     botonfiltro.appendChild(textofiltro);
-    div.appendChild(boton);
+    //div.appendChild(boton);
     div.appendChild(botonfiltro);
     contenedor.appendChild(div);
-    document.getElementById(boton.id).addEventListener("click", function() {
-        var dat=this.name.split("-");
-        if(dat[0]=="b"){
-            alert("Arrastre el consultor hacia un proyecto")
-        }else{
-            BotonDuplicar(dat[1], dat[2], dat[0]);
-        }
-    });
+
     document.getElementById(botonfiltro.id).addEventListener("click", function() {
         var dat=this.name.split("-");
         var tit=this.innerHTML;
+        document.getElementById("projectsBox").value="Seleccione...";
         if(tit=="f"){
             setVisibilityToProy(dat[1],true);
             this.innerHTML="b";
@@ -1069,7 +1106,7 @@ function createTeamStruct(){
         inp.className="name";
         var inp2=document.createElement("input");
         inp2.type="text";
-        inp2.style.width="20px"
+        inp2.style.width="30px"
         inp2.name=teamStruct[j].name;
         inp2.value=0;
         div.draggable="true";
@@ -1103,6 +1140,7 @@ function createTeamStruct(){
         document.getElementById(botonfiltro.id).addEventListener("click", function() {
             var dat=this.name.split("-");
             var tit=this.innerHTML;
+            document.getElementById("projectsBox").value="Seleccione...";
             if(tit=="f"){
                 setVisibilityToProy(dat[1],true);
                 this.innerHTML="b";
@@ -1114,20 +1152,9 @@ function createTeamStruct(){
         });
     }
 }
-let asynGetConsultant = async () => { 
-    const fetchData= await fetch(`https://getconsultant.azurewebsites.net/api/getconsultant`, {
-        method: 'GET',
-        headers: {
-            //'Content-Type': 'application/x-www-form-urlencoded',
-            'Content-Type': 'application/json',
-        }
-    }).then(r => r.json()).catch((error) => {
-        console.error(error);
-    });
-    return fetchData;
-}
-let asynGetStaffing = async () => { 
-    const fetchData= await fetch(`https://getstaffinghttp.azurewebsites.net/api/getstaffinghttp`, {
+
+let asynGetFromDB = async (url) => { 
+    const fetchData= await fetch(url, {
         method: 'GET',
         headers: {
             //'Content-Type': 'application/x-www-form-urlencoded',
@@ -1140,26 +1167,17 @@ let asynGetStaffing = async () => {
 }
 function setProy(){    
     createBaseTable();
-   
-    //console.log(getDataFromServer());
-    //console.log(dataArr);
 
-    //buildProject(dataArr);
-    //servidor local:http://localhost:3000/getStaff
-    //servidor azure:https://getstaffinghttp.azurewebsites.net/api/getstaffinghttp
-    //               se requiere configurar CORS
-    //https://getstaffinghttp.azurewebsites.net/api/getstaffinghttp
-
-    asynGetStaffing().then(function(fetchData){
+    asynGetFromDB(`https://getstaffinghttp.azurewebsites.net/api/getstaffinghttp`).then(function(fetchData){
         //console.log("fetch data",fetchData);
         buildProject(fetchData.data)
         //createMonStruct(dataArr);
         createMonStruct(fetchData.data);
         })
 
-
+        
     
-    asynGetConsultant().then(function(fetchData){
+    asynGetFromDB(`https://getconsultant.azurewebsites.net/api/getconsultant`).then(function(fetchData){
         //console.log("fetch data",fetchData);
         teamStruct=fetchData.data
         teamStruct.push(setDataTeam("CAMILO MORENO",0));
@@ -1167,6 +1185,207 @@ function setProy(){
         createTeamStruct();
     })
 
+    asynGetFromDB(`https://getallprojects.azurewebsites.net/api/getallprojects`).then(function(fetchData){
+        //console.log("fetch data getAllProjects",fetchData);
+        var xPB = document.getElementById("projectsBox");
+        
+
+        for(let i in fetchData.data){
+            var opt = document.createElement("option");
+            opt.text = fetchData.data[i].proyecto+"-"+fetchData.data[i].nb_proyecto
+            opt.value = fetchData.data[i].proyecto;
+            xPB.options.add(opt, 1);
+        }
+
+    })
+ 
+    asynGetFromDB(`https://getprojectsummary.azurewebsites.net/api/getprojectsummary`).then(function(fetchData){
+        //console.log("fetch data getProjectSummary",fetchData);
+        var breakProj="";
+        var objProj={id:0,total_hrs:0,total_week:0,calendar_week:0,fases:[]}
+        var tot_hrs=0;
+        var tot_week=0;
+        var cal_week=0;
+        
+        var fases=[]
+        var projArr = fetchData.data;
+        var prj=0;
+        for(let i in projArr){
+            //console.log(i,projArr[i]);
+            if(breakProj==projArr[i].proyecto){
+                //totalizar
+                tot_hrs=tot_hrs+parseFloat(projArr[i].horas);
+                tot_week=tot_week+parseFloat(projArr[i].semanas);
+                if(!isNaN(parseFloat(projArr[i].dura_sem)))
+                    cal_week=cal_week+parseFloat(projArr[i].dura_sem);
+                fases.push({fase:projArr[i].Fase,hrs:projArr[i].horas,weeks:projArr[i].semanas,dura_sem:projArr[i].dura_sem})
+            }else{
+                //rompe
+                if(breakProj==""){
+                    //primer ciclo
+                    breakProj=projArr[i].proyecto;
+                    fases.push({fase:projArr[i].Fase,hrs:projArr[i].horas,weeks:projArr[i].semanas,dura_sem:projArr[i].dura_sem})
+                    //console.log("breakProj",breakProj);
+                    //console.log("1era vez ",fases);
+                }else{
+                    //subsiguientes
+                    var phase=fases;
+                    var projObj={id:breakProj,total_hrs:tot_hrs,total_week:tot_week,calendar_week:cal_week,fases:phase}
+                    projStrtSumm.push(projObj);
+                    breakProj=projArr[i].proyecto;
+                    //console.log("breakProj",breakProj);
+                    //console.log("rompe",projStrtSumm);
+                    fases=[];
+                    fases.push({fase:projArr[i].Fase,hrs:projArr[i].horas,weeks:projArr[i].semanas,dura_sem:projArr[i].dura_sem})
+                    prj++;
+                }
+                tot_hrs=parseFloat(projArr[i].horas);
+                tot_week=parseFloat(projArr[i].semanas);
+                if(!isNaN(parseFloat(projArr[i].dura_sem)))
+                    cal_week=parseFloat(projArr[i].dura_sem);
+            }
+        }
+        //console.log("projStrtSumm",projStrtSumm);
+       // fillProjSumm(40);
+    })
+}
+/*
+calendar_week: 14
+fases: Array(3)
+0: {fase: 1, hrs: 480, weeks: 12, dura_sem: 7}
+1: {fase: 2, hrs: 496, weeks: 12.4, dura_sem: 7}
+2: {fase: 3, hrs: 811.22222, weeks: 20.28056, dura_sem: null}
+length: 3
+[[Prototype]]: Array(0)
+id: 40
+total_hrs: 1787.22222
+            <tr>
+                <td>ID</td>
+                <td>Fase</td>
+                <td>Total Horas</td>
+                <td>Total Semanas</td>
+                <td>Semans Calendario</td>
+                <td>Total</td>
+            </tr>*/
+function headTable(tabla){
+    var fila1=document.createElement("TR");
+    //  crear columnas
+    var idCol1=document.createElement("TD");
+    var faseCol1=document.createElement("TD");
+    var totHrsCol1=document.createElement("TD");
+    var totWeeksCol1=document.createElement("TD");
+    var totDuraWeekCol1=document.createElement("TD");
+    var idCol_tx1 = document.createTextNode("ID");
+    var faseCol_tx1 = document.createTextNode("Fase");
+    var totHrsCol_tx1 = document.createTextNode("Total Horas");
+    var totWeeksCol_tx1=document.createTextNode("Total Semanas");
+    var totDuraWeekCol_tx1=document.createTextNode("Semanas Calendario");
+    idCol1.appendChild(idCol_tx1);
+    faseCol1.appendChild(faseCol_tx1);
+    totHrsCol1.appendChild(totHrsCol_tx1);
+    totWeeksCol1.appendChild(totWeeksCol_tx1);
+    totDuraWeekCol1.appendChild(totDuraWeekCol_tx1);
+    fila1.appendChild(idCol1);
+    fila1.appendChild(faseCol1);
+    fila1.appendChild(totHrsCol1);
+    fila1.appendChild(totWeeksCol1);
+    fila1.appendChild(totDuraWeekCol1);
+    tabla.appendChild(fila1);
+}
+function fillProjSumm(projId){
+    //   traer tabla
+    var tabla=document.getElementById("projSumm");
+    tabla.innerHTML = "";
+    if(projId!="Seleccione...")
+        headTable(tabla)
+    for( let i in projStrtSumm){
+        if(projStrtSumm[i].id==projId){
+            let f=projStrtSumm[i].fases
+            for(let j in f){
+                //  agregar filas de tablas
+                var fila=document.createElement("TR");
+                //  crear columnas
+                var idCol=document.createElement("TD");
+                var faseCol=document.createElement("TD");
+                var totHrsCol=document.createElement("TD");
+                var totWeeksCol=document.createElement("TD");
+                var totDuraWeekCol=document.createElement("TD");
+                var idCol_tx = document.createTextNode(projStrtSumm[i].id);
+                var faseCol_tx = document.createTextNode(f[j].fase);
+                //
+                //(!f[j].hrs ? f[j].hrs : f[j].hrs.toFixed(2))
+                //(isNaN(f[j].dura_sem) ? f[j].dura_sem : f[j].dura_sem.toFixed(2))
+                //console.log(!f[j].dura_sem,(!f[j].dura_sem ? f[j].dura_sem : f[j].dura_sem.toFixed(2)))
+                var totHrsCol_tx = document.createTextNode((!f[j].hrs ? f[j].hrs : f[j].hrs.toFixed(2)));
+                var totWeeksCol_tx=document.createTextNode((!f[j].weeks ? f[j].weeks : f[j].weeks.toFixed(2)));
+                var totDuraWeekCol_tx=document.createTextNode((!f[j].dura_sem ? f[j].dura_sem : f[j].dura_sem.toFixed(2)));
+                idCol.appendChild(idCol_tx);
+                faseCol.appendChild(faseCol_tx);
+                totHrsCol.appendChild(totHrsCol_tx);
+                totWeeksCol.appendChild(totWeeksCol_tx);
+                totDuraWeekCol.appendChild(totDuraWeekCol_tx);
+                fila.appendChild(idCol);
+                fila.appendChild(faseCol);
+                fila.appendChild(totHrsCol);
+                fila.appendChild(totWeeksCol);
+                fila.appendChild(totDuraWeekCol);
+                tabla.appendChild(fila);
+            }
+            //  agregar filas de tablas
+            var fila1=document.createElement("TR");
+            //  crear columnas
+            var idCol1=document.createElement("TD");
+            var faseCol1=document.createElement("TD");
+            var totHrsCol1=document.createElement("TD");
+            var totWeeksCol1=document.createElement("TD");
+            var totDuraWeekCol1=document.createElement("TD");
+            var idCol_tx1 = document.createTextNode("Total:");
+            var faseCol_tx1 = document.createTextNode(f.length);
+            var totHrsCol_tx1 = document.createTextNode(projStrtSumm[i].total_hrs.toFixed(2));
+            var totWeeksCol_tx1=document.createTextNode(projStrtSumm[i].total_week.toFixed(2));
+            var totDuraWeekCol_tx1=document.createTextNode(projStrtSumm[i].calendar_week.toFixed(2));
+            idCol1.appendChild(idCol_tx1);
+            faseCol1.appendChild(faseCol_tx1);
+            totHrsCol1.appendChild(totHrsCol_tx1);
+            totWeeksCol1.appendChild(totWeeksCol_tx1);
+            totDuraWeekCol1.appendChild(totDuraWeekCol_tx1);
+            fila1.appendChild(idCol1);
+            fila1.appendChild(faseCol1);
+            fila1.appendChild(totHrsCol1);
+            fila1.appendChild(totWeeksCol1);
+            fila1.appendChild(totDuraWeekCol1);
+            tabla.appendChild(fila1);
+        } 
+    }
+
+}
+function filtrarPorProyecto(){
+    var proyId = document.getElementById("projectsBox").value;
+    //console.log("selected "+proyId);
+    fillProjSumm(proyId);
+    var classProjArr = document.getElementsByClassName("proyecto");
+    if(proyId=="Seleccione..."){
+        for(let ii in classProjArr){
+            if(typeof classProjArr[ii].id!="undefined"){
+                classProjArr[ii].style.display="block";  // mostrar el proyecto buscado
+            }
+        }
+    }else{ 
+        for(let i in classProjArr){
+            if(typeof classProjArr[i].id!="undefined"){
+                let id = classProjArr[i].id;
+                let pos = id.indexOf(".");
+                let idProj=id.substring(0,pos);
+                //console.log("filtrarPorProyecto",idProj)
+                if(idProj!=proyId){
+                    classProjArr[i].style.display="none";  // ocultar los distintos al proyecto buscado
+                }else{
+                    classProjArr[i].style.display="block";  // mostrar el proyecto buscado
+                    
+                }
+            }
+        }
+    }
 }
 function mostrar() {
     document.getElementById("sidebar").style.width = "200px";
@@ -1181,47 +1400,9 @@ function ocultar() {
     document.getElementById("abrir").style.display = "inline";
     document.getElementById("cerrar").style.display = "none";
 }
-async function getClockiTotals(feIni,feFinal){
-  feIni=feIni+"T00:00:00.000";
-  feFinal=feFinal+"T23:59:59.000";
-  var objBody={dateRangeStart:"",dateRangeEnd:"",detailedFilter:{page:1,pageSize:200},amountShown: "HIDE_AMOUNT"};
-  objBody.dateRangeStart=feIni;
-  objBody.dateRangeEnd=feFinal;
-  console.log("recibiendo en total ",objBody);
-  const fetchTotals = fetch(`${url2}/workspaces/5bdb9885b07987515bf07b16/reports/detailed`, {
-    method: 'POST',
-    body: JSON.stringify(objBody),
-    headers: {
-        'Content-Type': 'application/json',
-	      'X-Api-Key': key
-	}
-  }).then(r => r.json()).catch((error) => {
-    console.error(error);
-  });  
-  return fetchTotals;
-}
-async function getClockiDetail(feIni,feFinal,page){
-  feIni=feIni+"T00:00:00.000";
-  feFinal=feFinal+"T23:59:59.000";
-  var objBody={dateRangeStart:"",dateRangeEnd:"",detailedFilter:{page:"",pageSize:200},amountShown: "HIDE_AMOUNT", options: {totals: "EXCLUDE"} };
-  objBody.dateRangeStart=feIni;
-  objBody.dateRangeEnd=feFinal;
-  objBody.detailedFilter.page=page;
-  console.log("recibiendo ",objBody);
-  const fetchDetail = fetch(`${url2}/workspaces/5bdb9885b07987515bf07b16/reports/detailed`, {
-    method: 'POST',
-    body: JSON.stringify(objBody),
-    headers: {
-        'Content-Type': 'application/json',
-	      'X-Api-Key': key
-	}
-  }).then(r => r.json()).catch((error) => {
-    console.error(error);
-  });  
-  return fetchDetail;
-}
+
 async function sendData(objToSend){
-    console.log("sendData",JSON.stringify(objToSend));
+    //console.log("sendData",JSON.stringify(objToSend));
     const fetchDetail = fetch(`https://setstaffinghttp.azurewebsites.net/api/setstaffinghttp`, {
         method: 'POST',
         body:JSON.stringify(objToSend),
@@ -1240,18 +1421,18 @@ function sendToServer(){
     for(let i in dataArr){
         if(dataArr[i].dirty==1){
             var mod=dataArr[i];
-            console.log("modificar",dataArr[i].dedicacion)
+            //console.log("modificar",dataArr[i].dedicacion)
             modifyData.push(mod);
             hayData=true;
         }
     }
     if(hayData){
         var objToSend={data:modifyData}
-        console.log("enviar a server",objToSend);
+        //console.log("enviar a server",objToSend);
         sendData(objToSend).then((fetchDetail)=>{  
-            console.log("retorno fetchdetail",fetchDetail);
+            //console.log("retorno fetchdetail",fetchDetail);
             //var ret= JSON.parse(fetchDetail);
-            console.log("fetchDetail",fetchDetail.code)
+            //console.log("fetchDetail",fetchDetail.code)
             if(fetchDetail.code==0){
                 //console.log("entro a limpiar dirty")
                 // si todo ok, poner dirty en 0
@@ -1278,7 +1459,18 @@ function sendToServer(){
 </head>
 <body>
 
-<div ><img src="image/cybs-llogo-new-blanco.png" style="padding-top: 15px;" width="80px"></img><span style="width: 95%;text-align: center;"><h2 style="color:white">Staffing - prototipo</h2></span>
+<div >
+    <div style="float: left;">
+        <img src="image/cybs-llogo-new-blanco.png" style="padding-top: 15px;" width="80px"></img>
+    </div>
+    <div style="float: left;width:300px;margin-left: 130px;">
+        <span style="width: 600px;text-align: left;"><h2 style="color:white">Staffing v0.9</h2></span>
+    </div>
+    <div>
+        <table id="projSumm" style="margin-left: 300px;" class="paleBlueRows">
+
+        </table></div>
+    
 </div>
 <input type="checkbox" id="abrir-cerrar" name="abrir-cerrar" value="">
 <label for="abrir-cerrar">☰ <span class="abrir">Abrir</span><span class="cerrar">Cerrar</span>&nbsp;&nbsp;
@@ -1287,11 +1479,18 @@ function sendToServer(){
 
 <div id="sidebar" class="sidebar">
     <img src="image/cybs-llogo-new-blanco.png" width="80px"></img>
+    <div class="totales">
+        <div>Filtro de Proyectos</div>
+        <select id="projectsBox" onchange="filtrarPorProyecto()" style="width: 185px;height: 30px;">
+            <option>Seleccione...</option>
+        </select>
+    </div>
     <div style="text-align: center;">  <h4 style="color:white">EQUIPO CYBS</h4></div>
 
     <div id="trash"  ondrop="drop2(event)" ondragover="allowDrop(event)" style="border:1px solid #a31aff;color:#f5e6ff; width: 90%; height: 100px; ">
         <svg width="40" height="40" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" overflow="hidden"><defs><clipPath id="clip0"><rect x="592" y="312" width="40" height="40"/></clipPath><clipPath id="clip1"><rect x="592" y="312" width="39" height="39"/></clipPath><clipPath id="clip2"><rect x="592" y="312" width="39" height="39"/></clipPath><clipPath id="clip3"><rect x="592" y="312" width="39" height="39"/></clipPath></defs><g clip-path="url(#clip0)" transform="translate(-592 -312)"><g clip-path="url(#clip1)"><g clip-path="url(#clip2)"><g clip-path="url(#clip3)"><path d="M623.688 320.125 616.781 320.125 616.781 318.094C616.781 316.509 615.522 315.25 613.938 315.25L609.062 315.25C607.478 315.25 606.219 316.509 606.219 318.094L606.219 320.125 599.312 320.125C598.419 320.125 597.688 320.856 597.688 321.75L597.688 323.375 625.312 323.375 625.312 321.75C625.312 320.856 624.581 320.125 623.688 320.125ZM608.656 318.094C608.656 317.85 608.819 317.688 609.062 317.688L613.938 317.688C614.181 317.688 614.344 317.85 614.344 318.094L614.344 320.125 608.656 320.125 608.656 318.094Z" fill="#FFFFFF" fill-rule="nonzero" fill-opacity="1"/><path d="M600.125 346.125C600.125 347.019 600.856 347.75 601.75 347.75L621.25 347.75C622.144 347.75 622.875 347.019 622.875 346.125L622.875 325 600.125 325 600.125 346.125ZM616.781 327.438 619.219 327.438 619.219 345.312 616.781 345.312 616.781 327.438ZM610.281 327.438 612.719 327.438 612.719 345.312 610.281 345.312 610.281 327.438ZM603.781 327.438 606.219 327.438 606.219 345.312 603.781 345.312 603.781 327.438Z" fill="#FFFFFF" fill-rule="nonzero" fill-opacity="1"/></g></g></g></g></svg>
     </div>
+
     <div id="team">
 
     </div>
