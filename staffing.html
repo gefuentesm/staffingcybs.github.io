@@ -86,7 +86,10 @@ input#abrir-cerrar:checked + label[for="abrir-cerrar"], input#abrir-cerrar:check
     margin-left:206px;
     transition: margin-left .4s;
 }
-
+input#abrir-cerrar:checked + label[for="abrir-cerrar"], input#abrir-cerrar:checked ~ #container-project {
+    margin-left:206px;
+    transition: margin-left .4s;
+}
 
 input#abrir-cerrar:checked + label[for="abrir-cerrar"] .cerrar {
     display:inline;
@@ -1198,7 +1201,19 @@ function setProy(){
         }
 
     })
- 
+    //https://getfactprojmonthy.azurewebsites.net/api/getfactprojmonthy
+    asynGetFromDB(`https://getfactprojmonthy.azurewebsites.net/api/getfactprojmonthy`).then(function(fetchData){
+        //console.log("fetch data getAllProjects",fetchData);
+        var contenedor = document.getElementById("tab-proj-01");
+        var rowHead=`<tr><th>ID</th><th>Fase</th><th>Ene</th><th>Feb</th><th>Mar</th><th>Abr</th><th>May</th><th>Jun</th><th>Jul</th><th>Ago</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dic</th><th>Ene_</th><th>Feb_</th><th>Mar_</th><th>Abr_</th><th>A</th></tr>`;
+        contenedor.innerHTML=rowHead;
+        var rows="";
+        var arr=fetchData.data;
+        for(let i in arr){
+            rows=rows+`<tr><td>${arr[i].proyecto}</td><td>${arr[i].fase}</td><td >${(arr[i].pEne?'Avg: '+arr[i].pEne.toFixed(1)+'%':'')}<br>${(arr[i].hEne?arr[i].hEne.toFixed(1)+' Hrs':'')}</td><td>${(arr[i].pfeb?'Avg: '+arr[i].pfeb.toFixed(1)+'%':'')}<br>${(arr[i].hfeb?arr[i].hfeb.toFixed(1)+' Hrs':'')}</td><td>${(arr[i].pmar?'Avg: '+arr[i].pmar.toFixed(1)+'%':'')}<br>${(arr[i].hmar?arr[i].hmar.toFixed(1)+' Hrs':'')}</td><td>${(arr[i].pabr?'Avg: '+arr[i].pabr.toFixed(1)+'%':'')}<br>${(arr[i].habr?''+arr[i].habr.toFixed(1)+' Hrs':'')}</td><td>${(arr[i].pmay?'Avg: '+arr[i].pmay.toFixed(1)+'%':'')}<br>${(arr[i].hmay?arr[i].hmay.toFixed(1)+' Hrs':'')}</td><td>${(arr[i].pjun?'Avg: '+arr[i].pjun.toFixed(1)+'%':'')}<br>${(arr[i].hjun?arr[i].hjun.toFixed(1)+' Hrs':'')}</td><td>${(arr[i].pjul?'Avg: '+arr[i].pjul.toFixed(1)+'%':'')}<br>${(arr[i].hjul?arr[i].hjul.toFixed(1)+' Hrs':'')}</td><td>${(arr[i].pago?'Avg: '+arr[i].pago.toFixed(1)+'%':'')}<br>${(arr[i].hago?arr[i].hago.toFixed(1)+' Hrs':'')}</td><td>${(arr[i].psep?'Avg: '+arr[i].psep.toFixed(1)+'%':'')}<br>${(arr[i].hoct?arr[i].hoct.toFixed(1)+' Hrs':'')}</td><td>${(arr[i].pnov?'Avg: '+arr[i].pnov.toFixed(1)+'%':'')}<br>${(arr[i].hnov?arr[i].hnov.toFixed(1)+' Hrs':'')}</td><td>${(arr[i].pdic?'Avg: '+arr[i].pdic.toFixed(1)+'%':'')}<br>${(arr[i].hdic?arr[i].hdic.toFixed(1)+' Hrs':'')}</td><td>${(arr[i].pene_?'Avg: '+arr[i].pene_.toFixed(1)+'%':'')}<br>${(arr[i].hene_?arr[i].hene_.toFixed(1)+' Hrs':'')}</td><td>${(arr[i].pfeb_?'Avg: '+arr[i].pfeb_.toFixed(1)+'%':'')}<br>${(arr[i].hfeb_?arr[i].hfeb_.toFixed(1)+' Hrs':'')}</td><td>${(arr[i].pmar_?'Avg: '+arr[i].pmar_.toFixed(1)+'%':'')}<br>${(arr[i].hmar_?arr[i].hmar_.toFixed(1)+' Hrs':'')}</td></tr>`
+        }
+        contenedor.innerHTML=rowHead+rows;
+    })
     asynGetFromDB(`https://getprojectsummary.azurewebsites.net/api/getprojectsummary`).then(function(fetchData){
         //console.log("fetch data getProjectSummary",fetchData);
         var breakProj="";
@@ -1388,19 +1403,34 @@ function filtrarPorProyecto(){
     }
 }
 function mostrar() {
+    console.log("mostrar");
     document.getElementById("sidebar").style.width = "200px";
     document.getElementById("contenido").style.marginLeft = "200px";
+    document.getElementById("tab-proj-01").style.marginLeft = "200px";
+    console.log("margin",document.getElementById("tab-proj-01").style.marginLeft)
     document.getElementById("abrir").style.display = "none";
     document.getElementById("cerrar").style.display = "inline";
 }
 
 function ocultar() {
+    console.log("ocultar");
     document.getElementById("sidebar").style.width = "0";
     document.getElementById("contenido").style.marginLeft = "0";
+    document.getElementById("tab-proj-01").style.marginLeft = "0";
+    console.log("margin",document.getElementById("tab-proj-01").style.marginLeft)
     document.getElementById("abrir").style.display = "inline";
     document.getElementById("cerrar").style.display = "none";
 }
+function showContainerProj(){
+    if(document.getElementById("contenido").style.display==""){
+        document.getElementById("contenido").style.display="none";
+        document.getElementById("container-project").style.display="";
+    }else{
+        document.getElementById("contenido").style.display="";
+        document.getElementById("container-project").style.display="none";
+    }
 
+}
 async function sendData(objToSend){
     //console.log("sendData",JSON.stringify(objToSend));
     const fetchDetail = fetch(`https://setstaffinghttp.azurewebsites.net/api/setstaffinghttp`, {
@@ -1474,7 +1504,8 @@ function sendToServer(){
 </div>
 <input type="checkbox" id="abrir-cerrar" name="abrir-cerrar" value="">
 <label for="abrir-cerrar">☰ <span class="abrir">Abrir</span><span class="cerrar">Cerrar</span>&nbsp;&nbsp;
-    <button type="button" style="color:white" onclick="sendToServer()">Guardar</button>
+    <button type="button" style="color:white" onclick="sendToServer()">Guardar</button>|
+    <button type="button" style="color:white" onclick="showContainerProj()">Mostrar Resumen Proyectos</button>
 </label>
 
 <div id="sidebar" class="sidebar">
@@ -1496,8 +1527,13 @@ function sendToServer(){
     </div>
 
 </div>
-<div id="contenido">
+<div id="contenido" >
     <div id="div3" style="display: none;" ></div>
+</div>
+<div id="container-project">
+    <table id="tab-proj-01" class="paleBlueRows" style="font-family: Verdana, Geneva, Tahoma, sans-serif;font-size: 8pt;width:98%">
+
+    </table>
 </div>
     <script>setProy();</script>
 </body>
