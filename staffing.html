@@ -77,6 +77,9 @@ label[for="abrir-cerrar"] {
 #contenido {
     margin-left:0;
 }
+#container-project{
+    margin-left:0;
+}
 
 input#abrir-cerrar:checked ~ #sidebar {
     width:206px;
@@ -146,7 +149,10 @@ h1 {
     transition: margin-left .4s;
     padding: 1rem;
 }
-
+#container-project{
+    transition: margin-left .4s;
+    padding: 1rem;
+}
 .abrir-cerrar {
     color: #2E88C7;
     font-size:1rem;   
@@ -313,10 +319,12 @@ var YEARTOSHOW=new Date().getFullYear()+1;
 console.log(INITIALYEAR,YEARTOSHOW);
 cantidad=10
 titulo=["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
+// arreglos globales
 var dataArr=[];
 var mesStruct=Array.from({length: 24}, function() { return ""; });
 var teamStruct=[]
 var projStrtSumm=[]
+var factprojmonthy=[]
 function allowDrop(ev) {
   ev.preventDefault();
 }
@@ -614,7 +622,11 @@ function buildProject(dtaArr){
         var currMo=dataArr[i].mes;
         var currYear=dataArr[i].year;
         var diffYears=currYear-INITIALYEAR;
-        var idMo=currMo+diffYears*12;        
+        var idMo=currMo+diffYears*12; 
+        if(dataArr[i].IDp==197){
+            console.log("197",dataArr[i]);
+            console.log("idMo",idMo);
+        }       
         if(INITIALYEAR<=dataArr[i].year && dataArr[i].year<=YEARTOSHOW && idMo>=INITIALMONTH && idMo<=INITIALMONTH+MONTHTOSHOW){            
 
             //console.log("mes",currMo);
@@ -764,11 +776,13 @@ function buildProject(dtaArr){
                         wrp.style.display="block";
                         bwrp.innerHTML="i";
                         fillProjSumm(prj[0]);
+                        mostrarProyMonthly(prj[0]);
                     }else{
                         wrp.style.display="none";
                         bwrp.innerHTML="v";
                         var tabla=document.getElementById("projSumm");
                         tabla.innerHTML = "";
+                        mostrarProyMonthly(0);
                     }
                 });  
         }
@@ -823,9 +837,11 @@ function cleanMonStruct(mes){
 }
 function setNewDedication(proy,fase,mes,usr_name,inOnSite,usr_dedic){
     // buscar el proyecto
-    //console.log("setNewDedication-parametros",mes);
+    console.log("setNewDedication-parametros",mes);
+    console.log("setNewDedication-parametros",proy+"-"+fase+"-"+usr_name+"-"+usr_dedic);
+    console.log("dataArr",dataArr);
     var pmes=mes;
-    if(parseInt(mes)>12) pmes=parseInt(mes)-12;
+    //if(parseInt(mes)>12) pmes=parseInt(mes)-12;
     var existe=false;
     for(let i in dataArr){
         if(dataArr[i].IDp==proy && dataArr[i].fase==fase && dataArr[i].mes==pmes){
@@ -840,7 +856,7 @@ function setNewDedication(proy,fase,mes,usr_name,inOnSite,usr_dedic){
                 if(usr_name==dataArr[i].equipo[j].nombre && dataArr[i].equipo[j].inOnSite==inOnSite){
                     existe=true;
                     dataArr[i].equipo[j].dedicacion=usr_dedic;
-                    //console.log("setNewDedication 1",usr_dedic);
+                    console.log("setNewDedication 1",usr_dedic);
                 }
                 totChg=totChg+parseFloat(dataArr[i].equipo[j].dedicacion);
             }
@@ -849,8 +865,8 @@ function setNewDedication(proy,fase,mes,usr_name,inOnSite,usr_dedic){
                 newUsr.nombre=usr_name;
                 newUsr.dedicacion=usr_dedic;
                 newUsr.inOnSite=inOnSite;
-                //console.log("setNewDedication 2",usr_dedic);
-                //console.log("setNewDedication 2",newUsr.dedicacion);
+                console.log("setNewDedication 2",usr_dedic);
+                console.log("setNewDedication 2",newUsr.dedicacion);
                 dataArr[i].equipo.push(newUsr);
                 totChg=totChg+parseFloat(usr_dedic);
             }
@@ -860,8 +876,8 @@ function setNewDedication(proy,fase,mes,usr_name,inOnSite,usr_dedic){
     var id="chg-"+proy+"."+fase+"."+mes
     var totChngEnPag=document.getElementById(id);
     //console.log("id del total chg",id)
-    //console.log("valor",totChg);
-    //console.log("orig",totOrig);
+    console.log("valor",totChg);
+    console.log("orig",totOrig);
     //console.log("totDed",totDed);
     var color="orange";
     if(totOrig.toFixed(2)==totChg.toFixed(2)) {
@@ -1155,6 +1171,35 @@ function createTeamStruct(){
         });
     }
 }
+function mostrarProyMonthly(pproy){
+    var contenedor = document.getElementById("tab-proj-01");
+    var rowHead=`<tr><th>ID</th><th>Nombre</th><th>Fase</th><th>Ene</th><th>Feb</th><th>Mar</th><th>Abr</th><th>May</th><th>Jun</th><th>Jul</th><th>Ago</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dic</th><th>Ene_</th><th>Feb_</th><th>Mar_</th><th>Abr_</th><th>A</th></tr>`;
+    contenedor.innerHTML=rowHead;
+    var rows="";
+    //console.log("factprojmonthy",factprojmonthy)
+    var arr=factprojmonthy;
+    for(let i in arr){
+        if(arr[i].proyecto==pproy||pproy==0){
+            rows=rows+`<tr><td>${arr[i].proyecto}</td><td>${arr[i].nb_proyecto}</td><td>${arr[i].fase}</td>
+                <td >${(arr[i].pEne?'Avg: '+arr[i].pEne.toFixed(1)+'%':'')}<br>${(arr[i].hEne?arr[i].hEne.toFixed(1)+' Hrs':'')}</td>
+                <td>${(arr[i].pfeb?'Avg: '+arr[i].pfeb.toFixed(1)+'%':'')}<br>${(arr[i].hfeb?arr[i].hfeb.toFixed(1)+' Hrs':'')}</td>
+                <td>${(arr[i].pmar?'Avg: '+arr[i].pmar.toFixed(1)+'%':'')}<br>${(arr[i].hmar?arr[i].hmar.toFixed(1)+' Hrs':'')}</td>
+                <td>${(arr[i].pabr?'Avg: '+arr[i].pabr.toFixed(1)+'%':'')}<br>${(arr[i].habr?''+arr[i].habr.toFixed(1)+' Hrs':'')}</td>
+                <td>${(arr[i].pmay?'Avg: '+arr[i].pmay.toFixed(1)+'%':'')}<br>${(arr[i].hmay?arr[i].hmay.toFixed(1)+' Hrs':'')}</td>
+                <td>${(arr[i].pjun?'Avg: '+arr[i].pjun.toFixed(1)+'%':'')}<br>${(arr[i].hjun?arr[i].hjun.toFixed(1)+' Hrs':'')}</td>
+                <td>${(arr[i].pjul?'Avg: '+arr[i].pjul.toFixed(1)+'%':'')}<br>${(arr[i].hjul?arr[i].hjul.toFixed(1)+' Hrs':'')}</td>
+                <td>${(arr[i].pago?'Avg: '+arr[i].pago.toFixed(1)+'%':'')}<br>${(arr[i].hago?arr[i].hago.toFixed(1)+' Hrs':'')}</td>
+                <td>${(arr[i].psep?'Avg: '+arr[i].psep.toFixed(1)+'%':'')}<br>${(arr[i].hsep?arr[i].hsep.toFixed(1)+' Hrs':'')}</td>
+                <td>${(arr[i].poct?'Avg: '+arr[i].poct.toFixed(1)+'%':'')}<br>${(arr[i].hoct?arr[i].hoct.toFixed(1)+' Hrs':'')}</td>
+                <td>${(arr[i].pnov?'Avg: '+arr[i].pnov.toFixed(1)+'%':'')}<br>${(arr[i].hnov?arr[i].hnov.toFixed(1)+' Hrs':'')}</td>
+                <td>${(arr[i].pdic?'Avg: '+arr[i].pdic.toFixed(1)+'%':'')}<br>${(arr[i].hdic?arr[i].hdic.toFixed(1)+' Hrs':'')}</td>
+                <td>${(arr[i].pEne_?'Avg: '+arr[i].pEne_.toFixed(1)+'%':'')}<br>${(arr[i].hEne_?arr[i].hEne_.toFixed(1)+' Hrs':'')}</td>
+                <td>${(arr[i].pfeb_?'Avg: '+arr[i].pfeb_.toFixed(1)+'%':'')}<br>${(arr[i].hfeb_?arr[i].hfeb_.toFixed(1)+' Hrs':'')}</td>
+                <td>${(arr[i].pmar_?'Avg: '+arr[i].pmar_.toFixed(1)+'%':'')}<br>${(arr[i].hmar_?arr[i].hmar_.toFixed(1)+' Hrs':'')}</td></tr>`
+        }
+    }
+    contenedor.innerHTML=rowHead+rows;
+}
 
 let asynGetFromDB = async (url) => { 
     const fetchData= await fetch(url, {
@@ -1204,15 +1249,8 @@ function setProy(){
     //https://getfactprojmonthy.azurewebsites.net/api/getfactprojmonthy
     asynGetFromDB(`https://getfactprojmonthy.azurewebsites.net/api/getfactprojmonthy`).then(function(fetchData){
         //console.log("fetch data getAllProjects",fetchData);
-        var contenedor = document.getElementById("tab-proj-01");
-        var rowHead=`<tr><th>ID</th><th>Fase</th><th>Ene</th><th>Feb</th><th>Mar</th><th>Abr</th><th>May</th><th>Jun</th><th>Jul</th><th>Ago</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dic</th><th>Ene_</th><th>Feb_</th><th>Mar_</th><th>Abr_</th><th>A</th></tr>`;
-        contenedor.innerHTML=rowHead;
-        var rows="";
-        var arr=fetchData.data;
-        for(let i in arr){
-            rows=rows+`<tr><td>${arr[i].proyecto}</td><td>${arr[i].fase}</td><td >${(arr[i].pEne?'Avg: '+arr[i].pEne.toFixed(1)+'%':'')}<br>${(arr[i].hEne?arr[i].hEne.toFixed(1)+' Hrs':'')}</td><td>${(arr[i].pfeb?'Avg: '+arr[i].pfeb.toFixed(1)+'%':'')}<br>${(arr[i].hfeb?arr[i].hfeb.toFixed(1)+' Hrs':'')}</td><td>${(arr[i].pmar?'Avg: '+arr[i].pmar.toFixed(1)+'%':'')}<br>${(arr[i].hmar?arr[i].hmar.toFixed(1)+' Hrs':'')}</td><td>${(arr[i].pabr?'Avg: '+arr[i].pabr.toFixed(1)+'%':'')}<br>${(arr[i].habr?''+arr[i].habr.toFixed(1)+' Hrs':'')}</td><td>${(arr[i].pmay?'Avg: '+arr[i].pmay.toFixed(1)+'%':'')}<br>${(arr[i].hmay?arr[i].hmay.toFixed(1)+' Hrs':'')}</td><td>${(arr[i].pjun?'Avg: '+arr[i].pjun.toFixed(1)+'%':'')}<br>${(arr[i].hjun?arr[i].hjun.toFixed(1)+' Hrs':'')}</td><td>${(arr[i].pjul?'Avg: '+arr[i].pjul.toFixed(1)+'%':'')}<br>${(arr[i].hjul?arr[i].hjul.toFixed(1)+' Hrs':'')}</td><td>${(arr[i].pago?'Avg: '+arr[i].pago.toFixed(1)+'%':'')}<br>${(arr[i].hago?arr[i].hago.toFixed(1)+' Hrs':'')}</td><td>${(arr[i].psep?'Avg: '+arr[i].psep.toFixed(1)+'%':'')}<br>${(arr[i].hoct?arr[i].hoct.toFixed(1)+' Hrs':'')}</td><td>${(arr[i].pnov?'Avg: '+arr[i].pnov.toFixed(1)+'%':'')}<br>${(arr[i].hnov?arr[i].hnov.toFixed(1)+' Hrs':'')}</td><td>${(arr[i].pdic?'Avg: '+arr[i].pdic.toFixed(1)+'%':'')}<br>${(arr[i].hdic?arr[i].hdic.toFixed(1)+' Hrs':'')}</td><td>${(arr[i].pene_?'Avg: '+arr[i].pene_.toFixed(1)+'%':'')}<br>${(arr[i].hene_?arr[i].hene_.toFixed(1)+' Hrs':'')}</td><td>${(arr[i].pfeb_?'Avg: '+arr[i].pfeb_.toFixed(1)+'%':'')}<br>${(arr[i].hfeb_?arr[i].hfeb_.toFixed(1)+' Hrs':'')}</td><td>${(arr[i].pmar_?'Avg: '+arr[i].pmar_.toFixed(1)+'%':'')}<br>${(arr[i].hmar_?arr[i].hmar_.toFixed(1)+' Hrs':'')}</td></tr>`
-        }
-        contenedor.innerHTML=rowHead+rows;
+        factprojmonthy=fetchData.data;
+        mostrarProyMonthly(0);
     })
     asynGetFromDB(`https://getprojectsummary.azurewebsites.net/api/getprojectsummary`).then(function(fetchData){
         //console.log("fetch data getProjectSummary",fetchData);
@@ -1385,21 +1423,31 @@ function filtrarPorProyecto(){
                 classProjArr[ii].style.display="block";  // mostrar el proyecto buscado
             }
         }
+        mostrarProyMonthly(0);
     }else{ 
+        var encontrado=false;
+        var idProj=0;
         for(let i in classProjArr){
             if(typeof classProjArr[i].id!="undefined"){
                 let id = classProjArr[i].id;
                 let pos = id.indexOf(".");
-                let idProj=id.substring(0,pos);
+                idProj=id.substring(0,pos);
                 //console.log("filtrarPorProyecto",idProj)
                 if(idProj!=proyId){
                     classProjArr[i].style.display="none";  // ocultar los distintos al proyecto buscado
                 }else{
                     classProjArr[i].style.display="block";  // mostrar el proyecto buscado
+                    encontrado=true;
                     
                 }
             }
         }
+        if(encontrado){
+            var contenedor = document.getElementById("container-project");
+            contenedor.style.display=""
+            mostrarProyMonthly(proyId);
+        }
+            
     }
 }
 function mostrar() {
@@ -1422,12 +1470,29 @@ function ocultar() {
     document.getElementById("cerrar").style.display = "none";
 }
 function showContainerProj(){
+    let btn=document.getElementById("btn-hojas");
     if(document.getElementById("contenido").style.display==""){
         document.getElementById("contenido").style.display="none";
         document.getElementById("container-project").style.display="";
+        btn.textContent="Staffing View"
     }else{
         document.getElementById("contenido").style.display="";
         document.getElementById("container-project").style.display="none";
+        btn.textContent="Project View"
+    }
+
+}
+//showContainerBoth
+function showContainerBoth(){
+    let btn=document.getElementById("btn-both");
+    if(btn.textContent=="Project View & Staffing View"){
+        document.getElementById("contenido").style.display="";
+        document.getElementById("container-project").style.display="";
+        btn.textContent="Hide Project View"
+    }else{
+        document.getElementById("contenido").style.display="";
+        document.getElementById("container-project").style.display="none";
+        btn.textContent="Project View & Staffing View"
     }
 
 }
@@ -1504,19 +1569,20 @@ function sendToServer(){
 </div>
 <input type="checkbox" id="abrir-cerrar" name="abrir-cerrar" value="">
 <label for="abrir-cerrar">☰ <span class="abrir">Abrir</span><span class="cerrar">Cerrar</span>&nbsp;&nbsp;
-    <button type="button" style="color:white" onclick="sendToServer()">Guardar</button>|
-    <button type="button" style="color:white" onclick="showContainerProj()">Mostrar Resumen Proyectos</button>
+    <button type="button" style="color:white" onclick="sendToServer()">Save</button>|
+    <button type="button" id="btn-hojas" style="color:white" onclick="showContainerProj()">Project View</button>
+    <button type="button" id="btn-both" style="color:white" onclick="showContainerBoth()">Project View & Staffing View</button>
 </label>
 
 <div id="sidebar" class="sidebar">
     <img src="image/cybs-llogo-new-blanco.png" width="80px"></img>
     <div class="totales">
-        <div>Filtro de Proyectos</div>
+        <div>Project Filter</div>
         <select id="projectsBox" onchange="filtrarPorProyecto()" style="width: 185px;height: 30px;">
             <option>Seleccione...</option>
         </select>
     </div>
-    <div style="text-align: center;">  <h4 style="color:white">EQUIPO CYBS</h4></div>
+    <div style="text-align: center;">  <h4 style="color:white">CYBS Team</h4></div>
 
     <div id="trash"  ondrop="drop2(event)" ondragover="allowDrop(event)" style="border:1px solid #a31aff;color:#f5e6ff; width: 90%; height: 100px; ">
         <svg width="40" height="40" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" overflow="hidden"><defs><clipPath id="clip0"><rect x="592" y="312" width="40" height="40"/></clipPath><clipPath id="clip1"><rect x="592" y="312" width="39" height="39"/></clipPath><clipPath id="clip2"><rect x="592" y="312" width="39" height="39"/></clipPath><clipPath id="clip3"><rect x="592" y="312" width="39" height="39"/></clipPath></defs><g clip-path="url(#clip0)" transform="translate(-592 -312)"><g clip-path="url(#clip1)"><g clip-path="url(#clip2)"><g clip-path="url(#clip3)"><path d="M623.688 320.125 616.781 320.125 616.781 318.094C616.781 316.509 615.522 315.25 613.938 315.25L609.062 315.25C607.478 315.25 606.219 316.509 606.219 318.094L606.219 320.125 599.312 320.125C598.419 320.125 597.688 320.856 597.688 321.75L597.688 323.375 625.312 323.375 625.312 321.75C625.312 320.856 624.581 320.125 623.688 320.125ZM608.656 318.094C608.656 317.85 608.819 317.688 609.062 317.688L613.938 317.688C614.181 317.688 614.344 317.85 614.344 318.094L614.344 320.125 608.656 320.125 608.656 318.094Z" fill="#FFFFFF" fill-rule="nonzero" fill-opacity="1"/><path d="M600.125 346.125C600.125 347.019 600.856 347.75 601.75 347.75L621.25 347.75C622.144 347.75 622.875 347.019 622.875 346.125L622.875 325 600.125 325 600.125 346.125ZM616.781 327.438 619.219 327.438 619.219 345.312 616.781 345.312 616.781 327.438ZM610.281 327.438 612.719 327.438 612.719 345.312 610.281 345.312 610.281 327.438ZM603.781 327.438 606.219 327.438 606.219 345.312 603.781 345.312 603.781 327.438Z" fill="#FFFFFF" fill-rule="nonzero" fill-opacity="1"/></g></g></g></g></svg>
@@ -1527,14 +1593,22 @@ function sendToServer(){
     </div>
 
 </div>
-<div id="contenido" >
-    <div id="div3" style="display: none;" ></div>
-</div>
-<div id="container-project">
+<div id="container-project" style="display: none;">
+    <div style="font-family: Verdana, Geneva, Tahoma, sans-serif;font-size: 10pt;padding-top:10px;padding-bottom: 10px;">
+        <b>PROJECT VIEW</b><br>
+        Promedio de dedicación del equipo, Total horas
+    </div>
     <table id="tab-proj-01" class="paleBlueRows" style="font-family: Verdana, Geneva, Tahoma, sans-serif;font-size: 8pt;width:98%">
 
     </table>
 </div>
+<div id="contenido" >
+    <div style="font-family: Verdana, Geneva, Tahoma, sans-serif;font-size: 10pt;padding-top:10px;padding-bottom: 10px;">
+        <b>STAFFING VIEW</b>
+    </div>
+    <div id="div3" style="display: none;" ></div>
+</div>
+
     <script>setProy();</script>
 </body>
 </html>
