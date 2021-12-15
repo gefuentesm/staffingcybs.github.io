@@ -192,6 +192,7 @@ span.nb{
 th{
     font-family: Arial, Helvetica, sans-serif;
     color:white;
+    font-size: 12pt;
 }
 input{
     border:1px solid lightgray;
@@ -265,10 +266,9 @@ input.dedi{
   vertical-align: top;
 }
 table.paleBlueRows {
-  font-family: "Times New Roman", Times, serif;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
   border: 1px solid #FFFFFF;
-  width: 350px;
-  height: 200px;
+
   text-align: center;
   border-collapse: collapse;
 }
@@ -780,9 +780,14 @@ function buildProject(dtaArr){
                     }else{
                         wrp.style.display="none";
                         bwrp.innerHTML="v";
+                        var content = document.getElementById("container-project");
+                        content.style.display="none"
                         var tabla=document.getElementById("projSumm");
                         tabla.innerHTML = "";
                         mostrarProyMonthly(0);
+                        let btn=document.getElementById("btn-both");
+                        btn.textContent="Project View & Staffing View";
+                        
                     }
                 });  
         }
@@ -1173,29 +1178,53 @@ function createTeamStruct(){
 }
 function mostrarProyMonthly(pproy){
     var contenedor = document.getElementById("tab-proj-01");
-    var rowHead=`<tr><th>ID</th><th>Nombre</th><th>Fase</th><th>Ene</th><th>Feb</th><th>Mar</th><th>Abr</th><th>May</th><th>Jun</th><th>Jul</th><th>Ago</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dic</th><th>Ene_</th><th>Feb_</th><th>Mar_</th><th>Abr_</th><th>A</th></tr>`;
+    var rowHead=`<tr><th>Cod</th><th>Nombre</th><th>Fase</th><th>Ene</th><th>Feb</th><th>Mar</th><th>Abr</th><th>May</th><th>Jun</th><th>Jul</th><th>Ago</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dic</th><th>Ene_</th><th>Feb_</th><th>Mar_</th><th>Abr_</th><th>A</th></tr>`;
+    var rowName=['<tr><th width="40px" style="width:40px">ID</th><th style="width:420px">Nombre</th><th style="width:20px">Fase</th><th style="width:80px">Inicio</th><th style="width:80px">Cierre</th>','<th>Ene</th>','<th>Feb</th>','<th>Mar</th>','<th>Abr</th>','<th>May</th>','<th>Jun</th>','<th>Jul</th>','<th>Ago</th>','<th>Sep</th>','<th>Oct</th>','<th>Nov</th>','<th>Dic</th>','<th>Ene_</th>','<th>Feb_</th>','<th>Mar_</th>','<th>Abr_</th>','<th>May_</th>','<th>Jun_</th>','<th>Jul_</th>','<th>Ago_</th>','<th>Sep_</th>','<th>Oct_</th>','<th>Nov_</th>','<th>Dic_</th>']
     contenedor.innerHTML=rowHead;
     var rows="";
     //console.log("factprojmonthy",factprojmonthy)
     var arr=factprojmonthy;
-    for(let i in arr){
+    console.log("data arr",arr)
+    var rowHead=rowName[0];
+    for(let m=INITIALMONTH;m<INITIALMONTH+MONTHTOSHOW;m++){
+        rowHead=rowHead+rowName[m];
+    }
+    rowHead=rowHead+"</tr>"
+    
+    for(let i in arr){         
         if(arr[i].proyecto==pproy||pproy==0){
-            rows=rows+`<tr><td>${arr[i].proyecto}</td><td>${arr[i].nb_proyecto}</td><td>${arr[i].fase}</td>
-                <td >${(arr[i].pEne?'Avg: '+arr[i].pEne.toFixed(1)+'%':'')}<br>${(arr[i].hEne?arr[i].hEne.toFixed(1)+' Hrs':'')}</td>
-                <td>${(arr[i].pfeb?'Avg: '+arr[i].pfeb.toFixed(1)+'%':'')}<br>${(arr[i].hfeb?arr[i].hfeb.toFixed(1)+' Hrs':'')}</td>
-                <td>${(arr[i].pmar?'Avg: '+arr[i].pmar.toFixed(1)+'%':'')}<br>${(arr[i].hmar?arr[i].hmar.toFixed(1)+' Hrs':'')}</td>
-                <td>${(arr[i].pabr?'Avg: '+arr[i].pabr.toFixed(1)+'%':'')}<br>${(arr[i].habr?''+arr[i].habr.toFixed(1)+' Hrs':'')}</td>
-                <td>${(arr[i].pmay?'Avg: '+arr[i].pmay.toFixed(1)+'%':'')}<br>${(arr[i].hmay?arr[i].hmay.toFixed(1)+' Hrs':'')}</td>
-                <td>${(arr[i].pjun?'Avg: '+arr[i].pjun.toFixed(1)+'%':'')}<br>${(arr[i].hjun?arr[i].hjun.toFixed(1)+' Hrs':'')}</td>
-                <td>${(arr[i].pjul?'Avg: '+arr[i].pjul.toFixed(1)+'%':'')}<br>${(arr[i].hjul?arr[i].hjul.toFixed(1)+' Hrs':'')}</td>
-                <td>${(arr[i].pago?'Avg: '+arr[i].pago.toFixed(1)+'%':'')}<br>${(arr[i].hago?arr[i].hago.toFixed(1)+' Hrs':'')}</td>
-                <td>${(arr[i].psep?'Avg: '+arr[i].psep.toFixed(1)+'%':'')}<br>${(arr[i].hsep?arr[i].hsep.toFixed(1)+' Hrs':'')}</td>
-                <td>${(arr[i].poct?'Avg: '+arr[i].poct.toFixed(1)+'%':'')}<br>${(arr[i].hoct?arr[i].hoct.toFixed(1)+' Hrs':'')}</td>
-                <td>${(arr[i].pnov?'Avg: '+arr[i].pnov.toFixed(1)+'%':'')}<br>${(arr[i].hnov?arr[i].hnov.toFixed(1)+' Hrs':'')}</td>
-                <td>${(arr[i].pdic?'Avg: '+arr[i].pdic.toFixed(1)+'%':'')}<br>${(arr[i].hdic?arr[i].hdic.toFixed(1)+' Hrs':'')}</td>
-                <td>${(arr[i].pEne_?'Avg: '+arr[i].pEne_.toFixed(1)+'%':'')}<br>${(arr[i].hEne_?arr[i].hEne_.toFixed(1)+' Hrs':'')}</td>
-                <td>${(arr[i].pfeb_?'Avg: '+arr[i].pfeb_.toFixed(1)+'%':'')}<br>${(arr[i].hfeb_?arr[i].hfeb_.toFixed(1)+' Hrs':'')}</td>
-                <td>${(arr[i].pmar_?'Avg: '+arr[i].pmar_.toFixed(1)+'%':'')}<br>${(arr[i].hmar_?arr[i].hmar_.toFixed(1)+' Hrs':'')}</td></tr>`
+            var tds=[];
+            tds.push(`<tr><td>${arr[i].proyecto}</td><td>${arr[i].nb_proyecto}</td><td>${arr[i].fase}</td><td>${(arr[i].inicio?arr[i].inicio.substring(0,10):'')}</td><td>${(arr[i].cierre?arr[i].cierre.substring(0,10):'')}</td>`)
+            tds.push(`<td >${(arr[i].pEne?'Avg: '+arr[i].pEne.toFixed(1)+'%':'')}<br>${(arr[i].hEne?arr[i].hEne.toFixed(1)+' Hrs':'')}</td>`);
+            tds.push(`<td>${(arr[i].pfeb?'Avg: '+arr[i].pfeb.toFixed(1)+'%':'')}<br>${(arr[i].hfeb?arr[i].hfeb.toFixed(1)+' Hrs':'')}</td>`);
+            tds.push(`<td>${(arr[i].pmar?'Avg: '+arr[i].pmar.toFixed(1)+'%':'')}<br>${(arr[i].hmar?arr[i].hmar.toFixed(1)+' Hrs':'')}</td>`);
+            tds.push(`<td>${(arr[i].pabr?'Avg: '+arr[i].pabr.toFixed(1)+'%':'')}<br>${(arr[i].habr?''+arr[i].habr.toFixed(1)+' Hrs':'')}</td>`);
+            tds.push(`<td>${(arr[i].pmay?'Avg: '+arr[i].pmay.toFixed(1)+'%':'')}<br>${(arr[i].hmay?arr[i].hmay.toFixed(1)+' Hrs':'')}</td>`);
+            tds.push(`<td>${(arr[i].pjun?'Avg: '+arr[i].pjun.toFixed(1)+'%':'')}<br>${(arr[i].hjun?arr[i].hjun.toFixed(1)+' Hrs':'')}</td>`);
+            tds.push(`<td>${(arr[i].pjul?'Avg: '+arr[i].pjul.toFixed(1)+'%':'')}<br>${(arr[i].hjul?arr[i].hjul.toFixed(1)+' Hrs':'')}</td>`);
+            tds.push(`<td>${(arr[i].pago?'Avg: '+arr[i].pago.toFixed(1)+'%':'')}<br>${(arr[i].hago?arr[i].hago.toFixed(1)+' Hrs':'')}</td>`);
+            tds.push(`<td>${(arr[i].psep?'Avg: '+arr[i].psep.toFixed(1)+'%':'')}<br>${(arr[i].hsep?arr[i].hsep.toFixed(1)+' Hrs':'')}</td>`);
+            tds.push(`<td>${(arr[i].poct?'Avg: '+arr[i].poct.toFixed(1)+'%':'')}<br>${(arr[i].hoct?arr[i].hoct.toFixed(1)+' Hrs':'')}</td>`);
+            tds.push(`<td>${(arr[i].pnov?'Avg: '+arr[i].pnov.toFixed(1)+'%':'')}<br>${(arr[i].hnov?arr[i].hnov.toFixed(1)+' Hrs':'')}</td>`);
+            tds.push(`<td>${(arr[i].pdic?'Avg: '+arr[i].pdic.toFixed(1)+'%':'')}<br>${(arr[i].hdic?arr[i].hdic.toFixed(1)+' Hrs':'')}</td>`);
+            tds.push(`<td>${(arr[i].pEne_?'Avg: '+arr[i].pEne_.toFixed(1)+'%':'')}<br>${(arr[i].hEne_?arr[i].hEne_.toFixed(1)+' Hrs':'')}</td>`);
+            tds.push(`<td>${(arr[i].pfeb_?'Avg: '+arr[i].pfeb_.toFixed(1)+'%':'')}<br>${(arr[i].hfeb_?arr[i].hfeb_.toFixed(1)+' Hrs':'')}</td>`);
+            tds.push(`<td>${(arr[i].pmar_?'Avg: '+arr[i].pmar_.toFixed(1)+'%':'')}<br>${(arr[i].hmar_?arr[i].hmar_.toFixed(1)+' Hrs':'')}</td>`);
+            tds.push(`<td>${(arr[i].pabr_?'Avg: '+arr[i].pabr_.toFixed(1)+'%':'')}<br>${(arr[i].habr_?arr[i].habr_.toFixed(1)+' Hrs':'')}</td>`);
+            tds.push(`<td>${(arr[i].pmay_?'Avg: '+arr[i].pmay_.toFixed(1)+'%':'')}<br>${(arr[i].hmay_?arr[i].hmay_.toFixed(1)+' Hrs':'')}</td>`);
+            tds.push(`<td>${(arr[i].pjun_?'Avg: '+arr[i].pjun_.toFixed(1)+'%':'')}<br>${(arr[i].hjun_?arr[i].hjun_.toFixed(1)+' Hrs':'')}</td>`);
+            tds.push(`<td>${(arr[i].pjul_?'Avg: '+arr[i].pjul_.toFixed(1)+'%':'')}<br>${(arr[i].hjul_?arr[i].hjul_.toFixed(1)+' Hrs':'')}</td>`);
+            tds.push(`<td>${(arr[i].pago_?'Avg: '+arr[i].pago_.toFixed(1)+'%':'')}<br>${(arr[i].hago_?arr[i].hago_.toFixed(1)+' Hrs':'')}</td>`);
+            tds.push(`<td>${(arr[i].psep_?'Avg: '+arr[i].psep_.toFixed(1)+'%':'')}<br>${(arr[i].hsep_?arr[i].hsep_.toFixed(1)+' Hrs':'')}</td>`);
+            tds.push(`<td>${(arr[i].poct_?'Avg: '+arr[i].poct_.toFixed(1)+'%':'')}<br>${(arr[i].hoct_?arr[i].hoct_.toFixed(1)+' Hrs':'')}</td>`);
+            //if(pproy!=0) console.log("tds",tds);
+            rows=rows+tds[0];
+            for(let j=INITIALMONTH;j<INITIALMONTH+MONTHTOSHOW;j++){
+                if(typeof tds[j]!="undefined" )
+                    rows=rows+tds[j];
+            }
+            
+            
         }
     }
     contenedor.innerHTML=rowHead+rows;
@@ -1598,7 +1627,7 @@ function sendToServer(){
         <b>PROJECT VIEW</b><br>
         Promedio de dedicación del equipo, Total horas
     </div>
-    <table id="tab-proj-01" class="paleBlueRows" style="font-family: Verdana, Geneva, Tahoma, sans-serif;font-size: 8pt;width:98%">
+    <table id="tab-proj-01" class="paleBlueRows" style="width:75%" >
 
     </table>
 </div>
