@@ -162,7 +162,7 @@ button{
     color:white;
 }
 body{
-    background-color: #9999ff;
+    background-color: #ffffff;
     border:0;
     margin:0;
 }
@@ -284,6 +284,7 @@ table.paleBlueRows tr:nth-child(even) {
 }
 table.paleBlueRows thead {
   background: #0B6FA4;
+  color:#FFFFFF;
   border-bottom: 5px solid #FFFFFF;
 }
 table.paleBlueRows thead th {
@@ -768,6 +769,7 @@ function buildProject(dtaArr){
             }  
             document.getElementById(botonw.id).addEventListener("click", function() {
                     var dat=this.name.split("-");
+                    var ht=0;
                     let wrp=document.getElementById("w-"+dat[1]);
                     let prj=dat[1].split(".");
                     //console.log("display",wrp.style.display.length);
@@ -775,7 +777,9 @@ function buildProject(dtaArr){
                     if(wrp.style.display=="none"||wrp.style.display.length==0){
                         wrp.style.display="block";
                         bwrp.innerHTML="i";
-                        fillProjSumm(prj[0]);
+                        ht = parseInt(fillProjSumm(prj[0]));
+                        ht = ht + 40;
+                        document.getElementById("div-content-head").style.height=ht+"px";
                         mostrarProyMonthly(prj[0]);
                     }else{
                         wrp.style.display="none";
@@ -784,6 +788,7 @@ function buildProject(dtaArr){
                         content.style.display="none"
                         var tabla=document.getElementById("projSumm");
                         tabla.innerHTML = "";
+                        document.getElementById("div-content-head").style.height="120px";
                         mostrarProyMonthly(0);
                         let btn=document.getElementById("btn-both");
                         btn.textContent="Project View & Staffing View";
@@ -1178,8 +1183,8 @@ function createTeamStruct(){
 }
 function mostrarProyMonthly(pproy){
     var contenedor = document.getElementById("tab-proj-01");
-    var rowHead=`<tr><th>Cod</th><th>Nombre</th><th>Fase</th><th>Ene</th><th>Feb</th><th>Mar</th><th>Abr</th><th>May</th><th>Jun</th><th>Jul</th><th>Ago</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dic</th><th>Ene_</th><th>Feb_</th><th>Mar_</th><th>Abr_</th><th>A</th></tr>`;
-    var rowName=['<tr><th width="40px" style="width:40px">ID</th><th style="width:420px">Nombre</th><th style="width:20px">Fase</th><th style="width:80px">Inicio</th><th style="width:80px">Cierre</th>','<th>Ene</th>','<th>Feb</th>','<th>Mar</th>','<th>Abr</th>','<th>May</th>','<th>Jun</th>','<th>Jul</th>','<th>Ago</th>','<th>Sep</th>','<th>Oct</th>','<th>Nov</th>','<th>Dic</th>','<th>Ene_</th>','<th>Feb_</th>','<th>Mar_</th>','<th>Abr_</th>','<th>May_</th>','<th>Jun_</th>','<th>Jul_</th>','<th>Ago_</th>','<th>Sep_</th>','<th>Oct_</th>','<th>Nov_</th>','<th>Dic_</th>']
+    var rowHead=`<thead><tr><th>Cod</th><th>Nombre</th><th>Fase</th><th>Ene</th><th>Feb</th><th>Mar</th><th>Abr</th><th>May</th><th>Jun</th><th>Jul</th><th>Ago</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dic</th><th>Ene_</th><th>Feb_</th><th>Mar_</th><th>Abr_</th><th>A</th></tr></thead>`;
+    var rowName=['<thead><tr><th width="40px" style="width:40px">ID</th><th style="width:420px">Nombre</th><th style="width:20px">Fase</th><th style="width:80px">Inicio</th><th style="width:80px">Cierre</th>','<th>Ene</th>','<th>Feb</th>','<th>Mar</th>','<th>Abr</th>','<th>May</th>','<th>Jun</th>','<th>Jul</th>','<th>Ago</th>','<th>Sep</th>','<th>Oct</th>','<th>Nov</th>','<th>Dic</th>','<th>Ene_</th>','<th>Feb_</th>','<th>Mar_</th>','<th>Abr_</th>','<th>May_</th>','<th>Jun_</th>','<th>Jul_</th>','<th>Ago_</th>','<th>Sep_</th>','<th>Oct_</th>','<th>Nov_</th>','<th>Dic_</th>']
     contenedor.innerHTML=rowHead;
     var rows="";
     //console.log("factprojmonthy",factprojmonthy)
@@ -1189,7 +1194,7 @@ function mostrarProyMonthly(pproy){
     for(let m=INITIALMONTH;m<INITIALMONTH+MONTHTOSHOW;m++){
         rowHead=rowHead+rowName[m];
     }
-    rowHead=rowHead+"</tr>"
+    rowHead=rowHead+"</tr></thead>"
     
     for(let i in arr){         
         if(arr[i].proyecto==pproy||pproy==0){
@@ -1228,6 +1233,7 @@ function mostrarProyMonthly(pproy){
         }
     }
     contenedor.innerHTML=rowHead+rows;
+    console.log("contenedor height",contenedor.offsetHeight+" "+contenedor.style.height)
 }
 
 let asynGetFromDB = async (url) => { 
@@ -1351,6 +1357,7 @@ total_hrs: 1787.22222
             </tr>*/
 function headTable(tabla){
     var fila1=document.createElement("TR");
+    var hd=document.createElement("thead")
     //  crear columnas
     var idCol1=document.createElement("TD");
     var faseCol1=document.createElement("TD");
@@ -1372,7 +1379,8 @@ function headTable(tabla){
     fila1.appendChild(totHrsCol1);
     fila1.appendChild(totWeeksCol1);
     fila1.appendChild(totDuraWeekCol1);
-    tabla.appendChild(fila1);
+    hd.appendChild(fila1)
+    tabla.appendChild(hd);
 }
 function fillProjSumm(projId){
     //   traer tabla
@@ -1439,12 +1447,18 @@ function fillProjSumm(projId){
             tabla.appendChild(fila1);
         } 
     }
-
+    console.log("projSumm",tabla.offsetHeight)
+    return tabla.offsetHeight;
 }
 function filtrarPorProyecto(){
     var proyId = document.getElementById("projectsBox").value;
     //console.log("selected "+proyId);
-    fillProjSumm(proyId);
+    var ht=parseInt(fillProjSumm(proyId));
+    ht = ht + 40;
+    if(ht>40)
+        document.getElementById("div-content-head").style.height=ht+"px";
+    else
+    document.getElementById("div-content-head").style.height="120px";
     var classProjArr = document.getElementsByClassName("proyecto");
     if(proyId=="Seleccione..."){
         for(let ii in classProjArr){
@@ -1583,7 +1597,7 @@ function sendToServer(){
 </head>
 <body>
 
-<div >
+<div id="div-content-head" style="width: 100%;height:120px;background-color:#9999ff">&nbsp;
     <div style="float: left;">
         <img src="image/cybs-llogo-new-blanco.png" style="padding-top: 15px;" width="80px"></img>
     </div>
