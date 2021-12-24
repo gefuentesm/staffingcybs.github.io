@@ -238,6 +238,10 @@ input.dedi{
     font-size: 8pt;
     background-color: #e6f9ff;
 }
+.properties{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 12pt;
+}
 .carddup{
     border:1px solid lightgray;
     margin-top: 4px;
@@ -614,6 +618,48 @@ function BotonDuplicar(pid, m, nb, inOnSite){
     div.appendChild(inp2);
     wrp.appendChild(div);
 }
+function showProperties(bar,param){
+    var params=param.split(".");
+    var firstParam=params[0].split("-");
+    var idpParam=firstParam[1];
+    var fasePara=params[1];
+    var mesParam=params[2];
+    console.log("params",param)
+    bar.style.width="400px";
+    bar.style.padding="4px";
+    bar.style.marginLeft=(window.innerWidth-400)+"px"
+    bar.style.height=(window.window.innerHeight)+"px"
+    var contentBar=document.createElement("DIV");
+    contentBar.className="properties";
+    var contentProperties=document.createElement("DIV");
+    var textTitleBar;
+    
+    var existe=false;
+    //console.log("dataArr",dataArr);
+    var tabProperties="<table class='paleBlueRows'><thead><tr><th>Nombre</th><th>On Site<th>Dedicación</th><th>Original</th></tr></thead><tbody>";
+    for(let i in dataArr){
+        if(dataArr[i].fase==fasePara && dataArr[i].IDp==idpParam){
+            if((dataArr[i].year>INITIALYEAR && dataArr[i].mes+12==mesParam)||(dataArr[i].year==INITIALYEAR && dataArr[i].mes==mesParam) ){
+                existe=true;
+                let mesProp=dataArr[i].mes>12?dataArr[i].mes+"("+(dataArr[i].mes-12)+")":dataArr[i].mes
+                textTitleBar=dataArr[i].IDp+" "+dataArr[i].proyecto+"<br> Fase:"+dataArr[i].fase+"<br> Mes :"+mesProp+"<br> Año :"+dataArr[i].year+"<br><hr><br>";
+                let teamProp=dataArr[i].equipo;
+                for(let j in teamProp){
+                    let onsite=teamProp[j].inOnSite==1?"Si":""
+                    tabProperties=tabProperties+`<tr><td>${teamProp[j].nombre}</td><td>${onsite}</td><td>${teamProp[j].dedicacion}</td><td>${teamProp[j].original}</td></tr>`
+                }
+            }
+        }
+    }
+    if(existe){
+        tabProperties=tabProperties+"</tbody></table><br><hr>";
+        contentProperties.innerHTML=tabProperties;
+        contentBar.innerHTML=textTitleBar;
+        bar.appendChild(contentBar);
+        bar.appendChild(contentProperties);
+        
+    }
+}
 function buildProject(dtaArr){
     //console.log("En buildProject",dtaArr);
     //console.log("year",INITIALYEAR);
@@ -624,10 +670,7 @@ function buildProject(dtaArr){
         var currYear=dataArr[i].year;
         var diffYears=currYear-INITIALYEAR;
         var idMo=currMo+diffYears*12; 
-        if(dataArr[i].IDp==197){
-            console.log("197",dataArr[i]);
-            console.log("idMo",idMo);
-        }       
+
         if(INITIALYEAR<=dataArr[i].year && dataArr[i].year<=YEARTOSHOW && idMo>=INITIALMONTH && idMo<=INITIALMONTH+MONTHTOSHOW){            
 
             //console.log("mes",currMo);
@@ -665,7 +708,7 @@ function buildProject(dtaArr){
 
             teamText=teamText+")";
             teamTooltip=teamTooltip+" - ";
-            teamTooltip=dataArr[i].IDp+"-"+dataArr[i].proyecto+"   - Team:   "+teamTooltip;
+            teamTooltip=dataArr[i].IDp+"-"+dataArr[i].proyecto+"   - Team: "+teamTooltip;
             var nodeTexto=dataArr[i].IDp+"-"+dataArr[i].proyecto.substring(0,28)+"... fase "+dataArr[i].fase+" mes "+dataArr[i].mes+" año "+dataArr[i].year+" ";
             var texto=document.createTextNode(nodeTexto);
             var divtooltip=document.createElement("div");
@@ -774,8 +817,10 @@ function buildProject(dtaArr){
                     let prj=dat[1].split(".");
                     //console.log("display",wrp.style.display.length);
                     let bwrp=document.getElementById("bw-"+dat[1]);
+                    let bar=document.getElementById("bar")
                     if(wrp.style.display=="none"||wrp.style.display.length==0){
                         wrp.style.display="block";
+                        showProperties(bar,this.name);
                         bwrp.innerHTML="i";
                         ht = parseInt(fillProjSumm(prj[0]));
                         ht = ht + 40;
@@ -783,6 +828,10 @@ function buildProject(dtaArr){
                         mostrarProyMonthly(prj[0]);
                     }else{
                         wrp.style.display="none";
+                        bar.style.width="0";
+                        bar.style.height="0";
+                        bar.style.padding="0";
+                        bar.innerHTML="";
                         bwrp.innerHTML="v";
                         var content = document.getElementById("container-project");
                         content.style.display="none"
@@ -847,9 +896,9 @@ function cleanMonStruct(mes){
 }
 function setNewDedication(proy,fase,mes,usr_name,inOnSite,usr_dedic){
     // buscar el proyecto
-    console.log("setNewDedication-parametros",mes);
-    console.log("setNewDedication-parametros",proy+"-"+fase+"-"+usr_name+"-"+usr_dedic);
-    console.log("dataArr",dataArr);
+    //console.log("setNewDedication-parametros",mes);
+    //console.log("setNewDedication-parametros",proy+"-"+fase+"-"+usr_name+"-"+usr_dedic);
+    //console.log("dataArr",dataArr);
     var pmes=mes;
     //if(parseInt(mes)>12) pmes=parseInt(mes)-12;
     var existe=false;
@@ -866,7 +915,7 @@ function setNewDedication(proy,fase,mes,usr_name,inOnSite,usr_dedic){
                 if(usr_name==dataArr[i].equipo[j].nombre && dataArr[i].equipo[j].inOnSite==inOnSite){
                     existe=true;
                     dataArr[i].equipo[j].dedicacion=usr_dedic;
-                    console.log("setNewDedication 1",usr_dedic);
+                    //console.log("setNewDedication 1",usr_dedic);
                 }
                 totChg=totChg+parseFloat(dataArr[i].equipo[j].dedicacion);
             }
@@ -875,8 +924,8 @@ function setNewDedication(proy,fase,mes,usr_name,inOnSite,usr_dedic){
                 newUsr.nombre=usr_name;
                 newUsr.dedicacion=usr_dedic;
                 newUsr.inOnSite=inOnSite;
-                console.log("setNewDedication 2",usr_dedic);
-                console.log("setNewDedication 2",newUsr.dedicacion);
+                //console.log("setNewDedication 2",usr_dedic);
+                //console.log("setNewDedication 2",newUsr.dedicacion);
                 dataArr[i].equipo.push(newUsr);
                 totChg=totChg+parseFloat(usr_dedic);
             }
@@ -886,8 +935,8 @@ function setNewDedication(proy,fase,mes,usr_name,inOnSite,usr_dedic){
     var id="chg-"+proy+"."+fase+"."+mes
     var totChngEnPag=document.getElementById(id);
     //console.log("id del total chg",id)
-    console.log("valor",totChg);
-    console.log("orig",totOrig);
+    //console.log("valor",totChg);
+    //console.log("orig",totOrig);
     //console.log("totDed",totDed);
     var color="orange";
     if(totOrig.toFixed(2)==totChg.toFixed(2)) {
@@ -1189,7 +1238,7 @@ function mostrarProyMonthly(pproy){
     var rows="";
     //console.log("factprojmonthy",factprojmonthy)
     var arr=factprojmonthy;
-    console.log("data arr",arr)
+    //console.log("data arr",arr)
     var rowHead=rowName[0];
     for(let m=INITIALMONTH;m<INITIALMONTH+MONTHTOSHOW;m++){
         rowHead=rowHead+rowName[m];
@@ -1233,7 +1282,7 @@ function mostrarProyMonthly(pproy){
         }
     }
     contenedor.innerHTML=rowHead+rows;
-    console.log("contenedor height",contenedor.offsetHeight+" "+contenedor.style.height)
+    //console.log("contenedor height",contenedor.offsetHeight+" "+contenedor.style.height)
 }
 
 let asynGetFromDB = async (url) => { 
@@ -1447,7 +1496,7 @@ function fillProjSumm(projId){
             tabla.appendChild(fila1);
         } 
     }
-    console.log("projSumm",tabla.offsetHeight)
+    //console.log("projSumm",tabla.offsetHeight)
     return tabla.offsetHeight;
 }
 function filtrarPorProyecto(){
@@ -1494,21 +1543,21 @@ function filtrarPorProyecto(){
     }
 }
 function mostrar() {
-    console.log("mostrar");
+    //console.log("mostrar");
     document.getElementById("sidebar").style.width = "200px";
     document.getElementById("contenido").style.marginLeft = "200px";
     document.getElementById("tab-proj-01").style.marginLeft = "200px";
-    console.log("margin",document.getElementById("tab-proj-01").style.marginLeft)
+    //console.log("margin",document.getElementById("tab-proj-01").style.marginLeft)
     document.getElementById("abrir").style.display = "none";
     document.getElementById("cerrar").style.display = "inline";
 }
 
 function ocultar() {
-    console.log("ocultar");
+    //console.log("ocultar");
     document.getElementById("sidebar").style.width = "0";
     document.getElementById("contenido").style.marginLeft = "0";
     document.getElementById("tab-proj-01").style.marginLeft = "0";
-    console.log("margin",document.getElementById("tab-proj-01").style.marginLeft)
+    //console.log("margin",document.getElementById("tab-proj-01").style.marginLeft)
     document.getElementById("abrir").style.display = "inline";
     document.getElementById("cerrar").style.display = "none";
 }
@@ -1649,9 +1698,16 @@ function sendToServer(){
     <div style="font-family: Verdana, Geneva, Tahoma, sans-serif;font-size: 10pt;padding-top:10px;padding-bottom: 10px;">
         <b>STAFFING VIEW</b>
     </div>
+    <div id="bar"  style="z-index: 20;height:0;width:0;background-color:#fff2e6;top:0;left:0;position: fixed;
+transition: height 1s;"></div>
     <div id="div3" style="display: none;" ></div>
 </div>
 
-    <script>setProy();</script>
+    <script>setProy();
+    window.addEventListener('resize', function(event) {
+    document.getElementById("bar").style.marginLeft=(window.innerWidth-400)+"px";
+    document.getElementById("bar").style.height=window.window.innerHeight+"px"
+}, true);   
+    </script>
 </body>
 </html>
