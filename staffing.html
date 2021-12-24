@@ -645,7 +645,7 @@ function showProperties(bar,param){
                 textTitleBar=dataArr[i].IDp+" "+dataArr[i].proyecto+"<br> Fase:"+dataArr[i].fase+"<br> Mes :"+mesProp+"<br> Año :"+dataArr[i].year+"<br><hr><br>";
                 let teamProp=dataArr[i].equipo;
                 for(let j in teamProp){
-                    let onsite=teamProp[j].inOnSite==1?"Si":""
+                    let onsite=teamProp[j].inOnSite==1?"Si":"No"
                     tabProperties=tabProperties+`<tr><td>${teamProp[j].nombre}</td><td>${onsite}</td><td>${teamProp[j].dedicacion}</td><td>${teamProp[j].original}</td></tr>`
                 }
             }
@@ -654,7 +654,7 @@ function showProperties(bar,param){
     if(existe){
         tabProperties=tabProperties+"</tbody></table><br><hr>";
         contentProperties.innerHTML=tabProperties;
-        contentBar.innerHTML=textTitleBar;
+        contentBar.innerHTML=bar.innerHTML.indexOf("PROPERTIES VIEW")>=0?textTitleBar:"<h3>PROPERTIES VIEW</h3>"+textTitleBar;
         bar.appendChild(contentBar);
         bar.appendChild(contentProperties);
         
