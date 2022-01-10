@@ -1,0 +1,320 @@
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+  }
+  
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 160px;
+    height:220px;
+    font-size: 8pt;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 30%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+  }
+  
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }
+  header {
+      background:#333;
+      color:#eee;
+      width:100%;
+  }
+  
+  input#abrir-cerrar {
+      visibility:hidden;
+      position: absolute;
+      top: -9999px;
+  }
+  
+  
+  label[for="abrir-cerrar"] {
+      cursor:pointer;
+      padding: 1rem;
+      background-color:#333;
+      color:#fff;
+      display:inline-block;
+      width:200%;
+  
+  }
+  
+  .cerrar {
+      display:none;
+  }
+  
+  #sidebar {
+      width:0;
+  }
+  
+  #contenido {
+      margin-left:0;
+  }
+  #container-project{
+      margin-left:0;
+  }
+  
+  input#abrir-cerrar:checked ~ #sidebar {
+      width:206px;
+  }
+  
+  input#abrir-cerrar:checked + label[for="abrir-cerrar"], input#abrir-cerrar:checked ~ #contenido {
+      margin-left:206px;
+      transition: margin-left .4s;
+  }
+  input#abrir-cerrar:checked + label[for="abrir-cerrar"], input#abrir-cerrar:checked ~ #container-project {
+      margin-left:206px;
+      transition: margin-left .4s;
+  }
+  
+  input#abrir-cerrar:checked + label[for="abrir-cerrar"] .cerrar {
+      display:inline;
+  }
+  
+  input#abrir-cerrar:checked + label[for="abrir-cerrar"] .abrir {
+      display:none;
+  }
+  .name{
+      width: 120px;
+  }
+  .sidebar {
+      position: fixed;
+      height: 100%;
+      width: 0;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      background-color: #00324b;
+      overflow-x: hidden;
+      transition: 0.4s;
+      padding: 1rem 0;    
+      box-sizing:border-box;
+  }
+  
+  .sidebar .boton-cerrar {
+      position: absolute;
+      top: 0.5rem;
+      right: 1rem;
+      font-size: 2rem;
+      display: block;
+      padding: 0;
+      line-height: 1.5rem;
+      margin: 0;
+      height: 32px;
+      width: 32px;
+      text-align: center;
+      vertical-align: top;
+  }
+  
+  .sidebar ul, .sidebar li{
+      margin:0;
+      padding:0;
+      list-style:none inside;
+  }
+  
+  
+  h1 {
+      color:#f90;
+      font-size:180%;
+      font-weight:normal;
+  }
+  #contenido {
+      transition: margin-left .4s;
+      padding: 1rem;
+  }
+  #container-project{
+      transition: margin-left .4s;
+      padding: 1rem;
+  }
+  .abrir-cerrar {
+      color: #2E88C7;
+      font-size:1rem;   
+  }
+  button{
+      background-color: #9999ff;
+      color:white;
+  }
+  .btn_lite{
+      background-color: #e0e0fa;
+      color:black;
+  }
+  body{
+      background-color: #ffffff;
+      border:0;
+      margin:0;
+  }
+  .totales{
+      background-color: #cccccc;
+      vertical-align: top;
+      padding: 6px;
+  }
+  input{
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 9pt;  
+  }
+  .cardmini{
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 9pt;
+      width: 98%;
+  }
+  .bad{
+      background-color: rgb(248, 160, 160);
+      color: white;
+      border: 1px solid white;
+  }
+  span.nb{
+      display:inline-block;
+      width:150px;
+  }
+  th{
+      font-family: Arial, Helvetica, sans-serif;
+      color:white;
+      font-size: 12pt;
+  }
+  input{
+      border:1px solid lightgray;
+  }
+  input.dedi{
+      display:inline-block;
+      width:20px;
+  }
+  .good{
+      background-color: green;
+      color: white;
+      border: 1px solid white;
+      display:none;
+  }
+  .mes{
+      background-color: #cccccc;
+      height: 100%;
+      padding-top: 2px;
+      padding-bottom: 10px;
+  }
+  #team{
+      background-color: black;
+      height: 100%;
+      padding: 3px;
+      width: 200px;
+      margin: 2pxpx;
+  }
+  .teamWrapper{
+      display: none;
+  }
+  .sidebar::-webkit-scrollbar {
+      display: none;  /* Ocultar scroll */
+  }
+  .card{
+      border:1px solid lightgray;
+      display: block;
+      margin-top: 4px;
+      margin-bottom: 4px;
+      padding-top: 2px;
+      padding-bottom: 2px;
+      padding-left: 2px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 8pt;
+      background-color: #e6f9ff;
+  }
+  .properties{
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      font-size: 12pt;
+  }
+  .carddup{
+      border:1px solid lightgray;
+      margin-top: 4px;
+      margin-bottom: 4px;
+      padding-top: 2px;
+      padding-bottom: 2px;
+      background-color: dimgrey;
+  }
+  .proyecto {
+    width: 200px;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid silver;
+    vertical-align: top;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 9pt;
+    background-color: white;
+    color:#006080;
+  }
+  #div1, #div2, #div4, #div5 {
+    width: 200px;
+    height: 235px;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid black;
+    vertical-align: top;
+  }
+  div.hist{
+    width:380px;
+    height: 400px;
+    padding:4px;
+    overflow-x:scroll;
+    background-color:silver;
+  }
+  table.paleBlueRows {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    border: 1px solid #FFFFFF;
+  
+    text-align: center;
+    border-collapse: collapse;
+  }
+  table.paleBlueRows td, table.paleBlueRows th {
+    border: 1px solid #FFFFFF;
+    padding: 3px 2px;
+  }
+  table.paleBlueRows tbody td {
+    font-size: 13px;
+  }
+  table.paleBlueRows tr:nth-child(even) {
+    background: #d3d3fc;
+  }
+  table.paleBlueRows thead {
+    background: #9999ff;
+    color:#FFFFFF;
+    border-bottom: 5px solid #FFFFFF;
+  }
+  table.paleBlueRows thead th {
+    font-size: 17px;
+    font-weight: bold;
+    color: #FFFFFF;
+    text-align: center;
+    border-left: 2px solid #FFFFFF;
+  }
+  table.paleBlueRows thead th:first-child {
+    border-left: none;
+  }
+  
+  table.paleBlueRows tfoot {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333333;
+    background: #D0E4F5;
+    border-top: 3px solid #444444;
+  }
+  table.paleBlueRows tfoot td {
+    font-size: 14px;
+  }

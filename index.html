@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+<link rel="stylesheet" href="css/maincss.css"> </link>
+<script src="scripts/utils.js"></script>
+<script src="scripts/businessclass.js"></script>  
+<script src="scripts/viewclass.js"></script>
+<script src="scripts/mainjs.js"></script>  
+</head>
+<body>
+
+    <div id="div-content-head" style="width: 100%;height:120px;background-color:#9999ff">&nbsp;
+        <div style="float: left;">
+            <img src="image/cybs-llogo-new-blanco.png" style="padding-top: 15px;" width="80px"></img>
+        </div>
+        <div style="float: left;width:300px;margin-left: 130px;">
+            <span style="width: 600px;text-align: left;"><h2 style="color:white">Staffing v0.99</h2></span>
+        </div>
+        <div>
+            <table id="projSumm" style="margin-left: 300px;" class="paleBlueRows">
+    
+            </table></div>
+        
+    </div>
+    <input type="checkbox" id="abrir-cerrar" name="abrir-cerrar" value="">
+    <label for="abrir-cerrar">☰ <span class="abrir">Abrir</span><span class="cerrar">Cerrar</span>&nbsp;&nbsp;
+        <button type="button" style="color:white" onclick="btn_save()">Save</button>|
+        <button type="button" id="btn-hojas" style="color:white" onclick="showContainerProj()">Project View</button>
+        <button type="button" id="btn-both" style="color:white" onclick="showContainerBoth()">Project View & Staffing View</button>
+    </label>
+    
+    <div id="sidebar" class="sidebar">
+        <img src="image/cybs-llogo-new-blanco.png" width="80px"></img>
+        <div class="totales">
+            <div>Project Filter</div>
+            <select id="projectsBox" onchange="projectFilterView.filtrarPorProyecto()" style="width: 185px;height: 30px;">
+                <option>Seleccione...</option>
+            </select>
+        </div>
+        <div style="text-align: center;">  <h4 style="color:white">CYBS Team</h4></div>
+    
+        <div id="trash"  ondrop="util.drop2(event)" ondragover="util.allowDrop(event)" style="border:1px solid #a31aff;color:#f5e6ff; width: 90%; height: 100px; ">
+            <svg width="40" height="40" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" overflow="hidden"><defs><clipPath id="clip0"><rect x="592" y="312" width="40" height="40"/></clipPath><clipPath id="clip1"><rect x="592" y="312" width="39" height="39"/></clipPath><clipPath id="clip2"><rect x="592" y="312" width="39" height="39"/></clipPath><clipPath id="clip3"><rect x="592" y="312" width="39" height="39"/></clipPath></defs><g clip-path="url(#clip0)" transform="translate(-592 -312)"><g clip-path="url(#clip1)"><g clip-path="url(#clip2)"><g clip-path="url(#clip3)"><path d="M623.688 320.125 616.781 320.125 616.781 318.094C616.781 316.509 615.522 315.25 613.938 315.25L609.062 315.25C607.478 315.25 606.219 316.509 606.219 318.094L606.219 320.125 599.312 320.125C598.419 320.125 597.688 320.856 597.688 321.75L597.688 323.375 625.312 323.375 625.312 321.75C625.312 320.856 624.581 320.125 623.688 320.125ZM608.656 318.094C608.656 317.85 608.819 317.688 609.062 317.688L613.938 317.688C614.181 317.688 614.344 317.85 614.344 318.094L614.344 320.125 608.656 320.125 608.656 318.094Z" fill="#FFFFFF" fill-rule="nonzero" fill-opacity="1"/><path d="M600.125 346.125C600.125 347.019 600.856 347.75 601.75 347.75L621.25 347.75C622.144 347.75 622.875 347.019 622.875 346.125L622.875 325 600.125 325 600.125 346.125ZM616.781 327.438 619.219 327.438 619.219 345.312 616.781 345.312 616.781 327.438ZM610.281 327.438 612.719 327.438 612.719 345.312 610.281 345.312 610.281 327.438ZM603.781 327.438 606.219 327.438 606.219 345.312 603.781 345.312 603.781 327.438Z" fill="#FFFFFF" fill-rule="nonzero" fill-opacity="1"/></g></g></g></g></svg>
+        </div>
+    
+        <div id="team">
+    
+        </div>
+    
+    </div>
+    <div id="container-project" style="display: none;">
+        <div style="font-family: Verdana, Geneva, Tahoma, sans-serif;font-size: 10pt;padding-top:10px;padding-bottom: 10px;">
+            <b>PROJECT VIEW</b><br>
+            Promedio de dedicación del equipo, Total horas
+        </div>
+        <table id="tab-proj-01" class="paleBlueRows" style="width:75%" >
+    
+        </table>
+    </div>
+    <div id="contenido" >
+        <div style="font-family: Verdana, Geneva, Tahoma, sans-serif;font-size: 10pt;padding-top:10px;padding-bottom: 10px;">
+            <b>STAFFING VIEW</b>
+        </div>
+        <div id="bar"  style="z-index: 20;height:0;width:0;background-color:#fff2e6;top:0;left:0;position: fixed;
+    transition: height 1s;"></div>
+        <div id="div3" style="display: none;" ></div>
+    </div>
+    
+        <script>setProy();
+        window.addEventListener('resize', function(event) {
+        document.getElementById("bar").style.marginLeft=(window.innerWidth-400)+"px";
+        document.getElementById("bar").style.height=window.window.innerHeight+"px"
+    }, true);   
+        </script>
+
+</body>
+</html>
