@@ -1,0 +1,195 @@
+<! DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<html>
+    <body>
+        <button onclick="procSort()">Sort</button><button onclick="clearSort()">Clean Sort</button>
+        <div id="tabla"></div>
+        <script>
+            //Here is a simple functional generic approach. Specify sort order using array. Prepend minus to specify descending order.
+class Field{
+    constructor(){
+        this.field=[]
+        
+    }
+    add(id,idBoton,fieldName){
+        this.field.push({id:id,idBoton:idBoton,fieldName:fieldName})
+    }
+    getById(id){
+        let obj;
+        this.field.forEach(f=>{
+            if(f.id==id){
+                console.log("getById",id,f)
+                obj=f;
+            }
+        })
+        console.log("getById 2",id,obj)
+        return obj;
+    }
+    getByName(name){
+        let obj;
+        this.field.forEach(f=>{
+            if(f.fieldName==name){
+                obj = f;
+            }
+        })
+        return obj;
+    }
+}
+class SortList{
+    constructor(fields){
+        this.sortArr=[]
+        this.fieldObj=new Field();
+        this.fieldObj=fields
+    }
+    addToList(id){
+        let obj={}
+        let tipo=""
+        obj=this.fieldObj.getById(id);
+
+        let btn=obj.idBoton;
+        let pref="";
+        if(document.getElementById(btn).innerHTML=="-") tipo="^";
+        if(document.getElementById(btn).innerHTML=="^") {tipo="v";pref="-"}
+        
+        let field=obj.fieldName;
+        let pos=-1;
+        let pos1=-1;
+
+        pos=this.sortArr.indexOf(field);
+        pos1=this.sortArr.indexOf("-"+field);
+        if(pos>=0 || pos1>=0){          // existe
+            if(pos>=0) this.sortArr[pos]=pref+field;
+            if(pos1>=0) this.sortArr[pos1]=pref+field;
+        }else
+            this.sortArr.push(pref+field);
+        document.getElementById(btn).innerHTML=tipo;
+
+    }
+    clear(){
+        this.sortArr.forEach( el=>{
+            let id="";
+            let nb;
+            let obj;
+            nb=el;
+            if(el[0]=="-"){
+                nb=el.substring(1);
+            }
+            obj=this.fieldObj.getByName(nb);
+            id=obj.idBoton;
+
+
+            document.getElementById(id).innerHTML="-";
+        })
+        this.sortArr=[];
+
+    }
+    restaurar(){
+        let tipo="^"
+        let obj;
+        let obj1;
+        let id;
+        this.sortArr.forEach( el=>{
+            let id="";
+
+            let nb=el;
+            let pref="";
+            if(el[0]=="-"){
+                nb=el.substring(1);
+            }
+            obj=this.fieldObj.getByName(nb);
+
+
+            if(el==obj.fieldName) id=obj.idBoton;
+            if(el=="-"+obj.fieldName) {id=obj.idBoton;tipo="v";}
+
+            document.getElementById(id).innerHTML=tipo;
+        })
+    }
+}
+class SorterTable{
+    constructor(sortLst,data,tabla,funMostrar){
+        this.sortList=sortLst;
+        this.dataArr=data;
+        this.fmostrar=funMostrar;
+        this.tableName=tabla;
+    }
+    fieldSorter(fields) {
+        return function (a, b) {
+            return fields
+                .map(function (o) {
+                    var dir = 1;
+                    if (o[0] === '-') {
+                    dir = -1;
+                    o=o.substring(1);
+                    }
+                    if (a[o] > b[o]) return dir;
+                    if (a[o] < b[o]) return -(dir);
+                    return 0;
+                })
+                .reduce(function firstNonZeroValue (p,n) {
+                    return p ? p : n;
+                }, 0);
+        };
+    }
+
+    exec(){
+        console.log("exec",this.sortList)
+        this.dataArr.sort(this.fieldSorter(this.sortList.sortArr));
+        document.getElementById(this.tableName).innerHTML=this.fmostrar(this.dataArr);
+        this.sortList.restaurar()
+    }
+
+}
+var homes = [
+    {"h_id":"3", "city":"Dallas", "state":"TX","zip":"75201","price":"162500"},
+    {"h_id":"4","city":"Bevery Hills", "state":"CA", "zip":"90210", "price":"319250"},
+    {"h_id":"6", "city":"Dallas", "state":"TX", "zip":"75000", "price":"556699"},
+    {"h_id":"5", "city":"New York", "state":"NY", "zip":"00010", "price":"962500"}
+    ];
+var oField=new Field();
+oField.add(1,"b1","h_id");
+oField.add(2,"b2","city");
+oField.add(3,"b3","state");
+oField.add(4,"b4","zip");
+oField.add(5,"b5","price");
+var oSortList=new SortList(oField);
+var oSorter=new SorterTable(oSortList,homes,"tabla",mostrar)
+//oSorter.fmostrar(homes)
+var sortArr=[]
+
+//homes.sort(fieldSorter(['city', 'price']));
+document.getElementById("tabla").innerHTML=mostrar(homes);
+// homes.sort(fieldSorter(['zip', '-state', 'price'])); // alternative
+function clearSort(){
+    oSortList.clear();
+}
+function ordena(id){
+    oSortList.addToList(id);
+}
+function procSort(){
+    oSorter.exec();
+}
+function mostrar(a){
+    let filas=""
+    for(let i in a){
+        filas+=`<tr><td>${a[i].h_id}</td><td>${a[i].city}</td><td>${a[i].state}</td><td>${a[i].zip}</td><td>${a[i].price}</td></tr>`
+    }
+    let table="<table><thead><th >Id<br><button id='b1' onClick='ordena(1)'>-</buttom></th><th>City<br><button id='b2' onClick='ordena(2)'>-</buttom></th><th>State<br><button id='b3' onClick='ordena(3)'>-</buttom></th><th>ZIP<br><button id='b4' onClick='ordena(4)'>-</buttom></th><th>Price<br><button id='b5' onClick='ordena(5 )'>-</buttom></th></thead><tbody>"
+        table+=filas+"</tbody></table>"
+        return table;
+}
+
+
+        </script>
+    </body>
+</html>

@@ -327,11 +327,11 @@ class PropertyView{
         }
         let chgArr=projList.getChanged();
         console.log("chgArr",chgArr);
-        let encabChg="<h4>Cambios por Realizar</h4><table class='paleBlueRows'><thead><tr><th>Nombre</th><th>IdP</th><th>Fase</th><th>Cambio</th><th>Original</th><th>On Site</th></tr></thead><tbody>"
+        let encabChg="<h4>Cambios por Realizar</h4><table class='paleBlueRows'><thead><tr><th>Nombre>-</buttom></th><th>IdP</th><th>Fase</th><th>Cambio</th><th>Original</th><th>On Site</th></tr></thead><tbody>"
         let endEncab="</tbody></table><br><hr>";
         let rows="";
         chgArr.forEach(el=>{
-            console.log("chgArr",el)
+            //console.log("chgArr",el)
             let t=el.equipo;
             rows+=render.sendTableComp(el,t,"cambios_staff","","","","");
         });
@@ -339,15 +339,17 @@ class PropertyView{
         //console.log("bar",bar.innerHTML);
         bar.innerHTML+=encabChg+rows+endEncab;
 
-        let hcArr= this.historicChng.getData();
-        let encabChgh="<div class='hist'> <h4>Histórico de Cambios</h4><table class='paleBlueRows'><thead><tr><th>Nombre</th><th>IdP</th><th>Fase</th><th>Cambio</th><th>Original</th><th>In Site</th></tr></thead><tbody>"
-        let endEncabh="</tbody></table></div><br><hr>";
+        let hcArr= this.getHistoricData();
+        let encabChgh="<div class='hist'> <h4>Histórico de Cambios</h4><button onclick='procSort()'>Sort</button><button onclick='clearSort()'>Clean Sort</button> <div id='HistoricTable'><table class='paleBlueRows'><thead><tr><th>Nombre<br><button id='b1' onClick='ordena(1)'>-</botton></th><th>IdP<br><button id='b2' onClick='ordena(2)'>-</botton></th><th>Fase</th><th>Cambio</th><th>Original</th><th>In Site</th></tr></thead><tbody>"
+        let endEncabh="</tbody></table></div></div><br><hr>";
         rows="";
         rows=render.sendTable(hcArr,"historial_cambios","","","","");
-        console.log("rows",rows);
+        //console.log("rows",rows);
         //console.log("bar",bar.innerHTML);
         bar.innerHTML+=encabChgh+rows+endEncabh;        
-        
+    }
+    getHistoricData(){
+        return this.historicChng.getData();
     }
 }
 class TeamView{
@@ -455,16 +457,18 @@ class StaffingView{
                 var id="mes"+parseInt(r)+"totales";
                 //console.log("mon",id);
                 var mon=document.getElementById(id);
-                var pers=mesStruct[r];
-                pers.forEach(function(value,key){
-                    var div=document.createElement("div");
-                    var clase="good";                    
-                    if(value.dedicacion>GOODTHRESHOLD){
-                        clase="bad";
-                    }                         
-                    let obj={key:key,clase:"cardmini "+clase,mes:m,dedi:value.dedicacion}      
-                    mon.innerHTML+=render.send(obj,"total_persona_mes");          
-                })
+                if(mon!=null){ 
+                    var pers=mesStruct[r];
+                    pers.forEach(function(value,key){
+                        var div=document.createElement("div");
+                        var clase="good";                    
+                        if(value.dedicacion>GOODTHRESHOLD){
+                            clase="bad";
+                        }                         
+                        let obj={key:key,clase:"cardmini "+clase,mes:m,dedi:value.dedicacion}      
+                        mon.innerHTML+=render.send(obj,"total_persona_mes");          
+                    })
+                }
             }
         }
     }

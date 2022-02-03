@@ -30,9 +30,11 @@ class Util{
        });
        return fetchDetail;
    }
-   asynGetFromDB = async (url) => { 
+   asynGetFromDB = async (url,ptoken,ptime) => { 
+       let obj={token:ptoken,time:ptime}
        const fetchData= await fetch(url, {
-           method: 'GET',
+           method: 'POST',
+           body:JSON.stringify(obj),
            headers: {
                //'Content-Type': 'application/x-www-form-urlencoded',
                'Content-Type': 'application/json',
@@ -40,6 +42,7 @@ class Util{
        }).then(r => r.json()).catch((error) => {
            console.error(error);
        });
+       //console.log("asynGetFromDB",fetchData);
        return fetchData;
    }
    sendToServer(){

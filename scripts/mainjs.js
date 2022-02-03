@@ -18,9 +18,37 @@ var util;
 var projList;
 var teamView;
 var propertyBar;
+var myToken;
+var myTime;
 titulo=["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
-
+var oHistField=new Field();
+oHistField.add(1,"b1","nombre_persona");
+oHistField.add(2,"b2","proyecto");
+oHistField.add(3,"","Fase");
+oHistField.add(4,"","Cambio");
+oHistField.add(5,"","Original");
+oHistField.add(5,"","In Site");
+var oSortHistList=new SortList(oHistField);
+var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
 // GUI FUNCTIONS
+    function clearSort(){
+        oSortHistList.clear();
+    }
+    function ordena(id){
+        oSortHistList.addToList(id);
+    }
+    function procSort(){
+        oHistoricSorter.exec();
+    }
+    function mostrar(){
+        let hcArr= propertyBar.getHistoricData();
+        oHistoricSorter.setData(hcArr);
+        let encabChgh="<div id='HistoricTable'><table class='paleBlueRows'><thead><tr><th>Nombre<br><button id='b1' onClick='ordena(1)'>-</botton></th><th>IdP<br><button id='b2' onClick='ordena(2)'>-</botton></th><th>Fase</th><th>Cambio</th><th>Original</th><th>In Site</th></tr></thead><tbody>"
+        let endEncabh="</tbody></table></div>";
+        rows="";
+        rows=render.sendTable(hcArr,"historial_cambios","","","","");
+        return encabChgh+rows+endEncabh;
+    } 
     function tx_dedichange(nb,IDp,fase,mes,inOnSite){
         //id-${o.nombre}-${o.IDp}.${o.fase}.${o.mes}-${o.inOnSite}        
         let id="id-"+nb+"-"+IDp+"."+fase+"."+mes+"-"+inOnSite;
@@ -122,6 +150,7 @@ titulo=["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto"
             propertyBar.showProperties(IDp,fase,mes);
             btnInfo.innerHTML="info  v" 
             btnInfo.style.backgroundColor="orange";  
+            oHistoricSorter.setData(propertyBar.getHistoricData());
         }
     }
     function bpv_show(IDp,fase,mes){
@@ -163,47 +192,125 @@ titulo=["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto"
         console.log("save")
         util.sendToServer();                
     }
-    function setProy(){    
-        cal=new Calendario();
-        propertyBar=new PropertyView("bar");
-        util=new Util();
-        cal.createBaseTable();
-        render = new Render();
-        util.asynGetFromDB(`https://getstaffinghttp.azurewebsites.net/api/getstaffinghttp`).then(function(fetchData){
-            try{
-                projList=new ProjList(fetchData);
-                //projList.createMesStruct();
-                staffing=new StaffingView("contenido","mes");
-                staffing.createStaffingView();
-                staffing.createMonStruct();
-            }catch(e){
-                console.log("asynGetFromDB",e);
-                alert("Error en la carga, intente de nuevo");
+    function setProy(){  
+        if(myToken && myTime) {
+            console.log("auth",myToken,myTime)
+            let msg="";
+            cal=new Calendario();
+            propertyBar=new PropertyView("bar");
+            util=new Util();
+            cal.createBaseTable();
+            render = new Render();
+            util.asynGetFromDB(`https://getstaffinghttp.azurewebsites.net/api/getstaffinghttp`,myToken,myTime).then(function(fetchData){
+                try{                    
+                    if(typeof fetchData.msg=="undefined")
+                        msg="ok"
+                    else
+                        msg=fetchData.msg
+                    console.log("msg staffing",fetchData.msg);
+                    //projList.createMesStruct();
+                    if(msg=="ok"){
+                        projList=new ProjList(fetchData);
+                        staffing=new StaffingView("contenido","mes");
+                        staffing.createStaffingView();
+                        staffing.createMonStruct();
+                    }
+                }catch(e){
+                    console.log("asynGetFromDB",e);
+                    alert("Error en la carga, intente de nuevo");
+                }
+                
+            }); 
+                        
+            util.asynGetFromDB(`https://getconsultant.azurewebsites.net/api/getconsultant`,myToken,myTime).then(function(fetchData){
+                if(typeof fetchData.msg=="undefined")
+                        msg="ok"
+                    else
+                        msg=fetchData.msg
+                if(msg=="ok"){
+                    teamStruct=fetchData.data
+                    teamView=new TeamView(fetchData,"team");
+                    teamView.show();
+                }
+            });
+
+            util.asynGetFromDB(`https://getallprojects.azurewebsites.net/api/getallprojects`,myToken,myTime).then(function(fetchData){
+                //console.log("fetch data getAllProjects",fetchData);
+                if(typeof fetchData.msg=="undefined")
+                        msg="ok"
+                    else
+                        msg=fetchData.msg
+                if(msg=="ok")
+                    projectFilterView=new ProjectFilterView(fetchData.data,"projectsBox");
+            });
+
+            util.asynGetFromDB(`https://getfactprojmonthy.azurewebsites.net/api/getfactprojmonthy`,myToken,myTime).then(function(fetchData){
+                //console.log("fetch data getAllProjects",fetchData);
+                if(typeof fetchData.msg=="undefined")
+                        msg="ok"
+                    else
+                        msg=fetchData.msg
+                if(msg=="ok")
+                {
+                    factprojmonthy=fetchData.data;
+                    projView = new ProjView(fetchData.data,"container-project","tab-proj-01");
+                    projView.mostrarProyMonthly(0);
+                }
+            })
+
+            util.asynGetFromDB(`https://getprojectsummary.azurewebsites.net/api/getprojectsummary`,myToken,myTime).then(function(fetchData){
+            //console.log("fetch data getProjectSummary",fetchData);
+                if(typeof fetchData.msg=="undefined")
+                    msg="ok"
+                else
+                    msg=fetchData.msg
+                if(msg=="ok")
+                    projSummary= new ProjSummaryView(fetchData,"projSumm","div-content-head");
+            });
+    }
+    }
+    let asynGetToken = async (usr,pwd) => { 
+        //console.log("en async get Token function",usr,pwd)
+        let data={username:usr,password:pwd}
+        //console.log("json",JSON.stringify(data));
+        const fetchData= await fetch(`https://cybs-isauth.azurewebsites.net/api/cybs_login`, {
+            method: 'POST',
+            body:JSON.stringify(data),
+            headers: {
+                //'Content-Type': 'application/x-www-form-urlencoded',
+                'Content-Type': 'application/json',
             }
-        }); 
+        }).then(r => r.json())
+       
+        //console.log("fetchData",fetchData.data)
+        return fetchData;
+    }
+        //&#9744;
+        //cafe
+        //&#9749;
+    function open_close(){
+        let signin=document.getElementById("signin");
+        if(signin.style.display=="none") signin.style.display=""
+        else signin.style.display="none";
+    }
+    function auth(){    
+        let usr=document.getElementById("username")
+        let pwd=document.getElementById("password")
         
-        
-        util.asynGetFromDB(`https://getconsultant.azurewebsites.net/api/getconsultant`).then(function(fetchData){
-            teamStruct=fetchData.data
-            teamView=new TeamView(fetchData,"team");
-            teamView.show();
-        });
+        //console.log("usr",usr.value,pwd.value)
+        asynGetToken(usr.value,pwd.value).then(function(fetchData){
+            
+            if(fetchData.cod==0){
+                document.getElementById("container").style.display="";
+                myToken=fetchData.data;
+                myTime=fetchData.time;
+                localStorage.setItem("username", usr.value);
+                document.getElementById("signin").style.display="none";
+                setProy();
+                //console.log(myToken,myTime)
 
-        util.asynGetFromDB(`https://getallprojects.azurewebsites.net/api/getallprojects`).then(function(fetchData){
-            //console.log("fetch data getAllProjects",fetchData);
-            projectFilterView=new ProjectFilterView(fetchData.data,"projectsBox");
-        });
-
-        util.asynGetFromDB(`https://getfactprojmonthy.azurewebsites.net/api/getfactprojmonthy`).then(function(fetchData){
-            //console.log("fetch data getAllProjects",fetchData);
-            factprojmonthy=fetchData.data;
-            projView = new ProjView(fetchData.data,"container-project","tab-proj-01");
-            projView.mostrarProyMonthly(0);
-        })
-
-        util.asynGetFromDB(`https://getprojectsummary.azurewebsites.net/api/getprojectsummary`).then(function(fetchData){
-        //console.log("fetch data getProjectSummary",fetchData);
-            projSummary= new ProjSummaryView(fetchData,"projSumm","div-content-head");
-        });
-
+                
+            }else alert(fetchData.data)
+            
+        }).catch(error=>console.log(error))
     }

@@ -111,6 +111,7 @@
       transition: 0.4s;
       padding: 1rem 0;    
       box-sizing:border-box;
+      overflow: visible;
   }
   
   .sidebar .boton-cerrar {
