@@ -307,7 +307,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                 localStorage.setItem("username", usr.value);
                 document.getElementById("signin").style.display="none";
                 setProy();
-                //console.log(myToken,myTime)
+                console.log(myToken,myTime)
 
                 
             }else alert(fetchData.data)

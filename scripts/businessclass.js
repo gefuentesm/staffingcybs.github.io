@@ -44,7 +44,7 @@ class ProjList{
                 }
             }
         }
-        if(!wasChanged)
+        if(!wasChanged)    //si no existe se agregas
             this.chngStruct.push(obj) ; 
     }
     setTeamInData(IDp,fase,mes,nb,dedicacion,inOnSite){
