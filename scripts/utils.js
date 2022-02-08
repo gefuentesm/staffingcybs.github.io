@@ -49,7 +49,7 @@ class Util{
        let modifyData=projList.getChanged();
        console.log("modify data",modifyData);
        if(modifyData.length>0){
-           var objToSend={data:modifyData}
+           var objToSend={data:modifyData,token:myToken,time:myTime}
            //console.log("enviar a server",objToSend);
            this.sendData(objToSend).then((fetchDetail)=>{  
                //console.log("retorno fetchdetail",fetchDetail);

@@ -55,11 +55,11 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         var wrappid="t-"+nb+"-"+IDp+"."+fase+"."+mes+"-"+inOnSite;
         var wrappid2="c-"+nb+"-"+IDp+"."+fase+"."+mes+"-"+inOnSite;
         let currentInOnsite=0;
-        console.log("tx_dedichange",document.getElementById(wrappid2),wrappid2);
-        if(typeof document.getElementById(wrappid2).style!=="undefined")
+        console.log("tx_dedichange",document.getElementById(wrappid2),wrappid2);  //c-Gustavo Fuentes-40.2.2-0
+        if( document.getElementById(wrappid2))
             currentInOnsite=document.getElementById(wrappid2).style.backgroundColor=="blue"?1:0;
         else
-            if(typeof document.getElementById(wrappid).style!=="undefined")
+            if( document.getElementById(wrappid))
             currentInOnsite=document.getElementById(wrappid).style.backgroundColor=="blue"?1:0;
         console.log("current onsite",currentInOnsite);
         //console.log("on Change",document.getElementById(id).value);
