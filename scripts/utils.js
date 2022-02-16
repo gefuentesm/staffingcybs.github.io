@@ -120,6 +120,35 @@ class Render{
                                    }else return "";
                                }
         let f10=(arr)      =>  `<tr><td>${arr.nombre_persona}</td><td>${arr.proyecto}</td><td>${arr.Fase}</td><td>${arr.po_dedicacion}</td><td>${arr.po_original}</td><td>${arr.inOnSite}</td></tr>`;
+        let f11=(o)      => { 
+                                let btn_plus=""
+                                let rowMo=new Map()
+                                if(o.ind==0)
+                                    btn_plus=`<button onclick="mostrarProy('${'h.'+o.nombre_persona}')">+</button>`;
+                                rowMo.set(0,`<tr>
+                                    <td style="${o.ind==0?'text-align: left;font-weight: bold;':'text-align: center;display:none'}" name="${o.ind==0?'o.'+o.nombre_persona:'h.'+o.nombre_persona}">${btn_plus} ${o.nombre_persona}</td>
+                                    <td style="${o.ind==0?'font-weight: bold;':'display:none'}" name="${o.ind==0?'o.'+o.nombre_persona:'h.'+o.nombre_persona}">${o.proyecto}</td>
+                                    <td style="${o.ind==0?'':'display:none'}" name="${o.ind==0?'o.'+o.nombre_persona:'h.'+o.nombre_persona}">${o.fase}</td>`);
+                                rowMo.set(1,`<td style="${o.ind==0?'font-weight: bold;':'display:none'}" name="${o.ind==0?'o.'+o.nombre_persona:'h.'+o.nombre_persona}">${o.pEne==null?0:(o.pEne*100).toFixed(2)+'%'}</td>`);
+                                rowMo.set(2,`<td style="${o.ind==0?'font-weight: bold;':'display:none'}" name="${o.ind==0?'o.'+o.nombre_persona:'h.'+o.nombre_persona}">${o.pFeb==null?0:(o.pFeb*100).toFixed(2)+'%'}</td>`);
+                                rowMo.set(3,`<td style="${o.ind==0?'font-weight: bold;':'display:none'}" name="${o.ind==0?'o.'+o.nombre_persona:'h.'+o.nombre_persona}">${o.pMar==null?0:(o.pMar*100).toFixed(2)+'%'}</td>`);
+                                rowMo.set(4,`<td style="${o.ind==0?'font-weight: bold;':'display:none'}" name="${o.ind==0?'o.'+o.nombre_persona:'h.'+o.nombre_persona}">${o.pAbr==null?0:(o.pAbr*100).toFixed(2)+'%'}</td>`);
+                                rowMo.set(5,`<td style="${o.ind==0?'font-weight: bold;':'display:none'}" name="${o.ind==0?'o.'+o.nombre_persona:'h.'+o.nombre_persona}">${o.pMay==null?0:(o.pMay*100).toFixed(2)+'%'}</td>`);
+                                rowMo.set(6,`<td style="${o.ind==0?'font-weight: bold;':'display:none'}" name="${o.ind==0?'o.'+o.nombre_persona:'h.'+o.nombre_persona}">${o.pJun==null?0:(o.pJun*100).toFixed(2)+'%'}</td>`);
+                                rowMo.set(7,`<td style="${o.ind==0?'font-weight: bold;':'display:none'}" name="${o.ind==0?'o.'+o.nombre_persona:'h.'+o.nombre_persona}">${o.pJul==null?0:(o.pJul*100).toFixed(2)+'%'}</td>`);
+                                rowMo.set(8,`<td style="${o.ind==0?'font-weight: bold;':'display:none'}" name="${o.ind==0?'o.'+o.nombre_persona:'h.'+o.nombre_persona}">${o.pAgo==null?0:(o.pAgo*100).toFixed(2)+'%'}</td>`);
+                                rowMo.set(9,`<td style="${o.ind==0?'font-weight: bold;':'display:none'}" name="${o.ind==0?'o.'+o.nombre_persona:'h.'+o.nombre_persona}">${o.pSep==null?0:(o.pSep*100).toFixed(2)+'%'}</td>`);
+                                rowMo.set(10,`<td style="${o.ind==0?'font-weight: bold;':'display:none'}" name="${o.ind==0?'o.'+o.nombre_persona:'h.'+o.nombre_persona}">${o.pOct==null?0:(o.pOct*100).toFixed(2)+'%'}</td>`);
+                                rowMo.set(11,`<td style="${o.ind==0?'font-weight: bold;':'display:none'}" name="${o.ind==0?'o.'+o.nombre_persona:'h.'+o.nombre_persona}">${o.pNov==null?0:(o.pNov*100).toFixed(2)+'%'}</td>`);
+                                rowMo.set(12,`<td style="${o.ind==0?'font-weight: bold;':'display:none'}" name="${o.ind==0?'o.'+o.nombre_persona:'h.'+o.nombre_persona}">${o.pDic==null?0:(o.pDic*100).toFixed(2)+'%'}</td>`);
+                                let rows=rowMo.get(0);
+                                for(let m=INITIALMONTH;m<INITIALMONTH+MONTHTOSHOW;m++){
+                                    if(m!=0)
+                                        if(rowMo.get(m))
+                                            rows=rows+rowMo.get(m);
+                                }
+                                return rows+"</tr>"
+                            }
                                                      
        this.fm = new Map();
        this.fm.set( "proyecto_calendario",f1 );
@@ -132,6 +161,7 @@ class Render{
        this.fm.set( "drop_persona",f8 );
        this.fm.set( "cambios_staff",f9 );
        this.fm.set( "historial_cambios",f10 );
+       this.fm.set( "fact_personas",f11 );
    }
    send(o,i){
        return this.fm.get(i)(o);

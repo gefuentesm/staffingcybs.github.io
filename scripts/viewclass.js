@@ -93,6 +93,7 @@ class ProjView{
         this.containerProject=container;
         this.tabContainer=tab_container;
     }
+
     isVisible(){
         let content = document.getElementById(this.containerProject);
         //console.log("content.style.display",content.style.display);
@@ -402,8 +403,11 @@ class StaffingView{
     createStaffingView(){
         for(let i=INITIALMONTH;i<INITIALMONTH+MONTHTOSHOW;i++){
             var cont=document.getElementById(this.mc+i);
+            var totcont=document.getElementById(this.mc+i+"totales");
             var aux="";
             let totDedic=0;
+            cont.innerHTML="";
+            totcont.innerHTML="";
             projList.getProjectByMonth(i).forEach(o=>{
                 //console.log(i,o);
                 aux=render.send(o,"proyecto_calendario");
@@ -499,4 +503,132 @@ class StaffingView{
 
     }    
 
+}
+class PeopleView{
+    constructor(peopleObj,container){
+      this.peopleArr=peopleObj.data;
+      this.container=container;
+    }
+    isVisible(){
+        let content = document.getElementById(this.container);
+        //console.log("content.style.display",content.style.display);
+        return content.style.display=="";
+    }
+    setContainerHide(){
+        let content = document.getElementById(this.container);
+        content.style.display="none";
+    }
+    setContainerShow(){
+        let content = document.getElementById(this.container);
+        content.style.display="";
+    }
+    mostrar(x){
+        var arr=document.getElementsByName(x);
+        arr.forEach((el)=>{
+            if(el.style.display=="none"){
+                el.style.display="";
+            }else el.style.display="none";
+        });
+    }
+    sumar(hcArr){
+        const map1 = new Map();
+        var rompe=hcArr[0].nombre_persona;
+        var tene=0.0
+        var tfeb=0.0
+        var tmar=0.0
+        var tabr=0.0
+        var tmay=0.0
+        var tjun=0.0
+        var tjul=0.0
+        var tago=0.0
+        var tsep=0.0
+        var toct=0.0
+        var tnov=0.0
+        var tdic=0.0
+        for(let i in hcArr){
+            if(rompe!=hcArr[i].nombre_persona){
+                map1.set(rompe,{ene:tene,feb:tfeb,mar:tmar,abr:tabr,may:tmay,jun:tjun,
+                        jul:tjul,ago:tago,sep:tsep,oct:toct,nov:tnov,dic:tdic});
+                //console.log("total",rompe,tene,tfeb,tmar,map1);
+                tene=parseFloat(hcArr[i].pEne==null?0.0:hcArr[i].pEne)
+                tfeb=parseFloat(hcArr[i].pFeb==null?0.0:hcArr[i].pFeb)
+                tmar=parseFloat(hcArr[i].pMar==null?0.0:hcArr[i].pMar)  
+
+                tabr=parseFloat(hcArr[i].pAbr==null?0.0:hcArr[i].pAbr)
+                tmay=parseFloat(hcArr[i].pMay==null?0.0:hcArr[i].pMay)
+                tjun=parseFloat(hcArr[i].pJun==null?0.0:hcArr[i].pJun)
+
+                tjul=parseFloat(hcArr[i].pJul==null?0.0:hcArr[i].pJul)
+                tago=parseFloat(hcArr[i].pAgo==null?0.0:hcArr[i].pAgo)
+                tsep=parseFloat(hcArr[i].pSep==null?0.0:hcArr[i].pSep)
+
+                toct=parseFloat(hcArr[i].pOct==null?0.0:hcArr[i].pOct)
+                tnov=parseFloat(hcArr[i].pNov==null?0.0:hcArr[i].pNov)
+                tdic=parseFloat(hcArr[i].pDic==null?0.0:hcArr[i].pDic)
+                rompe=hcArr[i].nombre_persona
+            }else{
+                tene=tene+parseFloat(hcArr[i].pEne==null?0.0:hcArr[i].pEne)
+                tfeb=tfeb+parseFloat(hcArr[i].pFeb==null?0.0:hcArr[i].pFeb)
+                tmar=tmar+parseFloat(hcArr[i].pMar==null?0.0:hcArr[i].pMar)
+                tabr= tabr+ parseFloat(hcArr[i].pAbr==null?0.0:hcArr[i].pAbr)
+                tmay= tmay+ parseFloat(hcArr[i].pMay==null?0.0:hcArr[i].pMay)
+                tjun= tjun+ parseFloat(hcArr[i].pJun==null?0.0:hcArr[i].pJun)
+
+                tjul= tjul+ parseFloat(hcArr[i].pJul==null?0.0:hcArr[i].pJul)
+                tago= tago+ parseFloat(hcArr[i].pAgo==null?0.0:hcArr[i].pAgo)
+                tsep= tsep+ parseFloat(hcArr[i].pSep==null?0.0:hcArr[i].pSep)
+
+                toct= toct+ parseFloat(hcArr[i].pOct==null?0.0:hcArr[i].pOct)
+                tnov= tnov+ parseFloat(hcArr[i].pNov==null?0.0:hcArr[i].pNov)
+                tdic= tdic+ parseFloat(hcArr[i].pDic==null?0.0:hcArr[i].pDic)
+            }
+        }
+        map1.set(rompe,{ene:tene,feb:tfeb,mar:tmar,abr:tabr,may:tmay,jun:tjun,
+                    jul:tjul,ago:tago,sep:tsep,oct:toct,nov:tnov,dic:tdic});
+        //console.log("total",rompe,tene,tfeb,tmar,map1);
+        return map1;
+    }
+    renderView(){
+        let hcArr= this.peopleArr;
+        let totales = new Map();
+        totales=this.sumar(hcArr)
+        var rowName=[]
+        var rompe="";
+        var ind=0;
+        var dataArr=[];
+        for(let i in hcArr){
+            if(rompe!=hcArr[i].nombre_persona){
+            //close break for example totals
+            if(rompe==""){
+                ind=1;
+                rompe=hcArr[i].nombre_persona;
+            }
+            let obj=totales.get(hcArr[i].nombre_persona)
+            dataArr.push({nombre_persona:hcArr[i].nombre_persona,ind:0,proyecto:'',fase:'',pEne:obj.ene,pFeb:obj.feb,pMar:obj.mar,pAbr:obj.abr,pMay:obj.may,pJun:obj.jun,pJul:obj.jul,pAgo:obj.ago,pSep:obj.sep,pOct:obj.oct,pNov:obj.nov,pDic:obj.dic})
+            rompe=hcArr[i].nombre_persona;
+            hcArr[i].ind=ind;
+            //prepare next
+            }
+            hcArr[i].ind=ind;
+            //console.log(aux);
+            dataArr.push(hcArr[i]);
+            ind++;
+        }
+        //console.log("tiene ind",dataArr);
+        var rowName=["<div id='people'><table class='paleBlueRows'><thead><tr><th>Nombre</th><th>proyecto</th><th>Fase</th>","<th>Ene</th>","<th>Feb</th>","<th>Mar</th>","<th>Abr</th>","<th>May</th>","<th>Jun</th>","<th>Jul</th>","<th>Ago</th>","<th>Sep</th>","<th>Oct</th>","<th>Nov</th>","<th>Dic</th></tr></thead><tbody>"]
+        let rowHead=rowName[0];
+        for(let m=INITIALMONTH;m<INITIALMONTH+MONTHTOSHOW;m++){
+            if(m!=0)
+                if(rowName[m])
+                    rowHead=rowHead+rowName[m];
+        }
+        console.log("rowHead",rowHead);
+        let encabChgh="<div id='people'><table class='paleBlueRows'><thead><tr><th>Nombre</th><th>proyecto</th><th>Fase</th><th>Ene</th><th>Feb</th><th>Mar</th><th>Abr</th><th>May</th><th>Jun</th><th>Jul</th><th>Ago</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dic</th></tr></thead><tbody>"
+        let endEncabh="</tbody></table></div>";
+        let rows="";
+        //rows=render.sendTable(hcArr,"fact_personas","","","","");
+        rows=render.sendTable(dataArr,"fact_personas","","","","");
+        let tab=document.getElementById(this.container)
+        tab.innerHTML = rowHead+rows+endEncabh;
+    } 
 }

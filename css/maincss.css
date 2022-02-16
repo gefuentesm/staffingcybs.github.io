@@ -92,7 +92,10 @@
       margin-left:206px;
       transition: margin-left .4s;
   }
-  
+  input#abrir-cerrar:checked + label[for="abrir-cerrar"], input#abrir-cerrar:checked ~ #container-people {
+    margin-left:206px;
+    transition: margin-left .4s;
+}
   input#abrir-cerrar:checked + label[for="abrir-cerrar"] .cerrar {
       display:inline;
   }
@@ -166,6 +169,12 @@
   .btn_lite{
       background-color: #e0e0fa;
       color:black;
+  }
+  button:hover, button:focus {
+    background-color: #6666ff;
+  }
+  .btn_lite:hover, .btn_lite:focus {
+    background-color: #6666ff;
   }
   body{
       background-color: #ffffff;
@@ -325,3 +334,41 @@
   table.paleBlueRows tfoot td {
     font-size: 14px;
   }
+  
+  .dropbtn {
+    background-color: #9999ff;
+    color: white;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .dropbtn:hover, .dropbtn:focus {
+    background-color: #6666ff;
+  }
+  
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown a:hover {background-color: #ddd;}
+  
+  .show {display: block;}

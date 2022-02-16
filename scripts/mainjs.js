@@ -20,6 +20,7 @@ var teamView;
 var propertyBar;
 var myToken;
 var myTime;
+var peopleView;
 titulo=["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
 var oHistField=new Field();
 oHistField.add(1,"b1","nombre_persona");
@@ -39,6 +40,9 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
     }
     function procSort(){
         oHistoricSorter.exec();
+    }
+    function mostrarProy(x){
+        peopleView.mostrar(x)
     }
     function mostrar(){
         let hcArr= propertyBar.getHistoricData();
@@ -91,34 +95,26 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             document.getElementById(wrappid).style="";
         }
     } 
-    function showContainerProj(){
-        let btn=document.getElementById("btn-hojas");
-        let btnboth=document.getElementById("btn-both");
-        if(staffing.isVisible()){
-            staffing.setContainerHide();
-            projView.setContainerShow();
-            btn.textContent="Staffing View"
-        }else{
-            staffing.setContainerShow();
-            projView.setContainerHide();
-            btn.textContent="Project View"
-            btnboth.textContent="Project View & Staffing View"
-        }
-
+    function show_ProjContainer(){
+        projView.setContainerShow();
+        staffing.setContainerHide();
+        peopleView.setContainerHide();
     }
-    function showContainerBoth(){
-        let btn=document.getElementById("btn-both");
-        if(btn.textContent=="Project View & Staffing View"){
-            document.getElementById("contenido").style.display="";
-            staffing.setContainerShow();
-            projView.setContainerShow();
-            btn.textContent="Hide Project View"
-        }else{
-            staffing.setContainerShow();
-            projView.setContainerHide();
-            btn.textContent="Project View & Staffing View"
-        }
-
+    function show_StaffContainer(){
+        projView.setContainerHide();
+        staffing.setContainerShow();
+        peopleView.setContainerHide();
+    }
+    function show_PeopleContainer(){
+        console.log("peopleView",peopleView);
+        util.asynGetFromDB(`https://getfactpeoplemonthly.azurewebsites.net/api/getfactpeoplemonthly`,myToken,myTime).then(function(fetchData){
+        //console.log(fetchData);
+            peopleView = new PeopleView(fetchData,"container-people");
+            peopleView.renderView();
+            peopleView.setContainerShow();
+        })
+        projView.setContainerHide();
+        staffing.setContainerHide();
     }
     
     function bt_filterProj(dat){
@@ -170,7 +166,6 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
     function bw_mostrar(IDp,fase,mes){        
         //var dat=par.split("-");
         let wrp=document.getElementById("w-"+IDp+"."+fase+"."+mes);
-        let btn=document.getElementById("btn-both");
         //let prj=dat[1].split(".");
         //console.log("display",wrp.style.display.length);
         let bwrp=document.getElementById("bw-"+IDp+"."+fase+"."+mes);
@@ -180,7 +175,6 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             bwrp.innerHTML="detail v";   
             bwrp.style.backgroundColor="orange";         
             projSummary.fillProjSumm(IDp);
-            btn.textContent="Hide Project View";
         }else{
             wrp.style.display="none";
             bwrp.innerHTML="detail &#62;";
@@ -192,16 +186,14 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         console.log("save")
         util.sendToServer();                
     }
-    function setProy(){  
-        if(myToken && myTime) {
-            console.log("auth",myToken,myTime)
-            let msg="";
-            cal=new Calendario();
-            propertyBar=new PropertyView("bar");
-            util=new Util();
-            cal.createBaseTable();
-            render = new Render();
-            util.asynGetFromDB(`https://getstaffinghttp.azurewebsites.net/api/getstaffinghttp`,myToken,myTime).then(function(fetchData){
+    function btn_reload(){
+        projList=[]
+        loadStaff();
+        loadProjectMonthly();
+        loadProjectSummary();
+    }
+    function loadStaff(){
+        util.asynGetFromDB(`https://getstaffinghttp.azurewebsites.net/api/getstaffinghttp`,myToken,myTime).then(function(fetchData){
                 try{                    
                     if(typeof fetchData.msg=="undefined")
                         msg="ok"
@@ -220,45 +212,49 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                     alert("Error en la carga, intente de nuevo");
                 }
                 
-            }); 
-                        
-            util.asynGetFromDB(`https://getconsultant.azurewebsites.net/api/getconsultant`,myToken,myTime).then(function(fetchData){
-                if(typeof fetchData.msg=="undefined")
-                        msg="ok"
-                    else
-                        msg=fetchData.msg
-                if(msg=="ok"){
-                    teamStruct=fetchData.data
-                    teamView=new TeamView(fetchData,"team");
-                    teamView.show();
-                }
             });
-
-            util.asynGetFromDB(`https://getallprojects.azurewebsites.net/api/getallprojects`,myToken,myTime).then(function(fetchData){
-                //console.log("fetch data getAllProjects",fetchData);
-                if(typeof fetchData.msg=="undefined")
-                        msg="ok"
-                    else
-                        msg=fetchData.msg
-                if(msg=="ok")
-                    projectFilterView=new ProjectFilterView(fetchData.data,"projectsBox");
-            });
-
-            util.asynGetFromDB(`https://getfactprojmonthy.azurewebsites.net/api/getfactprojmonthy`,myToken,myTime).then(function(fetchData){
-                //console.log("fetch data getAllProjects",fetchData);
-                if(typeof fetchData.msg=="undefined")
-                        msg="ok"
-                    else
-                        msg=fetchData.msg
-                if(msg=="ok")
-                {
-                    factprojmonthy=fetchData.data;
-                    projView = new ProjView(fetchData.data,"container-project","tab-proj-01");
-                    projView.mostrarProyMonthly(0);
-                }
-            })
-
-            util.asynGetFromDB(`https://getprojectsummary.azurewebsites.net/api/getprojectsummary`,myToken,myTime).then(function(fetchData){
+    }
+    function loadConsultant(){
+        util.asynGetFromDB(`https://getconsultant.azurewebsites.net/api/getconsultant`,myToken,myTime).then(function(fetchData){
+            if(typeof fetchData.msg=="undefined")
+                    msg="ok"
+                else
+                    msg=fetchData.msg
+            if(msg=="ok"){
+                teamStruct=fetchData.data
+                teamView=new TeamView(fetchData,"team");
+                teamView.show();
+            }
+        });
+    }
+    function loadAllProjects(){
+        util.asynGetFromDB(`https://getallprojects.azurewebsites.net/api/getallprojects`,myToken,myTime).then(function(fetchData){
+            //console.log("fetch data getAllProjects",fetchData);
+            if(typeof fetchData.msg=="undefined")
+                    msg="ok"
+                else
+                    msg=fetchData.msg
+            if(msg=="ok")
+                projectFilterView=new ProjectFilterView(fetchData.data,"projectsBox");
+        });
+    }
+    function loadProjectMonthly(){
+        util.asynGetFromDB(`https://getfactprojmonthy.azurewebsites.net/api/getfactprojmonthy`,myToken,myTime).then(function(fetchData){
+            //console.log("fetch data getAllProjects",fetchData);
+            if(typeof fetchData.msg=="undefined")
+                    msg="ok"
+                else
+                    msg=fetchData.msg
+            if(msg=="ok")
+            {
+                factprojmonthy=fetchData.data;
+                projView = new ProjView(fetchData.data,"container-project","tab-proj-01");
+                projView.mostrarProyMonthly(0);
+            }
+        })
+    }
+    function loadProjectSummary(){
+        util.asynGetFromDB(`https://getprojectsummary.azurewebsites.net/api/getprojectsummary`,myToken,myTime).then(function(fetchData){
             //console.log("fetch data getProjectSummary",fetchData);
                 if(typeof fetchData.msg=="undefined")
                     msg="ok"
@@ -267,6 +263,27 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                 if(msg=="ok")
                     projSummary= new ProjSummaryView(fetchData,"projSumm","div-content-head");
             });
+    }
+    function setProy(){  
+        if(myToken && myTime) {
+            console.log("auth",myToken,myTime)
+            let msg="";
+            cal=new Calendario();
+            propertyBar=new PropertyView("bar");
+            util=new Util();
+            cal.createBaseTable();
+            render = new Render();
+
+            loadStaff() ;
+                        
+            loadConsultant();
+
+            loadAllProjects()
+
+            loadProjectMonthly();
+
+            loadProjectSummary();
+
     }
     }
     let asynGetToken = async (usr,pwd) => { 
@@ -314,3 +331,18 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             
         }).catch(error=>console.log(error))
     }
+    function toggleDropDown() {
+        document.getElementById("dropdownView").classList.toggle("show");
+      }
+    window.onclick = function(event) {
+        if (!event.target.matches('.dropbtn')) {
+          var dropdowns = document.getElementsByClassName("dropdown-content");
+          var i;
+          for (i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+              openDropdown.classList.remove('show');
+            }
+          }
+        }
+      }

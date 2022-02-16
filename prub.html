@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head> 
+    <link rel="stylesheet" href="css/maincss.css"> </link>
+    <script src="scripts/utils.js"></script>
+    <script src="scripts/sort.js"></script>  
+    <script src="scripts/businessclass.js"></script>  
+    <script src="scripts/viewclass.js"></script>
+    <script src="scripts/mainjs.js"></script>
+    <script src="peopleMonthly.js"></script>  
+  </head>
+<style>
+table, th, td {
+  border:1px solid black;
+}
+</style>
+<body>
+
+<h2>Consultant View</h2>
+<div class="dropdown">
+  <button onclick="toggleDropDown()" class="dropbtn">Views</button>
+  <div id="dropdownView" class="dropdown-content">
+    <a href="javascript:alert('Home')">Staffing View</a>
+    <a href="#about">Project View</a>
+    <a href="#contact">People View</a>
+  </div>
+</div>
+
+<div id="peopleTable"></div>
+
+<script>
+var  util=new Util();
+var  render = new Render();
+
+//console.log("data",loadPeople());
+var peopleView;
+function toggleDropDown() {
+  document.getElementById("dropdownView").classList.toggle("show");
+}
+function mostrarProy(x){
+    peopleView.mostrar(x)
+}
+
+util.asynGetFromDB(`https://getfactpeoplemonthly.azurewebsites.net/api/getfactpeoplemonthly`,myToken,myTime).then(function(fetchData){
+  //console.log(fetchData);
+  peopleView = new PeopleView(fetchData,"peopleTable");
+  peopleView.renderView();
+})
+
+
+
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+
+</script>
+
+</body>
+</html>

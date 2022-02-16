@@ -41,9 +41,16 @@
     <div id="container" style="display:none">
     <input type="checkbox" id="abrir-cerrar" name="abrir-cerrar" value="">
     <label style="margin-left:206px" for="abrir-cerrar">☰ <span class="abrir">Abrir</span><span class="cerrar">Cerrar</span>&nbsp;&nbsp;
-        <button type="button" style="color:white" onclick="btn_save()">Save</button>|
-        <button type="button" id="btn-hojas" style="color:white" onclick="showContainerProj()">Project View</button>
-        <button type="button" id="btn-both" style="color:white" onclick="showContainerBoth()">Project View & Staffing View</button>
+        <button type="button" style="color:white" onclick="btn_save()">Save</button>&nbsp;|&nbsp;
+        <div class="dropdown">
+            <button onclick="toggleDropDown()" class="dropbtn">Views</button>
+            <div id="dropdownView" class="dropdown-content">
+              <a href="javascript:show_StaffContainer()">Staffing View</a>
+              <a href="javascript:show_ProjContainer()">Project View</a>
+              <a href="javascript:show_PeopleContainer()">People View</a>
+            </div>
+          </div>
+          <button type="button" style="color:white" onclick="btn_reload()">Reload</button>
     </label>
     
     <div id="sidebar" class="sidebar"  >
@@ -65,6 +72,13 @@
         </div>
     
     </div>
+    <div id="container-people" style="display: none;margin-left: 206px;">
+        <div style="font-family: Verdana, Geneva, Tahoma, sans-serif;font-size: 10pt;padding-top:10px;padding-bottom: 10px;">
+            <b>PEOPLE VIEW</b><br>
+            Dedicación por Consultor
+        </div>
+
+    </div>    
     <div id="container-project" style="display: none;">
         <div style="font-family: Verdana, Geneva, Tahoma, sans-serif;font-size: 10pt;padding-top:10px;padding-bottom: 10px;">
             <b>PROJECT VIEW</b><br>
