@@ -101,9 +101,11 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         peopleView.setContainerHide();
     }
     function show_StaffContainer(){
+        document.getElementById("loading").style.visibility = "visible"
         projView.setContainerHide();
         staffing.setContainerShow();
         peopleView.setContainerHide();
+        document.getElementById("loading").style.visibility = "hidden"
     }
     function show_PeopleContainer(){
         console.log("peopleView",peopleView);
@@ -187,10 +189,12 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         util.sendToServer();                
     }
     function btn_reload(){
+        document.getElementById("loading").style.visibility = "visible";
         projList=[]
         loadStaff();
         loadProjectMonthly();
         loadProjectSummary();
+        document.getElementById("loading").style.visibility = "hidden";
     }
     function loadStaff(){
         util.asynGetFromDB(`https://getstaffinghttp.azurewebsites.net/api/getstaffinghttp`,myToken,myTime).then(function(fetchData){
@@ -265,7 +269,9 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             });
     }
     function setProy(){  
+
         if(myToken && myTime) {
+            
             console.log("auth",myToken,myTime)
             let msg="";
             cal=new Calendario();
@@ -283,8 +289,8 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             loadProjectMonthly();
 
             loadProjectSummary();
-
-    }
+           
+        }
     }
     let asynGetToken = async (usr,pwd) => { 
         //console.log("en async get Token function",usr,pwd)
@@ -311,6 +317,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         else signin.style.display="none";
     }
     function auth(){    
+        document.getElementById("loading").style.visibility = "visible";
         let usr=document.getElementById("username")
         let pwd=document.getElementById("password")
         
@@ -325,11 +332,17 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                 document.getElementById("signin").style.display="none";
                 setProy();
                 console.log(myToken,myTime)
-
+                document.getElementById("loading").style.visibility = "hidden";
                 
-            }else alert(fetchData.data)
+            }else {
+                document.getElementById("loading").style.visibility = "hidden";
+                alert(fetchData.data);
+            }
             
-        }).catch(error=>console.log(error))
+        }).catch(error=>{
+            document.getElementById("loading").style.visibility = "hidden";
+            console.log(error)
+        })
     }
     function toggleDropDown() {
         document.getElementById("dropdownView").classList.toggle("show");

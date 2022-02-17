@@ -17,6 +17,7 @@ class Util{
            elemt.remove();
    }    
    sendData = async  (objToSend) => {
+    document.getElementById("loading").style.visibility = "visible"
        //console.log("sendData",JSON.stringify(objToSend));
        const fetchDetail = fetch(`https://setstaffinghttp.azurewebsites.net/api/setstaffinghttp`, {
            method: 'POST',
@@ -28,11 +29,13 @@ class Util{
        }).then(r => r.json()).catch((error) => {
            console.error(error);
        });
+       document.getElementById("loading").style.visibility = "hidden"
        return fetchDetail;
    }
    asynGetFromDB = async (url,ptoken,ptime) => { 
-       let obj={token:ptoken,time:ptime}
-       const fetchData= await fetch(url, {
+        document.getElementById("loading").style.visibility = "visible"
+        let obj={token:ptoken,time:ptime}
+        const fetchData= await fetch(url, {
            method: 'POST',
            body:JSON.stringify(obj),
            headers: {
@@ -43,9 +46,11 @@ class Util{
            console.error(error);
        });
        //console.log("asynGetFromDB",fetchData);
+       document.getElementById("loading").style.visibility = "hidden"
        return fetchData;
    }
    sendToServer(){
+        document.getElementById("loading").style.visibility = "visible";
        let modifyData=projList.getChanged();
        console.log("modify data",modifyData);
        if(modifyData.length>0){
@@ -55,6 +60,7 @@ class Util{
                //console.log("retorno fetchdetail",fetchDetail);
                //var ret= JSON.parse(fetchDetail);
                //console.log("fetchDetail",fetchDetail.code)
+               document.getElementById("loading").style.visibility = "hidden";
                if(fetchDetail.code==0){
                    //console.log("entro a limpiar dirty")
                    // si todo ok, limpia el arreglo con los cambios
