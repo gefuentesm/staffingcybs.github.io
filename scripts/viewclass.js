@@ -92,6 +92,9 @@ class ProjView{
         this.factprojmonthy=data;
         this.containerProject=container;
         this.tabContainer=tab_container;
+        this.totalProj=new Map();
+        this.makeTotalMap();
+        console.log("total proj",this.totalProj);
     }
 
     isVisible(){
@@ -107,16 +110,74 @@ class ProjView{
         let content = document.getElementById(this.containerProject);
         content.style.display="";
     }
+    makeTotalMap(){
+        var arr=this.factprojmonthy;
+        //console.log("arr",arr);
+        var totDed=Array.from({length: 12}, function() { return 0.0; });
+        var tothrs=Array.from({length: 12}, function() { return 0.0; });
+        var rompe=arr[0].proyecto;
+        //console.log("rompe",rompe);
+        var cont=0;
+        var maxfase=0;
+        for(let i in arr){ 
+            if(rompe!=arr[i].proyecto){
+                //console.log("cont",rompe, cont);
+                if(cont>0){
+                    var totDedx=totDed.map(e=>e/cont);
+                    var tothrsx=tothrs.map(e=>e/cont);
+                    console.log("cont",rompe, cont,totDedx,totDed);
+                    this.totalProj.set(rompe,{maxfase:maxfase,ded:totDedx,hrs:tothrsx});
+                }else
+                    this.totalProj.set(rompe,{maxfase:maxfase,ded:totDed,hrs:tothrs});
+                //console.log("proyecto",rompe)
+                rompe=arr[i].proyecto;
+                totDed=Array.from({length: 12}, function() { return 0.0; });
+                tothrs=Array.from({length: 12}, function() { return 0.0; });
+                cont=0;
+                maxfase=0;
+            }else{
+                if(arr[i].pEne || arr[i].pfeb || arr[i].pmar || arr[i].pabr || arr[i].pmay || 
+                arr[i].pjun || arr[i].pjul || arr[i].pAago || arr[i].psep || arr[i].poct || 
+                arr[i].pnov || arr[i].pdic)
+                    cont++;
+                maxfase=(maxfase< arr[i].fase?arr[i].fase:maxfase)
+                //console.log("cont",cont)
+                totDed[0]=totDed[0]+arr[i].pEne;tothrs[0]=tothrs[0]+arr[i].hEne;
+                totDed[1]=totDed[1]+arr[i].pfeb;tothrs[1]=tothrs[1]+arr[i].hfeb;
+                //console.log("feb",arr[i].proyecto,totDed[1],arr[i].pfeb)
+                totDed[2]=totDed[2]+arr[i].pmar;tothrs[2]=tothrs[2]+arr[i].hmar;
+                totDed[3]=totDed[3]+arr[i].pabr;tothrs[3]=tothrs[3]+arr[i].habr;
+                totDed[4]=totDed[4]+arr[i].pmay;tothrs[4]=tothrs[4]+arr[i].hmay;
+                totDed[5]=totDed[5]+arr[i].pjun;tothrs[5]=tothrs[5]+arr[i].hjun;
+                totDed[6]=totDed[6]+arr[i].pjul;tothrs[6]=tothrs[6]+arr[i].hjul;
+                totDed[7]=totDed[7]+arr[i].pago;tothrs[7]=tothrs[7]+arr[i].hago;
+                totDed[8]=totDed[8]+arr[i].psep;tothrs[8]=tothrs[8]+arr[i].hsep;
+                totDed[9]=totDed[9]+arr[i].poct;tothrs[9]=tothrs[9]+arr[i].hoct;
+                totDed[10]=totDed[10]+arr[i].pnov;tothrs[10]=tothrs[10]+arr[i].hnov;
+                totDed[11]=totDed[11]+arr[i].pdic;tothrs[11]=tothrs[11]+arr[i].hdic;
+            }
+            
+        }
+        console.log("this.totalProj",this.totalProj)
+    }
+    mostrar(x){
+        var arr=document.getElementsByName(x);
+        arr.forEach((el)=>{
+            if(el.style.display=="none"){
+                el.style.display="";
+            }else el.style.display="none";
+        });
+    }
     mostrarProyMonthly(pproy){
         var contenedor = document.getElementById(this.tabContainer);
         var rowHead=``;
-        var rowName=['<thead><tr><th width="40px" style="width:40px">ID</th><th style="width:420px">Nombre</th><th style="width:20px">Fase</th><th style="width:80px">Inicio</th><th style="width:80px">Cierre</th>','<th>Ene</th>','<th>Feb</th>','<th>Mar</th>','<th>Abr</th>','<th>May</th>','<th>Jun</th>','<th>Jul</th>','<th>Ago</th>','<th>Sep</th>','<th>Oct</th>','<th>Nov</th>','<th>Dic</th>','<th>Ene_</th>','<th>Feb_</th>','<th>Mar_</th>','<th>Abr_</th>','<th>May_</th>','<th>Jun_</th>','<th>Jul_</th>','<th>Ago_</th>','<th>Sep_</th>','<th>Oct_</th>','<th>Nov_</th>','<th>Dic_</th>']
+        var rowName=['<thead><tr><th width="140px" style="width:140px">ID</th><th style="width:420px">Nombre</th><th style="width:20px">Fase</th><th style="width:80px">Inicio</th><th style="width:80px">Cierre</th>','<th>Ene</th>','<th>Feb</th>','<th>Mar</th>','<th>Abr</th>','<th>May</th>','<th>Jun</th>','<th>Jul</th>','<th>Ago</th>','<th>Sep</th>','<th>Oct</th>','<th>Nov</th>','<th>Dic</th>','<th>Ene_</th>','<th>Feb_</th>','<th>Mar_</th>','<th>Abr_</th>','<th>May_</th>','<th>Jun_</th>','<th>Jul_</th>','<th>Ago_</th>','<th>Sep_</th>','<th>Oct_</th>','<th>Nov_</th>','<th>Dic_</th>']
         contenedor.innerHTML=rowHead;
         var rows="";
         //console.log("factprojmonthy",factprojmonthy)
         var arr=this.factprojmonthy;
         //console.log("data arr",arr)
-
+        
         let inHead=true;
         for(let i in arr){     
             if(arr[i].proyecto==pproy||pproy==0){
@@ -130,7 +191,24 @@ class ProjView{
                     inHead=false;
                 }  
                 var tds=[];
-                tds.push(`<tr><td>${arr[i].proyecto}</td><td>${arr[i].nb_proyecto}</td><td>${arr[i].fase}</td><td>${(arr[i].inicio?arr[i].inicio.substring(0,10):'')}</td><td>${(arr[i].cierre?arr[i].cierre.substring(0,10):'')}</td>`)
+                var tdh="";
+                
+                let o=this.totalProj.get(arr[i].proyecto);
+                //console.log("totalProj",arr[i].proyecto,o)
+                if(typeof o !="undefined" ){
+                    let d=o.ded;
+                    let h=o.hrs;
+                    //console.log("d",d)
+                    if(arr[i].fase==1){
+                        tdh=`<tr><td id="pl.${arr[i].proyecto}" class="head-cell-left"><button onclick="mostrarDet('p.${arr[i].proyecto}')">+</button>&nbsp;&nbsp;${arr[i].proyecto}</td><td class="head-cell">${arr[i].nb_proyecto}</td><td class="head-cell">${o.maxfase}</td><td class="head-cell"></td><td class="head-cell"></td>`;
+                        for(let j=INITIALMONTH-1;j<INITIALMONTH+MONTHTOSHOW-1;j++){
+                            //if(i==0)console.log("into for",d[j],`<td >${(d[j]?'Avg: '+d[j].toFixed(1)+'%':'')}<br>${(h[j]?h[j].toFixed(1)+' Hrs':'')}</td>`)
+                            tdh=tdh+`<td  class="head-cell">${(d[j]?'Avg: '+d[j].toFixed(1)+'%':'')}<br>${(h[j]?h[j].toFixed(1)+' Hrs':'')}</td>`;
+                        }
+                        tdh=tdh+"</tr>";
+                    }
+                }
+                tds.push(`<tr name="p.${arr[i].proyecto}" style="display:none"><td>${arr[i].proyecto}</td><td>${arr[i].nb_proyecto}</td><td>${arr[i].fase}</td><td>${(arr[i].inicio?arr[i].inicio.substring(0,10):'')}</td><td>${(arr[i].cierre?arr[i].cierre.substring(0,10):'')}</td>`)
                 tds.push(`<td >${(arr[i].pEne?'Avg: '+arr[i].pEne.toFixed(1)+'%':'')}<br>${(arr[i].hEne?arr[i].hEne.toFixed(1)+' Hrs':'')}</td>`);
                 tds.push(`<td>${(arr[i].pfeb?'Avg: '+arr[i].pfeb.toFixed(1)+'%':'')}<br>${(arr[i].hfeb?arr[i].hfeb.toFixed(1)+' Hrs':'')}</td>`);
                 tds.push(`<td>${(arr[i].pmar?'Avg: '+arr[i].pmar.toFixed(1)+'%':'')}<br>${(arr[i].hmar?arr[i].hmar.toFixed(1)+' Hrs':'')}</td>`);
@@ -153,8 +231,9 @@ class ProjView{
                 tds.push(`<td>${(arr[i].pago_?'Avg: '+arr[i].pago_.toFixed(1)+'%':'')}<br>${(arr[i].hago_?arr[i].hago_.toFixed(1)+' Hrs':'')}</td>`);
                 tds.push(`<td>${(arr[i].psep_?'Avg: '+arr[i].psep_.toFixed(1)+'%':'')}<br>${(arr[i].hsep_?arr[i].hsep_.toFixed(1)+' Hrs':'')}</td>`);
                 tds.push(`<td>${(arr[i].poct_?'Avg: '+arr[i].poct_.toFixed(1)+'%':'')}<br>${(arr[i].hoct_?arr[i].hoct_.toFixed(1)+' Hrs':'')}</td>`);
-                //if(pproy!=0) //console.log("tds",tds);
-                rows=rows+tds[0];
+                //if(pproy!=0) 
+                console.log("tds",tds);
+                rows=rows+tdh+tds[0];
                 for(let j=INITIALMONTH;j<INITIALMONTH+MONTHTOSHOW;j++){
                     if(typeof tds[j]!="undefined" )
                         rows=rows+tds[j];

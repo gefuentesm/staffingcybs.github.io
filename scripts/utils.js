@@ -17,7 +17,7 @@ class Util{
            elemt.remove();
    }    
    sendData = async  (objToSend) => {
-    document.getElementById("loading").style.visibility = "visible"
+    document.getElementById("loader").style.display = ""
        //console.log("sendData",JSON.stringify(objToSend));
        const fetchDetail = fetch(`https://setstaffinghttp.azurewebsites.net/api/setstaffinghttp`, {
            method: 'POST',
@@ -29,11 +29,11 @@ class Util{
        }).then(r => r.json()).catch((error) => {
            console.error(error);
        });
-       document.getElementById("loading").style.visibility = "hidden"
+       document.getElementById("loader").style.display = "none"
        return fetchDetail;
    }
    asynGetFromDB = async (url,ptoken,ptime) => { 
-        document.getElementById("loading").style.visibility = "visible"
+        document.getElementById("loader").style.display = ""
         let obj={token:ptoken,time:ptime}
         const fetchData= await fetch(url, {
            method: 'POST',
@@ -46,11 +46,11 @@ class Util{
            console.error(error);
        });
        //console.log("asynGetFromDB",fetchData);
-       document.getElementById("loading").style.visibility = "hidden"
+       document.getElementById("loader").style.display = "none"
        return fetchData;
    }
    sendToServer(){
-        document.getElementById("loading").style.visibility = "visible";
+        document.getElementById("loader").style.display = "";
        let modifyData=projList.getChanged();
        console.log("modify data",modifyData);
        if(modifyData.length>0){
@@ -60,7 +60,7 @@ class Util{
                //console.log("retorno fetchdetail",fetchDetail);
                //var ret= JSON.parse(fetchDetail);
                //console.log("fetchDetail",fetchDetail.code)
-               document.getElementById("loading").style.visibility = "hidden";
+               document.getElementById("loader").style.display = "none";
                if(fetchDetail.code==0){
                    //console.log("entro a limpiar dirty")
                    // si todo ok, limpia el arreglo con los cambios
@@ -131,22 +131,22 @@ class Render{
                                 let rowMo=new Map()
                                 if(o.ind==0)
                                     btn_plus=`<button onclick="mostrarProy('${'h.'+o.nombre_persona}')">+</button>`;
-                                rowMo.set(0,`<tr>
-                                    <td style="${o.ind==0?'text-align: left;font-weight: bold;':'text-align: center;display:none'}" name="${o.ind==0?'o.'+o.nombre_persona:'h.'+o.nombre_persona}">${btn_plus} ${o.nombre_persona}</td>
-                                    <td style="${o.ind==0?'font-weight: bold;':'display:none'}" name="${o.ind==0?'o.'+o.nombre_persona:'h.'+o.nombre_persona}">${o.proyecto}</td>
-                                    <td style="${o.ind==0?'':'display:none'}" name="${o.ind==0?'o.'+o.nombre_persona:'h.'+o.nombre_persona}">${o.fase}</td>`);
-                                rowMo.set(1,`<td style="${o.ind==0?'font-weight: bold;':'display:none'}" name="${o.ind==0?'o.'+o.nombre_persona:'h.'+o.nombre_persona}">${o.pEne==null?0:(o.pEne*100).toFixed(2)+'%'}</td>`);
-                                rowMo.set(2,`<td style="${o.ind==0?'font-weight: bold;':'display:none'}" name="${o.ind==0?'o.'+o.nombre_persona:'h.'+o.nombre_persona}">${o.pFeb==null?0:(o.pFeb*100).toFixed(2)+'%'}</td>`);
-                                rowMo.set(3,`<td style="${o.ind==0?'font-weight: bold;':'display:none'}" name="${o.ind==0?'o.'+o.nombre_persona:'h.'+o.nombre_persona}">${o.pMar==null?0:(o.pMar*100).toFixed(2)+'%'}</td>`);
-                                rowMo.set(4,`<td style="${o.ind==0?'font-weight: bold;':'display:none'}" name="${o.ind==0?'o.'+o.nombre_persona:'h.'+o.nombre_persona}">${o.pAbr==null?0:(o.pAbr*100).toFixed(2)+'%'}</td>`);
-                                rowMo.set(5,`<td style="${o.ind==0?'font-weight: bold;':'display:none'}" name="${o.ind==0?'o.'+o.nombre_persona:'h.'+o.nombre_persona}">${o.pMay==null?0:(o.pMay*100).toFixed(2)+'%'}</td>`);
-                                rowMo.set(6,`<td style="${o.ind==0?'font-weight: bold;':'display:none'}" name="${o.ind==0?'o.'+o.nombre_persona:'h.'+o.nombre_persona}">${o.pJun==null?0:(o.pJun*100).toFixed(2)+'%'}</td>`);
-                                rowMo.set(7,`<td style="${o.ind==0?'font-weight: bold;':'display:none'}" name="${o.ind==0?'o.'+o.nombre_persona:'h.'+o.nombre_persona}">${o.pJul==null?0:(o.pJul*100).toFixed(2)+'%'}</td>`);
-                                rowMo.set(8,`<td style="${o.ind==0?'font-weight: bold;':'display:none'}" name="${o.ind==0?'o.'+o.nombre_persona:'h.'+o.nombre_persona}">${o.pAgo==null?0:(o.pAgo*100).toFixed(2)+'%'}</td>`);
-                                rowMo.set(9,`<td style="${o.ind==0?'font-weight: bold;':'display:none'}" name="${o.ind==0?'o.'+o.nombre_persona:'h.'+o.nombre_persona}">${o.pSep==null?0:(o.pSep*100).toFixed(2)+'%'}</td>`);
-                                rowMo.set(10,`<td style="${o.ind==0?'font-weight: bold;':'display:none'}" name="${o.ind==0?'o.'+o.nombre_persona:'h.'+o.nombre_persona}">${o.pOct==null?0:(o.pOct*100).toFixed(2)+'%'}</td>`);
-                                rowMo.set(11,`<td style="${o.ind==0?'font-weight: bold;':'display:none'}" name="${o.ind==0?'o.'+o.nombre_persona:'h.'+o.nombre_persona}">${o.pNov==null?0:(o.pNov*100).toFixed(2)+'%'}</td>`);
-                                rowMo.set(12,`<td style="${o.ind==0?'font-weight: bold;':'display:none'}" name="${o.ind==0?'o.'+o.nombre_persona:'h.'+o.nombre_persona}">${o.pDic==null?0:(o.pDic*100).toFixed(2)+'%'}</td>`);
+                                rowMo.set(0,`<tr name="${o.ind==0?'o.'+o.nombre_persona:'h.'+o.nombre_persona}" class="${o.ind==0?'head-cell':''}" style="${o.ind==0?'':'display:none'}">
+                                    <td class="${o.ind==0?'head-cell-left':''}" >${btn_plus} ${o.nombre_persona}</td>
+                                    <td class="${o.ind==0?'head-cell':''}" >${o.proyecto}</td>
+                                    <td class="${o.ind==0?'head-cell':''}" >${o.fase}</td>`);
+                                rowMo.set(1,`<td class="${o.ind==0?'head-cell':''}" >${o.pEne==null?0:(o.pEne*100).toFixed(2)+'%'}</td>`);
+                                rowMo.set(2,`<td class="${o.ind==0?'head-cell':''}" >${o.pFeb==null?0:(o.pFeb*100).toFixed(2)+'%'}</td>`);
+                                rowMo.set(3,`<td class="${o.ind==0?'head-cell':''}" >${o.pMar==null?0:(o.pMar*100).toFixed(2)+'%'}</td>`);
+                                rowMo.set(4,`<td class="${o.ind==0?'head-cell':''}" >${o.pAbr==null?0:(o.pAbr*100).toFixed(2)+'%'}</td>`);
+                                rowMo.set(5,`<td class="${o.ind==0?'head-cell':''}" >${o.pMay==null?0:(o.pMay*100).toFixed(2)+'%'}</td>`);
+                                rowMo.set(6,`<td class="${o.ind==0?'head-cell':''}" >${o.pJun==null?0:(o.pJun*100).toFixed(2)+'%'}</td>`);
+                                rowMo.set(7,`<td class="${o.ind==0?'head-cell':''}" >${o.pJul==null?0:(o.pJul*100).toFixed(2)+'%'}</td>`);
+                                rowMo.set(8,`<td class="${o.ind==0?'head-cell':''}" >${o.pAgo==null?0:(o.pAgo*100).toFixed(2)+'%'}</td>`);
+                                rowMo.set(9,`<td class="${o.ind==0?'head-cell':''}" >${o.pSep==null?0:(o.pSep*100).toFixed(2)+'%'}</td>`);
+                                rowMo.set(10,`<td class="${o.ind==0?'head-cell':''}" >${o.pOct==null?0:(o.pOct*100).toFixed(2)+'%'}</td>`);
+                                rowMo.set(11,`<td class="${o.ind==0?'head-cell':''}" >${o.pNov==null?0:(o.pNov*100).toFixed(2)+'%'}</td>`);
+                                rowMo.set(12,`<td class="${o.ind==0?'head-cell':''}" >${o.pDic==null?0:(o.pDic*100).toFixed(2)+'%'}</td>`);
                                 let rows=rowMo.get(0);
                                 for(let m=INITIALMONTH;m<INITIALMONTH+MONTHTOSHOW;m++){
                                     if(m!=0)

@@ -44,6 +44,9 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
     function mostrarProy(x){
         peopleView.mostrar(x)
     }
+    function mostrarDet(x){
+        projView.mostrar(x);
+    }
     function mostrar(){
         let hcArr= propertyBar.getHistoricData();
         oHistoricSorter.setData(hcArr);
@@ -64,7 +67,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             currentInOnsite=document.getElementById(wrappid2).style.backgroundColor=="blue"?1:0;
         else
             if( document.getElementById(wrappid))
-            currentInOnsite=document.getElementById(wrappid).style.backgroundColor=="blue"?1:0;
+                currentInOnsite=document.getElementById(wrappid).style.backgroundColor=="blue"?1:0;
         console.log("current onsite",currentInOnsite);
         //console.log("on Change",document.getElementById(id).value);
         projList.setAllStruct(IDp,fase,nb,document.getElementById(id).value,mes,currentInOnsite);
@@ -96,18 +99,24 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         }
     } 
     function show_ProjContainer(){
-        projView.setContainerShow();
-        staffing.setContainerHide();
-        peopleView.setContainerHide();
+        document.getElementById("loader").style.display = ""
+        if(projView) {
+            projView.mostrarProyMonthly(0); 
+            projView.setContainerShow();
+        }
+        if(staffing) staffing.setContainerHide();
+        if(peopleView) peopleView.setContainerHide();
+        document.getElementById("loader").style.display = "none"
     }
     function show_StaffContainer(){
-        document.getElementById("loading").style.visibility = "visible"
+        //document.getElementById("loader").style.display = ""
         projView.setContainerHide();
         staffing.setContainerShow();
         peopleView.setContainerHide();
-        document.getElementById("loading").style.visibility = "hidden"
+        //document.getElementById("loader").style.display = "none"
     }
     function show_PeopleContainer(){
+        document.getElementById("loader").style.display = ""
         console.log("peopleView",peopleView);
         util.asynGetFromDB(`https://getfactpeoplemonthly.azurewebsites.net/api/getfactpeoplemonthly`,myToken,myTime).then(function(fetchData){
         //console.log(fetchData);
@@ -117,6 +126,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         })
         projView.setContainerHide();
         staffing.setContainerHide();
+        document.getElementById("loader").style.display = "none"
     }
     
     function bt_filterProj(dat){
@@ -189,21 +199,22 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         util.sendToServer();                
     }
     function btn_reload(){
-        document.getElementById("loading").style.visibility = "visible";
+        document.getElementById("loader").style.display = "";
         projList=[]
         loadStaff();
         loadProjectMonthly();
         loadProjectSummary();
-        document.getElementById("loading").style.visibility = "hidden";
+        document.getElementById("loader").style.display = "none";
     }
     function loadStaff(){
+        document.getElementById("loader").style.display = ""
         util.asynGetFromDB(`https://getstaffinghttp.azurewebsites.net/api/getstaffinghttp`,myToken,myTime).then(function(fetchData){
                 try{                    
                     if(typeof fetchData.msg=="undefined")
                         msg="ok"
                     else
                         msg=fetchData.msg
-                    console.log("msg staffing",fetchData.msg);
+                    console.log("msg staffing",msg);
                     //projList.createMesStruct();
                     if(msg=="ok"){
                         projList=new ProjList(fetchData);
@@ -211,8 +222,10 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                         staffing.createStaffingView();
                         staffing.createMonStruct();
                     }
+                    document.getElementById("loader").style.display = "none"
                 }catch(e){
                     console.log("asynGetFromDB",e);
+                    document.getElementById("loader").style.display = "none"
                     alert("Error en la carga, intente de nuevo");
                 }
                 
@@ -268,18 +281,18 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                     projSummary= new ProjSummaryView(fetchData,"projSumm","div-content-head");
             });
     }
-    function setProy(){  
-
+    function setProy(){ 
+        console.log("setProy");
+        console.log("auth",myToken,myTime)
+        let msg="";
+        cal=new Calendario();
+        propertyBar=new PropertyView("bar");
+        util=new Util();
+        cal.createBaseTable();
+        render = new Render();
+        document.getElementById("loader").style.display = "";
         if(myToken && myTime) {
             
-            console.log("auth",myToken,myTime)
-            let msg="";
-            cal=new Calendario();
-            propertyBar=new PropertyView("bar");
-            util=new Util();
-            cal.createBaseTable();
-            render = new Render();
-
             loadStaff() ;
                         
             loadConsultant();
@@ -291,6 +304,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             loadProjectSummary();
            
         }
+        document.getElementById("loader").style.display = "none";
     }
     let asynGetToken = async (usr,pwd) => { 
         //console.log("en async get Token function",usr,pwd)
@@ -317,7 +331,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         else signin.style.display="none";
     }
     function auth(){    
-        document.getElementById("loading").style.visibility = "visible";
+        document.getElementById("loader").style.display = "";
         let usr=document.getElementById("username")
         let pwd=document.getElementById("password")
         
@@ -332,15 +346,15 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                 document.getElementById("signin").style.display="none";
                 setProy();
                 console.log(myToken,myTime)
-                document.getElementById("loading").style.visibility = "hidden";
+                document.getElementById("loader").style.display = "none";
                 
             }else {
-                document.getElementById("loading").style.visibility = "hidden";
+                document.getElementById("loader").style.visibility = "none";
                 alert(fetchData.data);
             }
             
         }).catch(error=>{
-            document.getElementById("loading").style.visibility = "hidden";
+            document.getElementById("loader").style.visibility = "none";
             console.log(error)
         })
     }
