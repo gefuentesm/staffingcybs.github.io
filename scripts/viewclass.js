@@ -93,8 +93,9 @@ class ProjView{
         this.containerProject=container;
         this.tabContainer=tab_container;
         this.totalProj=new Map();
+        this.contMap=new Map();
         this.makeTotalMap();
-        console.log("total proj",this.totalProj);
+        //console.log("total proj",this.totalProj);
     }
 
     isVisible(){
@@ -110,55 +111,87 @@ class ProjView{
         let content = document.getElementById(this.containerProject);
         content.style.display="";
     }
+    countAvailValueByMonth(id,mon,val){
+        let indx=id+"-"+mon; // indice del map es el proyecto-mes
+        let valor=val?1:0;
+        this.contMap.set(indx,typeof this.contMap.get(indx)=="undefined"?valor:this.contMap.get(indx)+valor);
+    }
     makeTotalMap(){
         var arr=this.factprojmonthy;
         //console.log("arr",arr);
         var totDed=Array.from({length: 12}, function() { return 0.0; });
         var tothrs=Array.from({length: 12}, function() { return 0.0; });
+        var maxDed=Array.from({length: 12}, function() { return 0.0; });
         var rompe=arr[0].proyecto;
         //console.log("rompe",rompe);
         var cont=0;
         var maxfase=0;
+        var maxCantConsl=0;
         for(let i in arr){ 
+            //if(arr[i].proyecto==171) console.log("check break",cont,arr[i])
             if(rompe!=arr[i].proyecto){
                 //console.log("cont",rompe, cont);
                 if(cont>0){
-                    var totDedx=totDed.map(e=>e/cont);
-                    var tothrsx=tothrs.map(e=>e/cont);
-                    console.log("cont",rompe, cont,totDedx,totDed);
-                    this.totalProj.set(rompe,{maxfase:maxfase,ded:totDedx,hrs:tothrsx});
+                    //console.log("map contadores",this.contMap);
+                    let i=0;
+                    let j=0;
+                    var totDedx=totDed.map(e=>e/this.contMap.get(rompe+"-"+i++));
+                    var tothrsx=tothrs.map(e=>e/this.contMap.get(rompe+"-"+j++));
+                    //console.log("cont",rompe, cont,totDedx,totDed);
+                    this.totalProj.set(rompe,{cons:maxCantConsl,maxfase:maxfase,ded:totDedx,hrs:tothrsx,max:maxDed});
                 }else
-                    this.totalProj.set(rompe,{maxfase:maxfase,ded:totDed,hrs:tothrs});
+                    this.totalProj.set(rompe,{cons:maxCantConsl,maxfase:maxfase,ded:totDed,hrs:tothrs,max:maxDed});
                 //console.log("proyecto",rompe)
                 rompe=arr[i].proyecto;
                 totDed=Array.from({length: 12}, function() { return 0.0; });
                 tothrs=Array.from({length: 12}, function() { return 0.0; });
+                maxDed=Array.from({length: 12}, function() { return 0.0; });
                 cont=0;
                 maxfase=0;
-            }else{
-                if(arr[i].pEne || arr[i].pfeb || arr[i].pmar || arr[i].pabr || arr[i].pmay || 
-                arr[i].pjun || arr[i].pjul || arr[i].pAago || arr[i].psep || arr[i].poct || 
-                arr[i].pnov || arr[i].pdic)
-                    cont++;
-                maxfase=(maxfase< arr[i].fase?arr[i].fase:maxfase)
-                //console.log("cont",cont)
-                totDed[0]=totDed[0]+arr[i].pEne;tothrs[0]=tothrs[0]+arr[i].hEne;
-                totDed[1]=totDed[1]+arr[i].pfeb;tothrs[1]=tothrs[1]+arr[i].hfeb;
-                //console.log("feb",arr[i].proyecto,totDed[1],arr[i].pfeb)
-                totDed[2]=totDed[2]+arr[i].pmar;tothrs[2]=tothrs[2]+arr[i].hmar;
-                totDed[3]=totDed[3]+arr[i].pabr;tothrs[3]=tothrs[3]+arr[i].habr;
-                totDed[4]=totDed[4]+arr[i].pmay;tothrs[4]=tothrs[4]+arr[i].hmay;
-                totDed[5]=totDed[5]+arr[i].pjun;tothrs[5]=tothrs[5]+arr[i].hjun;
-                totDed[6]=totDed[6]+arr[i].pjul;tothrs[6]=tothrs[6]+arr[i].hjul;
-                totDed[7]=totDed[7]+arr[i].pago;tothrs[7]=tothrs[7]+arr[i].hago;
-                totDed[8]=totDed[8]+arr[i].psep;tothrs[8]=tothrs[8]+arr[i].hsep;
-                totDed[9]=totDed[9]+arr[i].poct;tothrs[9]=tothrs[9]+arr[i].hoct;
-                totDed[10]=totDed[10]+arr[i].pnov;tothrs[10]=tothrs[10]+arr[i].hnov;
-                totDed[11]=totDed[11]+arr[i].pdic;tothrs[11]=tothrs[11]+arr[i].hdic;
+                maxCantConsl=0;
             }
+            if(arr[i].pEne || arr[i].pfeb || arr[i].pmar || arr[i].pabr || arr[i].pmay || 
+            arr[i].pjun || arr[i].pjul || arr[i].pago || arr[i].psep || arr[i].poct || 
+            arr[i].pnov || arr[i].pdic)
+                cont++;
+            this.countAvailValueByMonth(arr[i].proyecto,0,arr[i].pEne);
+            this.countAvailValueByMonth(arr[i].proyecto,1,arr[i].pfeb);
+            this.countAvailValueByMonth(arr[i].proyecto,2,arr[i].pmar);
+            this.countAvailValueByMonth(arr[i].proyecto,3,arr[i].pabr);
+            this.countAvailValueByMonth(arr[i].proyecto,4,arr[i].pmay);
+            this.countAvailValueByMonth(arr[i].proyecto,5,arr[i].pjun);
+            this.countAvailValueByMonth(arr[i].proyecto,6,arr[i].pjul);
+            this.countAvailValueByMonth(arr[i].proyecto,7,arr[i].pago);
+            this.countAvailValueByMonth(arr[i].proyecto,8,arr[i].psep);
+            this.countAvailValueByMonth(arr[i].proyecto,9,arr[i].poct);
+            this.countAvailValueByMonth(arr[i].proyecto,10,arr[i].pnov);
+            this.countAvailValueByMonth(arr[i].proyecto,11,arr[i].pdic);
             
+            maxfase=(maxfase< arr[i].fase?arr[i].fase:maxfase);
+            maxCantConsl=(maxCantConsl<arr[i].consultores?arr[i].consultores:maxCantConsl);
+            
+            totDed[0]=totDed[0]+(arr[i].pEne?arr[i].pEne:0);tothrs[0]=tothrs[0]+(arr[i].hEne?arr[i].hEne:0);
+            totDed[1]=totDed[1]+(arr[i].pfeb?arr[i].pfeb:0);tothrs[1]=tothrs[1]+(arr[i].hfeb?arr[i].hfeb:0);
+            //if(arr[i].proyecto==171) console.log("feb",arr[i].proyecto,totDed[1],arr[i].pfeb)
+            totDed[2]=totDed[2]+arr[i].pmar;tothrs[2]=tothrs[2]+arr[i].hmar;
+            totDed[3]=totDed[3]+arr[i].pabr;tothrs[3]=tothrs[3]+arr[i].habr;
+            totDed[4]=totDed[4]+arr[i].pmay;tothrs[4]=tothrs[4]+arr[i].hmay;
+            totDed[5]=totDed[5]+arr[i].pjun;tothrs[5]=tothrs[5]+arr[i].hjun;
+            totDed[6]=totDed[6]+arr[i].pjul;tothrs[6]=tothrs[6]+arr[i].hjul;
+            totDed[7]=totDed[7]+arr[i].pago;tothrs[7]=tothrs[7]+arr[i].hago;
+            totDed[8]=totDed[8]+arr[i].psep;tothrs[8]=tothrs[8]+arr[i].hsep;
+            totDed[9]=totDed[9]+arr[i].poct;tothrs[9]=tothrs[9]+arr[i].hoct;
+            totDed[10]=totDed[10]+arr[i].pnov;tothrs[10]=tothrs[10]+arr[i].hnov;
+            totDed[11]=totDed[11]+arr[i].pdic;tothrs[11]=tothrs[11]+arr[i].hdic;
+            maxDed[0]=maxDed[0]<arr[i].mEne?arr[i].mEne:maxDed[0];maxDed[1]=maxDed[1]<arr[i].mfeb?arr[i].mfeb:maxDed[1];
+            maxDed[2]=maxDed[2]<arr[i].mmar?arr[i].mmar:maxDed[2];maxDed[3]=maxDed[3]<arr[i].mabr?arr[i].mabr:maxDed[3];
+            maxDed[4]=maxDed[4]<arr[i].mmay?arr[i].mmay:maxDed[4];maxDed[5]=maxDed[5]<arr[i].mjun?arr[i].mjun:maxDed[5];
+            maxDed[6]=maxDed[6]<arr[i].mjul?arr[i].mjul:maxDed[6];maxDed[7]=maxDed[7]<arr[i].mago?arr[i].mago:maxDed[7];
+            maxDed[8]=maxDed[8]<arr[i].msep?arr[i].msep:maxDed[8];maxDed[9]=maxDed[9]<arr[i].moct?arr[i].moct:maxDed[9];
+            maxDed[10]=maxDed[10]<arr[i].mnov?arr[i].mnov:maxDed[10];maxDed[11]=maxDed[11]<arr[i].mdic?arr[i].mdic:maxDed[11];
+            //if(arr[i].proyecto==171) console.log("no rompe",cont,arr[i].proyecto,totDed,tothrs)
         }
-        console.log("this.totalProj",this.totalProj)
+        //console.log("this.totalProj",this.totalProj)
     }
     mostrar(x){
         var arr=document.getElementsByName(x);
@@ -171,7 +204,7 @@ class ProjView{
     mostrarProyMonthly(pproy){
         var contenedor = document.getElementById(this.tabContainer);
         var rowHead=``;
-        var rowName=['<thead><tr><th width="140px" style="width:140px">ID</th><th style="width:420px">Nombre</th><th style="width:20px">Fase</th><th style="width:80px">Inicio</th><th style="width:80px">Cierre</th>','<th>Ene</th>','<th>Feb</th>','<th>Mar</th>','<th>Abr</th>','<th>May</th>','<th>Jun</th>','<th>Jul</th>','<th>Ago</th>','<th>Sep</th>','<th>Oct</th>','<th>Nov</th>','<th>Dic</th>','<th>Ene_</th>','<th>Feb_</th>','<th>Mar_</th>','<th>Abr_</th>','<th>May_</th>','<th>Jun_</th>','<th>Jul_</th>','<th>Ago_</th>','<th>Sep_</th>','<th>Oct_</th>','<th>Nov_</th>','<th>Dic_</th>']
+        var rowName=['<thead><tr><th width="140px" style="width:140px">ID</th><th style="width:420px">Nombre</th><th style="width:20px">Fase</th><th style="width:20px">Cons.</th><th style="width:80px">Inicio</th><th style="width:80px">Cierre</th>','<th>Ene</th>','<th>Feb</th>','<th>Mar</th>','<th>Abr</th>','<th>May</th>','<th>Jun</th>','<th>Jul</th>','<th>Ago</th>','<th>Sep</th>','<th>Oct</th>','<th>Nov</th>','<th>Dic</th>','<th>Ene_</th>','<th>Feb_</th>','<th>Mar_</th>','<th>Abr_</th>','<th>May_</th>','<th>Jun_</th>','<th>Jul_</th>','<th>Ago_</th>','<th>Sep_</th>','<th>Oct_</th>','<th>Nov_</th>','<th>Dic_</th>']
         contenedor.innerHTML=rowHead;
         var rows="";
         //console.log("factprojmonthy",factprojmonthy)
@@ -198,41 +231,43 @@ class ProjView{
                 if(typeof o !="undefined" ){
                     let d=o.ded;
                     let h=o.hrs;
+                    let m=o.max;
                     //console.log("d",d)
                     if(arr[i].fase==1){
-                        tdh=`<tr><td id="pl.${arr[i].proyecto}" class="head-cell-left"><button onclick="mostrarDet('p.${arr[i].proyecto}')">+</button>&nbsp;&nbsp;${arr[i].proyecto}</td><td class="head-cell">${arr[i].nb_proyecto}</td><td class="head-cell">${o.maxfase}</td><td class="head-cell"></td><td class="head-cell"></td>`;
+                        tdh=`<tr><td id="pl.${arr[i].proyecto}" class="head-cell-left"><button onclick="mostrarDet('p.${arr[i].proyecto}')">+</button>&nbsp;&nbsp;${arr[i].proyecto}</td><td class="head-cell">${arr[i].nb_proyecto}</td><td class="head-cell">${o.maxfase}</td><td class="head-cell">${o.cons}</td><td class="head-cell"></td><td class="head-cell"></td>`;
                         for(let j=INITIALMONTH-1;j<INITIALMONTH+MONTHTOSHOW-1;j++){
                             //if(i==0)console.log("into for",d[j],`<td >${(d[j]?'Avg: '+d[j].toFixed(1)+'%':'')}<br>${(h[j]?h[j].toFixed(1)+' Hrs':'')}</td>`)
-                            tdh=tdh+`<td  class="head-cell">${(d[j]?'Avg: '+d[j].toFixed(1)+'%':'')}<br>${(h[j]?h[j].toFixed(1)+' Hrs':'')}</td>`;
+                            tdh=tdh+`<td  class="head-cell" width='170px'>${(d[j]?'Avg: '+d[j].toFixed(1)+'% Max: '+m[j].toFixed(1)+'%':'')}<br>${(h[j]?h[j].toFixed(1)+' Hrs':'')}</td>`;
                         }
                         tdh=tdh+"</tr>";
                     }
                 }
-                tds.push(`<tr name="p.${arr[i].proyecto}" style="display:none"><td>${arr[i].proyecto}</td><td>${arr[i].nb_proyecto}</td><td>${arr[i].fase}</td><td>${(arr[i].inicio?arr[i].inicio.substring(0,10):'')}</td><td>${(arr[i].cierre?arr[i].cierre.substring(0,10):'')}</td>`)
-                tds.push(`<td >${(arr[i].pEne?'Avg: '+arr[i].pEne.toFixed(1)+'%':'')}<br>${(arr[i].hEne?arr[i].hEne.toFixed(1)+' Hrs':'')}</td>`);
-                tds.push(`<td>${(arr[i].pfeb?'Avg: '+arr[i].pfeb.toFixed(1)+'%':'')}<br>${(arr[i].hfeb?arr[i].hfeb.toFixed(1)+' Hrs':'')}</td>`);
-                tds.push(`<td>${(arr[i].pmar?'Avg: '+arr[i].pmar.toFixed(1)+'%':'')}<br>${(arr[i].hmar?arr[i].hmar.toFixed(1)+' Hrs':'')}</td>`);
-                tds.push(`<td>${(arr[i].pabr?'Avg: '+arr[i].pabr.toFixed(1)+'%':'')}<br>${(arr[i].habr?''+arr[i].habr.toFixed(1)+' Hrs':'')}</td>`);
-                tds.push(`<td>${(arr[i].pmay?'Avg: '+arr[i].pmay.toFixed(1)+'%':'')}<br>${(arr[i].hmay?arr[i].hmay.toFixed(1)+' Hrs':'')}</td>`);
-                tds.push(`<td>${(arr[i].pjun?'Avg: '+arr[i].pjun.toFixed(1)+'%':'')}<br>${(arr[i].hjun?arr[i].hjun.toFixed(1)+' Hrs':'')}</td>`);
-                tds.push(`<td>${(arr[i].pjul?'Avg: '+arr[i].pjul.toFixed(1)+'%':'')}<br>${(arr[i].hjul?arr[i].hjul.toFixed(1)+' Hrs':'')}</td>`);
-                tds.push(`<td>${(arr[i].pago?'Avg: '+arr[i].pago.toFixed(1)+'%':'')}<br>${(arr[i].hago?arr[i].hago.toFixed(1)+' Hrs':'')}</td>`);
-                tds.push(`<td>${(arr[i].psep?'Avg: '+arr[i].psep.toFixed(1)+'%':'')}<br>${(arr[i].hsep?arr[i].hsep.toFixed(1)+' Hrs':'')}</td>`);
-                tds.push(`<td>${(arr[i].poct?'Avg: '+arr[i].poct.toFixed(1)+'%':'')}<br>${(arr[i].hoct?arr[i].hoct.toFixed(1)+' Hrs':'')}</td>`);
-                tds.push(`<td>${(arr[i].pnov?'Avg: '+arr[i].pnov.toFixed(1)+'%':'')}<br>${(arr[i].hnov?arr[i].hnov.toFixed(1)+' Hrs':'')}</td>`);
-                tds.push(`<td>${(arr[i].pdic?'Avg: '+arr[i].pdic.toFixed(1)+'%':'')}<br>${(arr[i].hdic?arr[i].hdic.toFixed(1)+' Hrs':'')}</td>`);
-                tds.push(`<td>${(arr[i].pEne_?'Avg: '+arr[i].pEne_.toFixed(1)+'%':'')}<br>${(arr[i].hEne_?arr[i].hEne_.toFixed(1)+' Hrs':'')}</td>`);
-                tds.push(`<td>${(arr[i].pfeb_?'Avg: '+arr[i].pfeb_.toFixed(1)+'%':'')}<br>${(arr[i].hfeb_?arr[i].hfeb_.toFixed(1)+' Hrs':'')}</td>`);
-                tds.push(`<td>${(arr[i].pmar_?'Avg: '+arr[i].pmar_.toFixed(1)+'%':'')}<br>${(arr[i].hmar_?arr[i].hmar_.toFixed(1)+' Hrs':'')}</td>`);
-                tds.push(`<td>${(arr[i].pabr_?'Avg: '+arr[i].pabr_.toFixed(1)+'%':'')}<br>${(arr[i].habr_?arr[i].habr_.toFixed(1)+' Hrs':'')}</td>`);
-                tds.push(`<td>${(arr[i].pmay_?'Avg: '+arr[i].pmay_.toFixed(1)+'%':'')}<br>${(arr[i].hmay_?arr[i].hmay_.toFixed(1)+' Hrs':'')}</td>`);
-                tds.push(`<td>${(arr[i].pjun_?'Avg: '+arr[i].pjun_.toFixed(1)+'%':'')}<br>${(arr[i].hjun_?arr[i].hjun_.toFixed(1)+' Hrs':'')}</td>`);
-                tds.push(`<td>${(arr[i].pjul_?'Avg: '+arr[i].pjul_.toFixed(1)+'%':'')}<br>${(arr[i].hjul_?arr[i].hjul_.toFixed(1)+' Hrs':'')}</td>`);
-                tds.push(`<td>${(arr[i].pago_?'Avg: '+arr[i].pago_.toFixed(1)+'%':'')}<br>${(arr[i].hago_?arr[i].hago_.toFixed(1)+' Hrs':'')}</td>`);
-                tds.push(`<td>${(arr[i].psep_?'Avg: '+arr[i].psep_.toFixed(1)+'%':'')}<br>${(arr[i].hsep_?arr[i].hsep_.toFixed(1)+' Hrs':'')}</td>`);
-                tds.push(`<td>${(arr[i].poct_?'Avg: '+arr[i].poct_.toFixed(1)+'%':'')}<br>${(arr[i].hoct_?arr[i].hoct_.toFixed(1)+' Hrs':'')}</td>`);
+                
+                tds.push(`<tr name="p.${arr[i].proyecto}" style="display:none"><td>${arr[i].proyecto}</td><td>${arr[i].nb_proyecto}</td><td>${arr[i].fase}</td><td>${arr[i].consultores}</td><td>${(arr[i].inicio?arr[i].inicio.substring(0,10):'')}</td><td>${(arr[i].cierre?arr[i].cierre.substring(0,10):'')}</td>`)
+                tds.push(`<td width='170px'>${(arr[i].pEne?'Avg: '+arr[i].pEne.toFixed(1)+'%':'')}<br>${(arr[i].hEne?arr[i].hEne.toFixed(1)+' Hrs':'')}</td>`);
+                tds.push(`<td width='170px'>${(arr[i].pfeb?'Avg: '+arr[i].pfeb.toFixed(1)+'% Max: '+arr[i].mfeb.toFixed(1)+'%':'')}<br>${(arr[i].hfeb?arr[i].hfeb.toFixed(1)+' Hrs':'')}</td>`);
+                tds.push(`<td width='170px'>${(arr[i].pmar?'Avg: '+arr[i].pmar.toFixed(1)+'% Max: '+arr[i].mmar.toFixed(1)+'%':'')}<br>${(arr[i].hmar?arr[i].hmar.toFixed(1)+' Hrs':'')}</td>`);
+                tds.push(`<td width='170px'>${(arr[i].pabr?'Avg: '+arr[i].pabr.toFixed(1)+'% Max: '+arr[i].mabr.toFixed(1)+'%':'')}<br>${(arr[i].habr?''+arr[i].habr.toFixed(1)+' Hrs':'')}</td>`);
+                tds.push(`<td width='170px'>${(arr[i].pmay?'Avg: '+arr[i].pmay.toFixed(1)+'% Max: '+arr[i].mmay.toFixed(1)+'%':'')}<br>${(arr[i].hmay?arr[i].hmay.toFixed(1)+' Hrs':'')}</td>`);
+                tds.push(`<td width='170px'>${(arr[i].pjun?'Avg: '+arr[i].pjun.toFixed(1)+'% Max: '+arr[i].mjun.toFixed(1)+'%':'')}<br>${(arr[i].hjun?arr[i].hjun.toFixed(1)+' Hrs':'')}</td>`);
+                tds.push(`<td width='170px'>${(arr[i].pjul?'Avg: '+arr[i].pjul.toFixed(1)+'% Max: '+arr[i].mjul.toFixed(1)+'%':'')}<br>${(arr[i].hjul?arr[i].hjul.toFixed(1)+' Hrs':'')}</td>`);
+                tds.push(`<td width='170px'>${(arr[i].pago?'Avg: '+arr[i].pago.toFixed(1)+'% Max: '+arr[i].mago.toFixed(1)+'%':'')}<br>${(arr[i].hago?arr[i].hago.toFixed(1)+' Hrs':'')}</td>`);
+                tds.push(`<td width='170px'>${(arr[i].psep?'Avg: '+arr[i].psep.toFixed(1)+'% Max: '+arr[i].msep.toFixed(1)+'%':'')}<br>${(arr[i].hsep?arr[i].hsep.toFixed(1)+' Hrs':'')}</td>`);
+                tds.push(`<td width='170px'>${(arr[i].poct?'Avg: '+arr[i].poct.toFixed(1)+'% Max: '+arr[i].moct.toFixed(1)+'%':'')}<br>${(arr[i].hoct?arr[i].hoct.toFixed(1)+' Hrs':'')}</td>`);
+                tds.push(`<td width='170px'>${(arr[i].pnov?'Avg: '+arr[i].pnov.toFixed(1)+'% Max: '+arr[i].mnov.toFixed(1)+'%':'')}<br>${(arr[i].hnov?arr[i].hnov.toFixed(1)+' Hrs':'')}</td>`);
+                tds.push(`<td width='170px'>${(arr[i].pdic?'Avg: '+arr[i].pdic.toFixed(1)+'% Max: '+arr[i].mdic.toFixed(1)+'%':'')}<br>${(arr[i].hdic?arr[i].hdic.toFixed(1)+' Hrs':'')}</td>`);
+                tds.push(`<td width='170px'>${(arr[i].pEne_?'Avg: '+arr[i].pEne_.toFixed(1)+'% Max: '+arr[i].mEne_.toFixed(1)+'%':'')}<br>${(arr[i].hEne_?arr[i].hEne_.toFixed(1)+' Hrs':'')}</td>`);
+                tds.push(`<td width='170px'>${(arr[i].pfeb_?'Avg: '+arr[i].pfeb_.toFixed(1)+'% Max: '+arr[i].mfeb_.toFixed(1)+'%':'')}<br>${(arr[i].hfeb_?arr[i].hfeb_.toFixed(1)+' Hrs':'')}</td>`);
+                tds.push(`<td width='170px'>${(arr[i].pmar_?'Avg: '+arr[i].pmar_.toFixed(1)+'% Max: '+arr[i].mmar_.toFixed(1)+'%':'')}<br>${(arr[i].hmar_?arr[i].hmar_.toFixed(1)+' Hrs':'')}</td>`);
+                tds.push(`<td width='170px'>${(arr[i].pabr_?'Avg: '+arr[i].pabr_.toFixed(1)+'% Max: '+arr[i].mabr_.toFixed(1)+'%':'')}<br>${(arr[i].habr_?arr[i].habr_.toFixed(1)+' Hrs':'')}</td>`);
+                tds.push(`<td width='170px'>${(arr[i].pmay_?'Avg: '+arr[i].pmay_.toFixed(1)+'% Max: '+arr[i].mmay_.toFixed(1)+'%':'')}<br>${(arr[i].hmay_?arr[i].hmay_.toFixed(1)+' Hrs':'')}</td>`);
+                tds.push(`<td width='170px'>${(arr[i].pjun_?'Avg: '+arr[i].pjun_.toFixed(1)+'% Max: '+arr[i].mjun_.toFixed(1)+'%':'')}<br>${(arr[i].hjun_?arr[i].hjun_.toFixed(1)+' Hrs':'')}</td>`);
+                tds.push(`<td width='170px'>${(arr[i].pjul_?'Avg: '+arr[i].pjul_.toFixed(1)+'% Max: '+arr[i].mjul_.toFixed(1)+'%':'')}<br>${(arr[i].hjul_?arr[i].hjul_.toFixed(1)+' Hrs':'')}</td>`);
+                tds.push(`<td width='170px'>${(arr[i].pago_?'Avg: '+arr[i].pago_.toFixed(1)+'% Max: '+arr[i].mago_.toFixed(1)+'%':'')}<br>${(arr[i].hago_?arr[i].hago_.toFixed(1)+' Hrs':'')}</td>`);
+                tds.push(`<td width='170px'>${(arr[i].psep_?'Avg: '+arr[i].psep_.toFixed(1)+'% Max: '+arr[i].msep_.toFixed(1)+'%':'')}<br>${(arr[i].hsep_?arr[i].hsep_.toFixed(1)+' Hrs':'')}</td>`);
+                tds.push(`<td width='170px'>${(arr[i].poct_?'Avg: '+arr[i].poct_.toFixed(1)+'% Max: '+arr[i].moct_.toFixed(1)+'%':'')}<br>${(arr[i].hoct_?arr[i].hoct_.toFixed(1)+' Hrs':'')}</td>`);
                 //if(pproy!=0) 
-                console.log("tds",tds);
+                //console.log("tds",tds);
                 rows=rows+tdh+tds[0];
                 for(let j=INITIALMONTH;j<INITIALMONTH+MONTHTOSHOW;j++){
                     if(typeof tds[j]!="undefined" )
@@ -406,7 +441,7 @@ class PropertyView{
             
         }
         let chgArr=projList.getChanged();
-        console.log("chgArr",chgArr);
+        //console.log("chgArr",chgArr);
         let encabChg="<h4>Cambios por Realizar</h4><table class='paleBlueRows'><thead><tr><th>Nombre>-</buttom></th><th>IdP</th><th>Fase</th><th>Cambio</th><th>Original</th><th>On Site</th></tr></thead><tbody>"
         let endEncab="</tbody></table><br><hr>";
         let rows="";
@@ -415,7 +450,7 @@ class PropertyView{
             let t=el.equipo;
             rows+=render.sendTableComp(el,t,"cambios_staff","","","","");
         });
-        console.log("rows",rows);
+        //console.log("rows",rows);
         //console.log("bar",bar.innerHTML);
         bar.innerHTML+=encabChg+rows+endEncab;
 
@@ -701,7 +736,7 @@ class PeopleView{
                 if(rowName[m])
                     rowHead=rowHead+rowName[m];
         }
-        console.log("rowHead",rowHead);
+        //console.log("rowHead",rowHead);
         let encabChgh="<div id='people'><table class='paleBlueRows'><thead><tr><th>Nombre</th><th>proyecto</th><th>Fase</th><th>Ene</th><th>Feb</th><th>Mar</th><th>Abr</th><th>May</th><th>Jun</th><th>Jul</th><th>Ago</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dic</th></tr></thead><tbody>"
         let endEncabh="</tbody></table></div>";
         let rows="";

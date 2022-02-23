@@ -9,10 +9,10 @@ class Util{
    drop2(ev) {
        ev.preventDefault();
        var data = ev.dataTransfer.getData("text");
-       console.log("al trash;"+ev.target,data);
+       //console.log("al trash;"+ev.target,data);
        //ev.target.appendChild(document.getElementById(data));
        let elemt=document.getElementById(data);
-       console.log("al trash;"+elemt);
+       //console.log("al trash;"+elemt);
        if(confirm("se eliminará permanentemente"))
            elemt.remove();
    }    
@@ -52,7 +52,7 @@ class Util{
    sendToServer(){
         document.getElementById("loader").style.display = "";
        let modifyData=projList.getChanged();
-       console.log("modify data",modifyData);
+       //console.log("modify data",modifyData);
        if(modifyData.length>0){
            var objToSend={data:modifyData,token:myToken,time:myTime}
            //console.log("enviar a server",objToSend);

@@ -100,7 +100,7 @@ class ProjList{
             }
             this.mesProjStruct[this.data[i].mes]=arr;  // data[i] is a project objet with team objet 
         }
-       console.log("this.mesProjStruct",this.mesProjStruct);
+       //console.log("this.mesProjStruct",this.mesProjStruct);
     }
     updateMesProjStruct(m){
         var arr=[];
@@ -206,6 +206,6 @@ class HistoricChanges{
     async updateData(){
         let data= await this.util.asynGetFromDB(`https://gethistchanges.azurewebsites.net/api/gethistchanges`);
         this.Hdata=data.data;
-        console.log("update data",this.Hdata);
+        //console.log("update data",this.Hdata);
     }
 }

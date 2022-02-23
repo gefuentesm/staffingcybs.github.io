@@ -62,19 +62,19 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         var wrappid="t-"+nb+"-"+IDp+"."+fase+"."+mes+"-"+inOnSite;
         var wrappid2="c-"+nb+"-"+IDp+"."+fase+"."+mes+"-"+inOnSite;
         let currentInOnsite=0;
-        console.log("tx_dedichange",document.getElementById(wrappid2),wrappid2);  //c-Gustavo Fuentes-40.2.2-0
+        //console.log("tx_dedichange",document.getElementById(wrappid2),wrappid2);  //c-Gustavo Fuentes-40.2.2-0
         if( document.getElementById(wrappid2))
             currentInOnsite=document.getElementById(wrappid2).style.backgroundColor=="blue"?1:0;
         else
             if( document.getElementById(wrappid))
                 currentInOnsite=document.getElementById(wrappid).style.backgroundColor=="blue"?1:0;
-        console.log("current onsite",currentInOnsite);
+        //console.log("current onsite",currentInOnsite);
         //console.log("on Change",document.getElementById(id).value);
         projList.setAllStruct(IDp,fase,nb,document.getElementById(id).value,mes,currentInOnsite);
-        console.log("dedichange",nb,IDp,mes,currentInOnsite,document.getElementById(id).value);
+        //console.log("dedichange",nb,IDp,mes,currentInOnsite,document.getElementById(id).value);
         let totDedic=projList.getTeamDedication(IDp,fase,mes);
         let origDedi=document.getElementById(`ref-${IDp}.${fase}.${mes}`).innerHTML;
-        console.log("cambios",totDedic,origDedi);
+        //console.log("cambios",totDedic,origDedi);
         let xcolor=totDedic==origDedi ? "orange" : "red";
         let chgDedi=document.getElementById(`chng-${IDp}.${fase}.${mes}`);
         chgDedi.innerHTML=totDedic.toFixed(2);
@@ -117,7 +117,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
     }
     function show_PeopleContainer(){
         document.getElementById("loader").style.display = ""
-        console.log("peopleView",peopleView);
+        //console.log("peopleView",peopleView);
         util.asynGetFromDB(`https://getfactpeoplemonthly.azurewebsites.net/api/getfactpeoplemonthly`,myToken,myTime).then(function(fetchData){
         //console.log(fetchData);
             peopleView = new PeopleView(fetchData,"container-people");
@@ -195,7 +195,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         }
     }
     function btn_save(){
-        console.log("save")
+        //console.log("save")
         util.sendToServer();                
     }
     function btn_reload(){
@@ -214,7 +214,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                         msg="ok"
                     else
                         msg=fetchData.msg
-                    console.log("msg staffing",msg);
+                    //console.log("msg staffing",msg);
                     //projList.createMesStruct();
                     if(msg=="ok"){
                         projList=new ProjList(fetchData);
@@ -257,7 +257,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
     }
     function loadProjectMonthly(){
         util.asynGetFromDB(`https://getfactprojmonthy.azurewebsites.net/api/getfactprojmonthy`,myToken,myTime).then(function(fetchData){
-            //console.log("fetch data getAllProjects",fetchData);
+            console.log("fetch data getAllProjects",fetchData);
             if(typeof fetchData.msg=="undefined")
                     msg="ok"
                 else
@@ -265,6 +265,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             if(msg=="ok")
             {
                 factprojmonthy=fetchData.data;
+                //console.log("en el load",fetchData.data)
                 projView = new ProjView(fetchData.data,"container-project","tab-proj-01");
                 projView.mostrarProyMonthly(0);
             }
@@ -282,8 +283,8 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             });
     }
     function setProy(){ 
-        console.log("setProy");
-        console.log("auth",myToken,myTime)
+        //console.log("setProy");
+        //console.log("auth",myToken,myTime)
         let msg="";
         cal=new Calendario();
         propertyBar=new PropertyView("bar");
@@ -345,7 +346,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                 localStorage.setItem("username", usr.value);
                 document.getElementById("signin").style.display="none";
                 setProy();
-                console.log(myToken,myTime)
+                //console.log(myToken,myTime)
                 document.getElementById("loader").style.display = "none";
                 
             }else {
