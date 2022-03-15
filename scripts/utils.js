@@ -74,8 +74,10 @@ class Util{
 }
 class Render{
    constructor(){
-       let f1=(obj)    =>  `<div class="proyecto" id="${obj.IDp}.${obj.fase}.${obj.mes}"  ondrop="staffing.drop(event)" ondragover="util.allowDrop(event)">
-                               ${obj.IDp}-${obj.proyecto} con la fase: ${obj.fase} en el mes ${obj.mes}  -
+       let f1=(obj)    => { let edo=obj.Fase;
+                            let prop=edo.indexOf("Lead")>0 ||edo.indexOf("Propuesta")>0?"style='font-weight:normal;color:orange'":"style='font-weight:bold;'";
+                            return `<div class="proyecto" id="${obj.IDp}.${obj.fase}.${obj.mes}"  ondrop="staffing.drop(event)" ondragover="util.allowDrop(event)">
+                               <span ${prop}>${obj.IDp}-${obj.proyecto} </span> con la fase: ${obj.fase} en el mes ${obj.mes}  -
                                <span id="ref-${obj.IDp}.${obj.fase}.${obj.mes}" style="color:green"></span>&nbsp;&nbsp;cambio por:&nbsp;&nbsp;
                                <span id="chng-${obj.IDp}.${obj.fase}.${obj.mes}" style="color:green"></span>   
                                <div >
@@ -83,6 +85,7 @@ class Render{
                                    <button type="button" class="btn_lite" onclick="bwi_info(${obj.IDp},${obj.fase},${obj.mes})" name="bwi-${obj.IDp}.${obj.fase}.${obj.mes}" id="bwi-${obj.IDp}.${obj.fase}.${obj.mes}">info &#62;</button> 
                                    <button type="button" class="btn_lite" style="margin-left:1px;" onclick="bpv_show(${obj.IDp},${obj.fase},${obj.mes})" name="bpv-${obj.IDp}.${obj.fase}.${obj.mes}" id="bpv-${obj.IDp}.${obj.fase}.${obj.mes}">project &#62;</button>                                                                                             
                                </div>`;
+                            }
        let f2=(obj,arr)=>  `<div id="c-${arr.nombre}-${obj.IDp}.${obj.fase}.${obj.mes}-${arr.inOnSite}" dragable="false"  class="card" style="background-color:${arr.inOnSite==1?'blue':'#e6f9ff'}">
                                <input type="text" name="nombre" readonly style="width: 120px;" value="${arr.nombre}">
                                <input type="text" id="id-${arr.nombre}-${obj.IDp}.${obj.fase}.${obj.mes}-${arr.inOnSite}" onchange="tx_dedichange('${arr.nombre}',${obj.IDp},${obj.fase},${obj.mes},${arr.inOnSite})" style="width: 39px;" value="${arr.dedicacion}">

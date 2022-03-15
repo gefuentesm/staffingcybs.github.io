@@ -209,6 +209,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
     function loadStaff(){
         document.getElementById("loader").style.display = ""
         util.asynGetFromDB(`https://getstaffinghttp.azurewebsites.net/api/getstaffinghttp`,myToken,myTime).then(function(fetchData){
+                console.log("fetchdata",fetchData);
                 try{                    
                     if(typeof fetchData.msg=="undefined")
                         msg="ok"

@@ -530,6 +530,7 @@ class StaffingView{
                 aux+="</div>";
                 cont.innerHTML+=aux;
                 totDedic=projList.getTeamDedication(o.IDp,o.fase,o.mes);
+                console.log("aqui da el error",`ref-${o.IDp}.${o.fase}.${o.mes}`);
                 document.getElementById(`ref-${o.IDp}.${o.fase}.${o.mes}`).innerHTML=totDedic.toFixed(2);
             })  
         }
