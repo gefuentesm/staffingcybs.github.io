@@ -43,7 +43,7 @@ class Util{
                'Content-Type': 'application/json',
            }
        }).then(r => r.json()).catch((error) => {
-           console.error(error);
+           console.log(error);
        });
        //console.log("asynGetFromDB",fetchData);
        document.getElementById("loader").style.display = "none"
@@ -139,7 +139,7 @@ class Render{
                                     travel='<img src="image/avion.svg" width="18px">'
                                 rowMo.set(0,`<tr name="${o.ind==0?'o.'+o.nombre_persona:'h.'+o.nombre_persona}" class="${o.ind==0?'head-cell':''}" style="${o.ind==0?'':'display:none'}">
                                     <td class="${o.ind==0?'head-cell-left':''}" >${btn_plus} ${o.nombre_persona} ${travel}</td>
-                                    <td class="${o.ind==0?'head-cell':''}" >${o.proyecto}</td>
+                                    <td class="${o.ind==0?'head-cell':''}" >${o.proyecto}-${o.nb_proyecto}</td>
                                     <td class="${o.ind==0?'head-cell':''}" >${o.fase}</td>`);
                                 rowMo.set(1,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.pEne)} >${o.pEne==null?0:(o.pEne*100).toFixed(2)+'%'}</td>`);
                                 rowMo.set(2,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.pFeb)}>${o.pFeb==null?0:(o.pFeb*100).toFixed(2)+'%'}</td>`);

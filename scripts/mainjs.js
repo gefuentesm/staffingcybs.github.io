@@ -247,7 +247,11 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                 teamView=new TeamView(fetchData,"team");
                 teamView.show();
             }
-        });
+        })
+        .catch(error=>{
+            document.getElementById("loader").style.visibility = "none";
+            console.log(error)
+        })
     }
     function loadAllProjects(){
         util.asynGetFromDB(`https://getallprojects.azurewebsites.net/api/getallprojects`,myToken,myTime).then(function(fetchData){
@@ -258,7 +262,11 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                     msg=fetchData.msg
             if(msg=="ok")
                 projectFilterView=new ProjectFilterView(fetchData.data,"projectsBox");
-        });
+        })
+        .catch(error=>{
+            document.getElementById("loader").style.visibility = "none";
+            console.log(error)
+        })
     }
     function loadProjectMonthly(){
         util.asynGetFromDB(`https://getfactprojmonthy.azurewebsites.net/api/getfactprojmonthy`,myToken,myTime).then(function(fetchData){
@@ -275,6 +283,10 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                 projView.mostrarProyMonthly(0);
             }
         })
+        .catch(error=>{
+            document.getElementById("loader").style.visibility = "none";
+            console.log(error)
+        })
     }
     function loadProjectSummary(){
         util.asynGetFromDB(`https://getprojectsummary.azurewebsites.net/api/getprojectsummary`,myToken,myTime).then(function(fetchData){
@@ -285,7 +297,11 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                     msg=fetchData.msg
                 if(msg=="ok")
                     projSummary= new ProjSummaryView(fetchData,"projSumm","div-content-head");
-            });
+            })
+            .catch(error=>{
+                document.getElementById("loader").style.visibility = "none";
+                console.log(error)
+            })
     }
     function setProy(){ 
         //console.log("setProy");
@@ -324,6 +340,10 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                 'Content-Type': 'application/json',
             }
         }).then(r => r.json())
+        .catch(error=>{
+            document.getElementById("loader").style.visibility = "none";
+            console.log(error)
+        })
        
         //console.log("fetchData",fetchData.data)
         return fetchData;

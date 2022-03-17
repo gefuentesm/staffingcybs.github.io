@@ -720,7 +720,7 @@ class PeopleView{
                 rompe=hcArr[i].nombre_persona;
             }
             let obj=totales.get(hcArr[i].nombre_persona)
-            dataArr.push({nombre_persona:hcArr[i].nombre_persona,ind:0,proyecto:'',fase:'',pEne:obj.ene,pFeb:obj.feb,pMar:obj.mar,pAbr:obj.abr,pMay:obj.may,pJun:obj.jun,pJul:obj.jul,pAgo:obj.ago,pSep:obj.sep,pOct:obj.oct,pNov:obj.nov,pDic:obj.dic})
+            dataArr.push({nombre_persona:hcArr[i].nombre_persona,ind:0,proyecto:'',nb_proyecto:'',fase:'',pEne:obj.ene,pFeb:obj.feb,pMar:obj.mar,pAbr:obj.abr,pMay:obj.may,pJun:obj.jun,pJul:obj.jul,pAgo:obj.ago,pSep:obj.sep,pOct:obj.oct,pNov:obj.nov,pDic:obj.dic})
             rompe=hcArr[i].nombre_persona;
             hcArr[i].ind=ind;
             //prepare next
@@ -743,6 +743,7 @@ class PeopleView{
         let endEncabh="</tbody></table></div>";
         let rows="";
         //rows=render.sendTable(hcArr,"fact_personas","","","","");
+        console.log("people",dataArr);
         rows=render.sendTable(dataArr,"fact_personas","","","","");
         let tab=document.getElementById(this.container)
         tab.innerHTML = rowHead+rows+endEncabh;
