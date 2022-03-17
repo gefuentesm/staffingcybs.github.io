@@ -120,7 +120,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         //console.log("peopleView",peopleView);
         util.asynGetFromDB(`https://getfactpeoplemonthly.azurewebsites.net/api/getfactpeoplemonthly`,myToken,myTime).then(function(fetchData){
         //console.log(fetchData);
-            peopleView = new PeopleView(fetchData,"container-people");
+            peopleView = new PeopleView(fetchData,"container-people","container-p");
             peopleView.renderView();
             peopleView.setContainerShow();
         })
@@ -230,7 +230,11 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                     alert("Error en la carga, intente de nuevo");
                 }
                 
-            });
+            })
+            .catch(error=>{
+                document.getElementById("loader").style.visibility = "none";
+                console.log(error)
+            })
     }
     function loadConsultant(){
         util.asynGetFromDB(`https://getconsultant.azurewebsites.net/api/getconsultant`,myToken,myTime).then(function(fetchData){
@@ -347,7 +351,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                 localStorage.setItem("username", usr.value);
                 document.getElementById("signin").style.display="none";
                 setProy();
-                //console.log(myToken,myTime)
+                console.log("myToken,myTime loaded")
                 document.getElementById("loader").style.display = "none";
                 
             }else {
