@@ -88,7 +88,7 @@ class Render{
                             }
        let f2=(obj,arr)=>  `<div id="c-${arr.nombre}-${obj.IDp}.${obj.fase}.${obj.mes}-${arr.inOnSite}" dragable="false"  class="card" style="background-color:${arr.inOnSite==1?'blue':'#e6f9ff'}">
                                <input type="text" name="nombre" readonly style="width: 120px;" value="${arr.nombre}">
-                               <input type="text" id="id-${arr.nombre}-${obj.IDp}.${obj.fase}.${obj.mes}-${arr.inOnSite}" onchange="tx_dedichange('${arr.nombre}',${obj.IDp},${obj.fase},${obj.mes},${arr.inOnSite})" style="width: 39px;" value="${arr.dedicacion}">
+                               <input type="text" id="id-${arr.nombre}-${obj.IDp}.${obj.fase}.${obj.mes}-${arr.inOnSite}" onchange="tx_dedichange('${arr.nombre}','${obj.IDp}','${obj.fase}','${obj.mes}',${arr.inOnSite})" style="width: 39px;" value="${arr.dedicacion}">
                                </div>`;
        let f3=(o)      =>  `<div id="t-${o.name}" draggable="true" class="card" ondragstart="util.drag(event)">
                                <input type="text" name="nombre" readonly class="name" value="${o.name}">
@@ -117,7 +117,7 @@ class Render{
                                </div>`;                
        let f8=(o)          => `<div id="t-${o.nombre}-${o.IDp}.${o.fase}.${o.mes}-${o.inOnSite}" draggable="true" class="card" ondragstart="util.drag(event)">
                                 <input type="text" name="nombre" class="name" readonly value="${o.nombre}">
-                                <input type="text" name="${o.nombre}" style="width:30px" id="id-${o.nombre}-${o.IDp}.${o.fase}.${o.mes}-${o.inOnSite}" onchange="tx_dedichange('${o.nombre}',${o.IDp},${o.fase},${o.mes},${o.inOnSite})" value="${o.dedicacion}">
+                                <input type="text" name="${o.nombre}" style="width:30px" id="id-${o.nombre}-${o.IDp}.${o.fase}.${o.mes}-${o.inOnSite}" onchange="tx_dedichange('${o.nombre}','${o.IDp}','${o.fase}','${o.mes}',${o.inOnSite})" value="${o.dedicacion}">
                                 <input type="checkbox" id="cb-${o.nombre}-${o.IDp}.${o.fase}.${o.mes}-${o.inOnSite}" onclick="click_checkbox('${o.nombre}',${o.IDp},${o.fase},${o.mes},${o.inOnSite})">
                                </div>`;
        let f9=(o,arr)      =>  {   //console.log("f9"+arr.nombre,typeof arr.dirty ==="undefined")

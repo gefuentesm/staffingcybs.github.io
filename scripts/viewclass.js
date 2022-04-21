@@ -441,17 +441,22 @@ class PropertyView{
             
         }
         let chgArr=projList.getChanged();
-        //console.log("chgArr",chgArr);
+        console.log("chgArr",chgArr);
         let encabChg="<h4>Cambios por Realizar</h4><table class='paleBlueRows'><thead><tr><th>Nombre>-</buttom></th><th>IdP</th><th>Fase</th><th>Cambio</th><th>Original</th><th>On Site</th></tr></thead><tbody>"
         let endEncab="</tbody></table><br><hr>";
         let rows="";
-        chgArr.forEach(el=>{
-            //console.log("chgArr",el)
+        /*chgArr.forEach(el=>{
+            console.log("chgArr el",el.equipo)
             let t=el.equipo;
             rows+=render.sendTableComp(el,t,"cambios_staff","","","","");
-        });
-        //console.log("rows",rows);
-        //console.log("bar",bar.innerHTML);
+        });*/
+        console.log("chgArr",chgArr);
+        if(chgArr.length>0){
+            console.log("chgArr",chgArr[0],chgArr[0].equipo);
+            rows+=render.sendTableComp(chgArr[0],chgArr[0].equipo,"cambios_staff","","","","");
+        }
+        console.log("rows",rows);
+        console.log("bar",bar.innerHTML);
         bar.innerHTML+=encabChg+rows+endEncab;
 
         let hcArr= this.getHistoricData();
@@ -596,6 +601,8 @@ class StaffingView{
         let target_id=ev.target.id;
         let arrTarget=target_id.split(".");
         let idProj=arrTarget[0];
+   
+        console.log("drop",idProj,arrTarget)
         let faseProj=arrTarget[1];
         let mesProj=arrTarget[2];
         //${o.nombre}-${o.IPp}.${o.fase}.${o.mes}-${o.inOnSite}

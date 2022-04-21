@@ -170,7 +170,7 @@ class ProjList{
         return this.mesStruct[mes].get(nb).dedicacion;
     }
     setAllStruct(IDp,fase,nb,dedica,mes,inOnSite){
-        //console.log("setAllStruct",IDp,fase,nb,dedica,mes)
+        console.log("setAllStruct",IDp,fase,nb,dedica,mes,inOnSite);
         // se cambia la estructura mensual, luego el array de data y finalmente (y en ese orden) se cambia la estructura de proyecto
         if(dedica && !isNaN(dedica)){
             if(this.mesStruct[mes].has(nb)){

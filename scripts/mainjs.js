@@ -68,8 +68,8 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         else
             if( document.getElementById(wrappid))
                 currentInOnsite=document.getElementById(wrappid).style.backgroundColor=="blue"?1:0;
-        //console.log("current onsite",currentInOnsite);
-        //console.log("on Change",document.getElementById(id).value);
+        console.log("current onsite",IDp,fase,mes,id,currentInOnsite);
+        console.log("on Change",document.getElementById(id).value);
         projList.setAllStruct(IDp,fase,nb,document.getElementById(id).value,mes,currentInOnsite);
         //console.log("dedichange",nb,IDp,mes,currentInOnsite,document.getElementById(id).value);
         let totDedic=projList.getTeamDedication(IDp,fase,mes);
