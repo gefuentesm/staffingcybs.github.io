@@ -1,7 +1,7 @@
 var globId=1;
 const GOODTHRESHOLD=100;
 //var INITIALMONTH=new Date().getMonth()+1; <-- esta es la correcta
-var INITIALMONTH=new Date().getMonth()+1;
+var INITIALMONTH=new Date().getMonth()-2;
 //INITIALMONTH=INITIALMONTH==0?12:INITIALMONTH;
 var MONTHTOSHOW=12;
 var INITIALYEAR=new Date().getFullYear();
@@ -10,6 +10,7 @@ console.log(INITIALYEAR,YEARTOSHOW);
 cantidad=10
 var staffing;
 var projView;
+var projViewReal;
 var projSummary;
 var render;
 var projectFilterView;
@@ -167,11 +168,15 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             projView.setContainerHide();
             btn.innerHTML="project &#62;";
             btn.style.backgroundColor="#e0e0fa";
+            projViewReal.setContainerHide();
+            
         }else{
             projView.setContainerShow();
             projView.mostrarProyMonthly(IDp);       
             btn.innerHTML="project v";     
             btn.style.backgroundColor="orange";
+            projViewReal.setContainerShow();
+            projViewReal.mostrarProyReal(IDp);
         }
         
     }
@@ -288,6 +293,26 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             console.log(error)
         })
     }
+    function loadProjectPlanReal(){
+        util.asynGetFromDB(`https://gethorasplanreal.azurewebsites.net/api/gethorasplanreal`,myToken,myTime).then(function(fetchData){
+            console.log("fetch data loadProjectPlanReal",fetchData);
+            if(typeof fetchData.msg=="undefined")
+                    msg="ok"
+                else
+                    msg=fetchData.msg
+            if(msg=="ok")
+            {
+                factprojmonthy=fetchData.data;
+                console.log("en el load de loadProjectPlanReal",fetchData.data)
+                projViewReal = new ProjViewReal(fetchData.data,"container-project-real","tab-proj-02");
+                //projView.mostrarProyMonthly(0);
+            }
+        })
+        .catch(error=>{
+            document.getElementById("loader").style.visibility = "none";
+            console.log(error)
+        })
+    }
     function loadProjectSummary(){
         util.asynGetFromDB(`https://getprojectsummary.azurewebsites.net/api/getprojectsummary`,myToken,myTime).then(function(fetchData){
             //console.log("fetch data getProjectSummary",fetchData);
@@ -322,6 +347,8 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             loadAllProjects()
 
             loadProjectMonthly();
+
+            loadProjectPlanReal();
 
             loadProjectSummary();
            

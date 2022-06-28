@@ -77,6 +77,7 @@ class Render{
        let f1=(obj)    => { let edo=obj.Fase;
                             let prop=edo.indexOf("Lead")>0 ||edo.indexOf("Propuesta")>0?"style='font-weight:normal;color:orange'":"style='font-weight:bold;'";
                             return `<div class="proyecto" id="${obj.IDp}.${obj.fase}.${obj.mes}"  ondrop="staffing.drop(event)" ondragover="util.allowDrop(event)">
+                               
                                <span ${prop}>${obj.IDp}-${obj.proyecto} </span> con la fase: ${obj.fase} en el mes ${obj.mes}  -
                                <span id="ref-${obj.IDp}.${obj.fase}.${obj.mes}" style="color:green"></span>&nbsp;&nbsp;cambio por:&nbsp;&nbsp;
                                <span id="chng-${obj.IDp}.${obj.fase}.${obj.mes}" style="color:green"></span>   

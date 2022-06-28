@@ -87,6 +87,89 @@ class ProjSummaryView{
             document.getElementById(this.containHead).style.height="120px";
     }
 }
+class ProjViewReal{
+    constructor(data,container,tab_container){
+        this.factprojmonthy=data;
+        this.containerProject=container;
+        this.tabContainer=tab_container;
+        this.totalProj=new Map();
+        this.contMap=new Map();
+        //this.makeTotalMap();
+        //console.log("total proj",this.totalProj);
+    }
+    isVisible(){
+        let content = document.getElementById(this.containerProject);
+        //console.log("content.style.display",content.style.display);
+        return content.style.display=="";
+    }
+    setContainerHide(){
+        let content = document.getElementById(this.containerProject);
+        content.style.display="none";
+    }
+    setContainerShow(){
+        let content = document.getElementById(this.containerProject);
+        content.style.display="";
+    }    
+    mostrar(x){
+        var arr=document.getElementsByName(x);
+        arr.forEach((el)=>{
+            if(el.style.display=="none"){
+                el.style.display="";
+            }else el.style.display="none";
+        });
+    }
+    mostrarProyReal(pproy){
+        var contenedor = document.getElementById(this.tabContainer);
+        var rowHead=``;
+        var rowName=['<thead><tr><th width="140px" style="background-color:#6666ff; width:140px">ID</th><th style="background-color:#6666ff;width:420px">Nombre</th><th style="background-color:#6666ff;width:20px">Semanas Plan</th><th style="background-color:#6666ff;width:20px">Horas Plan</th><th style="background-color:#6666ff;width:80px">Inicio</th><th style="background-color:#6666ff;width:80px">Cierre</th>','<th style="background-color:#6666ff;width:400px">Ene</th>','<th style="background-color:#6666ff;width:400px">Feb</th>','<th style="background-color:#6666ff;width:400px">Mar</th>','<th style="background-color:#6666ff;width:400px">Abr</th>','<th style="background-color:#6666ff;width:400px">May</th>','<th style="background-color:#6666ff;width:400px">Jun</th>','<th style="background-color:#6666ff;width:400px">Jul</th>','<th style="background-color:#6666ff;width:400px">Ago</th>','<th style="background-color:#6666ff;width:400px">Sep</th>','<th style="background-color:#6666ff;width:400px">Oct</th>','<th style="background-color:#6666ff;width:400px">Nov</th>','<th style="background-color:#6666ff;width:400px">Dic</th>','<th style="background-color:#6666ff;width:400px">Ene_</th>','<th style="background-color:#6666ff;width:400px">Feb_</th>','<th style="background-color:#6666ff;width:400px">Mar_</th>','<th style="background-color:#6666ff;width:400px">Abr_</th>','<th style="background-color:#6666ff;width:400px">May_</th>','<th style="background-color:#6666ff;width:400px">Jun_</th>','<th style="background-color:#6666ff;width:400px">Jul_</th>','<th style="background-color:#6666ff;width:400px">Ago_</th>','<th style="background-color:#6666ff;width:400px">Sep_</th>','<th style="background-color:#6666ff;width:400px">Oct_</th>','<th style="background-color:#6666ff;width:400px">Nov_</th>','<th style="background-color:#6666ff;width:400px">Dic_</th>']
+        contenedor.innerHTML=rowHead;
+        var rows="";        
+        var arr=this.factprojmonthy;
+        console.log("mostrarProyReal",pproy,arr.length);
+        let inHead=true;
+        for(let i in arr){     
+            if(arr[i].idProy==pproy||pproy==0){
+                if(inHead){
+                    rowHead=rowName[0];
+                    console.log()
+                    for(let m=INITIALMONTH;m<INITIALMONTH+MONTHTOSHOW;m++){
+                        if(m!=0)
+                            rowHead=rowHead+rowName[m];
+                    }
+                    rowHead=rowHead+"</tr></thead>"
+                    inHead=false;
+                   
+                }  
+                var tds=[];
+                var tdh="";
+                
+                tds.push(`<tr name="p.${arr[i].idProy}" ><td>${arr[i].idProy}</td><td>${arr[i].usr}</td><td>${arr[i].dura_plan_week}</td><td>${arr[i].hrs_dedica_plan}</td><td>${(arr[i].inicio_mon?arr[i].inicio_mon.substring(0,10):'')}</td><td>${(arr[i].cierre_mon?arr[i].cierre_mon.substring(0,10):'')}</td>`)
+                tds.push(`<td width='170px' ${arr[i].pEne_||arr[i].rEne_?'class="cell1"':''}>${(arr[i].pEne_?'PLAN: '+arr[i].pEne_.toFixed(1)+'H REAL:':'')}${(arr[i].rEne_?arr[i].rEne_.toFixed(1)+'H':'')}</td>`);
+                tds.push(`<td width='170px'${arr[i].pFeb_||arr[i].rFeb_?'class="cell1"':''}>${(arr[i].pFeb_?'<span class="plan">Plan:'+arr[i].pFeb_.toFixed(1)+'H</span>':'')}${(arr[i].rFeb_?'<span class="real">Real:'+arr[i].rFeb_.toFixed(1)+'H</span>':'')}</td>`);
+                tds.push(`<td width='170px'${arr[i].pMar_||arr[i].rMar_?'class="cell1"':''}>${(arr[i].pMar_?'<span class="plan">Plan:'+arr[i].pMar_.toFixed(1)+'H</span>':'')}${(arr[i].rMar_?'<span class="real">Real:'+arr[i].rMar_.toFixed(1)+'H</span>':'')}</td>`);
+                tds.push(`<td width='170px'${arr[i].pAbr_||arr[i].rAbr_?'class="cell1"':''}>${(arr[i].pAbr_?'<span class="plan">Plan:'+arr[i].pAbr_.toFixed(1)+'H</span>':'')}${(arr[i].rAbr_?'<span class="real">Real:'+arr[i].rAbr_.toFixed(1)+'H</span>':'')}</td>`);
+                tds.push(`<td width='170px'${arr[i].pMay_||arr[i].rMay_?'class="cell1"':''}>${(arr[i].pMay_?'<span class="plan">Plan:'+arr[i].pMay_.toFixed(1)+'H</span>':'')}${(arr[i].rMay_?'<span class="real">Real:'+arr[i].rMay_.toFixed(1)+'H</span>':'')}</td>`);
+                tds.push(`<td width='170px'${arr[i].pJun_||arr[i].rJun_?'class="cell1"':''}>${(arr[i].pJun_?'<span class="plan">Plan:'+arr[i].pJun_.toFixed(1)+'H</span>':'')}${(arr[i].rJun_?'<span class="real">Real:'+arr[i].rJun_.toFixed(1)+'H</span>':'')}</td>`);
+                tds.push(`<td width='170px'${arr[i].pJul_||arr[i].rJul_?'class="cell1"':''}>${(arr[i].pJul_?'<span class="plan">Plan:'+arr[i].pJul_.toFixed(1)+'H</span>':'')}${(arr[i].rJul_?'<span class="real">Real:'+arr[i].rJul_.toFixed(1)+'H</span>':'')}</td>`);
+                tds.push(`<td width='170px'${arr[i].pAgo_||arr[i].rAgo_?'class="cell1"':''}>${(arr[i].pAgo_?'<span class="plan">Plan:'+arr[i].pAgo_.toFixed(1)+'H</span>':'')}${(arr[i].rAgo_?'<span class="real">Real:'+arr[i].rAgo_.toFixed(1)+'H</span>':'')}</td>`);
+                tds.push(`<td width='170px'${arr[i].pSep_||arr[i].rSep_?'class="cell1"':''}>${(arr[i].pSep_?'<span class="plan">Plan:'+arr[i].pSep_.toFixed(1)+'H</span>':'')}${(arr[i].rSep_?'<span class="real">Real:'+arr[i].rSep_.toFixed(1)+'H</span>':'')}</td>`);
+                tds.push(`<td width='170px'${arr[i].pOct_||arr[i].rOct_?'class="cell1"':''}>${(arr[i].pOct_?'<span class="plan">Plan:'+arr[i].pOct_.toFixed(1)+'H</span>':'')}${(arr[i].rOct_?'<span class="real">Real:'+arr[i].rOct_.toFixed(1)+'H</span>':'')}</td>`);
+                tds.push(`<td width='170px'${arr[i].pNov_||arr[i].rNov_?'class="cell1"':''}>${(arr[i].pNov_?'<span class="plan">Plan:'+arr[i].pNov_.toFixed(1)+'H</span>':'')}${(arr[i].rNov_?'<span class="real">Real:'+arr[i].rNov_.toFixed(1)+'H</span>':'')}</td>`);
+                tds.push(`<td width='170px'${arr[i].pDic_||arr[i].rDic_?'class="cell1"':''}>${(arr[i].pDic_?'<span class="plan">Plan:'+arr[i].pDic_.toFixed(1)+'H</span>':'')}${(arr[i].rDic_?'<span class="real">Real:'+arr[i].rDic_.toFixed(1)+'H</span>':'')}</td>`);
+                tds.push(`<td width='170px'${arr[i].pEne||arr[i].rEne?'class="cell1"':''}>${(arr[i].pEne?'<span class="plan">Plan:'+arr[i].pEne.toFixed(1)+'H</span>':'')}${(arr[i].rEne?'<span class="real">Real:'+arr[i].rEne.toFixed(1)+'H</span>':'')}</td>`);
+                tds.push(`<td width='170px'${arr[i].pFeb||arr[i].rFeb?'class="cell1"':''}>${(arr[i].pFeb?'<span class="plan">Plan:'+arr[i].pFeb.toFixed(1)+'H</span>':'')}${(arr[i].rFeb?'<span class="real">Real:'+arr[i].rFeb.toFixed(1)+'H</span>':'')}</td>`);
+                tds.push(`<td width='170px'${arr[i].pMar||arr[i].rMar?'class="cell1"':''}>${(arr[i].pMar?'<span class="plan">Plan:'+arr[i].pMar.toFixed(1)+'H</span>':'')}${(arr[i].rMar?'<span class="real">Real:'+arr[i].rMar.toFixed(1)+'H</span>':'')}</td>`);
+                rows=rows+tdh+tds[0];
+                console.log("data arr",arr[i],tds[0]);
+                for(let j=INITIALMONTH;j<INITIALMONTH+MONTHTOSHOW;j++){
+                    if(typeof tds[j]!="undefined" )
+                        rows=rows+tds[j];
+                }
+            }
+        }
+        contenedor.innerHTML=rowHead+rows;
+    }
+}
 class ProjView{
     constructor(data,container,tab_container){
         this.factprojmonthy=data;
@@ -602,7 +685,7 @@ class StaffingView{
         let arrTarget=target_id.split(".");
         let idProj=arrTarget[0];
    
-        console.log("drop",idProj,arrTarget)
+        console.log("drop",ev.target.id,idProj,arrTarget,ev.target)
         let faseProj=arrTarget[1];
         let mesProj=arrTarget[2];
         //${o.nombre}-${o.IPp}.${o.fase}.${o.mes}-${o.inOnSite}
