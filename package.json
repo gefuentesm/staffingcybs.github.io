@@ -1,0 +1,19 @@
+{
+  "name": "staffingcybs.github.io",
+  "version": "1.0.0",
+  "description": "staffing cybs",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gefuentesm/staffingcybs.github.io.git"
+  },
+  "author": "gustavo fuentes",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gefuentesm/staffingcybs.github.io/issues"
+  },
+  "homepage": "https://github.com/gefuentesm/staffingcybs.github.io#readme"
+}
