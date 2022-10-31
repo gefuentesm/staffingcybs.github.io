@@ -1,12 +1,16 @@
 var globId=1;
-const GOODTHRESHOLD=100;
+const GOODTHRESHOLD=160;
 //var INITIALMONTH=new Date().getMonth()+1; <-- esta es la correcta
 var INITIALMONTH=new Date().getMonth()-2;
 //INITIALMONTH=INITIALMONTH==0?12:INITIALMONTH;
-var MONTHTOSHOW=12;
+var MONTHTOSHOW=21;
 var INITIALYEAR=new Date().getFullYear();
+var CURRYEAR=new Date().getFullYear();
 var YEARTOSHOW=new Date().getFullYear()+1;
+var CURRENTMONTH=new Date().getMonth()+1;
 console.log(INITIALYEAR,YEARTOSHOW);
+let yearInitial= INITIALYEAR;      //2021; 
+let proyectosArr=Array.from({length: 25}, function() { return []; });
 cantidad=10
 var staffing;
 var projView;
@@ -22,10 +26,13 @@ var propertyBar;
 var myToken;
 var myTime;
 var peopleView;
+var vacationView;
+var userSession;
+var dateOfChanged;
 titulo=["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
 var oHistField=new Field();
-oHistField.add(1,"b1","nombre_persona");
-oHistField.add(2,"b2","proyecto");
+oHistField.add(1,"b1","usr");
+oHistField.add(2,"b2","idProy");
 oHistField.add(3,"","Fase");
 oHistField.add(4,"","Cambio");
 oHistField.add(5,"","Original");
@@ -33,6 +40,105 @@ oHistField.add(5,"","In Site");
 var oSortHistList=new SortList(oHistField);
 var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
 // GUI FUNCTIONS
+    function getDataMesPlan(mo,year,el){            
+        let mon=mo>12?mo-12:mo;
+        //console.log("func getDataMesPlan",mo,mon,year,el);
+        if(year==CURRYEAR-1){
+            return mon==1?el.pEne_:(mon==2?el.pFeb_:(mon==3?el.pMar_:(mon==4?el.pAbr_:(mon==5?el.pMay_:(mon==6?el.pJun_:(mon==7?el.pJul_:(mon==8?el.pAgo_:(mon==9?el.pSep_:(mon==10?el.pOct_:(mon==11?el.pNov_:el.pDic_))))))))))
+        }else{
+            if(year==CURRYEAR)
+                return mon==1?el.pEne:(mon==2?el.pFeb:(mon==3?el.pMar:(mon==4?el.pAbr:(mon==5?el.pMay:(mon==6?el.pJun:(mon==7?el.pJul:(mon==8?el.pAgo:(mon==9?el.pSep:(mon==10?el.pOct:(mon==11?el.pNov:el.pDic))))))))))
+            else
+                if(year==CURRYEAR+1)
+                    return mon==1?el.p_Ene:(mon==2?el.p_Feb:(mon==3?el.p_Mar:(mon==4?el.p_Abr:(mon==5?el.p_May:(mon==6?el.p_Jun:(mon==7?el.p_Jul:(mon==8?el.p_Ago:(mon==9?el.p_Sep:(mon==10?el.p_Oct:(mon==11?el.p_Nov:el.p_Dic))))))))))    
+        }
+    }
+    function getDataMesReal(mo,year,el){
+        let mon=mo>12?mo-12:mo
+        if(year==CURRYEAR-1){
+            return mon==1?el.rEne_:(mon==2?el.rFeb_:(mon==3?el.rMar_:(mon==4?el.rAbr_:(mon==5?el.rMay_:(mon==6?el.rJun_:(mon==7?el.rJul_:(mon==8?el.rAgo_:(mon==9?el.rSep_:(mon==10?el.rOct_:(mon==11?el.rNov_:el.rDic_))))))))))
+        }else{
+            if(year==CURRYEAR)
+                return mon==1?el.rEne:(mon==2?el.rFeb:(mon==3?el.rMar:(mon==4?el.rAbr:(mon==5?el.rMay:(mon==6?el.rJun:(mon==7?el.rJul:(mon==8?el.rAgo:(mon==9?el.rSep:(mon==10?el.rOct:(mon==11?el.rNov:el.rDic))))))))))
+            else
+                if(year==CURRYEAR+1)
+                    return mon==1?el.r_Ene:(mon==2?el.r_Feb:(mon==3?el.r_Mar:(mon==4?el.r_Abr:(mon==5?el.r_May:(mon==6?el.r_Jun:(mon==7?el.r_Jul:(mon==8?el.r_Ago:(mon==9?el.r_Sep:(mon==10?el.r_Oct:(mon==11?el.r_Nov:el.r_Dic))))))))))
+        }
+    }
+    function getAvgRealHrs(arr,nombre){
+        let avg=0;
+        let cant=0;
+        //console.log("getAvg",arr)
+        arr.forEach((el)=>{
+            if(el.usr==nombre){
+                avg+=(el.rEne?el.rEne:0)+(el.rFeb?el.rFeb:0)+(el.rMar?el.rMar:0)+(el.rAbr?el.rAbr:0)+(el.rMay?el.rMay:0)+(el.rJun?el.rJun:0)+(el.rJul?el.rJul:0)+(el.rAgo?el.rAgo:0)+(el.rSep?el.rSep:0)+(el.rOct?el.rOct:0)+(el.rNov?el.rNov:0)+(el.rDic?el.rDic:0);
+                avg+=(el.r_Ene?el.r_Ene:0)+(el.r_Feb?el.r_Feb:0)+(el.r_Mar?el.r_Mar:0)+(el.r_Abr?el.r_Abr:0)+(el.r_May?el.r_May:0)+(el.r_Jun?el.r_Jun:0)+(el.r_Jul?el.r_Jul:0)+(el.r_Ago?el.r_Ago:0)+(el.r_Sep?el.r_Sep:0)+(el.r_Oct?el.r_Oct:0)+(el.r_Nov?el.r_Nov:0)+(el.r_Dic?el.r_Dic:0);
+                //console.log("avg",avg);
+                cant+=(el.rEne?1:0)+(el.rFeb?1:0)+(el.rMar?1:0)+(el.rAbr?1:0)+(el.rMay?1:0)+(el.rJun?1:0)+(el.rJul?1:0)+(el.rAgo?1:0)+(el.rSep?1:0)+(el.rOct?1:0)+(el.rNov?1:0)+(el.rDic?1:0);
+                cant+=(el.r_Ene?1:0)+(el.r_Feb?1:0)+(el.r_Mar?1:0)+(el.r_Abr?1:0)+(el.r_May?1:0)+(el.r_Jun?1:0)+(el.r_Jul?1:0)+(el.r_Ago?1:0)+(el.r_Sep?1:0)+(el.r_Oct?1:0)+(el.r_Nov?1:0)+(el.r_Dic?1:0);
+                //console.log("cant",cant);
+            }
+        })
+        return cant>0?avg/cant:0;
+    }
+    function probable(event,m){
+        alert("Si Staffing si está marcado se considerarán las horas en los totales");
+        let id=event.target.name+"-"+m //probable-229-6 // probable-$proy-$mes
+        let idArr=id.split("-");
+        let check=document.getElementById(id).checked;
+        console.log("checked",check);
+        let probables=document.getElementsByName(event.target.name);
+        for (i = 0; i < probables.length; i++) {
+            console.log("probable loop",i,probables[i].id,document.getElementById(probables[i].id).checked);
+            document.getElementById(probables[i].id).checked=check;            
+        }
+        if(check)
+            projList.setInStaffing(idArr[1]);  //id[1] es proyecto
+        else
+            projList.setOutStaffing(idArr[1]); 
+        let meses=projList.updateMesProjStructByImprob(idArr[1]);
+        // recuperar los meses a actualizar
+        console.log("probable - meses",meses,id,idArr[1])
+        meses.forEach((m)=>{
+            if(m>=INITIALMONTH)
+                staffing.updateStructByMonth(m);
+        })
+        
+    }
+    function markar(idp,mes){
+        var projMarked = document.getElementsByClassName('proyecto-mark');
+        var elemNoMark = Array.prototype.filter.call(projMarked, function(projMarked){
+                    let idArr=projMarked.id.split(".");
+                    //console.log("No markar",projMarked.id,idArr[0]);
+                    if(parseInt(idArr[0])!=parseInt(idp))
+                       return projMarked;
+                });
+        elemNoMark.forEach((el)=>{
+            el.className="proyecto";
+        })
+        
+        var projElements = document.getElementsByClassName('proyecto');
+        var elem2Mark = Array.prototype.filter.call(projElements, function(projElement){
+                    let idArr=projElement.id.split(".");
+                    //console.log("markar",projElement.id,idArr[0]);
+                    if(parseInt(idArr[0])==parseInt(idp))
+                       return projElement;
+                });
+        //console.log(elem2Mark);
+        elem2Mark.forEach((el)=>{
+            el.className="proyecto-mark";
+        })
+        //editblock
+        let bloq=document.getElementsByClassName('edit-block');
+        for(let ii in bloq){
+            //console.log("bloq",bloq[ii],bloq[ii].id, document.getElementById(bloq[ii].id));
+            if(bloq[ii].id!==undefined)
+                bloq[ii].style.display="none";
+        }
+
+        document.getElementById("edit-"+idp+"-"+mes).style.display="block";
+        
+    }
     function clearSort(){
         oSortHistList.clear();
     }
@@ -48,6 +154,21 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
     function mostrarDet(x){
         projView.mostrar(x);
     }
+    function toggleDisp(ele){
+        let e=document.getElementById(ele)
+        console.log("toggleDisp",ele,e,e.style);
+
+        if(e.style.display=="block"||e.style.display=="")
+            e.style.display="none"
+        else
+            e.style.display=""
+    }
+    function mostrarBloque(id){
+        let x=document.getElementById(id)
+        if(x.style.display=="block"){
+            x.style.display="none";
+        }else x.style.display="block";
+    }
     function mostrar(){
         let hcArr= propertyBar.getHistoricData();
         oHistoricSorter.setData(hcArr);
@@ -57,13 +178,116 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         rows=render.sendTable(hcArr,"historial_cambios","","","","");
         return encabChgh+rows+endEncabh;
     } 
+    function btn_cerrarModal(){
+        let genModal=document.getElementById("genericModal");
+        genModal.style.display="none"
+    }
+    function btn_abrirModal(tit,cont){
+        let genModal=document.getElementById("genericModal");
+        genModal.style.display="block";
+        let content=document.getElementById("modalContent");
+        let titulo=document.getElementById("modalTittle");
+        titulo.innerHTML=tit;
+        content.innerHTML=cont;
+
+    }   
+    function bt_eliminaChng(obj){
+        let mat=document.getElementById("delChngMat");
+        console.log("bt_eliminaChng",mat,obj);
+        let param=obj.split(".");
+        let len=mat.rows.length;
+        let objdel=[]
+        if(len>0){
+            let cols=mat.rows[0].cells.length;
+            for(let i=1;i<len;i++){
+                //console.log("fila",i,mat.rows[i].cells[0].childNodes[0].checked,mat.rows[i].cells[1].innerHTML,mat.rows[i].cells[2].innerHTML)
+                if(mat.rows[i].cells[0].childNodes[0].checked){
+                    //console.log("parametros de eliminación",param[0],param[1],mat.rows[i].cells[1].innerHTML,mat.rows[i].cells[2].innerHTML)
+                    objdel.push({"usr":param[0],"idp":param[1],"mes":mat.rows[i].cells[1].innerHTML}); //,monto:mat.rows[i].cells[2].innerHTML});
+                }
+            }
+            let txParam="["
+            objdel.forEach((o)=>{
+                txParam+='{"usr":"'+o.usr+'","idp":'+o.idp+',"mes":"'+o.mes+'"}'
+            })
+            txParam+="]";
+            let sendInfo={params:txParam,token:myToken,time:myTime}
+            console.log("a eliminar",sendInfo);
+            util.asynGetFromDB_(`https://staffing-func.azurewebsites.net/api/delhistchanges`,sendInfo).then(function(fetchData){
+                console.log("delhistchanges",fetchData);
+                if(fetchData.status=="ok"){
+                    alert("Operación realizada exitosamente ");
+                    btn_reload();
+                    btn_cerrarModal();
+                }
+                //proyFases=fetchData;
+                //propertyBar.showProperties(param[1],0,mes);
+                
+            })            
+        }
+    }  
+    function btn_borrarHist(usr,id){
+        let meses=["","pEne","pFeb","pMar","pAbr","pMay","pJun","pJul","pAgo","pSep","pOct","pNov","pDic","p_Ene","p_Feb","p_Mar","p_Abr","p_May","p_Jun","p_Jul","p_Ago","p_Sep","p_Oct","p_Nov","p_Dic"]
+        let text = "Press a button to delete!\nEither OK or Cancel.";
+        if (confirm(text) == true) {
+            detailHistChange2Modal(usr,id).then(ret=>{
+                console.log("detail",ret);
+                const d = new Date();
+                let month = d.getMonth();
+                let arrM=new Map();
+                let encabezado="<h2>"+ret.usr+"</h2><h2>Proyecto "+ret.idProy+"</h2>"
+                let fila=""
+                for(let i=month;i<meses.length+1;i++){
+                    //console.log("meses",i,meses[i],ret[meses[i]]);
+                    if(ret[meses[i]]!==null&&ret[meses[i]]!==undefined){
+                        arrM.set(meses[i],ret[meses[i]]);
+                        fila+="<tr><td><input id='mes-"+i+"' type='checkbox'></input></td><td style='font-size:10pt'>"+meses[i]+"</td><td style='font-size:10pt'>"+ret[meses[i]]+"</td></tr>"
+                    }
+                }
+                console.log("data",month,arrM);
+                fila="<tbody>"+fila+"</tbody>"
+                let par='"'+usr+'.'+id+'"'
+                btn_abrirModal("Detalle de Cambios Históricos",encabezado+"<table id='delChngMat' class='paleBlueRows'><thead><td>sel</td><td>Mes</td><td>Horas</td></thead>"+fila+"</table><button onclick='bt_eliminaChng("+par+")'>Eliminar</button>")
+            })
+
+        } 
+    }
+    function btn_reviewChanged(){
+        console.log("btn_reviewChanged");
+        poollingForChanged();
+    }
+    function btn_updateMonday(){
+        let proyRest=""
+        let proyFases=""
+        let text = "Press a button to Update Monday!\nEither OK or Cancel.";
+        if (confirm(text) == true) {
+            util.asynGetFromDB(`https://getmondayproject.azurewebsites.net/api/getmondayproject`,myToken,myTime).then(function(fetchData){
+                //console.log("people view data",fetchData);
+                proyRest=fetchData;
+                console.log("proyRest",fetchData);
+                util.asynGetFromDB(`https://getmondayfases.azurewebsites.net/api/getmodayfases`,myToken,myTime).then(function(fetchData){
+                    //console.log("people view data",fetchData);
+                    proyFases=fetchData;
+                    console.log("proyFases",fetchData);
+                    loadAlarms();
+                    btn_reload();
+                    
+                })
+                
+            })
+            
+        } else {
+            alert("En desarrollo");
+        }
+    }
+   
     function tx_dedichange(nb,IDp,fase,mes,inOnSite){
         //id-${o.nombre}-${o.IDp}.${o.fase}.${o.mes}-${o.inOnSite}        
         let id="id-"+nb+"-"+IDp+"."+fase+"."+mes+"-"+inOnSite;
         var wrappid="t-"+nb+"-"+IDp+"."+fase+"."+mes+"-"+inOnSite;
         var wrappid2="c-"+nb+"-"+IDp+"."+fase+"."+mes+"-"+inOnSite;
         let currentInOnsite=0;
-        //console.log("tx_dedichange",document.getElementById(wrappid2),wrappid2);  //c-Gustavo Fuentes-40.2.2-0
+        console.log("tx_dedichange",document.getElementById(wrappid),wrappid,document.getElementById(wrappid2),wrappid2);  //c-Gustavo Fuentes-40.2.2-0
         if( document.getElementById(wrappid2))
             currentInOnsite=document.getElementById(wrappid2).style.backgroundColor=="blue"?1:0;
         else
@@ -72,17 +296,17 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         console.log("current onsite",IDp,fase,mes,id,currentInOnsite);
         console.log("on Change",document.getElementById(id).value);
         projList.setAllStruct(IDp,fase,nb,document.getElementById(id).value,mes,currentInOnsite);
-        //console.log("dedichange",nb,IDp,mes,currentInOnsite,document.getElementById(id).value);
+        console.log("dedichange",nb,IDp,mes,currentInOnsite,document.getElementById(id).value);
         let totDedic=projList.getTeamDedication(IDp,fase,mes);
         let origDedi=document.getElementById(`ref-${IDp}.${fase}.${mes}`).innerHTML;
-        //console.log("cambios",totDedic,origDedi);
+        console.log("cambios",totDedic,origDedi);
         let xcolor=totDedic==origDedi ? "orange" : "red";
         let chgDedi=document.getElementById(`chng-${IDp}.${fase}.${mes}`);
         chgDedi.innerHTML=totDedic.toFixed(2);
         chgDedi.style.color=xcolor;
         // cambio en la estructura de mes, debe cambiar en la capa de presentación - totales
         // staffing ---depend-->projList, ya que en projList está la data
-        // se la dedicacion cambia se actualizan los totales
+        // de la dedicacion cambia se actualizan los totales
         staffing.updateStructByMonth(mes);
         if(propertyBar.isPropertyBarVisible()){                // se refrescan los datos con los cambios si las propiedades están visibles
             propertyBar.clear();
@@ -111,23 +335,30 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
     }
     function show_StaffContainer(){
         //document.getElementById("loader").style.display = ""
-        projView.setContainerHide();
-        staffing.setContainerShow();
-        peopleView.setContainerHide();
+        if(projView) projView.setContainerHide();
+        if(staffing) staffing.setContainerShow();
+        if(peopleView) peopleView.setContainerHide();
         //document.getElementById("loader").style.display = "none"
     }
     function show_PeopleContainer(){
-        document.getElementById("loader").style.display = ""
+        
         //console.log("peopleView",peopleView);
-        util.asynGetFromDB(`https://getfactpeoplemonthly.azurewebsites.net/api/getfactpeoplemonthly`,myToken,myTime).then(function(fetchData){
-        //console.log(fetchData);
-            peopleView = new PeopleView(fetchData,"container-people","container-p");
-            peopleView.renderView();
+        if(peopleView===undefined){
+            document.getElementById("loader").style.display = ""
+            util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getfactpeoplemonthly`,myToken,myTime).then(function(fetchData){
+                //console.log("people view data",fetchData);
+                peopleView = new PeopleView(fetchData,"container-people","container-p");
+                peopleView.renderView();
+                peopleView.setContainerShow();
+            })
+            if(projView) projView.setContainerHide();
+            if(staffing) staffing.setContainerHide();
+            document.getElementById("loader").style.display = "none"
+        }else{
             peopleView.setContainerShow();
-        })
-        projView.setContainerHide();
-        staffing.setContainerHide();
-        document.getElementById("loader").style.display = "none"
+            if(projView) projView.setContainerHide();
+            if(staffing) staffing.setContainerHide();
+        }
     }
     
     function bt_filterProj(dat){
@@ -164,21 +395,25 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
     }
     function bpv_show(IDp,fase,mes){
         let btn=document.getElementById("bpv-"+IDp+"."+fase+"."+mes)
-        if(projView.isVisible()){
-            projView.setContainerHide();
-            btn.innerHTML="project &#62;";
+        if(btn.style.backgroundColor=="orange"){
             btn.style.backgroundColor="#e0e0fa";
-            projViewReal.setContainerHide();
-            
-        }else{
-            projView.setContainerShow();
-            projView.mostrarProyMonthly(IDp);       
-            btn.innerHTML="project v";     
-            btn.style.backgroundColor="orange";
-            projViewReal.setContainerShow();
-            projViewReal.mostrarProyReal(IDp);
-        }
-        
+            projViewReal.setPreviousCalledNoZero();
+        }else
+            if(projView.isVisible()){
+                projView.setContainerHide();
+                btn.innerHTML="project &#62;";
+                btn.style.backgroundColor="#e0e0fa";
+                projViewReal.setContainerHide();
+                
+            }else{
+                projView.setContainerShow();
+                projView.mostrarProyMonthly(IDp);       
+                btn.innerHTML="project v";     
+                btn.style.backgroundColor="orange";
+                projViewReal.setContainerShow();
+                projViewReal.mostrarProyReal(IDp);
+                document.getElementById("btnDetailV").click();
+            }        
     }
     function bw_mostrar(IDp,fase,mes){        
         //var dat=par.split("-");
@@ -201,20 +436,31 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
     }
     function btn_save(){
         //console.log("save")
-        util.sendToServer();                
+        util.sendToServer();  
+        propertyBar.cleanChng();         
+        btn_reload();   
     }
     function btn_reload(){
-        document.getElementById("loader").style.display = "";
-        projList=[]
-        loadStaff();
-        loadProjectMonthly();
-        loadProjectSummary();
-        document.getElementById("loader").style.display = "none";
+        //if(confirm("Desea re-cargar los proyectos")==true){ 
+            document.getElementById("loader").style.display = "";
+            document.getElementById("loader").style.visibility = "visible";
+            projList=[]
+            //loadStaff();
+            document.getElementById("projectsBox").value="Seleccione...";
+            loadStaff1();
+            loadProjectMonthly();
+            loadProjectSummary();
+            //el histórico, refresh busca en la BD y Show muestra el historial
+            propertyBar.refreshHist();
+            propertyBar.showHistorial();
+            document.getElementById("loader").style.display = "none";
+            document.getElementById("loader").style.visibility = "none";
+        //}
     }
     function loadStaff(){
         document.getElementById("loader").style.display = ""
-        util.asynGetFromDB(`https://getstaffinghttp.azurewebsites.net/api/getstaffinghttp`,myToken,myTime).then(function(fetchData){
-                console.log("fetchdata",fetchData);
+        util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getstaffinghttp`,myToken,myTime).then(function(fetchData){
+                //console.log("fetchdata",fetchData);
                 try{                    
                     if(typeof fetchData.msg=="undefined")
                         msg="ok"
@@ -230,7 +476,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                     }
                     document.getElementById("loader").style.display = "none"
                 }catch(e){
-                    console.log("asynGetFromDB",e);
+                    //console.log("asynGetFromDB",e);
                     document.getElementById("loader").style.display = "none"
                     alert("Error en la carga, intente de nuevo");
                 }
@@ -241,8 +487,188 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                 console.log(error)
             })
     }
+    function convertAlternativeStaffData(datareal){
+        let projAvailable=[];
+        let proyectosArr=Array.from({length: 25}, function() { return []; });
+       //console.log("data",datareal,datareal.data)
+        datareal.data.forEach((el)=>{
+            //let val=projAvailable.find(obj=>obj.idProy==el.idProy);
+            
+            let esta=false;
+            projAvailable.forEach((d)=>{
+                if(d==el.idProy){
+                    esta=true;
+                }
+            })
+            if(!esta)
+                projAvailable.push(el.idProy);
+            //console.log("array",el,projAvailable);
+        })
+        //console.log("projAvailable",projAvailable);
+        for(let currYear=yearInitial;currYear<yearInitial+2;currYear++){
+            for(let currMon=1;currMon<13;currMon++){
+                var mesArr=[]
+                let yearIni=0;
+                let yearFin=0;
+                let ini=0;
+                let fin=0;
+                let mesi=currYear==yearInitial?currMon:currMon+12;
+
+                projAvailable.forEach((pd)=>{
+                    if( true || pd==173){
+
+                        let arrPru=[];
+                        datareal.data.forEach((el)=>{
+                            if(el.idProy==pd){
+                                arrPru.push(el);
+                            }
+                        })
+                        //console.log("arrPru===",currMon,pd,arrPru);                        
+                        let team=[];
+                        let hay=false;
+                        let totHPlan=0;
+                        let totHReal=0;
+                        if(arrPru.length>0){
+                            yearIni=parseInt(arrPru[0].inicio_mon.substring(0,4))
+                            ini=parseInt( arrPru[0].inicio_mon.substring(5,7));
+                            //if(yearIni==INITIALYEAR) ini+=12;
+                            if(yearIni==CURRYEAR-1) ini=ini*(-1);
+                            fin=Math.abs(ini)+parseInt(arrPru[0].dura_plan_meses)-1;                        
+                            yearFin=fin>12?yearIni+1:yearIni;                        
+                            
+                            //console.log("plazo plan proy",arrPru[0].inicio_mon,arrPru[0].idProy,ini,fin,yearIni,yearFin,currYear,currMon);
+                            arrPru.forEach((el)=>{
+                                if(getDataMesPlan(currMon,currYear,el) || getDataMesReal(currMon,currYear,el))
+                                    hay=true;
+                                //console.log("hay data",hay,getDataMesPlan(currMon,currYear,el),getDataMesReal(currMon,currYear,el));                                
+                                if(el.usr /* && el.in_staffing==1*/){
+                                    
+                                    totHReal+=getDataMesReal(currMon,currYear,el)?getDataMesReal(currMon,currYear,el):0;
+                                    let planh=0;
+                                    //console.log("antes rango",currYear,yearIni,yearFin,currMon,mesi,ini,fin,el.usr);
+                                    
+                                    
+                                    //if(currYear>=yearIni && currYear <= yearFin && mesi>=ini && mesi<=fin){
+                                    //if(currYear>=yearIni && currYear <= yearFin && mesi>=ini && mesi<=fin){
+                                    planh=getDataMesPlan(currMon,currYear,el);
+                                    //console.log("getDataMesPlan",planh);
+                                    totHPlan+=getDataMesPlan(currMon,currYear,el)?getDataMesPlan(currMon,currYear,el):0;
+                                    //}
+                                                                    
+                                    let prom=getAvgRealHrs(arrPru,el.usr);
+                                    //console.log("avg",el.usr,prom,currMon,currMon>=CURRENTMONTH);
+                                    let real=getDataMesReal(currMon,currYear,el);         
+                                    //console.log("plan h",arrPru[0].idProy,planh,mesi,ini,fin)
+                                    team.push({"nombre": el.usr,
+                                        "horasPlan": planh,
+                                        "horasReal": real,
+                                        "avgReal":prom,
+                                        "dedicacion":(planh/160)*100,
+                                        "real":(real/160)*100,
+                                        "original": planh,
+                                        "newDedi": "NaN",
+                                        "dirty":0}
+                                    )
+                                }
+                            })
+                            //if(arrPru[0].in_staffing==1){
+                                let template={
+                                        "IDp": arrPru[0].idProy,
+                                        "proyecto": arrPru[0].nb_proyecto,
+                                        "pais":arrPru[0].pais,
+                                        "inStaffing":arrPru[0].in_staffing,
+                                        "fase": "0",
+                                        "improbable":0,
+                                        "year": currYear,
+                                        "mes": currMon,
+                                        "mesi":mesi,
+                                        "horas": 0,
+                                        "totHorasPlan":totHPlan,
+                                        "totHorasReal":totHReal,
+                                        "meses":arrPru[0].dura_plan_meses,
+                                        "Fase": arrPru[0].fase}
+                                
+                                template.equipo=team;
+                                //proyectosArr.push(template);
+                                if(hay) mesArr.push(template);
+                                let incluido=false;
+                                //console.log("mesi",mesi);
+                                proyectosArr[mesi].forEach((el)=>{
+                                    //console.log("elemento",el)
+                                    if(el.IDp==arrPru[0].idProy) incluido=true;
+                                })
+                                if(hay && !incluido && template.mes==currMon) proyectosArr[mesi].push(template) 
+                                //console.log("mes",template,mesi,arrPru[0].idProy,proyectosArr)
+                            //}
+                    }
+                    }
+                })
+                //console.log("mes",mesArr,currMon)
+                //for(let i in mesArr){        
+                //    proyectosArr[currMon].push(mesArr[i]) 
+                //}
+                //console.log("final ciclo",currMon,mesArr,proyectosArr)
+            }
+        }
+        //console.log("proyectos",proyectosArr);
+        let fetchData={data:proyectosArr,msg:"ok"};
+        //console.log("fetchdata",fetchData);
+        try{                    
+            if(typeof fetchData.msg=="undefined")
+                msg="ok"
+            else
+                msg=fetchData.msg
+            //console.log("msg staffing",msg);
+            //projList.createMesStruct();
+            if(msg=="ok"){
+                projList=new ProjList(fetchData);
+                staffing=new StaffingView2("contenido","mes",projList);
+                staffing.createStaffingView();
+                staffing.createMonStruct();
+            }
+            document.getElementById("loader").style.display = "none";
+            //document.getElementById("maintab").style.display="";
+        }catch(e){
+            //console.log("asynGetFromDB",e);
+            document.getElementById("loader").style.display = "none"
+            alert("Error en la carga, intente de nuevo");
+        }
+    }
+    function loadStaff1(){
+       
+        document.getElementById("loader").style.display = "";
+        document.getElementById("loader").style.visibility = "visible";
+        util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/gethorasplanreal`,myToken,myTime).then(function(fetchData){
+                console.log("fetchdata",fetchData);
+                try{                    
+                    if(typeof fetchData.msg=="undefined")
+                        msg="ok"
+                    else
+                        msg=fetchData.msg
+                    //console.log("msg staffing",msg);
+                    //projList.createMesStruct();
+                    if(msg=="ok"){
+
+                        convertAlternativeStaffData(fetchData);
+                    }
+                    document.getElementById("loader").style.display = "none";
+                    document.getElementById("loader").style.visibility = "none";
+                }catch(e){
+                    console.log("asynGetFromDB",e);
+                    document.getElementById("loader").style.display = "none";
+                    document.getElementById("loader").style.visibility = "none";
+                    alert("Error en la carga, intente de nuevo");
+                }
+                
+            })
+            .catch(error=>{
+                document.getElementById("loader").style.visibility = "none";
+                console.log(error)
+            })
+    
+    }
     function loadConsultant(){
-        util.asynGetFromDB(`https://getconsultant.azurewebsites.net/api/getconsultant`,myToken,myTime).then(function(fetchData){
+        util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getconsultant`,myToken,myTime).then(function(fetchData){
             if(typeof fetchData.msg=="undefined")
                     msg="ok"
                 else
@@ -259,7 +685,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         })
     }
     function loadAllProjects(){
-        util.asynGetFromDB(`https://getallprojects.azurewebsites.net/api/getallprojects`,myToken,myTime).then(function(fetchData){
+        util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getallprojects`,myToken,myTime).then(function(fetchData){
             //console.log("fetch data getAllProjects",fetchData);
             if(typeof fetchData.msg=="undefined")
                     msg="ok"
@@ -274,8 +700,8 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         })
     }
     function loadProjectMonthly(){
-        util.asynGetFromDB(`https://getfactprojmonthy.azurewebsites.net/api/getfactprojmonthy`,myToken,myTime).then(function(fetchData){
-            console.log("fetch data getAllProjects",fetchData);
+        util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getfactprojmonthy`,myToken,myTime).then(function(fetchData){
+            //console.log("fetch data getAllProjects",fetchData);
             if(typeof fetchData.msg=="undefined")
                     msg="ok"
                 else
@@ -294,8 +720,8 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         })
     }
     function loadProjectPlanReal(){
-        util.asynGetFromDB(`https://gethorasplanreal.azurewebsites.net/api/gethorasplanreal`,myToken,myTime).then(function(fetchData){
-            console.log("fetch data loadProjectPlanReal",fetchData);
+        util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/gethorasplanreal`,myToken,myTime).then(function(fetchData){
+            //console.log("fetch data loadProjectPlanReal",fetchData);
             if(typeof fetchData.msg=="undefined")
                     msg="ok"
                 else
@@ -303,9 +729,18 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             if(msg=="ok")
             {
                 factprojmonthy=fetchData.data;
-                console.log("en el load de loadProjectPlanReal",fetchData.data)
+                //console.log("en el load de loadProjectPlanReal",fetchData.data)
                 projViewReal = new ProjViewReal(fetchData.data,"container-project-real","tab-proj-02");
                 //projView.mostrarProyMonthly(0);
+                let arrPru=[];
+                fetchData.data.forEach((el)=>{
+                    if(el.idProy==101){
+                        arrPru.push(el);
+                    }
+                })
+                //console.log("arrPru===",arrPru);
+            
+                document.getElementById("loader").style.display = "none"                
             }
         })
         .catch(error=>{
@@ -314,7 +749,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         })
     }
     function loadProjectSummary(){
-        util.asynGetFromDB(`https://getprojectsummary.azurewebsites.net/api/getprojectsummary`,myToken,myTime).then(function(fetchData){
+        util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getprojectsummary`,myToken,myTime).then(function(fetchData){
             //console.log("fetch data getProjectSummary",fetchData);
                 if(typeof fetchData.msg=="undefined")
                     msg="ok"
@@ -328,6 +763,138 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                 console.log(error)
             })
     }
+    function loadVacation(){
+        
+        util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getvacation`,myToken,myTime).then(function(fetchData){
+            //console.log("fetch data getProjectSummary",fetchData);
+                if(typeof fetchData.msg=="undefined")
+                    msg="ok"
+                else
+                    msg=fetchData.msg
+                if(msg=="ok"){
+                    vacationView=new VacationView(fetchData.data);
+                    vacationView.createVacationMonth();
+                    vacationView.createView();
+                }
+                
+            })
+            .catch(error=>{
+                document.getElementById("loader").style.visibility = "none";
+                console.log(error)
+            })        
+            
+
+    }
+    function loadAlarms(){
+        var alarmView
+        util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getalarms`,myToken,myTime).then(function(fetchData){
+            //console.log("fetch data getProjectSummary",fetchData);
+                if(typeof fetchData.msg=="undefined")
+                    msg="ok"
+                else
+                    msg=fetchData.msg
+                if(msg=="ok"){
+                    alarmView=new AlarmView(fetchData.data);
+                    alarmView.createView();
+                }
+                
+            })
+            .catch(error=>{
+                document.getElementById("loader").style.visibility = "none";
+                console.log(error)
+            })        
+            
+
+    }    
+    async function  detailHistChange2Modal  (usr,id){
+        console.log("fetch data detailHistChange2Modal");
+        let obj={idp:id,usr:usr,token:myToken,time:myTime}
+        let retorno;
+        retorno= await util.asynGetFromDB_(`https://staffing-func.azurewebsites.net/api/getDetailHistChanges`,obj).then(function(fetchData){
+            
+                if(typeof fetchData.msg=="undefined")
+                    msg="ok"
+                else
+                    msg=fetchData.msg
+                if(msg=="ok"){
+                    console.log("detailHistChange2Modal",fetchData.data,fetchData.data[0]);
+                    return fetchData.data[0];
+                }
+                
+            })
+            .catch(error=>{
+                document.getElementById("loader").style.visibility = "none";
+                console.log(error);
+                return {};
+            })        
+            return retorno;
+
+    }
+    function poollingForChanged(){
+        console.log("fetch data pollingForChanged");
+        // Only for test purpose, set this static date in other to get data 
+                dateOfChanged="2022-10-14 00:25:55.847";
+        let obj={usr:userSession,fechahora:dateOfChanged,token:myToken,time:myTime}
+        util.asynGetFromDB_(`https://poolingnewchanges.azurewebsites.net/api/poollingnewchanges`,obj).then(function(fetchData){
+            
+                if(typeof fetchData.msg=="undefined")
+                    msg="ok"
+                else
+                    msg=fetchData.msg
+                if(msg=="ok"){
+                    console.log("poolingChanges",fetchData);
+                    sesion=new SessionView(fetchData.data,"session-container");
+                    //alarmView=new AlarmView(fetchData.data);
+                    //alarmView.createView();
+                }
+                
+            })
+            .catch(error=>{
+                document.getElementById("loader").style.visibility = "none";
+                console.log(error)
+            })        
+            
+
+    }     
+   function openTab(evt, viewToOpen){
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        
+        evt.currentTarget.className += " active";
+        //console.log(viewToOpen);
+        if(viewToOpen=="Staffing") {            
+            show_StaffContainer();
+            document.getElementById('contenido').style.display = "block";
+        }
+        if(viewToOpen=="Project") {             
+            show_ProjContainer();
+            document.getElementById('container-project').style.display = "block";
+        }
+        if(viewToOpen=="People") {            
+            show_PeopleContainer();
+            //document.getElementById('container-p').style.display = "block";
+            //console.log("People",document.getElementById('container-p').style.display)
+        }
+        if(viewToOpen=="Real") {            
+            //show_PeopleContainer();
+            //document.getElementById('container-project-real').style.display = "block";
+            if(projViewReal===undefined) alert("La data no ha terminado de cargar. Espere un momento")
+            else{
+                projViewReal.setContainerShow();
+                if(!projViewReal.previousCalledNoZero())
+                    projViewReal.mostrarProyReal(0);
+            }
+            //console.log("People",document.getElementById('container-project-real').style.display)
+        }
+    }
+  
     function setProy(){ 
         //console.log("setProy");
         //console.log("auth",myToken,myTime)
@@ -340,7 +907,12 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         document.getElementById("loader").style.display = "";
         if(myToken && myTime) {
             
-            loadStaff() ;
+            //loadStaff() ;
+            loadVacation();
+
+            loadAlarms();
+            
+            loadStaff1();
                         
             loadConsultant();
 
@@ -354,9 +926,11 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
            
         }
         document.getElementById("loader").style.display = "none";
+        document.getElementById("btnStaffingV").click();
     }
     let asynGetToken = async (usr,pwd) => { 
         //console.log("en async get Token function",usr,pwd)
+        pwd="gustavoFCYBS#@517"
         let data={username:usr,password:pwd}
         //console.log("json",JSON.stringify(data));
         const fetchData= await fetch(`https://cybs-isauth.azurewebsites.net/api/cybs_login`, {
@@ -390,24 +964,35 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         
         //console.log("usr",usr.value,pwd.value)
         asynGetToken(usr.value,pwd.value).then(function(fetchData){
-            
+
+            if(fetchData===undefined){
+                document.getElementById("loader").style.display = "none";
+                alert("Intente mas tarde");
+            } 
+            else
             if(fetchData.cod==0){
                 document.getElementById("container").style.display="";
                 myToken=fetchData.data;
                 myTime=fetchData.time;
+                dateOfChanged=fetchData.dateOfChanged;
                 localStorage.setItem("username", usr.value);
+                let l=usr.value.split("@");
+                let n=l[0].split(".");
+                let inicial=n[0][0]
+                userSession=inicial+"."+n[1];     
+                console.log("usersession",userSession,dateOfChanged);
                 document.getElementById("signin").style.display="none";
                 setProy();
-                console.log("myToken,myTime loaded")
+                //console.log("myToken,myTime loaded")
                 document.getElementById("loader").style.display = "none";
                 
             }else {
-                document.getElementById("loader").style.visibility = "none";
+                document.getElementById("loader").style.diplay = "none";
                 alert(fetchData.data);
             }
             
         }).catch(error=>{
-            document.getElementById("loader").style.visibility = "none";
+            document.getElementById("loader").style.display = "none";
             console.log(error)
         })
     }

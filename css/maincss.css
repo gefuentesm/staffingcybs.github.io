@@ -1,43 +1,68 @@
 .tooltip {
-    position: relative;
-    display: inline-block;
-    border-bottom: 1px dotted black;
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+.sesiones{
+  position: relative;
+  display: inline-block;
+}
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 1020px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+  .alarma {
+    border-radius: 50%;
+    background: red;
+    padding: 5px; 
+    color:white;
+    font-size:10pt;
+    text-align:center;
+    width: 10px;
+    height: 10px;  
   }
+  .session {
+    border-radius: 25%;
+    background: red;
+    padding: 5px; 
+    color:white;
+    font-size:10pt;
+    text-align:center;
+    width: 30px;
+    height: 10px;  
+  }
+    a:link {
+      color: white;
+    }
+    
+    /* visited link */
+    a:visited {
+      color: green;
+    }
+    
+    /* mouse over link */
+    a:hover {
+      color: yellow;
+    }
+    
+    /* selected link */
+    a:active {
+      color: blue;
+    }
   
-  .tooltip .tooltiptext {
-    visibility: hidden;
-    width: 160px;
-    height:220px;
-    font-size: 8pt;
-    background-color: #555;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    position: absolute;
-    z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    margin-left: -60px;
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-  
-  .tooltip .tooltiptext::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 30%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: #555 transparent transparent transparent;
-  }
-  
-  .tooltip:hover .tooltiptext {
-    visibility: visible;
-    opacity: 1;
-  }
   header {
       background:#333;
       color:#eee;
@@ -104,7 +129,7 @@
       display:none;
   }
   .name{
-      width: 120px;
+      width: 110px;
   }
   .sidebar {
       position: fixed;
@@ -206,7 +231,7 @@
   }
   .cell1{
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 9pt;
+    font-size: 11pt;
     background-color: #f1f1f9;
       color:black;
       border: 1px solid gray;
@@ -221,8 +246,16 @@
   }
   .real{
     padding:3px;
-    background-color:#6666ff;
+    background-color:darkviolet;
     color:white;
+  }
+  .horas-plan{
+    padding-left:3px;padding-right: 3px;
+    color:white;background-color:LightSlateGrey;font-weight:bold;
+  }
+  .horas-real{  
+    padding-left:3px;  padding-right: 3PX;
+    color:black;background-color:Gainsboro;font-weight:bold;
   }
   body{
       font-family: Arial, Helvetica, sans-serif;
@@ -252,7 +285,7 @@
   }
   span.nb{
       display:inline-block;
-      width:150px;
+      width:110px;
   }
   th{
       font-family: Arial, Helvetica, sans-serif;
@@ -264,11 +297,11 @@
   }
   input.dedi{
       display:inline-block;
-      width:20px;
+      width:40px;
   }
   .good{
-      background-color: green;
-      color: white;
+      background-color: #b3e6b3;
+      color: gray;
       border: 1px solid white;
       display:none;
   }
@@ -277,6 +310,18 @@
       height: 100%;
       padding-top: 2px;
       padding-bottom: 10px;
+  }
+  .curr-mes{
+    background-color: LightSteelBlue;
+    height: 100%;
+    padding-top: 2px;
+    padding-bottom: 10px;
+  }
+  .future-mes{
+    background-color: HoneyDew;
+    height: 100%;
+    padding-top: 2px;
+    padding-bottom: 10px;
   }
   #team{
     background-color: black;
@@ -315,6 +360,17 @@
       padding-bottom: 2px;
       background-color: dimgrey;
   }
+  .resumen {
+    width: 500px;
+    margin: 5px;
+    padding: 7px;
+    border: 1px solid silver;
+    vertical-align: top;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 9pt;
+    background-color: white;
+    color:#006080;
+  }
   .proyecto {
     width: 200px;
     margin: 10px;
@@ -329,6 +385,28 @@
   .proyecto::after{
     content: 'Agregar Consultor adicional aquí';
     font-size: 10px;
+    display:none;
+    color:white;
+    background:gray;
+    width: 170px;
+    height: 10px;
+    margin: 5px;
+    padding: 5px;
+  }
+  .proyecto-mark {
+    width: 200px;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid silver;
+    vertical-align: top;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 9pt;
+    background-color: #ffffcc;
+    color:#006080;
+  }
+  .proyecto-mark::after{
+    content: 'Agregar Consultor adicional aquí';
+    font-size: 10px;
     color:white;
     display:block;
     background:gray;
@@ -337,6 +415,7 @@
     margin: 5px;
     padding: 5px;
   }
+  a.menu_links { cursor: pointer; }
   #div1, #div2, #div4, #div5 {
     width: 200px;
     height: 235px;
@@ -346,10 +425,11 @@
     vertical-align: top;
   }
   div.hist{
-    width:380px;
+    width:470px;
     height: 400px;
     padding:4px;
     overflow-x:scroll;
+    overflow-y:scroll;
     background-color:silver;
   }
   table.paleBlueRows {
@@ -364,7 +444,7 @@
     padding: 3px 2px;
   }
   table.paleBlueRows tbody td {
-    font-size: 13px;
+    font-size: 10px;
   }
   table.paleBlueRows tr:nth-child(even) {
     background: #d3d3fc;
@@ -375,7 +455,7 @@
     border-bottom: 5px solid #FFFFFF;
   }
   table.paleBlueRows thead th {
-    font-size: 17px;
+    font-size: 14px;
     font-weight: bold;
     color: #FFFFFF;
     text-align: center;
@@ -393,7 +473,7 @@
     border-top: 3px solid #444444;
   }
   table.paleBlueRows tfoot td {
-    font-size: 14px;
+    font-size: 12px;
   }
   
   .dropbtn {
@@ -448,7 +528,117 @@
     -webkit-animation: spin 2s linear infinite;
     animation: spin 2s linear infinite;
   }
+  .grid-vacation {
+    display: grid;
+    column-gap: 1px;
+    grid-template-columns: auto auto auto auto auto;
+    background-color: #2196F3;
+    padding: 1px;
+  }
   
+  .grid-vac {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 2px;
+    font-size: 10px;
+    text-align: center;
+  }
+  .nbvaca{
+    width:180px;
+  }
+  .vaca {
+    background-color: red;
+  
+  }
+  .tab {
+    overflow: hidden;
+    border: 1px solid #333;
+    background-color: #585656;
+  }
+  
+  /* Style the buttons inside the tab */
+  .tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 12px 14px;
+    transition: 0.3s;
+    font-size: 17px;
+  }
+  
+  /* Change background color of buttons on hover */
+  .tab button:hover {
+    background-color: rgb(65, 64, 64);
+  }
+  
+  /* Create an active/current tablink class */
+  .tab button.active {
+    background-color: #333;
+  }
+  #tmeses{
+    margin-top: 10px;
+  }
+  /* Style the tab content */
+  .tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 0px solid #333;
+    border-top: none;
+  }
+   /* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 100; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 40%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close-modal {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close-modal:hover,
+.close-modal:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+} 
+.grid-modal {
+  display: grid;
+  grid-template-columns: 90% 10%;
+  grid-gap: 1px;
+  background-color: silver;
+  padding: 1px;
+}
+
+.grid-modal > div {
+  background-color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  padding: 1px;
+  font-size: 30px;
+}
+
   @-webkit-keyframes spin {
     0% { -webkit-transform: rotate(0deg); }
     100% { -webkit-transform: rotate(360deg); }

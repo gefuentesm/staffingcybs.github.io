@@ -9,10 +9,13 @@
     <script src="scripts/businessclass.js"></script>  
     <script src="scripts/viewclass.js"></script>
     <script src="scripts/mainjs.js"></script>  
+    <script src="datarealjs2.js"></script>
+    <script src="vacaciones.js"></script>
 </head>
 <body>
     <div id="loader" style="display:none"></div>
-    <div id="div-content-head" style="width: 100%;height:120px;background-color:#9999ff">&nbsp;
+
+    <div id="div-content-head" style="width: 4200px;height:120px;top:0;position:fixed;background-color:#9999ff">&nbsp;
         <div style="float: left;">
             <img src="image/cybs-llogo-new-blanco.png" style="padding-top: 15px;" width="80px"></img>
         </div>
@@ -40,24 +43,33 @@
     </div>
     <div id="container" style="display:none">
     <input type="checkbox" id="abrir-cerrar" name="abrir-cerrar" value="">
-    <label style="margin-left:206px" for="abrir-cerrar">☰ <span class="abrir">Abrir</span><span class="cerrar">Cerrar</span>&nbsp;&nbsp;
+    <label style="margin-left:206px;top:10px;position:fixed;" for="abrir-cerrar">☰ <span class="abrir">Abrir</span><span class="cerrar">Cerrar</span>&nbsp;&nbsp;
         <button type="button" style="color:white" onclick="btn_save()">Save</button>&nbsp;|&nbsp;
-        <div class="dropdown">
-            <button onclick="toggleDropDown()" class="dropbtn">Views</button>
-            <div id="dropdownView" class="dropdown-content">
-              <a href="javascript:show_StaffContainer()">Staffing View</a>
-              <a href="javascript:show_ProjContainer()">Project View</a>
-              <a href="javascript:show_PeopleContainer()">People View</a>
+        <button type="button" style="color:white" onclick="btn_reload()">Reload</button> 
+        <button type="button" style="color:white" onclick="btn_updateMonday()">Update Monday</button> &nbsp;|&nbsp;
+        <button type="button" style="color:white" onclick="btn_reviewChanged()">Review</button>
+        <div id="alarm-container" class="tooltip"style="visibility: hidden">
+            <span id="alarma1" class="alarma">10</span>
+            <div id="alarm-text" class="tooltiptext">
             </div>
-          </div>
-          <button type="button" style="color:white" onclick="btn_reload()">Reload</button>
+        </div>
+          <div id="session-container" class="sesiones" style="visibility: visible">
+
+          </div>        
+        <div class="tab">
+            <button id="btnStaffingV" class="tablinks" onclick="openTab(event, 'Staffing')">Staffing View </button>
+            <button id="btnProjectV" class="tablinks" onclick="openTab(event, 'Project')">Project View</button>
+            <button id="btnPeopleV" class="tablinks" onclick="openTab(event, 'People')">People View</button>
+            <button id="btnDetailV" class="tablinks" onclick="openTab(event, 'Real')">Project Detail View</button>
+            
+        </div>
     </label>
     
     <div id="sidebar" class="sidebar"  >
         <img src="image/cybs-llogo-new-blanco.png" width="80px"></img>
         <div class="totales">
-            <div>Project Filter</div>
-            <select id="projectsBox" onchange="projectFilterView.filtrarPorProyecto()" style="width: 185px;height: 30px;">
+            <div>Project Manager Filter</div>
+            <select id="projectsBox" onchange="projectFilterView.filterByManager()" style="width: 185px;height: 30px;">
                 <option>Seleccione...</option>
             </select>
         </div>
@@ -72,7 +84,7 @@
         </div>
     
     </div>
-    <div id="container-p" style="display: none;margin-left: 206px;">
+    <div id="container-p" class="tabcontent" style="display: none;margin-left: 206px;margin-top:110px">
         <div style="font-family: Verdana, Geneva, Tahoma, sans-serif;font-size: 10pt;padding-top:10px;padding-bottom: 10px;">
             <b>PEOPLE VIEW</b><br>
             Dedicación por Consultor
@@ -85,16 +97,16 @@
         </div>
 
     </div>    
-    <div id="container-project" style="display: none;margin-left: 206px;">
+    <div id="container-project" class="tabcontent" style="display: none;margin-left: 206px;margin-top: 110px;">
         <div style="font-family: Verdana, Geneva, Tahoma, sans-serif;font-size: 10pt;padding-top:10px;padding-bottom: 10px;margin-left: 10px;">
             <b>PROJECT VIEW</b><br>
             Promedio de dedicación del equipo, Total horas
         </div>
-        <table id="tab-proj-01"  style="width:75%;margin-left: 10px;" >
+        <table id="tab-proj-01"  style="width:100%;margin-left: 10px;" >
     
         </table>
     </div>
-    <div id="container-project-real" style="display: none;margin-left: 206px;">
+    <div id="container-project-real" class="tabcontent" style="display: none;margin-left: 206px;margin-top:110px;">
         <div style="font-family: Verdana, Geneva, Tahoma, sans-serif;font-size: 10pt;padding-top:10px;padding-bottom: 10px;margin-left: 10px;">
             <b>PROJECT VIEW</b><br>
             Total horas Planificadas y Ejecutadas
@@ -103,14 +115,24 @@
     
         </table>
     </div>
-    <div id="contenido" >
-        <div style="font-family: Verdana, Geneva, Tahoma, sans-serif;font-size: 10pt;padding-top:10px;padding-bottom: 10px;">
+    <div id="contenido" class="tabcontent">
+        <div style="font-family: Verdana, Geneva, Tahoma, sans-serif;font-size: 10pt;padding-top:110px;padding-bottom: 10px;">
             <b>STAFFING VIEW</b>
         </div>
         <div id="bar"  style="z-index: 20;height:0;width:0;background-color:#fff2e6;top:0;left:0;position: fixed;
     transition: height 1s;"></div>
         <div id="div3" style="display: none;" ></div>
     </div>
+    <div id="genericModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+          <span class="close-modal" onclick="btn_cerrarModal()">&times;</span>
+          <h1 id="modalTittle">Titulo</h1>
+          <div id="modalContent"></div>
+        </div>
+      
+      </div>
 </div>
     
         <script>
@@ -120,9 +142,9 @@
             document.getElementById("username").value=lastname;
         }
                         
-        setProy();
+        //setProy();
         window.addEventListener('resize', function(event) {
-            document.getElementById("bar").style.marginLeft=(window.innerWidth-400)+"px";
+            document.getElementById("bar").style.marginLeft=(window.innerWidth-500)+"px";
             document.getElementById("bar").style.height=window.window.innerHeight+"px"
         }, true);   
         </script>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+        <title>CYBS Staffing</title>
+        <link rel="stylesheet" href="css/maincss.css"> </link>
+        <script src="scripts/utils.js"></script>
+        <script src="scripts/sort.js"></script>  
+        <script src="scripts/businessclass.js"></script>  
+        <script src="scripts/viewclass.js"></script>
+        <script src="datareal.js"></script>
+    </head>
+    <body>
+        <div id="contenido" >
+            <div style="font-family: Verdana, Geneva, Tahoma, sans-serif;font-size: 10pt;padding-top:10px;padding-bottom: 10px;">
+                <b>STAFFING VIEW</b>
+            </div>
+            <div id="bar"  style="z-index: 20;height:0;width:0;background-color:#fff2e6;top:0;left:0;position: fixed;
+        transition: height 1s;"></div>
+            <div id="div3" style="display: none;" ></div>
+        </div>
+    <script>
+        function getDataMesPlan(mo,year,el){            
+            let mon=mo>12?mo-12:mo;
+            console.log("func getDataMesPlan",mo,mon,year,el);
+            if(year==2021){
+                return mon==1?el.pEne_:(mon==2?el.pFeb_:(mon==3?el.pMar_:(mon==4?el.pAbr_:(mon==5?el.pMay_:(mon==6?el.pJun_:(mon==7?el.pJul_:(mon==8?el.pAgo_:(mon==9?el.pSep_:(mon==10?el.pOct_:(mon==11?el.pNov_:el.pDic_))))))))))
+            }else{
+                if(year==2022)
+                    return mon==1?el.pEne:(mon==2?el.pFeb:(mon==3?el.pMar:(mon==4?el.pAbr:(mon==5?el.pMay:(mon==6?el.pJun:(mon==7?el.pJul:(mon==8?el.pAgo:(mon==9?el.pSep:(mon==10?el.pOct:(mon==11?el.pNov:el.pDic))))))))))
+            }
+        }
+        function getDataMesReal(mo,year,el){
+            let mon=mo>12?mo-12:mo
+            if(year==2021){
+                return mon==1?el.rEne_:(mon==2?el.rFeb_:(mon==3?el.rMar_:(mon==4?el.rAbr_:(mon==5?el.rMay_:(mon==6?el.rJun_:(mon==7?el.rJul_:(mon==8?el.rAgo_:(mon==9?el.rSep_:(mon==10?el.rOct_:(mon==11?el.rNov_:el.rDic_))))))))))
+            }else{
+                if(year==2022)
+                    return mon==1?el.rEne:(mon==2?el.rFeb:(mon==3?el.rMar:(mon==4?el.rAbr:(mon==5?el.rMay:(mon==6?el.rJun:(mon==7?el.rJul:(mon==8?el.rAgo:(mon==9?el.rSep:(mon==10?el.rOct:(mon==11?el.rNov:el.rDic))))))))))
+            }
+        }
+        function getAvgRealHrs(arr,nombre){
+            let avg=0;
+            let cant=0;
+            //console.log("getAvg",arr)
+            arr.forEach((el)=>{
+                if(el.usr==nombre){
+                    avg+=(el.rEne_?el.rEne_:0)+(el.rFeb_?el.rFeb_:0)+(el.rMar_?el.rMar_:0)+(el.rAbr_?el.rAbr_:0)+(el.rMay_?el.rMay_:0)+(el.rJun_?el.rJun_:0)+(el.rJul_?el.rJul_:0)+(el.rAgo_?el.rAgo_:0)+(el.rSep_?el.rSep_:0)+(el.rOct_?el.rOct_:0)+(el.rNov_?el.rNov_:0)+(el.rDic_?el.rDic_:0);
+                    avg+=(el.rEne?el.rEne:0)+(el.rFeb?el.rFeb:0)+(el.rMar?el.rMar:0)+(el.rAbr?el.rAbr:0)+(el.rMay?el.rMay:0)+(el.rJun?el.rJun:0)+(el.rJul?el.rJul:0)+(el.rAgo?el.rAgo:0)+(el.rSep?el.rSep:0)+(el.rOct?el.rOct:0)+(el.rNov?el.rNov:0)+(el.rDic?el.rDic:0);
+                    //console.log("avg",avg);
+                    cant+=(el.rEne_?1:0)+(el.rFeb_?1:0)+(el.rMar_?1:0)+(el.rAbr_?1:0)+(el.rMay_?1:0)+(el.rJun_?1:0)+(el.rJul_?1:0)+(el.rAgo_?0:0)+(el.rSep_?1:0)+(el.rOct_?1:0)+(el.rNov_?1:0)+(el.rDic_?1:0);
+                    cant+=(el.rEne?1:0)+(el.rFeb?1:0)+(el.rMar?1:0)+(el.rAbr?1:0)+(el.rMay?1:0)+(el.rJun?1:0)+(el.rJul?1:0)+(el.rAgo?1:0)+(el.rSep?1:0)+(el.rOct?1:0)+(el.rNov?1:0)+(el.rDic?1:0);
+                    //console.log("cant",cant);
+                }
+            })
+            return cant>0?avg/cant:0;
+        }
+        function markar(idp){
+            var projMarked = document.getElementsByClassName('proyecto-mark');
+            var elemNoMark = Array.prototype.filter.call(projMarked, function(projMarked){
+                        let idArr=projMarked.id.split(".");
+                        console.log("No markar",projMarked.id,idArr[0]);
+                        if(parseInt(idArr[0])!=parseInt(idp))
+                           return projMarked;
+                    });
+            elemNoMark.forEach((el)=>{
+                el.className="proyecto";
+            })
+            
+            var projElements = document.getElementsByClassName('proyecto');
+            var elem2Mark = Array.prototype.filter.call(projElements, function(projElement){
+                        let idArr=projElement.id.split(".");
+                        console.log("markar",projElement.id,idArr[0]);
+                        if(parseInt(idArr[0])==parseInt(idp))
+                           return projElement;
+                    });
+            console.log(elem2Mark);
+            elem2Mark.forEach((el)=>{
+                el.className="proyecto-mark";
+            })
+            
+        }
+        function bw_mostrar(IDp,fase,mes){        
+            //var dat=par.split("-");
+            let wrp=document.getElementById("w-"+IDp+"."+fase+"."+mes);
+            //let prj=dat[1].split(".");
+            //console.log("display",wrp.style.display.length);
+            let bwrp=document.getElementById("bw-"+IDp+"."+fase+"."+mes);
+            //let bar=document.getElementById("bar")
+            if(wrp.style.display=="none"||wrp.style.display.length==0){
+                wrp.style.display="block";
+                bwrp.innerHTML="detail v";   
+                bwrp.style.backgroundColor="orange";         
+                markar(IDp)
+                //projSummary.fillProjSumm(IDp);
+            }else{
+                wrp.style.display="none";
+                bwrp.innerHTML="detail &#62;";
+                bwrp.style.backgroundColor="#e0e0fa";
+                //projSummary.blankProjSummary();
+            }
+        }
+        const GOODTHRESHOLD=100;
+        //var INITIALMONTH=new Date().getMonth()+1; <-- esta es la correcta
+        var INITIALMONTH=1//new Date().getMonth()-4;
+        //INITIALMONTH=INITIALMONTH==0?12:INITIALMONTH;
+        var MONTHTOSHOW=24;
+        var INITIALYEAR=new Date().getFullYear();
+        var YEARTOSHOW=new Date().getFullYear()+1;
+        var CURRENTMONTH=new Date().getMonth()+13;
+
+        console.log("currentmonth",CURRENTMONTH);
+        console.log(INITIALYEAR,YEARTOSHOW);
+        cantidad=10
+
+        titulo=["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
+        let mesInicial=1;
+        let yearInitial=2021;
+        let currMon=1;
+        let currYear=2022;
+        let projAvailable=[];
+        let proyectosArr=Array.from({length: 25}, function() { return []; });
+        datarealPru.data.forEach((el)=>{
+            //let val=projAvailable.find(obj=>obj.idProy==el.idProy);
+            let esta=false;
+            projAvailable.forEach((d)=>{
+                if(d==el.idProy){
+                    esta=true;
+                }
+            })
+            if(!esta)
+                projAvailable.push(el.idProy);
+        })
+        //console.log("projAvailable",projAvailable);
+        for(let currYear=yearInitial;currYear<yearInitial+2;currYear++){
+            for(let currMon=INITIALMONTH;currMon<13;currMon++){
+                var mesArr=[]
+                let yearIni=0;
+                let yearFin=0;
+                let ini=0;
+                let fin=0;
+                let mesi=currYear==yearInitial?currMon:currMon+12;
+                projAvailable.forEach((pd)=>{
+                    if( true || pd==194){
+
+                        let arrPru=[];
+                        datarealPru.data.forEach((el)=>{
+                            if(el.idProy==pd){
+                                arrPru.push(el);
+                            }
+                        })
+                        //console.log("arrPru===",currMon,pd,arrPru);
+
+                        
+                        let team=[];
+                        let hay=false;
+                        let totHPlan=0;
+                        let totHReal=0;
+                        yearIni=parseInt(arrPru[0].inicio_mon.substring(0,4))
+                        ini=parseInt( arrPru[0].inicio_mon.substring(5,7));
+                        if(yearIni==INITIALYEAR) ini+=12;
+                        fin=ini+parseInt(arrPru[0].dura_plan_meses)-1;                        
+                        yearFin=fin>12?yearIni+1:yearIni;                        
+                        
+                        //console.log("plazo plan proy",arrPru[0].idProy,ini,fin,yearIni,yearFin,currYear,currMon);
+                        arrPru.forEach((el)=>{
+                            if(getDataMesPlan(currMon,currYear,el) || getDataMesReal(currMon,currYear,el))
+                                hay=true;
+                            //console.log("hay data",hay,getDataMesPlan(currMon,currYear,el),getDataMesReal(currMon,currYear,el));                                
+                            if(el.usr ){
+                                
+                                totHReal+=getDataMesReal(currMon,currYear,el)?getDataMesReal(currMon,currYear,el):0;
+                                let planh=0;
+                                console.log("antes rango",currYear,yearIni,yearFin,currMon,mesi,ini,fin);
+                                //if(currYear>=yearIni && currYear <= yearFin && mesi>=ini && mesi<=fin){
+                                if(currYear>=yearIni && currYear <= yearFin && mesi>=ini && mesi<=fin){
+                                    planh=getDataMesPlan(currMon,currYear,el);
+                                    console.log("getDataMesPlan",planh);
+                                    totHPlan+=getDataMesPlan(currMon,currYear,el)?getDataMesPlan(currMon,currYear,el):0;
+                                }
+                                                                
+                                let prom=getAvgRealHrs(arrPru,el.usr);
+                                //console.log("avg",el.usr,prom,currMon,currMon>=CURRENTMONTH);
+                                                                                                    
+                                //console.log("plan h",arrPru[0].idProy,planh,mesi,ini,fin)
+                                team.push({"nombre": el.usr,
+                                    "horasPlan": planh,
+                                    "horasReal": getDataMesReal(currMon,currYear,el),
+                                    "avgReal":prom,
+                                    "dedicacion":planh,
+                                    "original": "0",
+                                    "newDedi": "NaN"}
+                                )
+                            }
+                        })
+                        
+                        let template={
+                                "IDp": arrPru[0].idProy,
+                                "proyecto": arrPru[0].nb_proyecto,
+                                "fase": "0",
+                                "year": currYear,
+                                "mes": currMon,
+                                "mesi":mesi,
+                                "horas": 0,
+                                "totHorasPlan":totHPlan,
+                                "totHorasReal":totHReal,
+                                "meses":arrPru[0].dura_plan_meses,
+                                "Fase": arrPru[0].fase}
+                        
+                        template.equipo=team;
+                        //proyectosArr.push(template);
+                        if(hay) mesArr.push(template);
+                        let incluido=false;
+                        //console.log("mesi",mesi);
+                        proyectosArr[mesi].forEach((el)=>{
+                            //console.log("elemento",el)
+                            if(el.IDp==arrPru[0].idProy) incluido=true;
+                        })
+                        if(hay && !incluido && template.mes==currMon) proyectosArr[mesi].push(template) 
+                        //console.log("mes",template,mesi,arrPru[0].idProy,proyectosArr)
+                        
+                    }
+                })
+                //console.log("mes",mesArr,currMon)
+                //for(let i in mesArr){        
+                //    proyectosArr[currMon].push(mesArr[i]) 
+                //}
+                //console.log("final ciclo",currMon,mesArr,proyectosArr)
+            }
+        }
+        console.log("proyectos",proyectosArr);
+        
+        let html="";
+        let msg="";
+        var cal=new Calendario();
+        //propertyBar=new PropertyView("bar");
+        var util=new Util();
+        cal.createBaseTable();
+        var render = new Render();
+        //for(let i=INITIALMONTH;i<INITIALMONTH+MONTHTOSHOW;i++){
+        for(let i=1;i<25;i++){
+            var cont=document.getElementById("mes"+i);
+            if(cont){
+                var totcont=document.getElementById("mes"+i+"totales");
+                var aux="";
+                let totDedic=0;
+                cont.innerHTML="";
+                if(i==CURRENTMONTH){
+                        cont.className="curr-mes";
+                }
+                if(i>CURRENTMONTH){
+                        cont.className="future-mes";
+                }
+                totcont.innerHTML="";
+                if(proyectosArr[i]!==undefined)
+                    proyectosArr[i].forEach((o)=>{
+                        aux=render.send(o,"proyecto_calendarior");
+                        var tw=`<div class="teamWrapper" id="w-${o.IDp}.${o.fase}.${o.mesi}" style="display: none;">`;
+                        aux+=render.sendTableComp(o,o.equipo,"team_staffingr",tw,"</div>","","");
+                        aux+="</div>";
+                        cont.innerHTML+=aux;
+                        //totDedic=projList.getTeamDedication(o.IDp,o.fase,o.mes);
+                        //console.log("aqui da el error",`ref-${o.IDp}.${o.fase}.${o.mes}`);
+                        //document.getElementById(`ref-${o.IDp}.${o.fase}.${o.mes}`).innerHTML=totDedic.toFixed(2);
+                    })
+                }
+        }
+        
+        //document.getElementById("tabla-meses").innerHTML="<table>"+html+"</table>"
+
+    </script>
+</body>
+</html>
