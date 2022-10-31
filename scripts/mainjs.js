@@ -937,7 +937,6 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
     }
     let asynGetToken = async (usr,pwd) => { 
         //console.log("en async get Token function",usr,pwd)
-        pwd="gustavoFCYBS#@517"
         let data={username:usr,password:pwd}
         //console.log("json",JSON.stringify(data));
         const fetchData= await fetch(`https://cybs-isauth.azurewebsites.net/api/cybs_login`, {
