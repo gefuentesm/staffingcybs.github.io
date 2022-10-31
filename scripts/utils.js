@@ -69,14 +69,15 @@ class Util{
    document.getElementById("loader").style.display = "none"
    return fetchData;
 }
-   sendToServer(){
+   async sendToServer(){
         document.getElementById("loader").style.display = "";
        let modifyData=projList.getChanged();
+       let retcode=0
        console.log("modify data",modifyData);
        if(modifyData.length>0){
            var objToSend={data:modifyData,usr:userSession,token:myToken,time:myTime}
            //console.log("enviar a server",objToSend);
-           this.sendData(objToSend).then((fetchDetail)=>{  
+           await this.sendData(objToSend).then((fetchDetail)=>{  
                //console.log("retorno fetchdetail",fetchDetail);
                //var ret= JSON.parse(fetchDetail);
                console.log("fetchDetail",fetchDetail)
@@ -86,10 +87,17 @@ class Util{
                    // si todo ok, limpia el arreglo con los cambios
                    projList.cleanChanged();
                    alert("La información se actualizó exitosamente");
+                   retcode=0;
                // Response: "{ "status": "cambio en dedicacion errado", "code": 1, "orig": 42.86, "chg": 22.86 }"
-               }else alert("No se pudo realizar la actualizacion. Valor original "+fetchDetail.orig+" cambio por "+fetchDetail.chg)
+               }else {
+                alert("No se pudo realizar la actualizacion. Valor original "+fetchDetail.orig+" cambio por "+fetchDetail.chg);
+                retcode=-1;
+               }
            });
-       }else alert("No se ha modificado datos");
+       }else {alert("No se ha modificado datos");
+            retcode=1;
+        }
+        return retcode;
    }
 }
 class Render{

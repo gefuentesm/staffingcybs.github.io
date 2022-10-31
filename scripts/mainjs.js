@@ -217,6 +217,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                 console.log("delhistchanges",fetchData);
                 if(fetchData.status=="ok"){
                     alert("Operación realizada exitosamente ");
+                    console.log("recarga la data del servidor")
                     btn_reload();
                     btn_cerrarModal();
                 }
@@ -434,17 +435,21 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             projSummary.blankProjSummary();
         }
     }
-    function btn_save(){
+    async function btn_save(){
         //console.log("save")
-        util.sendToServer();  
-        propertyBar.cleanChng();         
-        btn_reload();   
+        let r=await util.sendToServer();  
+        if(r==0){
+            console.log("recarga la data del servidor-save")
+            propertyBar.cleanChng();         
+            btn_reload();   
+        }
+
     }
     function btn_reload(){
         //if(confirm("Desea re-cargar los proyectos")==true){ 
             document.getElementById("loader").style.display = "";
             document.getElementById("loader").style.visibility = "visible";
-            projList=[]
+           /* projList=[]
             //loadStaff();
             document.getElementById("projectsBox").value="Seleccione...";
             loadStaff1();
@@ -452,7 +457,8 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             loadProjectSummary();
             //el histórico, refresh busca en la BD y Show muestra el historial
             propertyBar.refreshHist();
-            propertyBar.showHistorial();
+            propertyBar.showHistorial();*/
+            setProy();
             document.getElementById("loader").style.display = "none";
             document.getElementById("loader").style.visibility = "none";
         //}
@@ -650,6 +656,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                     if(msg=="ok"){
 
                         convertAlternativeStaffData(fetchData);
+                        console.log("se cargo la data")
                     }
                     document.getElementById("loader").style.display = "none";
                     document.getElementById("loader").style.visibility = "none";
