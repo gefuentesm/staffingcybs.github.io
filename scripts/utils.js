@@ -224,7 +224,7 @@ class Render{
                                 //console.log("check",box,tcheck,prop,edo.indexOf("Lead"),edo.indexOf("Propuesta"),edo);
                                 return `<div class="proyecto" id="${obj.IDp}.${obj.fase}.${obj.mesi}"  ondrop="staffing.drop(event)" ondragover="util.allowDrop(event)">
                                    
-                                   <a style="cursor: pointer;font-weight:bold;color:${color}" ${prop}  onclick="markar(${obj.IDp},${obj.mes})">${obj.IDp}-${obj.proyecto} </a>mes:${obj.mes}-${obj.year}-${obj.pais} 
+                                   <a style="cursor: pointer;font-weight:bold;color:${color}" ${prop}  onclick="markar(${obj.IDp},${obj.mes})">${obj.IDp}-${obj.proyecto} </a>mes:${obj.mes}-${obj.year}-${obj.pais===null?'':obj.pais} 
                                    <div id="edit-${obj.IDp}-${obj.mes}" class="edit-block" style="display:none">${tcheck}
                                     <div>
                                         <span class="horas-plan" ${obj.totHorasPlan>0?'':'style="color:LightSlateGrey"'}>${obj.totHorasPlan.toFixed(2)}</span><span class="horas-real" ${obj.totHorasReal>0?'':'style="color:Gainsboro"'} > ${obj.totHorasReal.toFixed(2)}</span><span class="horas-plan" style="color:white;background-color:${(obj.totHorasPlan-obj.totHorasReal)<0?'red':'green'}"> ${(obj.totHorasPlan-obj.totHorasReal).toFixed(2)}</span>
