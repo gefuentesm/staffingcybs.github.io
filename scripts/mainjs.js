@@ -86,10 +86,10 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         let id=event.target.name+"-"+m //probable-229-6 // probable-$proy-$mes
         let idArr=id.split("-");
         let check=document.getElementById(id).checked;
-        console.log("checked",check);
+        //console.log("checked",check);
         let probables=document.getElementsByName(event.target.name);
         for (i = 0; i < probables.length; i++) {
-            console.log("probable loop",i,probables[i].id,document.getElementById(probables[i].id).checked);
+            //console.log("probable loop",i,probables[i].id,document.getElementById(probables[i].id).checked);
             document.getElementById(probables[i].id).checked=check;            
         }
         if(check)
@@ -98,7 +98,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             projList.setOutStaffing(idArr[1]); 
         let meses=projList.updateMesProjStructByImprob(idArr[1]);
         // recuperar los meses a actualizar
-        console.log("probable - meses",meses,id,idArr[1])
+        //console.log("probable - meses",meses,id,idArr[1])
         meses.forEach((m)=>{
             if(m>=INITIALMONTH)
                 staffing.updateStructByMonth(m);
@@ -156,7 +156,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
     }
     function toggleDisp(ele){
         let e=document.getElementById(ele)
-        console.log("toggleDisp",ele,e,e.style);
+        //console.log("toggleDisp",ele,e,e.style);
 
         if(e.style.display=="block"||e.style.display=="")
             e.style.display="none"
@@ -193,7 +193,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
     }   
     function bt_eliminaChng(obj){
         let mat=document.getElementById("delChngMat");
-        console.log("bt_eliminaChng",mat,obj);
+        //console.log("bt_eliminaChng",mat,obj);
         let param=obj.split(".");
         let len=mat.rows.length;
         let objdel=[]
@@ -212,12 +212,12 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             })
             txParam+="]";
             let sendInfo={params:txParam,token:myToken,time:myTime}
-            console.log("a eliminar",sendInfo);
+            //console.log("a eliminar",sendInfo);
             util.asynGetFromDB_(`https://staffing-func.azurewebsites.net/api/delhistchanges`,sendInfo).then(function(fetchData){
-                console.log("delhistchanges",fetchData);
+                //console.log("delhistchanges",fetchData);
                 if(fetchData.status=="ok"){
                     alert("Operación realizada exitosamente ");
-                    console.log("recarga la data del servidor")
+                    //console.log("recarga la data del servidor")
                     btn_reload();
                     btn_cerrarModal();
                 }
@@ -232,7 +232,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         let text = "Press a button to delete!\nEither OK or Cancel.";
         if (confirm(text) == true) {
             detailHistChange2Modal(usr,id).then(ret=>{
-                console.log("detail",ret);
+                //console.log("detail",ret);
                 const d = new Date();
                 let month = d.getMonth();
                 let arrM=new Map();
@@ -245,7 +245,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                         fila+="<tr><td><input id='mes-"+i+"' type='checkbox'></input></td><td style='font-size:10pt'>"+meses[i]+"</td><td style='font-size:10pt'>"+ret[meses[i]]+"</td></tr>"
                     }
                 }
-                console.log("data",month,arrM);
+                //console.log("data",month,arrM);
                 fila="<tbody>"+fila+"</tbody>"
                 let par='"'+usr+'.'+id+'"'
                 btn_abrirModal("Detalle de Cambios Históricos",encabezado+"<table id='delChngMat' class='paleBlueRows'><thead><td>sel</td><td>Mes</td><td>Horas</td></thead>"+fila+"</table><button onclick='bt_eliminaChng("+par+")'>Eliminar</button>")
@@ -254,7 +254,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         } 
     }
     function btn_reviewChanged(){
-        console.log("btn_reviewChanged");
+        //console.log("btn_reviewChanged");
         poollingForChanged();
     }
     function btn_updateMonday(){
@@ -265,11 +265,11 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             util.asynGetFromDB(`https://getmondayproject.azurewebsites.net/api/getmondayproject`,myToken,myTime).then(function(fetchData){
                 //console.log("people view data",fetchData);
                 proyRest=fetchData;
-                console.log("proyRest",fetchData);
+                //console.log("proyRest",fetchData);
                 util.asynGetFromDB(`https://getmondayfases.azurewebsites.net/api/getmodayfases`,myToken,myTime).then(function(fetchData){
                     //console.log("people view data",fetchData);
                     proyFases=fetchData;
-                    console.log("proyFases",fetchData);
+                    //console.log("proyFases",fetchData);
                     loadAlarms();
                     btn_reload();
                     
@@ -288,19 +288,19 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         var wrappid="t-"+nb+"-"+IDp+"."+fase+"."+mes+"-"+inOnSite;
         var wrappid2="c-"+nb+"-"+IDp+"."+fase+"."+mes+"-"+inOnSite;
         let currentInOnsite=0;
-        console.log("tx_dedichange",document.getElementById(wrappid),wrappid,document.getElementById(wrappid2),wrappid2);  //c-Gustavo Fuentes-40.2.2-0
+        //console.log("tx_dedichange",document.getElementById(wrappid),wrappid,document.getElementById(wrappid2),wrappid2);  //c-Gustavo Fuentes-40.2.2-0
         if( document.getElementById(wrappid2))
             currentInOnsite=document.getElementById(wrappid2).style.backgroundColor=="blue"?1:0;
         else
             if( document.getElementById(wrappid))
                 currentInOnsite=document.getElementById(wrappid).style.backgroundColor=="blue"?1:0;
-        console.log("current onsite",IDp,fase,mes,id,currentInOnsite);
-        console.log("on Change",document.getElementById(id).value);
+        //console.log("current onsite",IDp,fase,mes,id,currentInOnsite);
+        //console.log("on Change",document.getElementById(id).value);
         projList.setAllStruct(IDp,fase,nb,document.getElementById(id).value,mes,currentInOnsite);
-        console.log("dedichange",nb,IDp,mes,currentInOnsite,document.getElementById(id).value);
+        //console.log("dedichange",nb,IDp,mes,currentInOnsite,document.getElementById(id).value);
         let totDedic=projList.getTeamDedication(IDp,fase,mes);
         let origDedi=document.getElementById(`ref-${IDp}.${fase}.${mes}`).innerHTML;
-        console.log("cambios",totDedic,origDedi);
+        //console.log("cambios",totDedic,origDedi);
         let xcolor=totDedic==origDedi ? "orange" : "red";
         let chgDedi=document.getElementById(`chng-${IDp}.${fase}.${mes}`);
         chgDedi.innerHTML=totDedic.toFixed(2);
@@ -439,7 +439,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         //console.log("save")
         let r=await util.sendToServer();  
         if(r==0){
-            console.log("recarga la data del servidor-save")
+            //console.log("recarga la data del servidor-save")
             propertyBar.cleanChng();         
             btn_reload();   
         }
@@ -645,7 +645,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         document.getElementById("loader").style.display = "";
         document.getElementById("loader").style.visibility = "visible";
         util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/gethorasplanreal`,myToken,myTime).then(function(fetchData){
-                console.log("fetchdata",fetchData);
+                //console.log("fetchdata",fetchData);
                 try{                    
                     if(typeof fetchData.msg=="undefined")
                         msg="ok"
@@ -656,12 +656,12 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                     if(msg=="ok"){
 
                         convertAlternativeStaffData(fetchData);
-                        console.log("se cargo la data")
+                        //console.log("se cargo la data")
                     }
                     document.getElementById("loader").style.display = "none";
                     document.getElementById("loader").style.visibility = "none";
                 }catch(e){
-                    console.log("asynGetFromDB",e);
+                    //console.log("asynGetFromDB",e);
                     document.getElementById("loader").style.display = "none";
                     document.getElementById("loader").style.visibility = "none";
                     alert("Error en la carga, intente de nuevo");
@@ -814,7 +814,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
 
     }    
     async function  detailHistChange2Modal  (usr,id){
-        console.log("fetch data detailHistChange2Modal");
+        //console.log("fetch data detailHistChange2Modal");
         let obj={idp:id,usr:usr,token:myToken,time:myTime}
         let retorno;
         retorno= await util.asynGetFromDB_(`https://staffing-func.azurewebsites.net/api/getDetailHistChanges`,obj).then(function(fetchData){
@@ -824,7 +824,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                 else
                     msg=fetchData.msg
                 if(msg=="ok"){
-                    console.log("detailHistChange2Modal",fetchData.data,fetchData.data[0]);
+                    //console.log("detailHistChange2Modal",fetchData.data,fetchData.data[0]);
                     return fetchData.data[0];
                 }
                 
@@ -838,7 +838,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
 
     }
     function poollingForChanged(){
-        console.log("fetch data pollingForChanged");
+        //console.log("fetch data pollingForChanged");
         // Only for test purpose, set this static date in other to get data 
                 dateOfChanged="2022-10-14 00:25:55.847";
         let obj={usr:userSession,fechahora:dateOfChanged,token:myToken,time:myTime}
@@ -849,7 +849,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                 else
                     msg=fetchData.msg
                 if(msg=="ok"){
-                    console.log("poolingChanges",fetchData);
+                    //console.log("poolingChanges",fetchData);
                     sesion=new SessionView(fetchData.data,"session-container");
                     //alarmView=new AlarmView(fetchData.data);
                     //alarmView.createView();
@@ -986,7 +986,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                 let n=l[0].split(".");
                 let inicial=n[0][0]
                 userSession=inicial+"."+n[1];     
-                console.log("usersession",userSession,dateOfChanged);
+                //console.log("usersession",userSession,dateOfChanged);
                 document.getElementById("signin").style.display="none";
                 setProy();
                 //console.log("myToken,myTime loaded")

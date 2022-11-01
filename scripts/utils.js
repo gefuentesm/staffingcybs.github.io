@@ -19,7 +19,7 @@ class Util{
 
    sendData = async  (objToSend) => {
     document.getElementById("loader").style.display = ""
-       console.log("sendData",JSON.stringify(objToSend));
+       //console.log("sendData",JSON.stringify(objToSend));
        const fetchDetail = fetch(`https://staffing-func.azurewebsites.net/api/setstaffinghttp`, {
            method: 'POST',
            body:JSON.stringify(objToSend),
@@ -52,7 +52,7 @@ class Util{
        return fetchData;
    }
    asynGetFromDB_ = async (url,obj) => { 
-    console.log("asynGetFromDB_",JSON.stringify(obj))
+    //console.log("asynGetFromDB_",JSON.stringify(obj))
     document.getElementById("loader").style.display = ""
     //let obj={token:ptoken,time:ptime}
     const fetchData= await fetch(url, {
@@ -73,14 +73,14 @@ class Util{
         document.getElementById("loader").style.display = "";
        let modifyData=projList.getChanged();
        let retcode=0
-       console.log("modify data",modifyData);
+       //console.log("modify data",modifyData);
        if(modifyData.length>0){
            var objToSend={data:modifyData,usr:userSession,token:myToken,time:myTime}
            //console.log("enviar a server",objToSend);
            await this.sendData(objToSend).then((fetchDetail)=>{  
                //console.log("retorno fetchdetail",fetchDetail);
                //var ret= JSON.parse(fetchDetail);
-               console.log("fetchDetail",fetchDetail)
+               //console.log("fetchDetail",fetchDetail)
                document.getElementById("loader").style.display = "none";
                if(fetchDetail.status==""){
                    //console.log("entro a limpiar dirty")
@@ -288,7 +288,7 @@ class Render{
    }
 
    sendTableWB(arr,rompe,i,encab,e_encab,tag,e_tag){
-        if(encab=="") console.log("sendTableWB encab (4to parametro) no puede estar vacio");
+        //if(encab=="") //console.log("sendTableWB encab (4to parametro) no puede estar vacio");
         let distinArr=this.getArrDistict(arr,rompe);
         let re="";
         let t;
@@ -316,9 +316,9 @@ class Render{
    }
    sendTableComp(o,arr,i,encab,e_encab,tag,e_tag){
        var t=encab;
-       if(arr===undefined){
-            console.log("sendTableComp funcion a activar",i,o,arr,encab);
-       }else{
+       if(arr!==undefined){
+            //console.log("sendTableComp funcion a activar",i,o,arr,encab);
+      
             arr.forEach(a =>{
                 t+=tag+this.fm.get(i)(o,a)+e_tag;            
             })

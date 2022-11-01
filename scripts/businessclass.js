@@ -24,7 +24,7 @@ class ProjList{
                         if(mem.dirty!==undefined)
                             if(mem.dirty==1){
                                 mem.dirty=0;
-                                console.log("cleanChanged",mem);
+                                //console.log("cleanChanged",mem);
                             }
                                 
                     });
@@ -79,7 +79,7 @@ class ProjList{
         if(mes>12)
             mes=mes-12;
         this.chngStruct.forEach((c)=>{
-            console.log("en el loop",c,c.IDp,IDp,c.IDp==IDp,c.nb,nb,c.nb==nb)
+            //console.log("en el loop",c,c.IDp,IDp,c.IDp==IDp,c.nb,nb,c.nb==nb)
             if(c.IDp==IDp && c.nb==nb && c.mes==mes && c.year==year){
                 c.horasPlan=horasPlan;
                 existe=true;
@@ -89,13 +89,13 @@ class ProjList{
             let oChang={IDp:IDp,nb:nb,year:year,mes:mes,horasPlan:horasPlan};
             this.chngStruct.push(oChang);
         }
-        console.log("setChangeStruct - nueva estructura",this.chngStruct)
+        //console.log("setChangeStruct - nueva estructura",this.chngStruct)
     }
     setChngStruct(IDp,fase,mes,nb,horasPlan,inOnSite,obj){
         /*
         {IDp,nb,mes,horasPlan}
         */
-        console.log("setChngStruct obj",obj,this.chngStruct);
+        //console.log("setChngStruct obj",obj,this.chngStruct);
         let wasChanged=false;
         for(let i in this.chngStruct){
             if(this.chngStruct[i].IDp==IDp && this.chngStruct[i].fase==fase && this.chngStruct[i].mes==mes){
@@ -109,16 +109,16 @@ class ProjList{
         let existe=false;
         this.chngStruct.forEach((el)=>{
             if(JSON.stringify(el)===JSON.stringify(obj)){
-                console.log("isEqual",el,obj)
+                //console.log("isEqual",el,obj)
                 existe=true;
             }
         })
         if(!existe)    //si no existe se agregas
             this.chngStruct.push(obj) ; 
-        console.log("ChngStruct",this.chngStruct);
+        //console.log("ChngStruct",this.chngStruct);
     }
     setTeamInData(IDp,fase,mes,nb,horasPlan,inOnSite){
-        console.log("setTeamInData caso existe",IDp,fase,mes,nb,this.mesProjStruct[mes]);
+        //console.log("setTeamInData caso existe",IDp,fase,mes,nb,this.mesProjStruct[mes]);
         var existe=false;
         let obj={}
         this.mesProjStruct[mes].forEach((el)=>{
@@ -131,7 +131,7 @@ class ProjList{
                         mem.inOnSite=inOnSite;
                         mem.dirty=1;
                         existe=true;
-                        console.log("setTeamInData->setChngStruct")
+                        //console.log("setTeamInData->setChngStruct")
                         //this.setChngStruct(IDp,fase,mes,nb,horasPlan,inOnSite,el);
                         this.setChangeStruct(IDp,el.year,mes,nb,horasPlan);
                         return 0;
@@ -152,7 +152,7 @@ class ProjList{
             obj={nombre:nb,horasPlan:horasPlan,original:0,inOnSite:inOnSite,newDedi:'NaN',chg_dedi:'',dirty:1};
             if(el.IDp==IDp) {
                 el.equipo.push(obj);
-                console.log("addTeamToData->setChngStruct")
+                //console.log("addTeamToData->setChngStruct")
                 //this.setChngStruct(IDp,fase,mes,nb,horasPlan,inOnSite,el);
                 this.setChangeStruct(IDp,el.year,mes,nb,horasPlan);
             }
@@ -221,7 +221,7 @@ class ProjList{
             });
             this.mesStruct[i]=people;
         }
-        console.log("mesStruct",this.mesStruct);
+        //console.log("mesStruct",this.mesStruct);
     }
     updateMesProjStructByImprob(IDp){
         let meses=[];
@@ -232,7 +232,7 @@ class ProjList{
             dat.forEach((el)=>{
                if(el.IDp==IDp) existe=true;
             });
-            console.log("updateMesProjStructByImprob existe",i,IDp,existe);
+            //console.log("updateMesProjStructByImprob existe",i,IDp,existe);
             if(existe){
                 meses.push(i);
                 // el proyecto está en el mes
@@ -304,27 +304,27 @@ class ProjList{
         return this.mesStruct;
     }
     getMonStruct(nb,mes){
-        console.log("getMonStruct",mes,nb);
+        //console.log("getMonStruct",mes,nb);
         return this.mesStruct[mes].get(nb).horasPlan;
     }
     setAllStruct(IDp,fase,nb,horasPlan,mes,inOnSite){
-        console.log("setAllStruct",IDp,fase,nb,horasPlan,mes,inOnSite);
+        //console.log("setAllStruct",IDp,fase,nb,horasPlan,mes,inOnSite);
         // se cambia la estructura mensual, luego el array de data y finalmente (y en ese orden) se cambia la estructura de proyecto
         //console.log("setAllStruct in",this.mesProjStruct);
         //console.log("setAllStruct in ",mes,this.mesStruct[mes])
         if(horasPlan && !isNaN(horasPlan)){
             if(this.mesStruct[mes].has(nb)){
                 this.mesStruct[mes].get(nb).horasPlan = parseFloat(horasPlan);
-                console.log("se encontro y se cambio",nb,this.mesStruct[mes].get(nb));
+                //console.log("se encontro y se cambio",nb,this.mesStruct[mes].get(nb));
                 // se cambia en el arreglo data y la estructura 
                 // de proyectos
                 if(this.setTeamInData(IDp,fase,mes,nb,horasPlan,inOnSite)==-1){
-                    console.log("dio error porque no esta en el team y se pasa a agregar");
+                    //console.log("dio error porque no esta en el team y se pasa a agregar");
                     this.addTeamToData(IDp,fase,mes,nb,horasPlan,inOnSite);            // array data, almacena el cambio en chgStruct
                 }
                 this.updateMesStruct(mes);                     // actualiza la estructura de proyecto
             }else{
-                console.log("No existe. Hay que agregarlo",nb,this.mesStruct[mes]);
+                //console.log("No existe. Hay que agregarlo",nb,this.mesStruct[mes]);
                 this.addTeamToData(IDp,fase,mes,nb,horasPlan,inOnSite);         // agrega la persona en el equipo, en caso que no exista y almacena el cambio
                 //this.updateMesProjStruct(mes);                      // actualiza la estructua de proyecto
                 this.updateMesStruct(mes);                          //se actualiza solo el mes 
@@ -377,6 +377,6 @@ class HistoricChanges{
     async updateData(){
         let data= await this.util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/gethistchanges`,myToken,myTime);
         this.Hdata=data.data;
-        console.log("update data",this.Hdata);
+        //console.log("update data",this.Hdata);
     }
 }

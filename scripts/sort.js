@@ -10,11 +10,11 @@ class Field{
         let obj;
         this.field.forEach(f=>{
             if(f.id==id){
-                console.log("getById",id,f)
+                //console.log("getById",id,f)
                 obj=f;
             }
         })
-        console.log("getById 2",id,obj)
+        //console.log("getById 2",id,obj)
         return obj;
     }
     getByName(name){
@@ -37,7 +37,7 @@ class SortList{
         let obj={}
         let tipo=""
         obj=this.fieldObj.getById(id);
-        console.log("addToList",this.fieldObj,id);
+        //console.log("addToList",this.fieldObj,id);
         let btn=obj.idBoton;
         let pref="";
         if(document.getElementById(btn).innerHTML=="-") tipo="^";
@@ -80,7 +80,7 @@ class SortList{
         let obj;
         let obj1;
         let id;
-        console.log("restaurar",this.sortArr);
+        //console.log("restaurar",this.sortArr);
         this.sortArr.forEach( el=>{
             let id="";
 
@@ -89,7 +89,7 @@ class SortList{
             if(el[0]=="-"){
                 nb=el.substring(1);
             }
-            console.log("restaurar",this.fieldObj,el);
+            //console.log("restaurar",this.fieldObj,el);
             obj=this.fieldObj.getByName(nb);
 
 
@@ -130,7 +130,7 @@ class SorterTable{
     }
 
     exec(){
-        console.log("exec",this.dataArr)
+        //console.log("exec",this.dataArr)
         this.dataArr.sort(this.fieldSorter(this.sortList.sortArr));
         document.getElementById(this.tableName).innerHTML=this.fmostrar();
         this.sortList.restaurar()

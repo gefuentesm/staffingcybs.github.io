@@ -205,7 +205,7 @@ class AlarmView{
 }
 class SessionView{
     constructor(data,container){
-        console.log("data",data);
+        //console.log("data",data);
         this.sesiones=data;
         this.container=container;
         this.eachSession=new Map();
@@ -226,7 +226,7 @@ class SessionView{
             }
         })
 
-        console.log("EachSession",this.eachSession);
+        //console.log("EachSession",this.eachSession);
 
     }
     createView(){
@@ -359,7 +359,7 @@ class ProjView{
         var maxfase=0;
         var maxCantConsl=0;
         for(let i in arr){ 
-            //if(arr[i].proyecto==171) console.log("check break",cont,arr[i])
+            //if(arr[i].proyecto==171) //console.log("check break",cont,arr[i])
             if(rompe!=arr[i].proyecto){
                 //console.log("cont",rompe, cont);
                 if(cont>0){
@@ -436,7 +436,7 @@ class ProjView{
             maxDed[6]=maxDed[6]<arr[i].mjul?arr[i].mjul:maxDed[6];maxDed[7]=maxDed[7]<arr[i].mago?arr[i].mago:maxDed[7];
             maxDed[8]=maxDed[8]<arr[i].msep?arr[i].msep:maxDed[8];maxDed[9]=maxDed[9]<arr[i].moct?arr[i].moct:maxDed[9];
             maxDed[10]=maxDed[10]<arr[i].mnov?arr[i].mnov:maxDed[10];maxDed[11]=maxDed[11]<arr[i].mdic?arr[i].mdic:maxDed[11];
-            //if(arr[i].proyecto==171) console.log("no rompe",cont,arr[i].proyecto,totDed,tothrs)
+            //if(arr[i].proyecto==171) //console.log("no rompe",cont,arr[i].proyecto,totDed,tothrs)
         }
         //console.log("this.totalProj",this.totalProj)
     }
@@ -551,11 +551,11 @@ class ProjectFilterView{
         })
         
         const gerentes=this.gte.keys();
-        console.log("gte",this.gte,gerentes);
+        //console.log("gte",this.gte,gerentes);
         let gteArr=[]
  
         for (const x of this.gte.keys()) {
-            console.log("x",x);
+            //console.log("x",x);
             gteArr.push(x);
         }
         //lista_gerentes
@@ -575,7 +575,7 @@ class ProjectFilterView{
     filterByManager(){
         var manager = document.getElementById(this.container).value;
         var arr=this.gte.get(manager);
-        console.log("selected "+manager);
+        //console.log("selected "+manager);
         this.desMarkar();
         var classProjArr = document.getElementsByClassName("proyecto");
         if(manager=="Seleccione..."){
@@ -772,11 +772,11 @@ class PropertyView{
         for(let i=len;i>1;i--){
             document.getElementById("chng-table").deleteRow(i-1); 
         }
-        console.log("cleanChng",len,document.getElementById("chng-table"));
+        //console.log("cleanChng",len,document.getElementById("chng-table"));
     }
     showHistorial(){
         let hcArr= this.getHistoricData();
-        console.log("showHistorial",hcArr);
+        //console.log("showHistorial",hcArr);
         let rows="";
         let enc="<table class='paleBlueRows'><thead><tr><th>Nombre<br><button id='b1' onClick='ordena(1)'>-</botton></th><th>IdP<br><button id='b2' onClick='ordena(2)'>-</botton></th><th>Proyecto</th><th>Nuevas Hrs.</th><th>Orig.</th><th>Dif.</th><th>Acción</th></tr></thead><tbody>"
         let endEnc="</tbody></table>";
@@ -793,7 +793,7 @@ class PropertyView{
         var idpParam=firstParam[1];
         var fasePara=params[1];
         var mesParam=params[2];*/
-        console.log("mesParam",mesParam)
+        //console.log("mesParam",mesParam)
         bar.style.width="480px";
         bar.style.padding="4px";
         bar.style.marginLeft=(window.innerWidth-500)+"px"
@@ -821,7 +821,7 @@ class PropertyView{
                     let teamProp=dataArr[i].equipo;
                     for(let j in teamProp){
                         let onsite=teamProp[j].inOnSite==1?"Si":"No"
-                        console.log("mes",dataArr[i].mes);
+                        //console.log("mes",dataArr[i].mes);
                         let tot=projList.getMonStruct(teamProp[j].nombre,mesParam);
                         tabProperties=tabProperties+`<tr><td>${teamProp[j].nombre}</td><td ${tot>160?"Style='color:red'":""}>${Math.round( tot )}</td><td>${Math.round( teamProp[j].horasPlan)}</td><td>${Math.round(teamProp[j].original)}</td></tr>`
                     }
@@ -842,13 +842,13 @@ class PropertyView{
         let endEncab="</tbody></table><br><hr>";
         let rows="";
         /*chgArr.forEach(el=>{
-            console.log("chgArr el",el.equipo)
+            //console.log("chgArr el",el.equipo)
             let t=el.equipo;
             rows+=render.sendTableComp(el,t,"cambios_staff","","","","");
         });*/
         //console.log("chgArr",chgArr);
         if(chgArr.length>0){
-            console.log("chgArr",chgArr);
+            //console.log("chgArr",chgArr);
             rows+=render.sendTable(chgArr,"cambios_staff","","","","")+"</div>";
         }
         //console.log("rows",rows);
@@ -942,7 +942,7 @@ class StaffingView2{
                             cont.innerHTML+=aux;
                         }
                         //else
-                          //  console.log("staffing 0",o);
+                          //console.log("staffing 0",o);
                         //totDedic=projList.getTeamDedication(o.IDp,o.fase,o.mes);
                         //console.log("aqui da el error",`ref-${o.IDp}.${o.fase}.${o.mes}`);
                         //document.getElementById(`ref-${o.IDp}.${o.fase}.${o.mes}`).innerHTML=totDedic.toFixed(2);
@@ -966,7 +966,7 @@ class StaffingView2{
         */
         //let mesStruct=projList.getStructByMonth(m);
         var id="mes"+parseInt(m)+"totales";
-        console.log("mon",id);
+        //console.log("mon",id);
         var mon=document.getElementById(id);
         mon.innerHTML="";
         //var pers=mesStruct[m];
