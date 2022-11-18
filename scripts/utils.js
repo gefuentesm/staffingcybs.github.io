@@ -144,7 +144,8 @@ class Render{
                                 <input class="dedi" ${o.horasPlan>=160?'style="color:red"':''} readonly id="sp-${o.key}-${o.mes}" value="${o.horasPlan}">
                                 <input class="dedi" ${o.horasReal>=160?'style="color:red"':''} readonly id="spr-${o.key}-${o.mes}" value="${o.horasReal}">
                                 <span>%</span>
-                               </div>`;                
+                               </div>`
+                                                     
        let f8=(o)          => `<div id="t-${o.nombre}-${o.IDp}.${o.fase}.${o.mes}-${o.inOnSite}" draggable="true" class="card" ondragstart="util.drag(event)">
                                 <input type="text" name="nombre" class="name" readonly value="${o.nombre}">
                                 <input type="text" name="${o.nombre}" style="width:30px" id="id-${o.nombre}-${o.IDp}.${o.fase}.${o.mes}-${o.inOnSite}" onchange="tx_dedichange('${o.nombre}','${o.IDp}','${o.fase}','${o.mes}',${o.inOnSite})" value="${o.dedicacion}">

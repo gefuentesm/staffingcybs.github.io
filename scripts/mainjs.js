@@ -880,24 +880,23 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             show_StaffContainer();
             document.getElementById('contenido').style.display = "block";
         }
-        if(viewToOpen=="Project") {             
-            show_ProjContainer();
-            document.getElementById('container-project').style.display = "block";
+        if(viewToOpen=="Project") {        
+            alert("En desarrollo");     
+            //show_ProjContainer();
+            //document.getElementById('container-project').style.display = "block";
         }
-        if(viewToOpen=="People") {            
-            show_PeopleContainer();
-            //document.getElementById('container-p').style.display = "block";
-            //console.log("People",document.getElementById('container-p').style.display)
+        if(viewToOpen=="People") {   
+            alert("En desarrollo");          
+            //show_PeopleContainer();
         }
         if(viewToOpen=="Real") {            
-            //show_PeopleContainer();
-            //document.getElementById('container-project-real').style.display = "block";
-            if(projViewReal===undefined) alert("La data no ha terminado de cargar. Espere un momento")
+            alert("En desarrollo"); 
+            /*if(projViewReal===undefined) alert("La data no ha terminado de cargar. Espere un momento")
             else{
                 projViewReal.setContainerShow();
                 if(!projViewReal.previousCalledNoZero())
                     projViewReal.mostrarProyReal(0);
-            }
+            }*/
             //console.log("People",document.getElementById('container-project-real').style.display)
         }
     }

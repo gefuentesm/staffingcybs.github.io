@@ -978,8 +978,10 @@ class StaffingView2{
             if(value.horasPlan>GOODTHRESHOLD){
                 clase="bad";
             }                         
-            let obj={key:key,clase:"cardmini "+clase,mes:m,horasPlan:value.horasPlan,horasReal:value.horasReal}      
-            mon.innerHTML+=render.send(obj,"total_persona_mes");          
+            let obj={key:key,clase:"cardmini "+clase,mes:m,horasPlan:value.horasPlan,horasReal:value.horasReal}
+            if(obj.horasPlan>0 || obj.horasReal>0){
+                mon.innerHTML+=render.send(obj,"total_persona_mes");     
+            }           
         })
     }
     createMonStruct(){      
@@ -1001,7 +1003,8 @@ class StaffingView2{
                             clase="bad";
                         }                         
                         let obj={key:key,clase:"cardmini "+clase,mes:m,horasPlan:value.horasPlan,horasReal:value.horasReal}      
-                        mon.innerHTML+=render.send(obj,"total_persona_mes");          
+                        if(obj.horasPlan>0 || obj.horasReal>0)
+                            mon.innerHTML+=render.send(obj,"total_persona_mes");          
                     })
                 }
             }
@@ -1094,7 +1097,8 @@ class StaffingView{
                 clase="bad";
             }                         
             let obj={key:key,clase:"cardmini "+clase,mes:m,dedi:value.dedicacion}      
-            mon.innerHTML+=render.send(obj,"total_persona_mes");          
+            if(obj.horasPlan>0 || obj.horasReal>0)
+                mon.innerHTML+=render.send(obj,"total_persona_mes");          
         })
     }
     createMonStruct(){      
@@ -1114,7 +1118,7 @@ class StaffingView{
                         if(value.dedicacion>GOODTHRESHOLD){
                             clase="bad";
                         }                         
-                        let obj={key:key,clase:"cardmini "+clase,mes:m,dedi:value.dedicacion}      
+                        let obj={key:key,clase:"cardmini "+clase,mes:m,dedi:value.dedicacion}                              
                         mon.innerHTML+=render.send(obj,"total_persona_mes");          
                     })
                 }
