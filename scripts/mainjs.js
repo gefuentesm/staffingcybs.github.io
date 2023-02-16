@@ -1,10 +1,13 @@
 var globId=1;
 const GOODTHRESHOLD=160;
 //var INITIALMONTH=new Date().getMonth()+1; <-- esta es la correcta
-var INITIALMONTH=new Date().getMonth()-2;
+var INITIALMONTH=new Date().getMonth();
 //INITIALMONTH=INITIALMONTH==0?12:INITIALMONTH;
+
 var MONTHTOSHOW=21;
 var INITIALYEAR=new Date().getFullYear();
+INITIALYEAR=INITIALMONTH<0?INITIALYEAR-1:INITIALYEAR;
+INITIALMONTH=INITIALMONTH==-1?12:(INITIALMONTH==0?11:INITIALMONTH);
 var CURRYEAR=new Date().getFullYear();
 var YEARTOSHOW=new Date().getFullYear()+1;
 var CURRENTMONTH=new Date().getMonth()+1;
@@ -485,6 +488,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                     //console.log("asynGetFromDB",e);
                     document.getElementById("loader").style.display = "none"
                     alert("Error en la carga, intente de nuevo");
+                    console.log("loadStaff",e);
                 }
                 
             })
@@ -638,6 +642,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             //console.log("asynGetFromDB",e);
             document.getElementById("loader").style.display = "none"
             alert("Error en la carga, intente de nuevo");
+            console.log("convertAlternativeStaffData",e)
         }
     }
     function loadStaff1(){
@@ -665,12 +670,13 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                     document.getElementById("loader").style.display = "none";
                     document.getElementById("loader").style.visibility = "none";
                     alert("Error en la carga, intente de nuevo");
+                    console.log("loadStaff1",e)
                 }
                 
             })
             .catch(error=>{
                 document.getElementById("loader").style.visibility = "none";
-                console.log(error)
+                console.log(error);                
             })
     
     }

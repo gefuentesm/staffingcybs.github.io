@@ -659,14 +659,18 @@ class Calendario{
         var nombres = document.createElement("TR"); // el encabezado con los nombres de los meses
         nombres.setAttribute("id", "titulo");
         document.getElementById("tmeses").appendChild(nombres);
+        let topm=12
+        let yearadd=0;
         for(let i=INITIALMONTH;i<INITIALMONTH+MONTHTOSHOW;i++){
                 var z = document.createElement("TD");
                 
                 var numes=i-1;
-                if(i>12){
-                    numes=i-12-1;
-                    y=INITIALYEAR+1;
-                    //console.log(numes,titulo[numes]);
+                topm=i>12&&i<25?12:(i>24?24:0);
+                yearadd=i>24?2:1;
+                if(i>topm){
+                    numes=i-topm-1;
+                    y=INITIALYEAR+yearadd;
+                    console.log(i,numes,titulo[numes]);
                 }
                 var t = document.createTextNode(titulo[numes] +"-" + y);
                 z.appendChild(t);
@@ -678,8 +682,7 @@ class Calendario{
         for(let j=INITIALMONTH;j<INITIALMONTH+MONTHTOSHOW;j++){
                 var td = document.createElement("TD");
                 td.setAttribute("class", "totales");
-                var numes=j;
-                //if(j>12) numes=j-12-1
+                var numes=j;               
                 let butt = document.createElement("BUTTON");
                 butt.setAttribute("id","but-mes"+j);
                 let tbutt=document.createTextNode("Mostrar Todos");
@@ -721,7 +724,6 @@ class Calendario{
                 var td = document.createElement("TD");
                 td.setAttribute("class", "vacaciones");
                 var numes=j;
-                //if(j>12) numes=j-12-1
                 var div = document.createElement("DIV")
                 let titulodiv="mes"+numes+"vacaciones"
                 div.setAttribute("id", titulodiv);
@@ -917,8 +919,10 @@ class StaffingView2{
     createStaffingView(){
         for(let i=1;i<25;i++){
             var cont=document.getElementById("mes"+i);
+            console.log("createStaffingView-meses",i,cont)
             if(cont){
                 var totcont=document.getElementById("mes"+i+"totales");
+                
                 var aux="";
                 let totDedic=0;
                 cont.innerHTML="";
