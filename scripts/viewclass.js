@@ -666,11 +666,11 @@ class Calendario{
                 
                 var numes=i-1;
                 topm=i>12&&i<25?12:(i>24?24:0);
-                yearadd=i>24?2:1;
+                yearadd=i>12&&i<25?1:(i>24?2:0)
                 if(i>topm){
                     numes=i-topm-1;
                     y=INITIALYEAR+yearadd;
-                    console.log(i,numes,titulo[numes]);
+                    console.log(i,numes,titulo[numes],y,topm);
                 }
                 var t = document.createTextNode(titulo[numes] +"-" + y);
                 z.appendChild(t);
