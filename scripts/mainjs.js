@@ -1,7 +1,7 @@
 var globId=1;
 const GOODTHRESHOLD=160;
 //var INITIALMONTH=new Date().getMonth()+1; <-- esta es la correcta
-var INITIALMONTH=new Date().getMonth();
+var INITIALMONTH=new Date().getMonth()-1;
 //INITIALMONTH=INITIALMONTH==0?12:INITIALMONTH;
 
 var MONTHTOSHOW=21;
