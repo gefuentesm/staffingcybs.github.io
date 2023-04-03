@@ -163,7 +163,7 @@ class ProjList{
     }    
 
     createMesProjStruct(){
-        //console.log("createMesProjStruct-data",this.data)
+        console.log("createMesProjStruct-data",this.data)
         this.mesProjStruct=this.data;
 
     }
