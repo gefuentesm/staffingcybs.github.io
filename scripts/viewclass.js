@@ -1175,6 +1175,16 @@ class PeopleView{
           if(d.in_staffing==1)
             this.peopleArr.push(d);
       })
+      this.peopleArr.sort(function(a, b) {
+        if (a.usr < b.usr) {
+          return -1;
+        }
+        if (a.usr > b.usr) {
+          return 1;
+        }
+        return 0;
+      });
+      console.log(" peopleArr",this.peopleArr);
       this.container=container;
       this.containerGlob=containerGlob
     }
@@ -1201,7 +1211,7 @@ class PeopleView{
     }
     sumar(hcArr){
         const map1 = new Map();
-        var rompe=hcArr[0].nombre_persona;
+        var rompe=hcArr[0].usr;
         var tene=0.0
         var tfeb=0.0
         var tmar=0.0
@@ -1215,7 +1225,7 @@ class PeopleView{
         var tnov=0.0
         var tdic=0.0
         for(let i in hcArr){
-            if(rompe!=hcArr[i].nombre_persona){
+            if(rompe!=hcArr[i].usr){
                 map1.set(rompe,{ene:tene,feb:tfeb,mar:tmar,abr:tabr,may:tmay,jun:tjun,
                         jul:tjul,ago:tago,sep:tsep,oct:toct,nov:tnov,dic:tdic});
                 //console.log("total",rompe,tene,tfeb,tmar,map1);
@@ -1234,7 +1244,7 @@ class PeopleView{
                 toct=parseFloat(hcArr[i].pOct==null?0.0:hcArr[i].pOct)
                 tnov=parseFloat(hcArr[i].pNov==null?0.0:hcArr[i].pNov)
                 tdic=parseFloat(hcArr[i].pDic==null?0.0:hcArr[i].pDic)
-                rompe=hcArr[i].nombre_persona
+                rompe=hcArr[i].usr
             }else{
                 tene=tene+parseFloat(hcArr[i].pEne==null?0.0:hcArr[i].pEne)
                 tfeb=tfeb+parseFloat(hcArr[i].pFeb==null?0.0:hcArr[i].pFeb)
@@ -1267,15 +1277,18 @@ class PeopleView{
         var ind=0;
         var dataArr=[];
         for(let i in hcArr){
-            if(rompe!=hcArr[i].nombre_persona){
+            if(rompe!=hcArr[i].usr){
             //close break for example totals
             if(rompe==""){
                 ind=1;
-                rompe=hcArr[i].nombre_persona;
+                rompe=hcArr[i].usr;
             }
-            let obj=totales.get(hcArr[i].nombre_persona)
-            dataArr.push({nombre_persona:hcArr[i].nombre_persona,ind:0,proyecto:'',nb_proyecto:'',fase:'',pEne:obj.ene,pFeb:obj.feb,pMar:obj.mar,pAbr:obj.abr,pMay:obj.may,pJun:obj.jun,pJul:obj.jul,pAgo:obj.ago,pSep:obj.sep,pOct:obj.oct,pNov:obj.nov,pDic:obj.dic})
-            rompe=hcArr[i].nombre_persona;
+            let obj=totales.get(hcArr[i].usr)
+
+            console.log(" obj",obj,hcArr[i].usr,totales)
+            if(obj!==undefined)
+                dataArr.push({usr:hcArr[i].usr,ind:0,idProy:'',nb_proyecto:'',fase:'',pEne:obj.ene,pFeb:obj.feb,pMar:obj.mar,pAbr:obj.abr,pMay:obj.may,pJun:obj.jun,pJul:obj.jul,pAgo:obj.ago,pSep:obj.sep,pOct:obj.oct,pNov:obj.nov,pDic:obj.dic})
+            rompe=hcArr[i].usr;
             hcArr[i].ind=ind;
             //prepare next
             }
@@ -1297,7 +1310,7 @@ class PeopleView{
         let endEncabh="</tbody></table></div>";
         let rows="";
         //rows=render.sendTable(hcArr,"fact_personas","","","","");
-        //console.log("people",dataArr);
+        console.log("people",dataArr);
         rows=render.sendTable(dataArr,"fact_personas","","","","");
         let tab=document.getElementById(this.container)
         tab.innerHTML = rowHead+rows+endEncabh;

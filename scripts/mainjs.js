@@ -349,8 +349,9 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         //console.log("peopleView",peopleView);
         if(peopleView===undefined){
             document.getElementById("loader").style.display = ""
-            util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getfactpeoplemonthly`,myToken,myTime).then(function(fetchData){
-                //console.log("people view data",fetchData);
+            //`https://staffing-func.azurewebsites.net/api/getfactpeoplemonthly`
+            util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/gethorasplanreal`,myToken,myTime).then(function(fetchData){
+                console.log("people view data",fetchData);
                 peopleView = new PeopleView(fetchData,"container-people","container-p");
                 peopleView.renderView();
                 peopleView.setContainerShow();
@@ -892,8 +893,8 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             //document.getElementById('container-project').style.display = "block";
         }
         if(viewToOpen=="People") {   
-            alert("En desarrollo");          
-            //show_PeopleContainer();
+            //alert("En desarrollo");          
+            show_PeopleContainer();
         }
         if(viewToOpen=="Real") {            
             //alert("En desarrollo"); 

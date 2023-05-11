@@ -162,25 +162,25 @@ class Render{
                                 let travel=""
                                 let rowMo=new Map()
                                 if(o.ind==0)
-                                    btn_plus=`<button onclick="mostrarProy('${'h.'+o.nombre_persona}')">+</button>`;
+                                    btn_plus=`<button onclick="mostrarProy('${'h.'+o.usr}')">+</button>`;
                                 if(o.inOnSite==1)
                                     travel='<img src="image/avion.svg" width="18px">'
-                                rowMo.set(0,`<tr name="${o.ind==0?'o.'+o.nombre_persona:'h.'+o.nombre_persona}" class="${o.ind==0?'head-cell':''}" style="${o.ind==0?'':'display:none'}">
-                                    <td class="${o.ind==0?'head-cell-left':''}" >${btn_plus} ${o.nombre_persona} ${travel}</td>
-                                    <td class="${o.ind==0?'head-cell':''}" >${o.proyecto}-${o.nb_proyecto}</td>
+                                rowMo.set(0,`<tr name="${o.ind==0?'o.'+o.usr:'h.'+o.usr}" class="${o.ind==0?'head-cell':''}" style="${o.ind==0?'':'display:none'}">
+                                    <td class="${o.ind==0?'head-cell-left':''}" >${btn_plus} ${o.usr} ${travel}</td>
+                                    <td class="${o.ind==0?'head-cell':''}" >${o.idProy}-${o.nb_proyecto}</td>
                                     <td class="${o.ind==0?'head-cell':''}" >${o.fase}</td>`);
-                                rowMo.set(1,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.pEne)} >${o.pEne==null?0:(o.pEne*100).toFixed(2)+'%'}</td>`);
-                                rowMo.set(2,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.pFeb)}>${o.pFeb==null?0:(o.pFeb*100).toFixed(2)+'%'}</td>`);
-                                rowMo.set(3,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.pMar)}>${o.pMar==null?0:(o.pMar*100).toFixed(2)+'%'}</td>`);
-                                rowMo.set(4,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.pAbr)}>${o.pAbr==null?0:(o.pAbr*100).toFixed(2)+'%'}</td>`);
-                                rowMo.set(5,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.pMay)}>${o.pMay==null?0:(o.pMay*100).toFixed(2)+'%'}</td>`);
-                                rowMo.set(6,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.pJun)}>${o.pJun==null?0:(o.pJun*100).toFixed(2)+'%'}</td>`);
-                                rowMo.set(7,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.pJul)}>${o.pJul==null?0:(o.pJul*100).toFixed(2)+'%'}</td>`);
-                                rowMo.set(8,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.pAgo)}>${o.pAgo==null?0:(o.pAgo*100).toFixed(2)+'%'}</td>`);
-                                rowMo.set(9,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.pSep)}>${o.pSep==null?0:(o.pSep*100).toFixed(2)+'%'}</td>`);
-                                rowMo.set(10,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.pOct)}>${o.pOct==null?0:(o.pOct*100).toFixed(2)+'%'}</td>`);
-                                rowMo.set(11,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.pNov)}>${o.pNov==null?0:(o.pNov*100).toFixed(2)+'%'}</td>`);
-                                rowMo.set(12,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.pDic)}>${o.pDic==null?0:(o.pDic*100).toFixed(2)+'%'}</td>`);
+                                rowMo.set(1,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.pEne)} >${o.pEne==null?0:(o.pEne).toFixed(2)+'H'}</td>`);
+                                rowMo.set(2,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.pFeb)}>${o.pFeb==null?0:(o.pFeb).toFixed(2)+'H'}</td>`);
+                                rowMo.set(3,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.pMar)}>${o.pMar==null?0:(o.pMar).toFixed(2)+'H'}</td>`);
+                                rowMo.set(4,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.pAbr)}>${o.pAbr==null?0:(o.pAbr).toFixed(2)+'H'}</td>`);
+                                rowMo.set(5,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.pMay)}>${o.pMay==null?0:(o.pMay).toFixed(2)+'H'}</td>`);
+                                rowMo.set(6,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.pJun)}>${o.pJun==null?0:(o.pJun).toFixed(2)+'H'}</td>`);
+                                rowMo.set(7,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.pJul)}>${o.pJul==null?0:(o.pJul).toFixed(2)+'H'}</td>`);
+                                rowMo.set(8,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.pAgo)}>${o.pAgo==null?0:(o.pAgo).toFixed(2)+'H'}</td>`);
+                                rowMo.set(9,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.pSep)}>${o.pSep==null?0:(o.pSep).toFixed(2)+'H'}</td>`);
+                                rowMo.set(10,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.pOct)}>${o.pOct==null?0:(o.pOct).toFixed(2)+'H'}</td>`);
+                                rowMo.set(11,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.pNov)}>${o.pNov==null?0:(o.pNov).toFixed(2)+'H'}</td>`);
+                                rowMo.set(12,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.pDic)}>${o.pDic==null?0:(o.pDic).toFixed(2)+'H'}</td>`);
                                 let rows=rowMo.get(0);
                                 for(let m=INITIALMONTH;m<INITIALMONTH+MONTHTOSHOW;m++){
                                     if(m!=0)
@@ -261,13 +261,13 @@ class Render{
    }
    formatCell(valor){
         let v=valor==null?0:valor;
-        v=v*100;
+        //v=v*100;
         let rango=""
-        if(v<=30)
+        if(v<=80)
             rango="#b3b3ff"
-        else if(v>30 && v<=50)
+        else if(v>80 && v<=100)
             rango="#ffcc66"
-        else if(v>50 && v<=100)
+        else if(v>100 && v<=160)
             rango="#33cc33"
         else rango="#ff6699";
          
