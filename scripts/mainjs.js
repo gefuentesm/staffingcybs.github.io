@@ -622,7 +622,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         }
         //console.log("proyectos",proyectosArr);
         let fetchData={data:proyectosArr,msg:"ok"};
-        //console.log("fetchdata",fetchData);
+        console.log("fetchdata",fetchData);
         try{                    
             if(typeof fetchData.msg=="undefined")
                 msg="ok"
@@ -896,13 +896,13 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             //show_PeopleContainer();
         }
         if(viewToOpen=="Real") {            
-            alert("En desarrollo"); 
-            /*if(projViewReal===undefined) alert("La data no ha terminado de cargar. Espere un momento")
+            //alert("En desarrollo"); 
+            if(projViewReal===undefined) alert("La data no ha terminado de cargar. Espere un momento")
             else{
                 projViewReal.setContainerShow();
                 if(!projViewReal.previousCalledNoZero())
                     projViewReal.mostrarProyReal(0);
-            }*/
+            }
             //console.log("People",document.getElementById('container-project-real').style.display)
         }
     }

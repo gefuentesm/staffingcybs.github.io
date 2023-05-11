@@ -76,17 +76,19 @@ class ProjList{
     setChangeStruct(IDp,year,mes,nb,horasPlan){
         
         let existe=false;
+        let origin=0;
         if(mes>12)
             mes=mes-12;
         this.chngStruct.forEach((c)=>{
             //console.log("en el loop",c,c.IDp,IDp,c.IDp==IDp,c.nb,nb,c.nb==nb)
             if(c.IDp==IDp && c.nb==nb && c.mes==mes && c.year==year){
                 c.horasPlan=horasPlan;
+                origin=c.original;
                 existe=true;
             }
         });
         if(!existe){
-            let oChang={IDp:IDp,nb:nb,year:year,mes:mes,horasPlan:horasPlan};
+            let oChang={IDp:IDp,nb:nb,year:year,mes:mes,horasPlan:horasPlan,original:origin};
             this.chngStruct.push(oChang);
         }
         //console.log("setChangeStruct - nueva estructura",this.chngStruct)

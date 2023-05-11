@@ -143,6 +143,9 @@ class ProjViewReal{
         var arr=this.factprojmonthy;
         //console.log("mostrarProyReal",pproy,arr.length);
         let inHead=true;
+        let primera=true;
+        let projHead="";
+        let projBreak=0;
         for(let i in arr){     
             if(arr[i].idProy==pproy||pproy==0){
                 if(inHead){
@@ -158,8 +161,12 @@ class ProjViewReal{
                 }  
                 var tds=[];
                 var tdh="";
-                
-                tds.push(`<tr name="p.${arr[i].idProy}" ><td>${arr[i].idProy}</td><td>${arr[i].usr}</td><td>${arr[i].dura_plan_week?arr[i].dura_plan_week:0}</td><td>${arr[i].hrs_dedica_plan?arr[i].hrs_dedica_plan:0}</td><td>${(arr[i].inicio_mon?arr[i].inicio_mon.substring(0,10):'')}</td><td>${(arr[i].cierre_mon?arr[i].cierre_mon.substring(0,10):'')}</td>`)
+                if(arr[i].idProy!=projBreak){
+                    projHead=`<tr name="o.${arr[i].nb_proyecto}" ><td class="head-cell" colspan="4">${arr[i].idProy}-${arr[i].nb_proyecto}</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>`;
+                    //tds.push(`<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>`);
+                    projBreak=arr[i].idProy;
+                }
+                tds.push(`<tr name="p.${arr[i].idProy}" ><td>&nbsp;</td><td>${arr[i].usr}</td><td>${arr[i].dura_plan_week?arr[i].dura_plan_week:0}</td><td>${arr[i].hrs_dedica_plan?arr[i].hrs_dedica_plan:0}</td><td>${(arr[i].inicio_mon?arr[i].inicio_mon.substring(0,10):'')}</td><td>${(arr[i].cierre_mon?arr[i].cierre_mon.substring(0,10):'')}</td>`)
                 tds.push(`<td width='170px'${arr[i].pEne||arr[i].rEne?'class="cell1"':''}>${(arr[i].pEne?'<span class="plan">Plan:'+arr[i].pEne.toFixed(1)+'H</span>':'')}${(arr[i].rEne?'<div class="real">Real:'+arr[i].rEne.toFixed(1)+'H</div>':'')}</td>`);
                 tds.push(`<td width='170px'${arr[i].pFeb||arr[i].rFeb?'class="cell1"':''}>${(arr[i].pFeb?'<span class="plan">Plan:'+arr[i].pFeb.toFixed(1)+'H</span>':'')}${(arr[i].rFeb?'<div class="real">Real:'+arr[i].rFeb.toFixed(1)+'H</div>':'')}</td>`);
                 tds.push(`<td width='170px'${arr[i].pMar||arr[i].rMar?'class="cell1"':''}>${(arr[i].pMar?'<span class="plan">Plan:'+arr[i].pMar.toFixed(1)+'H</span>':'')}${(arr[i].rMar?'<div class="real">Real:'+arr[i].rMar.toFixed(1)+'H</div>':'')}</td>`);
@@ -175,8 +182,9 @@ class ProjViewReal{
                 tds.push(`<td width='170px'${arr[i].p_Ene||arr[i].r_Ene?'class="cell1"':''}>${(arr[i].p_Ene?'<span class="plan">Plan:'+arr[i].p_Ene.toFixed(1)+'H</span>':'')}${(arr[i].r_Ene?'<div class="real">Real:'+arr[i].r_Ene.toFixed(1)+'H</div>':'')}</td>`);
                 tds.push(`<td width='170px'${arr[i].p_Feb||arr[i].r_Feb?'class="cell1"':''}>${(arr[i].p_Feb?'<span class="plan">Plan:'+arr[i].p_Feb.toFixed(1)+'H</span>':'')}${(arr[i].r_Feb?'<div class="real">Real:'+arr[i].r_Feb.toFixed(1)+'H</div>':'')}</td>`);
                 tds.push(`<td width='170px'${arr[i].p_Mar||arr[i].r_Mar?'class="cell1"':''}>${(arr[i].p_Mar?'<span class="plan">Plan:'+arr[i].p_Mar.toFixed(1)+'H</span>':'')}${(arr[i].r_Mar?'<div class="real">Real:'+arr[i].r_Mar.toFixed(1)+'H</div>':'')}</td>`);
-                rows=rows+tdh+tds[0];
-                //console.log("data arr",arr[i],tds[0]);
+                rows=rows+tdh+projHead+tds[0];
+                projHead="";
+                console.log("data arr",arr[i],tds);
                 for(let j=INITIALMONTH;j<INITIALMONTH+MONTHTOSHOW;j++){
                     if(typeof tds[j]!="undefined" )
                         rows=rows+tds[j];
