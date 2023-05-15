@@ -162,11 +162,11 @@ class ProjViewReal{
                 var tds=[];
                 var tdh="";
                 if(arr[i].idProy!=projBreak){
-                    projHead=`<tr name="o.${arr[i].nb_proyecto}" ><td class="head-cell" colspan="4">${arr[i].idProy}-${arr[i].nb_proyecto}</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>`;
+                    projHead=`<tr name="o.${arr[i].nb_proyecto}" ><td class="head-cell-left" colspan="4"><button onclick="mostrarProyReal('p.${arr[i].idProy}')">+</button>${arr[i].idProy}-${arr[i].nb_proyecto}</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>`;
                     //tds.push(`<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>`);
                     projBreak=arr[i].idProy;
                 }
-                tds.push(`<tr name="p.${arr[i].idProy}" ><td>&nbsp;</td><td>${arr[i].usr}</td><td>${arr[i].dura_plan_week?arr[i].dura_plan_week:0}</td><td>${arr[i].hrs_dedica_plan?arr[i].hrs_dedica_plan:0}</td><td>${(arr[i].inicio_mon?arr[i].inicio_mon.substring(0,10):'')}</td><td>${(arr[i].cierre_mon?arr[i].cierre_mon.substring(0,10):'')}</td>`)
+                tds.push(`<tr name="p.${arr[i].idProy}" style="display:none"><td>&nbsp;</td><td>${arr[i].usr}</td><td>${arr[i].dura_plan_week?arr[i].dura_plan_week:0}</td><td>${arr[i].hrs_dedica_plan?arr[i].hrs_dedica_plan:0}</td><td>${(arr[i].inicio_mon?arr[i].inicio_mon.substring(0,10):'')}</td><td>${(arr[i].cierre_mon?arr[i].cierre_mon.substring(0,10):'')}</td>`)
                 tds.push(`<td width='170px'${arr[i].pEne||arr[i].rEne?'class="cell1"':''}>${(arr[i].pEne?'<span class="plan">Plan:'+arr[i].pEne.toFixed(1)+'H</span>':'')}${(arr[i].rEne?'<div class="real">Real:'+arr[i].rEne.toFixed(1)+'H</div>':'')}</td>`);
                 tds.push(`<td width='170px'${arr[i].pFeb||arr[i].rFeb?'class="cell1"':''}>${(arr[i].pFeb?'<span class="plan">Plan:'+arr[i].pFeb.toFixed(1)+'H</span>':'')}${(arr[i].rFeb?'<div class="real">Real:'+arr[i].rFeb.toFixed(1)+'H</div>':'')}</td>`);
                 tds.push(`<td width='170px'${arr[i].pMar||arr[i].rMar?'class="cell1"':''}>${(arr[i].pMar?'<span class="plan">Plan:'+arr[i].pMar.toFixed(1)+'H</span>':'')}${(arr[i].rMar?'<div class="real">Real:'+arr[i].rMar.toFixed(1)+'H</div>':'')}</td>`);

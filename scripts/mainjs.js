@@ -154,6 +154,9 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
     function mostrarProy(x){
         peopleView.mostrar(x)
     }
+    function mostrarProyReal(x){
+        projViewReal.mostrar(x)
+    }
     function mostrarDet(x){
         projView.mostrar(x);
     }
@@ -883,7 +886,8 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         
         evt.currentTarget.className += " active";
         //console.log(viewToOpen);
-        if(viewToOpen=="Staffing") {            
+        if(viewToOpen=="Staffing") {   
+            document.getElementById("team").style.display="block";         
             show_StaffContainer();
             document.getElementById('contenido').style.display = "block";
         }
@@ -895,11 +899,13 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         if(viewToOpen=="People") {   
             //alert("En desarrollo");          
             show_PeopleContainer();
+            document.getElementById("team").style.display="none";
         }
         if(viewToOpen=="Real") {            
             //alert("En desarrollo"); 
             if(projViewReal===undefined) alert("La data no ha terminado de cargar. Espere un momento")
             else{
+                document.getElementById("team").style.display="none";
                 projViewReal.setContainerShow();
                 if(!projViewReal.previousCalledNoZero())
                     projViewReal.mostrarProyReal(0);
