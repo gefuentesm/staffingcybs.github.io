@@ -184,7 +184,7 @@ class ProjViewReal{
                 tds.push(`<td width='170px'${arr[i].p_Mar||arr[i].r_Mar?'class="cell1"':''}>${(arr[i].p_Mar?'<span class="plan">Plan:'+arr[i].p_Mar.toFixed(1)+'H</span>':'')}${(arr[i].r_Mar?'<div class="real">Real:'+arr[i].r_Mar.toFixed(1)+'H</div>':'')}</td>`);
                 rows=rows+tdh+projHead+tds[0];
                 projHead="";
-                console.log("data arr",arr[i],tds);
+                //console.log("data arr",arr[i],tds);
                 for(let j=INITIALMONTH;j<INITIALMONTH+MONTHTOSHOW;j++){
                     if(typeof tds[j]!="undefined" )
                         rows=rows+tds[j];
@@ -877,6 +877,10 @@ class TeamView{
         this.data=data.data;
         this.container=container;
     }
+    buscarPorNombre = (nombre) => {
+        let consultor=this.data
+        return consultor.find((consultor) => consultor.name === nombre);
+    };
     show(){
         //teamStruct=fetchData.data
         var contenedor=document.getElementById(this.container);
@@ -946,7 +950,8 @@ class StaffingView2{
                 if(this.projList.getProjectByMonth(i)!==undefined)
                     //proyectosArr[i].forEach((o)=>{
                     this.projList.getProjectByMonth(i).forEach(o=>{
-                        if(o.inStaffing==1){
+                        if(o.inStaffing==1||o.Fase=="En Proceso"){
+                            if(o.inStaffing==0 && o.Fase=="En Proceso") console.log("en proceso inStaffing 0",o.IDp)
                             aux=render.send(o,"proyecto_calendarior");
                             var tw=`<div class="teamWrapper" id="w-${o.IDp}.${o.fase}.${o.mesi}" style="display: none;">`;
                             aux+=render.sendTableComp(o,o.equipo,"team_staffingr",tw,"</div>","","");
@@ -1212,22 +1217,36 @@ class PeopleView{
     sumar(hcArr){
         const map1 = new Map();
         var rompe=hcArr[0].usr;
-        var tene=0.0
-        var tfeb=0.0
-        var tmar=0.0
-        var tabr=0.0
-        var tmay=0.0
-        var tjun=0.0
-        var tjul=0.0
-        var tago=0.0
-        var tsep=0.0
-        var toct=0.0
-        var tnov=0.0
-        var tdic=0.0
+        let tene=0.0
+        let tfeb=0.0
+        let tmar=0.0
+        let tabr=0.0
+        let tmay=0.0
+        let tjun=0.0
+        let tjul=0.0
+        let tago=0.0
+        let tsep=0.0
+        let toct=0.0
+        let tnov=0.0
+        let tdic=0.0
+        let trene=0.0
+        let trfeb=0.0
+        let trmar=0.0
+        let trabr=0.0
+        let trmay=0.0
+        let trjun=0.0
+        let trjul=0.0
+        let trago=0.0
+        let trsep=0.0
+        let troct=0.0
+        let trnov=0.0
+        let trdic=0.0
         for(let i in hcArr){
             if(rompe!=hcArr[i].usr){
                 map1.set(rompe,{ene:tene,feb:tfeb,mar:tmar,abr:tabr,may:tmay,jun:tjun,
-                        jul:tjul,ago:tago,sep:tsep,oct:toct,nov:tnov,dic:tdic});
+                        jul:tjul,ago:tago,sep:tsep,oct:toct,nov:tnov,dic:tdic,
+                        rene:trene,rfeb:trfeb,rmar:trmar,rabr:trabr,rmay:trmay,rjun:trjun,
+                        rjul:trjul,rago:trago,rsep:trsep,roct:troct,rnov:trnov,rdic:trdic});
                 //console.log("total",rompe,tene,tfeb,tmar,map1);
                 tene=parseFloat(hcArr[i].pEne==null?0.0:hcArr[i].pEne)
                 tfeb=parseFloat(hcArr[i].pFeb==null?0.0:hcArr[i].pFeb)
@@ -1244,11 +1263,28 @@ class PeopleView{
                 toct=parseFloat(hcArr[i].pOct==null?0.0:hcArr[i].pOct)
                 tnov=parseFloat(hcArr[i].pNov==null?0.0:hcArr[i].pNov)
                 tdic=parseFloat(hcArr[i].pDic==null?0.0:hcArr[i].pDic)
+
+                trene=parseFloat(hcArr[i].rEne==null?0.0:hcArr[i].rEne)
+                trfeb=parseFloat(hcArr[i].rFeb==null?0.0:hcArr[i].rFeb)
+                trmar=parseFloat(hcArr[i].rMar==null?0.0:hcArr[i].rMar)  
+
+                trabr=parseFloat(hcArr[i].rAbr==null?0.0:hcArr[i].rAbr)
+                trmay=parseFloat(hcArr[i].rMay==null?0.0:hcArr[i].rMay)
+                trjun=parseFloat(hcArr[i].rJun==null?0.0:hcArr[i].rJun)
+
+                trjul=parseFloat(hcArr[i].rJul==null?0.0:hcArr[i].rJul)
+                trago=parseFloat(hcArr[i].rAgo==null?0.0:hcArr[i].rAgo)
+                trsep=parseFloat(hcArr[i].rSep==null?0.0:hcArr[i].rSep)
+
+                troct=parseFloat(hcArr[i].rOct==null?0.0:hcArr[i].rOct)
+                trnov=parseFloat(hcArr[i].rNov==null?0.0:hcArr[i].rNov)
+                trdic=parseFloat(hcArr[i].rDic==null?0.0:hcArr[i].rDic)
                 rompe=hcArr[i].usr
             }else{
                 tene=tene+parseFloat(hcArr[i].pEne==null?0.0:hcArr[i].pEne)
                 tfeb=tfeb+parseFloat(hcArr[i].pFeb==null?0.0:hcArr[i].pFeb)
                 tmar=tmar+parseFloat(hcArr[i].pMar==null?0.0:hcArr[i].pMar)
+
                 tabr= tabr+ parseFloat(hcArr[i].pAbr==null?0.0:hcArr[i].pAbr)
                 tmay= tmay+ parseFloat(hcArr[i].pMay==null?0.0:hcArr[i].pMay)
                 tjun= tjun+ parseFloat(hcArr[i].pJun==null?0.0:hcArr[i].pJun)
@@ -1260,10 +1296,28 @@ class PeopleView{
                 toct= toct+ parseFloat(hcArr[i].pOct==null?0.0:hcArr[i].pOct)
                 tnov= tnov+ parseFloat(hcArr[i].pNov==null?0.0:hcArr[i].pNov)
                 tdic= tdic+ parseFloat(hcArr[i].pDic==null?0.0:hcArr[i].pDic)
+
+                trene=trene+parseFloat(hcArr[i].rEne==null?0.0:hcArr[i].rEne)
+                trfeb=trfeb+parseFloat(hcArr[i].rFeb==null?0.0:hcArr[i].rFeb)
+                trmar=trmar+parseFloat(hcArr[i].rMar==null?0.0:hcArr[i].rMar) 
+
+                trabr=trabr+parseFloat(hcArr[i].rAbr==null?0.0:hcArr[i].rAbr)
+                trmay=trmay+parseFloat(hcArr[i].rMay==null?0.0:hcArr[i].rMay)
+                trjun=trjun+parseFloat(hcArr[i].rJun==null?0.0:hcArr[i].rJun)
+
+                trjul=trjul+parseFloat(hcArr[i].rJul==null?0.0:hcArr[i].rJul)
+                trago=trago+parseFloat(hcArr[i].rAgo==null?0.0:hcArr[i].rAgo)
+                trsep=trsep+parseFloat(hcArr[i].rSep==null?0.0:hcArr[i].rSep)
+
+                troct=troct+parseFloat(hcArr[i].rOct==null?0.0:hcArr[i].rOct)
+                trnov=trnov+parseFloat(hcArr[i].rNov==null?0.0:hcArr[i].rNov)
+                trdic=trdic+parseFloat(hcArr[i].rDic==null?0.0:hcArr[i].rDic)
             }
         }
         map1.set(rompe,{ene:tene,feb:tfeb,mar:tmar,abr:tabr,may:tmay,jun:tjun,
-                    jul:tjul,ago:tago,sep:tsep,oct:toct,nov:tnov,dic:tdic});
+                    jul:tjul,ago:tago,sep:tsep,oct:toct,nov:tnov,dic:tdic,
+                    rene:trene,rfeb:trfeb,rmar:trmar,rabr:trabr,rmay:trmay,rjun:trjun,
+                    rjul:trjul,rago:trago,rsep:trsep,roct:troct,rnov:trnov,rdic:trdic});
         //console.log("total",rompe,tene,tfeb,tmar,map1);
         return map1;
     }
@@ -1276,23 +1330,36 @@ class PeopleView{
         var rompe="";
         var ind=0;
         var dataArr=[];
+        let inTeam=false
         for(let i in hcArr){
             if(rompe!=hcArr[i].usr){
             //close break for example totals
-            if(rompe==""){
-                ind=1;
-                rompe=hcArr[i].usr;
-            }
-            let obj=totales.get(hcArr[i].usr)
+                inTeam=true;
+                if(teamView.buscarPorNombre(hcArr[i].usr)===undefined){
+                    console.log(" el usuario no existe",hcArr[i].usr);
+                    inTeam=false;
+                }
+                    
+                if(rompe==""){
+                    ind=1;
+                    rompe=hcArr[i].usr;
+                }
+                let obj=totales.get(hcArr[i].usr)
 
-            console.log(" obj",obj,hcArr[i].usr,totales)
-            if(obj!==undefined)
-                dataArr.push({usr:hcArr[i].usr,ind:0,idProy:'',nb_proyecto:'',fase:'',pEne:obj.ene,pFeb:obj.feb,pMar:obj.mar,pAbr:obj.abr,pMay:obj.may,pJun:obj.jun,pJul:obj.jul,pAgo:obj.ago,pSep:obj.sep,pOct:obj.oct,pNov:obj.nov,pDic:obj.dic})
-            rompe=hcArr[i].usr;
-            hcArr[i].ind=ind;
+                console.log(" obj",obj,hcArr[i].usr,totales)
+                if(obj!==undefined)
+                    dataArr.push({usr:hcArr[i].usr,ind:0,inTeam:inTeam,idProy:'',nb_proyecto:'',fase:'',pEne:obj.ene,pFeb:obj.feb,pMar:obj.mar,pAbr:obj.abr,pMay:obj.may,pJun:obj.jun,pJul:obj.jul,pAgo:obj.ago,pSep:obj.sep,pOct:obj.oct,pNov:obj.nov,pDic:obj.dic,rEne:obj.rene,rFeb:obj.rfeb,rMar:obj.rmar,rAbr:obj.rabr,rMay:obj.rmay,rJun:obj.rjun,rJul:obj.rjul,rAgo:obj.rago,rSep:obj.rsep,rOct:obj.roct,rNov:obj.rnov,rDic:obj.rdic})
+                rompe=hcArr[i].usr;
+                hcArr[i].ind=ind;
             //prepare next
             }
             hcArr[i].ind=ind;
+            inTeam=true;
+            if(teamView.buscarPorNombre(hcArr[i].usr)===undefined){
+                console.log(" el usuario no existe",hcArr[i].usr);
+                inTeam=false;
+            }
+            hcArr[i].inTeam=inTeam;
             //console.log(aux);
             dataArr.push(hcArr[i]);
             ind++;
