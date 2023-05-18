@@ -139,13 +139,18 @@ class Render{
                                 <td>${(el.total_week.toFixed(2))}</td>
                                 <td>${(el.calendar_week.toFixed(2))}</td>
                               </tr>`;            
-       let f7=(o)          => `<div class="${o.clase}">
+       let f7=(o)          => {
+                                let vac="";
+                                if(teamView.buscarPorNombre(o.key)===undefined){
+                                    vac="color:#F8F8F8;";
+                                }
+                                return `<div class="${o.clase}" style="${vac}">
                                 <span class="nb">${o.key}</span>
                                 <input class="dedi" ${o.horasPlan>=160?'style="color:red"':''} readonly id="sp-${o.key}-${o.mes}" value="${o.horasPlan}">
                                 <input class="dedi" ${o.horasReal>=160?'style="color:red"':''} readonly id="spr-${o.key}-${o.mes}" value="${o.horasReal}">
                                 <span>H</span>
                                </div>`
-                                                     
+                                }                      
        let f8=(o)          => `<div id="t-${o.nombre}-${o.IDp}.${o.fase}.${o.mes}-${o.inOnSite}" draggable="true" class="card" ondragstart="util.drag(event)">
                                 <input type="text" name="nombre" class="name" readonly value="${o.nombre}">
                                 <input type="text" name="${o.nombre}" style="width:30px" id="id-${o.nombre}-${o.IDp}.${o.fase}.${o.mes}-${o.inOnSite}" onchange="tx_dedichange('${o.nombre}','${o.IDp}','${o.fase}','${o.mes}',${o.inOnSite})" value="${o.dedicacion}">
@@ -170,18 +175,18 @@ class Render{
                                         <td class="${o.ind==0?'head-cell-left':''}" >${btn_plus} ${o.usr} ${travel}</td>
                                         <td class="${o.ind==0?'head-cell':''}" >${o.idProy}-${o.nb_proyecto}</td>
                                         <td class="${o.ind==0?'head-cell':''}" >${o.fase}</td>`);
-                                    rowMo.set(1,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rEne)} >${o.pEne==null?0.00:(o.pEne).toFixed(2)}H -(${o.rEne==null?0.00:(o.rEne).toFixed(2)}H )</td>`);
-                                    rowMo.set(2,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rFeb)}>${o.pFeb==null?0.00:(o.pFeb).toFixed(2)}H -( ${o.rFeb==null?0.00:(o.rFeb).toFixed(2)}H )</td>`);
-                                    rowMo.set(3,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rMar)}>${o.pMar==null?0.00:(o.pMar).toFixed(2)}H -( ${o.rMar==null?0.00:(o.rMar).toFixed(2)}H )</td>`);
-                                    rowMo.set(4,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rAbr)}>${o.pAbr==null?0:(o.pAbr).toFixed(2)}H -( ${o.rAbr==null?0.00:(o.rAbr).toFixed(2)}H )</td>`);
-                                    rowMo.set(5,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rMay)}>${o.pMay==null?0:(o.pMay).toFixed(2)}H -( ${o.rMay==null?0.00:(o.rMay).toFixed(2)}H )</td>`);
-                                    rowMo.set(6,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rJun)}>${o.pJun==null?0:(o.pJun).toFixed(2)}H -( ${o.rJun==null?0.00:(o.rJun).toFixed(2)}H )</td>`);
-                                    rowMo.set(7,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rJul)}>${o.pJul==null?0:(o.pJul).toFixed(2)}H -( ${o.rJul==null?0.00:(o.rJul).toFixed(2)}H )</td>`);
-                                    rowMo.set(8,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rAgo)}>${o.pAgo==null?0:(o.pAgo).toFixed(2)}H -( ${o.rAgo==null?0.00:(o.rAgo).toFixed(2)}H )</td>`);
-                                    rowMo.set(9,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rSep)}>${o.pSep==null?0:(o.pSep).toFixed(2)}H -( ${o.rSep==null?0.00:(o.rSep).toFixed(2)}H )</td>`);
-                                    rowMo.set(10,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rOct)}>${o.pOct==null?0:(o.pOct).toFixed(2)}H -( ${o.rOct==null?0.00:(o.rOct).toFixed(2)}H )</td>`);
-                                    rowMo.set(11,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rNov)}>${o.pNov==null?0:(o.pNov).toFixed(2)}H -( ${o.rNov==null?0.00:(o.rNov).toFixed(2)}H )</td>`);
-                                    rowMo.set(12,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rDic)}>${o.pDic==null?0:(o.pDic).toFixed(2)}H -( ${o.rDic==null?0.00:(o.rDic).toFixed(2)}H )</td>`);
+                                    rowMo.set(1,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rEne)} >${o.pEne==null?0.00:(o.pEne).toFixed(2)}H<br/>(${o.rEne==null?0.00:(o.rEne).toFixed(2)}H )</td>`);
+                                    rowMo.set(2,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rFeb)}>${o.pFeb==null?0.00:(o.pFeb).toFixed(2)}H<br/>( ${o.rFeb==null?0.00:(o.rFeb).toFixed(2)}H )</td>`);
+                                    rowMo.set(3,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rMar)}>${o.pMar==null?0.00:(o.pMar).toFixed(2)}H<br/>( ${o.rMar==null?0.00:(o.rMar).toFixed(2)}H )</td>`);
+                                    rowMo.set(4,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rAbr)}>${o.pAbr==null?0:(o.pAbr).toFixed(2)}H<br/>( ${o.rAbr==null?0.00:(o.rAbr).toFixed(2)}H )</td>`);
+                                    rowMo.set(5,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rMay)}>${o.pMay==null?0:(o.pMay).toFixed(2)}H<br/>( ${o.rMay==null?0.00:(o.rMay).toFixed(2)}H )</td>`);
+                                    rowMo.set(6,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rJun)}>${o.pJun==null?0:(o.pJun).toFixed(2)}H<br/>( ${o.rJun==null?0.00:(o.rJun).toFixed(2)}H )</td>`);
+                                    rowMo.set(7,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rJul)}>${o.pJul==null?0:(o.pJul).toFixed(2)}H<br/>( ${o.rJul==null?0.00:(o.rJul).toFixed(2)}H )</td>`);
+                                    rowMo.set(8,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rAgo)}>${o.pAgo==null?0:(o.pAgo).toFixed(2)}H<br/>( ${o.rAgo==null?0.00:(o.rAgo).toFixed(2)}H )</td>`);
+                                    rowMo.set(9,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rSep)}>${o.pSep==null?0:(o.pSep).toFixed(2)}H<br/>( ${o.rSep==null?0.00:(o.rSep).toFixed(2)}H )</td>`);
+                                    rowMo.set(10,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rOct)}>${o.pOct==null?0:(o.pOct).toFixed(2)}H<br/>( ${o.rOct==null?0.00:(o.rOct).toFixed(2)}H )</td>`);
+                                    rowMo.set(11,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rNov)}>${o.pNov==null?0:(o.pNov).toFixed(2)}H<br/>( ${o.rNov==null?0.00:(o.rNov).toFixed(2)}H )</td>`);
+                                    rowMo.set(12,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rDic)}>${o.pDic==null?0:(o.pDic).toFixed(2)}H<br/> ${o.rDic==null?0.00:(o.rDic).toFixed(2)}H )</td>`);
                                 
                                     let rows=rowMo.get(0);
                                     for(let m=INITIALMONTH;m<INITIALMONTH+MONTHTOSHOW;m++){
