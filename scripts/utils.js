@@ -203,6 +203,9 @@ class Render{
                                 if(v>0){
                                     vac="background-color:yellow;";
                                 }
+                                if(teamView.buscarPorNombre(arr.nombre)===undefined){
+                                    vac="color:red;";
+                                }
                                 //console.log("vacaciones",obj.mesi,arr.nombre,v);
                                 if(obj.mesi>CURRENTMONTH){
                                     horasReal=arr.avgReal;
