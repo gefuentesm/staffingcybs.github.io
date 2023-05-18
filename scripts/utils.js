@@ -175,18 +175,18 @@ class Render{
                                         <td class="${o.ind==0?'head-cell-left':''}" >${btn_plus} ${o.usr} ${travel}</td>
                                         <td class="${o.ind==0?'head-cell':''}" >${o.idProy}-${o.nb_proyecto}</td>
                                         <td class="${o.ind==0?'head-cell':''}" >${o.fase}</td>`);
-                                    rowMo.set(1,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rEne)} >${o.pEne==null?0.00:(o.pEne).toFixed(2)}H<br/>(${o.rEne==null?0.00:(o.rEne).toFixed(2)}H )</td>`);
-                                    rowMo.set(2,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rFeb)}>${o.pFeb==null?0.00:(o.pFeb).toFixed(2)}H<br/>( ${o.rFeb==null?0.00:(o.rFeb).toFixed(2)}H )</td>`);
-                                    rowMo.set(3,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rMar)}>${o.pMar==null?0.00:(o.pMar).toFixed(2)}H<br/>( ${o.rMar==null?0.00:(o.rMar).toFixed(2)}H )</td>`);
-                                    rowMo.set(4,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rAbr)}>${o.pAbr==null?0:(o.pAbr).toFixed(2)}H<br/>( ${o.rAbr==null?0.00:(o.rAbr).toFixed(2)}H )</td>`);
-                                    rowMo.set(5,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rMay)}>${o.pMay==null?0:(o.pMay).toFixed(2)}H<br/>( ${o.rMay==null?0.00:(o.rMay).toFixed(2)}H )</td>`);
-                                    rowMo.set(6,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rJun)}>${o.pJun==null?0:(o.pJun).toFixed(2)}H<br/>( ${o.rJun==null?0.00:(o.rJun).toFixed(2)}H )</td>`);
-                                    rowMo.set(7,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rJul)}>${o.pJul==null?0:(o.pJul).toFixed(2)}H<br/>( ${o.rJul==null?0.00:(o.rJul).toFixed(2)}H )</td>`);
-                                    rowMo.set(8,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rAgo)}>${o.pAgo==null?0:(o.pAgo).toFixed(2)}H<br/>( ${o.rAgo==null?0.00:(o.rAgo).toFixed(2)}H )</td>`);
-                                    rowMo.set(9,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rSep)}>${o.pSep==null?0:(o.pSep).toFixed(2)}H<br/>( ${o.rSep==null?0.00:(o.rSep).toFixed(2)}H )</td>`);
-                                    rowMo.set(10,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rOct)}>${o.pOct==null?0:(o.pOct).toFixed(2)}H<br/>( ${o.rOct==null?0.00:(o.rOct).toFixed(2)}H )</td>`);
-                                    rowMo.set(11,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rNov)}>${o.pNov==null?0:(o.pNov).toFixed(2)}H<br/>( ${o.rNov==null?0.00:(o.rNov).toFixed(2)}H )</td>`);
-                                    rowMo.set(12,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rDic)}>${o.pDic==null?0:(o.pDic).toFixed(2)}H<br/> ${o.rDic==null?0.00:(o.rDic).toFixed(2)}H )</td>`);
+                                    rowMo.set(1,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rEne,o.pEne)} >${o.pEne==null?0.00:(o.pEne).toFixed(2)}H<br/>(${o.rEne==null?0.00:(o.rEne).toFixed(2)}H )</td>`);
+                                    rowMo.set(2,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rFeb,o.pFeb)}>${o.pFeb==null?0.00:(o.pFeb).toFixed(2)}H<br/>( ${o.rFeb==null?0.00:(o.rFeb).toFixed(2)}H )</td>`);
+                                    rowMo.set(3,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rMar,o.pMar)}>${o.pMar==null?0.00:(o.pMar).toFixed(2)}H<br/>( ${o.rMar==null?0.00:(o.rMar).toFixed(2)}H )</td>`);
+                                    rowMo.set(4,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rAbr,o.pAbr)}>${o.pAbr==null?0:(o.pAbr).toFixed(2)}H<br/>( ${o.rAbr==null?0.00:(o.rAbr).toFixed(2)}H )</td>`);
+                                    rowMo.set(5,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rMay,o.pMay)}>${o.pMay==null?0:(o.pMay).toFixed(2)}H<br/>( ${o.rMay==null?0.00:(o.rMay).toFixed(2)}H )</td>`);
+                                    rowMo.set(6,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rJun,o.pJun)}>${o.pJun==null?0:(o.pJun).toFixed(2)}H<br/>( ${o.rJun==null?0.00:(o.rJun).toFixed(2)}H )</td>`);
+                                    rowMo.set(7,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rJul,o.pJul)}>${o.pJul==null?0:(o.pJul).toFixed(2)}H<br/>( ${o.rJul==null?0.00:(o.rJul).toFixed(2)}H )</td>`);
+                                    rowMo.set(8,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rAgo,o.pAgo)}>${o.pAgo==null?0:(o.pAgo).toFixed(2)}H<br/>( ${o.rAgo==null?0.00:(o.rAgo).toFixed(2)}H )</td>`);
+                                    rowMo.set(9,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rSep,o.pSep)}>${o.pSep==null?0:(o.pSep).toFixed(2)}H<br/>( ${o.rSep==null?0.00:(o.rSep).toFixed(2)}H )</td>`);
+                                    rowMo.set(10,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rOct,o.pOct)}>${o.pOct==null?0:(o.pOct).toFixed(2)}H<br/>( ${o.rOct==null?0.00:(o.rOct).toFixed(2)}H )</td>`);
+                                    rowMo.set(11,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rNov,o.pNov)}>${o.pNov==null?0:(o.pNov).toFixed(2)}H<br/>( ${o.rNov==null?0.00:(o.rNov).toFixed(2)}H )</td>`);
+                                    rowMo.set(12,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rDic,o.pDic)}>${o.pDic==null?0:(o.pDic).toFixed(2)}H<br/> ${o.rDic==null?0.00:(o.rDic).toFixed(2)}H )</td>`);
                                 
                                     let rows=rowMo.get(0);
                                     for(let m=INITIALMONTH;m<INITIALMONTH+MONTHTOSHOW;m++){
@@ -271,9 +271,13 @@ class Render{
        this.fm.set( "proyecto_calendarior",f13);
        this.fm.set( "lista_gerentes",f14);
    }
-   formatCell(valor){
+   formatCell(valor,valor1){
         let v=valor==null?0:valor;
+        let v1=valor1==null?0:valor1;
         //v=v*100;
+        if(v1>v){
+            v=v1;
+        }
         let rango=""
         if(v<=80)
             rango="#b3b3ff"

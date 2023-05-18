@@ -241,12 +241,14 @@
       width:120px;
   }
   .plan{
+    font-size: 10pt;
     padding:3px;
     color:green;
   }
   .real{
+    font-size: 10pt;
+    font-weight: bold;
     padding:3px;
-    background-color:darkviolet;
     color:white;
   }
   .horas-plan{

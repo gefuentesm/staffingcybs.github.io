@@ -133,6 +133,17 @@ class ProjViewReal{
             }else el.style.display="none";
         });
     }
+    formtRango=(v)=>{
+        let rango="";
+        if(v<=80)
+            rango="#b3b3ff"
+        else if(v>80 && v<=100)
+            rango="#ffcc66"
+        else if(v>100 && v<=160)
+            rango="#33cc33"
+        else rango="#ff6699";
+        return "style='color:"+rango+"'";
+    }
     mostrarProyReal(pproy){
         var contenedor = document.getElementById(this.tabContainer);
         var rowHead=``;
@@ -141,6 +152,7 @@ class ProjViewReal{
         contenedor.innerHTML=rowHead;
         var rows="";        
         var arr=this.factprojmonthy;
+
         //console.log("mostrarProyReal",pproy,arr.length);
         let inHead=true;
         let primera=true;
@@ -184,21 +196,21 @@ class ProjViewReal{
                     ex="color:red;"
                 }
                 tds.push(`<tr name="p.${arr[i].idProy}" style="display:none;"><td>&nbsp;</td><td style="${ex}">${arr[i].usr}</td><td>${arr[i].dura_plan_week?arr[i].dura_plan_week:0}</td><td>${arr[i].hrs_dedica_plan?arr[i].hrs_dedica_plan:0}</td><td>${(arr[i].inicio_mon?arr[i].inicio_mon.substring(0,10):'')}</td><td>${(arr[i].cierre_mon?arr[i].cierre_mon.substring(0,10):'')}</td>`)
-                tds.push(`<td width='170px'${arr[i].pEne||arr[i].rEne?'class="cell1"':''}>${(arr[i].pEne?'<span class="plan">Plan:'+arr[i].pEne.toFixed(1)+'H</span>':'')}${(arr[i].rEne?'<div class="real">Real:'+arr[i].rEne.toFixed(1)+'H</div>':'')}</td>`);
-                tds.push(`<td width='170px'${arr[i].pFeb||arr[i].rFeb?'class="cell1"':''}>${(arr[i].pFeb?'<span class="plan">Plan:'+arr[i].pFeb.toFixed(1)+'H</span>':'')}${(arr[i].rFeb?'<div class="real">Real:'+arr[i].rFeb.toFixed(1)+'H</div>':'')}</td>`);
-                tds.push(`<td width='170px'${arr[i].pMar||arr[i].rMar?'class="cell1"':''}>${(arr[i].pMar?'<span class="plan">Plan:'+arr[i].pMar.toFixed(1)+'H</span>':'')}${(arr[i].rMar?'<div class="real">Real:'+arr[i].rMar.toFixed(1)+'H</div>':'')}</td>`);
-                tds.push(`<td width='170px'${arr[i].pAbr||arr[i].rAbr?'class="cell1"':''}>${(arr[i].pAbr?'<span class="plan">Plan:'+arr[i].pAbr.toFixed(1)+'H</span>':'')}${(arr[i].rAbr?'<div class="real">Real:'+arr[i].rAbr.toFixed(1)+'H</div>':'')}</td>`);
-                tds.push(`<td width='170px'${arr[i].pMay||arr[i].rMay?'class="cell1"':''}>${(arr[i].pMay?'<span class="plan">Plan:'+arr[i].pMay.toFixed(1)+'H</span>':'')}${(arr[i].rMay?'<div class="real">Real:'+arr[i].rMay.toFixed(1)+'H</div>':'')}</td>`);
-                tds.push(`<td width='170px'${arr[i].pJun||arr[i].rJun?'class="cell1"':''}>${(arr[i].pJun?'<span class="plan">Plan:'+arr[i].pJun.toFixed(1)+'H</span>':'')}${(arr[i].rJun?'<div class="real">Real:'+arr[i].rJun.toFixed(1)+'H</div>':'')}</td>`);
-                tds.push(`<td width='170px'${arr[i].pJul||arr[i].rJul?'class="cell1"':''}>${(arr[i].pJul?'<span class="plan">Plan:'+arr[i].pJul.toFixed(1)+'H</span>':'')}${(arr[i].rJul?'<div class="real">Real:'+arr[i].rJul.toFixed(1)+'H</div>':'')}</td>`);
-                tds.push(`<td width='170px'${arr[i].pAgo||arr[i].rAgo?'class="cell1"':''}>${(arr[i].pAgo?'<span class="plan">Plan:'+arr[i].pAgo.toFixed(1)+'H</span>':'')}${(arr[i].rAgo?'<div class="real">Real:'+arr[i].rAgo.toFixed(1)+'H</div>':'')}</td>`);
-                tds.push(`<td width='170px'${arr[i].pSep||arr[i].rSep?'class="cell1"':''}>${(arr[i].pSep?'<span class="plan">Plan:'+arr[i].pSep.toFixed(1)+'H</span>':'')}${(arr[i].rSep?'<div class="real">Real:'+arr[i].rSep.toFixed(1)+'H</div>':'')}</td>`);
-                tds.push(`<td width='170px'${arr[i].pOct||arr[i].rOct?'class="cell1"':''}>${(arr[i].pOct?'<span class="plan">Plan:'+arr[i].pOct.toFixed(1)+'H</span>':'')}${(arr[i].rOct?'<div class="real">Real:'+arr[i].rOct.toFixed(1)+'H</div>':'')}</td>`);
-                tds.push(`<td width='170px'${arr[i].pNov||arr[i].rNov?'class="cell1"':''}>${(arr[i].pNov?'<span class="plan">Plan:'+arr[i].pNov.toFixed(1)+'H</span>':'')}${(arr[i].rNov?'<div class="real">Real:'+arr[i].rNov.toFixed(1)+'H</div>':'')}</td>`);
-                tds.push(`<td width='170px'${arr[i].pDic||arr[i].rDic?'class="cell1"':''}>${(arr[i].pDic?'<span class="plan">Plan:'+arr[i].pDic.toFixed(1)+'H</span>':'')}${(arr[i].rDic?'<div class="real">Real:'+arr[i].rDic.toFixed(1)+'H</div>':'')}</td>`);
-                tds.push(`<td width='170px'${arr[i].p_Ene||arr[i].r_Ene?'class="cell1"':''}>${(arr[i].p_Ene?'<span class="plan">Plan:'+arr[i].p_Ene.toFixed(1)+'H</span>':'')}${(arr[i].r_Ene?'<div class="real">Real:'+arr[i].r_Ene.toFixed(1)+'H</div>':'')}</td>`);
-                tds.push(`<td width='170px'${arr[i].p_Feb||arr[i].r_Feb?'class="cell1"':''}>${(arr[i].p_Feb?'<span class="plan">Plan:'+arr[i].p_Feb.toFixed(1)+'H</span>':'')}${(arr[i].r_Feb?'<div class="real">Real:'+arr[i].r_Feb.toFixed(1)+'H</div>':'')}</td>`);
-                tds.push(`<td width='170px'${arr[i].p_Mar||arr[i].r_Mar?'class="cell1"':''}>${(arr[i].p_Mar?'<span class="plan">Plan:'+arr[i].p_Mar.toFixed(1)+'H</span>':'')}${(arr[i].r_Mar?'<div class="real">Real:'+arr[i].r_Mar.toFixed(1)+'H</div>':'')}</td>`);
+                tds.push(`<td width='170px'${arr[i].pEne||arr[i].rEne?'class="cell1"':''}>${(arr[i].pEne?`<span class="plan" ${this.formtRango(arr[i].pEne)}>Plan:`+arr[i].pEne.toFixed(1)+'H</span>':'')}${(arr[i].rEne?`<div class="real" ${this.formtRango(arr[i].rEne)}>Real:`+arr[i].rEne.toFixed(1)+'H</div>':'')}</td>`);
+                tds.push(`<td width='170px'${arr[i].pFeb||arr[i].rFeb?'class="cell1"':''}>${(arr[i].pFeb?`<span class="plan"  ${this.formtRango(arr[i].pFeb)}>Plan:`+arr[i].pFeb.toFixed(1)+'H</span>':'')}${(arr[i].rFeb?`<div class="real" ${this.formtRango(arr[i].rFeb)}>Real:`+arr[i].rFeb.toFixed(1)+'H</div>':'')}</td>`);
+                tds.push(`<td width='170px'${arr[i].pMar||arr[i].rMar?'class="cell1"':''}>${(arr[i].pMar?`<span class="plan" ${this.formtRango(arr[i].pMar)}>Plan:`+arr[i].pMar.toFixed(1)+'H</span>':'')}${(arr[i].rMar?`<div class="real" ${this.formtRango(arr[i].rMar)}>Real:`+arr[i].rMar.toFixed(1)+'H</div>':'')}</td>`);
+                tds.push(`<td width='170px'${arr[i].pAbr||arr[i].rAbr?'class="cell1"':''}>${(arr[i].pAbr?`<span class="plan" ${this.formtRango(arr[i].pAbr)}>Plan:`+arr[i].pAbr.toFixed(1)+'H</span>':'')}${(arr[i].rAbr?`<div class="real" ${this.formtRango(arr[i].rAbr)}>Real:`+arr[i].rAbr.toFixed(1)+'H</div>':'')}</td>`);
+                tds.push(`<td width='170px'${arr[i].pMay||arr[i].rMay?'class="cell1"':''}>${(arr[i].pMay?`<span class="plan" ${this.formtRango(arr[i].pMay)}>Plan:`+arr[i].pMay.toFixed(1)+'H</span>':'')}${(arr[i].rMay?`<div class="real" ${this.formtRango(arr[i].rMay)}>Real:`+arr[i].rMay.toFixed(1)+'H</div>':'')}</td>`);
+                tds.push(`<td width='170px'${arr[i].pJun||arr[i].rJun?'class="cell1"':''}>${(arr[i].pJun?`<span class="plan" ${this.formtRango(arr[i].pJun)}>Plan:`+arr[i].pJun.toFixed(1)+'H</span>':'')}${(arr[i].rJun?`<div class="real" ${this.formtRango(arr[i].rJun)}>Real:`+arr[i].rJun.toFixed(1)+'H</div>':'')}</td>`);
+                tds.push(`<td width='170px'${arr[i].pJul||arr[i].rJul?'class="cell1"':''}>${(arr[i].pJul?`<span class="plan" ${this.formtRango(arr[i].pJul)}>Plan:`+arr[i].pJul.toFixed(1)+'H</span>':'')}${(arr[i].rJul?`<div class="real" ${this.formtRango(arr[i].rJul)}>Real:`+arr[i].rJul.toFixed(1)+'H</div>':'')}</td>`);
+                tds.push(`<td width='170px'${arr[i].pAgo||arr[i].rAgo?'class="cell1"':''}>${(arr[i].pAgo?`<span class="plan" ${this.formtRango(arr[i].pAgo)}>Plan:`+arr[i].pAgo.toFixed(1)+'H</span>':'')}${(arr[i].rAgo?`<div class="real" ${this.formtRango(arr[i].rAgo)}>Real:`+arr[i].rAgo.toFixed(1)+'H</div>':'')}</td>`);
+                tds.push(`<td width='170px'${arr[i].pSep||arr[i].rSep?'class="cell1"':''}>${(arr[i].pSep?`<span class="plan" ${this.formtRango(arr[i].pSep)}>Plan:`+arr[i].pSep.toFixed(1)+'H</span>':'')}${(arr[i].rSep?`<div class="real" ${this.formtRango(arr[i].rSep)}>Real:`+arr[i].rSep.toFixed(1)+'H</div>':'')}</td>`);
+                tds.push(`<td width='170px'${arr[i].pOct||arr[i].rOct?'class="cell1"':''}>${(arr[i].pOct?`<span class="plan" ${this.formtRango(arr[i].pOct)}>Plan:`+arr[i].pOct.toFixed(1)+'H</span>':'')}${(arr[i].rOct?`<div class="real" ${this.formtRango(arr[i].rOct)}>Real:`+arr[i].rOct.toFixed(1)+'H</div>':'')}</td>`);
+                tds.push(`<td width='170px'${arr[i].pNov||arr[i].rNov?'class="cell1"':''}>${(arr[i].pNov?`<span class="plan" ${this.formtRango(arr[i].pNov)}>Plan:`+arr[i].pNov.toFixed(1)+'H</span>':'')}${(arr[i].rNov?`<div class="real" ${this.formtRango(arr[i].rNov)}>Real:`+arr[i].rNov.toFixed(1)+'H</div>':'')}</td>`);
+                tds.push(`<td width='170px'${arr[i].pDic||arr[i].rDic?'class="cell1"':''}>${(arr[i].pDic?`<span class="plan" ${this.formtRango(arr[i].pDic)}>Plan:`+arr[i].pDic.toFixed(1)+'H</span>':'')}${(arr[i].rDic?`<div class="real" ${this.formtRango(arr[i].rDic)}>Real:`+arr[i].rDic.toFixed(1)+'H</div>':'')}</td>`);
+                tds.push(`<td width='170px'${arr[i].p_Ene||arr[i].r_Ene?'class="cell1"':''}>${(arr[i].p_Ene?`<span class="plan" ${this.formtRango(arr[i].p_Ene)}>Plan:`+arr[i].p_Ene.toFixed(1)+'H</span>':'')}${(arr[i].r_Ene?`<div class="real" ${this.formtRango(arr[i].r_Ene)}>Real:`+arr[i].r_Ene.toFixed(1)+'H</div>':'')}</td>`);
+                tds.push(`<td width='170px'${arr[i].p_Feb||arr[i].r_Feb?'class="cell1"':''}>${(arr[i].p_Feb?`<span class="plan" ${this.formtRango(arr[i].p_Feb)}>Plan:`+arr[i].p_Feb.toFixed(1)+'H</span>':'')}${(arr[i].r_Feb?`<div class="real" ${this.formtRango(arr[i].r_Feb)}>Real:`+arr[i].r_Feb.toFixed(1)+'H</div>':'')}</td>`);
+                tds.push(`<td width='170px'${arr[i].p_Mar||arr[i].r_Mar?'class="cell1"':''}>${(arr[i].p_Mar?`<span class="plan" ${this.formtRango(arr[i].p_Mar)}>Plan:`+arr[i].p_Mar.toFixed(1)+'H</span>':'')}${(arr[i].r_Mar?`<div class="real" ${this.formtRango(arr[i].r_Mar)}>Real:`+arr[i].r_Mar.toFixed(1)+'H</div>':'')}</td>`);
                 rows=rows+tdh+projHead+tds[0];
                 projHead="";
                 //console.log("data arr",arr[i],tds);
