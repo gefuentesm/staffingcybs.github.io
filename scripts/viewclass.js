@@ -1455,28 +1455,29 @@ class CrossRefView{
         let i=0;
         let th="<thead><tr style='width:120px'><th class='rotar'>Consultor</th><th>Total</th>";
         for (const [indice, valor] of proyMap.entries()) {
-            th+=`<th class="rotar" >${indice}-${valor.nb}</th>`
+            th+=`<th class="rotar" >${indice}-${valor.nb} &nbsp;&nbsp; Total:${this.crossObj.getHorasByProject(indice).toFixed(2)}</th>`
             i++;
         }
         th+="</tr></thead>";
         let tr="<tbody>"
+        console.log("consulArr buscando a zuleima",consulArr);
         for(let i=0;i<consulArr.length;i++){
-            if(this.team.buscarPorNombre(consulArr[i].usr)!==undefined){
-                tr+="<tr>";
-                tr+=`<td>${consulArr[i].usr}</td><td>${this.crossObj.getHorasByConsultor(consulArr[i].usr).toFixed(2)}</td>`;
-                //console.log("array",consulArr[i].projs,consulArr[i].projs.length)
-                //getHorasByConsultor
-                for (const [indice, valor] of proyMap.entries()){
-                    //let esta=this.buscarPosicion(consulArr[i].projs,indice);
-                    let hrs=this.crossObj.getHoras(indice,consulArr[i].usr)
-                    //console.log("pos",hrs,indice,consulArr[i].usr)
-                    if(hrs!=-1)
-                        tr+=`<td style="${this.colorear(hrs)};">${hrs}</td>`;
-                    else
-                        tr+="<td>&nbsp;</td>";
-                }
-                tr+="</tr>";
+            let no_esta=this.team.buscarPorNombre(consulArr[i].usr)===undefined?"color:red":"color:black"
+            tr+="<tr>";
+            tr+=`<td style="${no_esta}">${consulArr[i].usr}</td><td>${this.crossObj.getHorasByConsultor(consulArr[i].usr).toFixed(2)}</td>`;
+            //console.log("array",consulArr[i].projs,consulArr[i].projs.length)
+            //getHorasByConsultor
+            for (const [indice, valor] of proyMap.entries()){
+                //let esta=this.buscarPosicion(consulArr[i].projs,indice);
+                let hrs=this.crossObj.getHoras(indice,consulArr[i].usr)
+                //console.log("pos",hrs,indice,consulArr[i].usr)
+                if(hrs!=-1)
+                    tr+=`<td style="${this.colorear(hrs)};">${hrs}</td>`;
+                else
+                    tr+="<td>&nbsp;</td>";
             }
+            tr+="</tr>";
+            //}
         }
         tr+="</tbody>"
         let fecha=this.crossObj.getUltimaFechaRep();

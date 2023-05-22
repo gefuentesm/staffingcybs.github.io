@@ -394,6 +394,7 @@ class CrossReference{
         this.projs=new Map();
         this.createCrossRef();
         this.horasTxConsultor= this.createDedicacionTotal();
+        this.horasTxProject=this.createCargaTotal();
     }
     createDedicacionTotal(){
         const personHours = new Map();
@@ -409,8 +410,25 @@ class CrossReference{
         console.log("persona horas",personHours);
         return personHours;
     }
+    createCargaTotal(){
+        const projHours = new Map();
+        let projects=this.data;
+
+        projects.forEach(({ idProy, horas }) => {
+        if (projHours.has(idProy)) {
+            projHours.set(idProy, projHours.get(idProy) + horas);
+        } else {
+            projHours.set(idProy, horas);
+        }
+        });
+        console.log("proyecto horas",projHours);
+        return projHours;
+    }
     getHorasByConsultor(usr){
         return this.horasTxConsultor.get(usr);
+    }
+    getHorasByProject(prodid){
+        return this.horasTxProject.get(prodid);
     }
     getUltimaFechaRep(){
         return this.fechaObj.ultima_fecha.substring(0,10);
@@ -471,23 +489,27 @@ class CrossReference{
                 usrBreak=this.data[i].usr;
                 this.cross[this.data[i].usr]={}
             }
-            //console.log("entro",this.data[i].usr)
+            
+            //if(usrBreak=="Zuleima Silva"||i>155) console.log("entro",i,this.data[i].usr,this.data[i].idProy,this.projs.get(this.data[i].idProy))
             if(this.projs.get(this.data[i].idProy)===undefined)
                 this.projs.set(this.data[i].idProy,{nb:this.data[i].nb_proyecto,fase:this.data[i].fase});
             if(this.data[i].usr!=usrBreak){
                 //console.log("rompe",this.data[i].usr,usrBreak,proj)
                 this.crossArr.push({usr:usrBreak,projs:proj})
                 proj=[];
+                proj.push(this.data[i].idProy);
                 this.cross[this.data[i].usr]={}
                 this.cross[this.data[i].usr][this.data[i].idProy]=0;
                 usrBreak=this.data[i].usr;
+                if(i===157) console.log("rompe zuleima",i,this.data[i].usr,this.crossArr)
             }else{
                 proj.push(this.data[i].idProy);
                 //this.cross[this.data[i].usr]={}
                 this.cross[this.data[i].usr][this.data[i].idProy]=0;
             }
         }
-        //console.log("estructura cruzada",this.crossArr,this.cross,this.projs);
+        this.crossArr.push({usr:usrBreak,projs:proj})
+        console.log("estructura cruzada",this.crossArr,usrBreak);
     }
 
 }
