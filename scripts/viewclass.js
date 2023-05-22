@@ -1469,7 +1469,7 @@ class CrossRefView{
                 for (const [indice, valor] of proyMap.entries()){
                     //let esta=this.buscarPosicion(consulArr[i].projs,indice);
                     let hrs=this.crossObj.getHoras(indice,consulArr[i].usr)
-                    console.log("pos",hrs,indice,consulArr[i].usr)
+                    //console.log("pos",hrs,indice,consulArr[i].usr)
                     if(hrs!=-1)
                         tr+=`<td style="${this.colorear(hrs)};">${hrs}</td>`;
                     else
@@ -1479,6 +1479,10 @@ class CrossRefView{
             }
         }
         tr+="</tbody>"
+        let fecha=this.crossObj.getUltimaFechaRep();
+        let iniweek=this.crossObj.getSemanaDesde();
+        let finweek=this.crossObj.getSemanaHasta();
+        document.getElementById("periodCross").innerHTML=`(desde la semana: ${iniweek} hasta ${finweek}- última fecha ${fecha} )`
         document.getElementById(this.tablename).innerHTML=th+tr;
         
     }

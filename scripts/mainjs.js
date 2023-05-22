@@ -841,6 +841,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                 else
                     msg=fetchData.msg
                 if(msg=="ok"){
+                    console.log("crossreference data",fetchData)
                     crossRef=new CrossReference(fetchData);
                     crossRefView=new CrossRefView(crossRef,"container-project","tab-proj-01",teamView);
                 }

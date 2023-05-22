@@ -385,12 +385,23 @@ class HistoricChanges{
 class CrossReference{
     constructor(data){
         this.data=this.filterSoloProy(data); 
+        this.fechaObj=data.fecha[0];
+        console.log("objeto fecha",this.fechaObj);
         this.currentMonth=new Date().getMonth();
         this.previousMonth=this.currentMonth-1;
         this.cross={};
         this.crossArr=[];
         this.projs=new Map();
         this.createCrossRef();
+    }
+    getUltimaFechaRep(){
+        return this.fechaObj.ultima_fecha.substring(0,10);
+    }
+    getSemanaDesde(){
+        return this.fechaObj.semana_desde;
+    }
+    getSemanaHasta(){
+        return this.fechaObj.semana_hasta;
     }
     filterSoloProy(data){
         let arrayProy=data.data;
