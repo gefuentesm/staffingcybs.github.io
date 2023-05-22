@@ -1453,7 +1453,7 @@ class CrossRefView{
         let consulArr=this.crossObj.getCrossArr();
         let posicion = -1;
         let i=0;
-        let th="<thead><tr style='width:120px'><th class='rotar'>Consultor</th>";
+        let th="<thead><tr style='width:120px'><th class='rotar'>Consultor</th><th>Total</th>";
         for (const [indice, valor] of proyMap.entries()) {
             th+=`<th class="rotar" >${indice}-${valor.nb}</th>`
             i++;
@@ -1463,9 +1463,9 @@ class CrossRefView{
         for(let i=0;i<consulArr.length;i++){
             if(this.team.buscarPorNombre(consulArr[i].usr)!==undefined){
                 tr+="<tr>";
-                tr+=`<td>${consulArr[i].usr}</td>`;
+                tr+=`<td>${consulArr[i].usr}</td><td>${this.crossObj.getHorasByConsultor(consulArr[i].usr).toFixed(2)}</td>`;
                 //console.log("array",consulArr[i].projs,consulArr[i].projs.length)
-                //for(let j=0;j<consulArr[i].projs.length;j++){
+                //getHorasByConsultor
                 for (const [indice, valor] of proyMap.entries()){
                     //let esta=this.buscarPosicion(consulArr[i].projs,indice);
                     let hrs=this.crossObj.getHoras(indice,consulArr[i].usr)

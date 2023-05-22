@@ -393,6 +393,24 @@ class CrossReference{
         this.crossArr=[];
         this.projs=new Map();
         this.createCrossRef();
+        this.horasTxConsultor= this.createDedicacionTotal();
+    }
+    createDedicacionTotal(){
+        const personHours = new Map();
+        let projects=this.data;
+
+        projects.forEach(({ usr, horas }) => {
+        if (personHours.has(usr)) {
+            personHours.set(usr, personHours.get(usr) + horas);
+        } else {
+            personHours.set(usr, horas);
+        }
+        });
+        console.log("persona horas",personHours);
+        return personHours;
+    }
+    getHorasByConsultor(usr){
+        return this.horasTxConsultor.get(usr);
     }
     getUltimaFechaRep(){
         return this.fechaObj.ultima_fecha.substring(0,10);
