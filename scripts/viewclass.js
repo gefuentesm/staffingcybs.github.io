@@ -960,7 +960,7 @@ class StaffingView2{
     createStaffingView(){
         for(let i=1;i<25;i++){
             var cont=document.getElementById("mes"+i);
-            console.log("createStaffingView-meses",i,cont)
+            //console.log("createStaffingView-meses",i,cont)
             if(cont){
                 var totcont=document.getElementById("mes"+i+"totales");
                 
@@ -1411,4 +1411,75 @@ class PeopleView{
         let tab=document.getElementById(this.container)
         tab.innerHTML = rowHead+rows+endEncabh;
     } 
+}
+//tab-proj-01
+class CrossRefView{
+    constructor(crossObj,container,tablename,team){
+        this.crossObj=crossObj;
+        this.container=container;
+        this.tablename=tablename;
+        this.team=team;
+    }
+    setContainerHide(){
+        let content = document.getElementById(this.container);
+        content.style.display="none";
+    }
+    setContainerShow(){
+        let content = document.getElementById(this.container);
+        content.style.display="block";
+    }
+    buscarPosicion(projs,proyid){
+        let proyMap=this.crossObj.getProjMap();
+        let esta=false;
+        for(let j=0;j<projs.length;j++){
+            if(projs[j]==proyid){
+                esta=true;
+                break;
+            }
+        }
+        return esta;
+    }
+    colorear(v){
+        let color=""
+        if(v<=4) color="#b3b3ff"
+        else if(v>4 && v<=8) color="#ffcc66";
+        else if(v>8 && v<=16) color="#33cc33";
+        else if(v>16) color="#ff6699";
+        return "color:"+color;
+    }
+    showCrossRef(){
+        let proyMap=this.crossObj.getProjMap();
+
+        let consulArr=this.crossObj.getCrossArr();
+        let posicion = -1;
+        let i=0;
+        let th="<thead><tr style='width:120px'><th class='rotar'>Consultor</th>";
+        for (const [indice, valor] of proyMap.entries()) {
+            th+=`<th class="rotar" >${indice}-${valor.nb}</th>`
+            i++;
+        }
+        th+="</tr></thead>";
+        let tr="<tbody>"
+        for(let i=0;i<consulArr.length;i++){
+            if(this.team.buscarPorNombre(consulArr[i].usr)!==undefined){
+                tr+="<tr>";
+                tr+=`<td>${consulArr[i].usr}</td>`;
+                //console.log("array",consulArr[i].projs,consulArr[i].projs.length)
+                //for(let j=0;j<consulArr[i].projs.length;j++){
+                for (const [indice, valor] of proyMap.entries()){
+                    //let esta=this.buscarPosicion(consulArr[i].projs,indice);
+                    let hrs=this.crossObj.getHoras(indice,consulArr[i].usr)
+                    console.log("pos",hrs,indice,consulArr[i].usr)
+                    if(hrs!=-1)
+                        tr+=`<td style="${this.colorear(hrs)};">${hrs}</td>`;
+                    else
+                        tr+="<td>&nbsp;</td>";
+                }
+                tr+="</tr>";
+            }
+        }
+        tr+="</tbody>"
+        document.getElementById(this.tablename).innerHTML=th+tr;
+        
+    }
 }

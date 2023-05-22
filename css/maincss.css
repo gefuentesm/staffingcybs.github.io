@@ -74,7 +74,10 @@
       position: absolute;
       top: -9999px;
   }
-  
+  .rotar {
+    width:150px;
+    
+  }
   
   label[for="abrir-cerrar"] {
       cursor:pointer;
@@ -449,7 +452,8 @@
     font-size: 10px;
   }
   table.paleBlueRows tr:nth-child(even) {
-    background: #d3d3fc;
+    background:  #e6e6ff
+    ;
   }
   table.paleBlueRows thead {
     background: #9999ff;

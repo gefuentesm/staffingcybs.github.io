@@ -382,3 +382,83 @@ class HistoricChanges{
         //console.log("update data",this.Hdata);
     }
 }
+class CrossReference{
+    constructor(data){
+        this.data=this.filterSoloProy(data); 
+        this.currentMonth=new Date().getMonth();
+        this.previousMonth=this.currentMonth-1;
+        this.cross={};
+        this.crossArr=[];
+        this.projs=new Map();
+        this.createCrossRef();
+    }
+    filterSoloProy(data){
+        let arrayProy=data.data;
+        let soloProy = arrayProy.filter(function(arrayProy) {
+            return arrayProy.Project== "Categoría - Proyecto";
+          });
+        console.log("solo proyectos",soloProy);
+        return soloProy;
+    }
+    getProjMap(){
+        let p=this.projs
+        const sortedMap = new Map(
+            Array.from(p).sort((a, b) => parseInt(a) > parseInt(b) ? 1 : -1)
+          );
+        return sortedMap;//this.projs;
+    }
+    getCrossArr(){
+        return this.crossArr;
+    }
+    getHoras(proy,usr){
+        let horas=-1
+        for(let i=0;i<this.data.length;i++){
+            if(this.data[i].idProy==proy && this.data[i].usr==usr){
+                horas=this.data[i].horas;
+                break;
+            }
+        }
+        return horas;
+    }
+    createCrossRef(){
+        this.data.sort(function(a, b) {
+            if (a.usr < b.usr) {
+              return -1;
+            }
+            if (a.usr > b.usr) {
+              return 1;
+            }
+            return 0;
+        });
+        //console.log("ordenar por usuario",this.data)
+        /*  matriz["persona 1"]={}
+            matriz['persona 1']["65"]=20
+            matriz['persona 1']["101"]=0*/
+        let usrBreak=""
+        let proj=[];
+
+        for(let i=0;i<this.data.length;i++){
+            if(usrBreak=="") {
+                usrBreak=this.data[i].usr;
+                this.cross[this.data[i].usr]={}
+            }
+            //console.log("entro",this.data[i].usr)
+            if(this.projs.get(this.data[i].idProy)===undefined)
+                this.projs.set(this.data[i].idProy,{nb:this.data[i].nb_proyecto,fase:this.data[i].fase});
+            if(this.data[i].usr!=usrBreak){
+                //console.log("rompe",this.data[i].usr,usrBreak,proj)
+                this.crossArr.push({usr:usrBreak,projs:proj})
+                proj=[];
+                this.cross[this.data[i].usr]={}
+                this.cross[this.data[i].usr][this.data[i].idProy]=0;
+                usrBreak=this.data[i].usr;
+            }else{
+                proj.push(this.data[i].idProy);
+                //this.cross[this.data[i].usr]={}
+                this.cross[this.data[i].usr][this.data[i].idProy]=0;
+            }
+        }
+        //console.log("estructura cruzada",this.crossArr,this.cross,this.projs);
+    }
+
+}

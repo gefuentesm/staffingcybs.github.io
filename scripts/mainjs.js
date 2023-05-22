@@ -32,6 +32,8 @@ var peopleView;
 var vacationView;
 var userSession;
 var dateOfChanged;
+var crossRef;
+var crossRefView;
 titulo=["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
 var oHistField=new Field();
 oHistField.add(1,"b1","usr");
@@ -332,9 +334,13 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
     } 
     function show_ProjContainer(){
         document.getElementById("loader").style.display = ""
-        if(projView) {
+        /*if(projView) {
             projView.mostrarProyMonthly(0); 
             projView.setContainerShow();
+        }*/
+        if(crossRefView){
+            crossRefView.showCrossRef();
+            crossRefView.setContainerShow();
         }
         if(staffing) staffing.setContainerHide();
         if(peopleView) peopleView.setContainerHide();
@@ -343,6 +349,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
     function show_StaffContainer(){
         //document.getElementById("loader").style.display = ""
         if(projView) projView.setContainerHide();
+        if(crossRefView) crossRefView.setContainerHide();
         if(staffing) staffing.setContainerShow();
         if(peopleView) peopleView.setContainerHide();
         //document.getElementById("loader").style.display = "none"
@@ -360,11 +367,13 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                 peopleView.setContainerShow();
             })
             if(projView) projView.setContainerHide();
+            if(crossRefView) crossRefView.setContainerHide();
             if(staffing) staffing.setContainerHide();
             document.getElementById("loader").style.display = "none"
         }else{
             peopleView.setContainerShow();
             if(projView) projView.setContainerHide();
+            if(crossRefView) crossRefView.setContainerHide();
             if(staffing) staffing.setContainerHide();
         }
     }
@@ -756,7 +765,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                     }
                 })
                 //console.log("arrPru===",arrPru);
-            
+                
                 document.getElementById("loader").style.display = "none"                
             }
         })
@@ -822,7 +831,26 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             })        
             
 
-    }    
+    }   
+    function loadCrossRefData(){
+        var alarmView
+        util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getclocki4weeks`,myToken,myTime).then(function(fetchData){
+            //console.log("fetch data getProjectSummary",fetchData);
+                if(typeof fetchData.msg=="undefined")
+                    msg="ok"
+                else
+                    msg=fetchData.msg
+                if(msg=="ok"){
+                    crossRef=new CrossReference(fetchData);
+                    crossRefView=new CrossRefView(crossRef,"container-project","tab-proj-01",teamView);
+                }
+                
+            })
+            .catch(error=>{
+                document.getElementById("loader").style.visibility = "none";
+                console.log(error)
+            })  
+    } 
     async function  detailHistChange2Modal  (usr,id){
         //console.log("fetch data detailHistChange2Modal");
         let obj={idp:id,usr:usr,token:myToken,time:myTime}
@@ -892,8 +920,8 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             document.getElementById('contenido').style.display = "block";
         }
         if(viewToOpen=="Project") {        
-            alert("En desarrollo");     
-            //show_ProjContainer();
+            //alert("En desarrollo");     
+            show_ProjContainer();
             //document.getElementById('container-project').style.display = "block";
         }
         if(viewToOpen=="People") {   
@@ -935,7 +963,9 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                         
             loadConsultant();
 
-            loadAllProjects()
+            loadAllProjects();
+            
+            loadCrossRefData();
 
             loadProjectMonthly();
 
