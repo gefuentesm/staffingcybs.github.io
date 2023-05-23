@@ -180,13 +180,15 @@ class ProjViewReal{
                     projHead=`<tr name="o.${arr[i].nb_proyecto}" ><td class="head-cell-left" colspan="4"><button onclick="mostrarProyReal('p.${arr[i].idProy}')">+</button>${arr[i].idProy}-${arr[i].nb_proyecto}</td><td>${(arr[i].inicio_mon?arr[i].inicio_mon.substring(0,10):'')}</td><td>${(arr[i].cierre_mon?arr[i].cierre_mon.substring(0,10):'')}</td>`;
                     let feiniR=new Date(arr[i].inicio_mon.substring(0,8)+"01");
                     let fefinR=new Date(arr[i].cierre_mon.substring(0,10));
+                    //console.log("Rango fechas",arr[i].idProy,feiniR,fefinR)
                     bgc="";
                     if(arr[i].fase=="Propuesta Activa"||arr[i].fase=="SOW/Contrato") bgc="style='background-color:orange;'";
                     if(arr[i].fase=="Detenido") bgc="style='background-color:red;'";
                     for(let j=INITIALMONTH;j<INITIALMONTH+MONTHTOSHOW;j++){
-                        let fe2Test=new Date(CURRYEAR+"-"+j+"-01")
-                        if(fe2Test>=feiniR && fe2Test<=fefinR) periodo+=`<td class='head-cell-left' ${bgc} >&nbsp;</td>`;
-                        else periodo+="<td></td>";
+                        let fe2Test=j<=12?new Date(CURRYEAR+"-"+j+"-01"):new Date((CURRYEAR+1)+"-"+(j-12)+"-01")
+                        if(fe2Test>=feiniR && fe2Test<=fefinR){ 
+                            periodo+=`<td class='head-cell-left' ${bgc} >&nbsp;</td>`;
+                        }else periodo+="<td></td>";
                     } 
                     projHead+=periodo;
                     //tds.push(`<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>`);
@@ -1412,7 +1414,7 @@ class PeopleView{
         tab.innerHTML = rowHead+rows+endEncabh;
     } 
 }
-//tab-proj-01
+
 class CrossRefView{
     constructor(crossObj,container,tablename,team){
         this.crossObj=crossObj;
