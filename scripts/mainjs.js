@@ -361,7 +361,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             document.getElementById("loader").style.display = ""
             //`https://staffing-func.azurewebsites.net/api/getfactpeoplemonthly`
             util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/gethorasplanreal`,myToken,myTime).then(function(fetchData){
-                console.log("people view data",fetchData);
+                //console.log("people view data",fetchData);
                 peopleView = new PeopleView(fetchData,"container-people","container-p");
                 peopleView.renderView();
                 peopleView.setContainerShow();
@@ -501,7 +501,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                     //console.log("asynGetFromDB",e);
                     document.getElementById("loader").style.display = "none"
                     alert("Error en la carga, intente de nuevo");
-                    console.log("loadStaff",e);
+                    //console.log("loadStaff",e);
                 }
                 
             })
@@ -635,7 +635,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         }
         //console.log("proyectos",proyectosArr);
         let fetchData={data:proyectosArr,msg:"ok"};
-        console.log("fetchdata",fetchData);
+        //console.log("fetchdata",fetchData);
         try{                    
             if(typeof fetchData.msg=="undefined")
                 msg="ok"
@@ -841,7 +841,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                 else
                     msg=fetchData.msg
                 if(msg=="ok"){
-                    console.log("crossreference data",fetchData)
+                    //console.log("crossreference data",fetchData)
                     crossRef=new CrossReference(fetchData);
                     crossRefView=new CrossRefView(crossRef,"container-project","tab-proj-01",teamView);
                 }
@@ -966,11 +966,11 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
 
             loadAllProjects();
             
-            loadCrossRefData();
-
-            loadProjectMonthly();
+            //loadProjectMonthly();
 
             loadProjectPlanReal();
+
+            loadCrossRefData();
 
             loadProjectSummary();
            

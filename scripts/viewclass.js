@@ -707,7 +707,7 @@ class Calendario{
                 if(i>topm){
                     numes=i-topm-1;
                     y=INITIALYEAR+yearadd;
-                    console.log(i,numes,titulo[numes],y,topm);
+                    //console.log(i,numes,titulo[numes],y,topm);
                 }
                 var t = document.createTextNode(titulo[numes] +"-" + y);
                 z.appendChild(t);
@@ -1218,7 +1218,7 @@ class PeopleView{
         }
         return 0;
       });
-      console.log(" peopleArr",this.peopleArr);
+      //console.log(" peopleArr",this.peopleArr);
       this.container=container;
       this.containerGlob=containerGlob
     }
@@ -1375,7 +1375,7 @@ class PeopleView{
                 }
                 let obj=totales.get(hcArr[i].usr)
 
-                console.log(" obj",obj,hcArr[i].usr,totales)
+                //console.log(" obj",obj,hcArr[i].usr,totales)
                 if(obj!==undefined)
                     dataArr.push({usr:hcArr[i].usr,ind:0,inTeam:inTeam,idProy:'',nb_proyecto:'',fase:'',pEne:obj.ene,pFeb:obj.feb,pMar:obj.mar,pAbr:obj.abr,pMay:obj.may,pJun:obj.jun,pJul:obj.jul,pAgo:obj.ago,pSep:obj.sep,pOct:obj.oct,pNov:obj.nov,pDic:obj.dic,rEne:obj.rene,rFeb:obj.rfeb,rMar:obj.rmar,rAbr:obj.rabr,rMay:obj.rmay,rJun:obj.rjun,rJul:obj.rjul,rAgo:obj.rago,rSep:obj.rsep,rOct:obj.roct,rNov:obj.rnov,rDic:obj.rdic})
                 rompe=hcArr[i].usr;
@@ -1406,7 +1406,7 @@ class PeopleView{
         let endEncabh="</tbody></table></div>";
         let rows="";
         //rows=render.sendTable(hcArr,"fact_personas","","","","");
-        console.log("people",dataArr);
+        //console.log("people",dataArr);
         rows=render.sendTable(dataArr,"fact_personas","","","","");
         let tab=document.getElementById(this.container)
         tab.innerHTML = rowHead+rows+endEncabh;
@@ -1442,7 +1442,7 @@ class CrossRefView{
     colorear(v){
         let color=""
         if(v<=4) color="#b3b3ff"
-        else if(v>4 && v<=8) color="#ffcc66";
+        else if(v>4 && v<=8) color="#fbb831";
         else if(v>8 && v<=16) color="#33cc33";
         else if(v>16) color="#ff6699";
         return "color:"+color;
@@ -1460,7 +1460,7 @@ class CrossRefView{
         }
         th+="</tr></thead>";
         let tr="<tbody>"
-        console.log("consulArr buscando a zuleima",consulArr);
+        //console.log("consulArr buscando a zuleima",consulArr);
         for(let i=0;i<consulArr.length;i++){
             let no_esta=this.team.buscarPorNombre(consulArr[i].usr)===undefined?"color:red":"color:black"
             tr+="<tr>";
@@ -1472,7 +1472,7 @@ class CrossRefView{
                 let hrs=this.crossObj.getHoras(indice,consulArr[i].usr)
                 //console.log("pos",hrs,indice,consulArr[i].usr)
                 if(hrs!=-1)
-                    tr+=`<td style="${this.colorear(hrs)};">${hrs}</td>`;
+                    tr+=`<td style="${this.colorear(hrs)};"><b>${hrs}</b></td>`;
                 else
                     tr+="<td>&nbsp;</td>";
             }

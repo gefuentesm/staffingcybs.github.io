@@ -165,7 +165,7 @@ class ProjList{
     }    
 
     createMesProjStruct(){
-        console.log("createMesProjStruct-data",this.data)
+        //console.log("createMesProjStruct-data",this.data)
         this.mesProjStruct=this.data;
 
     }
@@ -386,7 +386,7 @@ class CrossReference{
     constructor(data){
         this.data=this.filterSoloProy(data); 
         this.fechaObj=data.fecha[0];
-        console.log("objeto fecha",this.fechaObj);
+        //console.log("objeto fecha",this.fechaObj);
         this.currentMonth=new Date().getMonth();
         this.previousMonth=this.currentMonth-1;
         this.cross={};
@@ -407,7 +407,7 @@ class CrossReference{
             personHours.set(usr, horas);
         }
         });
-        console.log("persona horas",personHours);
+        //console.log("persona horas",personHours);
         return personHours;
     }
     createCargaTotal(){
@@ -421,7 +421,7 @@ class CrossReference{
             projHours.set(idProy, horas);
         }
         });
-        console.log("proyecto horas",projHours);
+        //console.log("proyecto horas",projHours);
         return projHours;
     }
     getHorasByConsultor(usr){
@@ -444,7 +444,7 @@ class CrossReference{
         let soloProy = arrayProy.filter(function(arrayProy) {
             return arrayProy.Project== "Categoría - Proyecto";
           });
-        console.log("solo proyectos",soloProy);
+        //console.log("solo proyectos",soloProy);
         return soloProy;
     }
     getProjMap(){
@@ -501,7 +501,7 @@ class CrossReference{
                 this.cross[this.data[i].usr]={}
                 this.cross[this.data[i].usr][this.data[i].idProy]=0;
                 usrBreak=this.data[i].usr;
-                if(i===157) console.log("rompe zuleima",i,this.data[i].usr,this.crossArr)
+                //if(i===157) console.log("rompe zuleima",i,this.data[i].usr,this.crossArr)
             }else{
                 proj.push(this.data[i].idProy);
                 //this.cross[this.data[i].usr]={}
@@ -509,7 +509,7 @@ class CrossReference{
             }
         }
         this.crossArr.push({usr:usrBreak,projs:proj})
-        console.log("estructura cruzada",this.crossArr,usrBreak);
+        //console.log("estructura cruzada",this.crossArr,usrBreak);
     }
 
 }
