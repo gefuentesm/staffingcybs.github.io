@@ -1,3 +1,39 @@
+:root {
+  --color-sem-normal:#b3b3ff;
+  --color-sem-yellow: #fbb831;
+  --color-sem-green: #33cc33;
+  --color-sem-red:#ff6699;
+  --color-fase-detenido:#ff6699;
+  --color-fase-enproceso:#33cc33;
+  --color-fase-propuesta:#acac39;
+  --color-fase-sowcontrato:darkgreen;
+  --color-fase-cerrado:darkgray;
+  --color-fase-lead:lightgray;
+  --color-fase-facturado:lightblue;
+  --color-fase-leadsincont:#7d3636;
+  --color-fase-propnoacep:black;
+
+}
+.enproceso{
+    background-color: var(--color-fase-enproceso);
+    color:white;
+}
+.prop-activa{
+  background-color: var(--color-fase-propuesta);
+  color:white;
+}
+.sow-contrato{
+  background-color: var(--color-fase-sowcontrato);
+  color:white;
+}
+.detenido{
+  background-color: var(--color-fase-detenido);
+  color:white;
+}
+.lead{
+  background-color: var(--color-fase-lead);
+  color:white;
+}
 .tooltip {
   position: relative;
   display: inline-block;
@@ -55,7 +91,7 @@
     
     /* mouse over link */
     a:hover {
-      color: yellow;
+      color: silver;
     }
     
     /* selected link */

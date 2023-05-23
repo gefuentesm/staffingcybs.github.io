@@ -229,6 +229,9 @@ class Render{
                                
                                 let edo=obj.Fase;
                                 let color=(edo=='Propuesta Activa'?'darkorange':'#006080;');
+                                let clas=this.claseFase(edo);
+                                let ima=this.imageFase(edo);
+                                clas=clas==""?"":"class='"+clas+"'"
                                 let prop=edo.indexOf("Lead")>=0 ||edo.indexOf("Propuesta")>=0?"style='font-weight:normal;color:orange'":"style='font-weight:bold;'";
                                 let box="<label for='probable-"+obj.IDp+"'>Staffing:</label>  <input type='checkbox' checked='true' id='probable-"+obj.IDp+"-"+obj.mesi+"' name='probable-"+obj.IDp+"' onclick='probable(event,"+obj.mes+")'>"
                                 let tcheck=""
@@ -237,7 +240,7 @@ class Render{
                                 //console.log("check",box,tcheck,prop,edo.indexOf("Lead"),edo.indexOf("Propuesta"),edo);
                                 return `<div class="proyecto" id="${obj.IDp}.${obj.fase}.${obj.mesi}"  ondrop="staffing.drop(event)" ondragover="util.allowDrop(event)">
                                    
-                                   <a style="cursor: pointer;font-weight:bold;color:${color}" ${prop}  onclick="markar(${obj.IDp},${obj.mes})">${obj.IDp}-${obj.proyecto} </a>mes:${obj.mes}-${obj.year}-${obj.pais===null?'':obj.pais} 
+                                   <img src="image/${ima}"></img><a style="cursor: pointer;font-weight:bold;"   onclick="markar(${obj.IDp},${obj.mes})">${obj.IDp}-${obj.proyecto} </a>mes:${obj.mes}-${obj.year}-${obj.pais===null?'':obj.pais} 
                                    <div id="edit-${obj.IDp}-${obj.mes}" class="edit-block" style="display:none">${tcheck}
                                     <div>
                                         <span class="horas-plan" ${obj.totHorasPlan>0?'':'style="color:LightSlateGrey"'}>${obj.totHorasPlan.toFixed(2)}</span><span class="horas-real" ${obj.totHorasReal>0?'':'style="color:Gainsboro"'} > ${obj.totHorasReal.toFixed(2)}</span><span class="horas-plan" style="color:white;background-color:${(obj.totHorasPlan-obj.totHorasReal)<0?'red':'green'}"> ${(obj.totHorasPlan-obj.totHorasReal).toFixed(2)}</span>
@@ -271,6 +274,24 @@ class Render{
        this.fm.set( "proyecto_calendarior",f13);
        this.fm.set( "lista_gerentes",f14);
    }
+   imageFase(edo){
+        let klass=""
+        if(edo=="En Proceso") klass="edo-enproceso.svg";
+        else if(edo=="Propuesta Activa") klass="edo-propuesta.svg";
+        else if(edo=="SOW/Contrato") klass="edo-sowcontrato.svg";
+        else if(edo=="Detenido") klass="edo-detenido.svg";
+        else if(edo="Lead") klass="edo-lead.svg"
+        return klass;
+   }
+   claseFase(edo){
+        let klass=""
+        if(edo=="En Proceso") klass="enproceso";
+        else if(edo=="Propuesta Activa") klass="prop-activa";
+        else if(edo=="SOW/Contrato") klass="sow-contrato";
+        else if(edo=="Detenido") klass="detenido";
+        else if(edo="Lead") klass="lead"
+        return klass;
+   }
    formatCell(valor,valor1){
         let v=valor==null?0:valor;
         let v1=valor1==null?0:valor1;
@@ -280,14 +301,14 @@ class Render{
         }
         let rango=""
         if(v<=80)
-            rango="#b3b3ff"
+            rango="var(--color-sem-normal)"
         else if(v>80 && v<=100)
-            rango="#ffcc66"
+            rango="var(--color-sem-yellow)"
         else if(v>100 && v<=160)
-            rango="#33cc33"
-        else rango="#ff6699";
+            rango="var(--color-sem-green)"
+        else rango="var(--color-sem-red)";
          
-        return v==0?`style="background-color:white;color:#b3b3ff;"`:`style="background-color:${rango};"`;
+        return v==0?`style="background-color:white;color:var(--color-sem-normal);"`:`style="background-color:${rango};"`;
    }
    getArrDistict(arr,par){
         let b=""

@@ -1443,10 +1443,10 @@ class CrossRefView{
     }
     colorear(v){
         let color=""
-        if(v<=4) color="#b3b3ff"
-        else if(v>4 && v<=8) color="#fbb831";
-        else if(v>8 && v<=16) color="#33cc33";
-        else if(v>16) color="#ff6699";
+        if(v<=4) color="var(--color-sem-normal);"
+        else if(v>4 && v<=8) color="var(--color-sem-yellow)";
+        else if(v>8 && v<=16) color="var(--color-sem-green)";
+        else if(v>16) color="var(--color-sem-red)";
         return "color:"+color;
     }
     showCrossRef(){
