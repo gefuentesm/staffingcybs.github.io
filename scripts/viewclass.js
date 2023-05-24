@@ -1449,24 +1449,41 @@ class CrossRefView{
         else if(v>16) color="var(--color-sem-red)";
         return "color:"+color;
     }
+    claseFase(f){
+        let clasef="";
+        if(f=="En Proceso") clasef = "enproceso";
+        if(f=="Propuesta Activa") clasef = "prop-activa";
+        if(f=="SOW/Contrato") clasef = "sow-contrato";
+        if(f=="Detenido") clasef = "detenido";
+        if(f=="Lead") clasef = "lead";
+        if(f=="Propuesta no Aceptada")clasef="prop-no-acep";
+        if(f=="Cerrado")clasef="proycerrado";
+        if(f=="Cierre Interno")clasef="cierre-interno";
+        if(f=="Lead sin Continuidad")clasef="lead-sin";
+        return "class='"+clasef+"'";
+    }
     showCrossRef(){
         let proyMap=this.crossObj.getProjMap();
 
         let consulArr=this.crossObj.getCrossArr();
         let posicion = -1;
         let i=0;
-        let th="<thead><tr style='width:120px'><th class='rotar'>Consultor</th><th>Total</th>";
+        let th="<thead><tr style='width:120px'><th class='rotar'>Consultor</th>";
+        let tfase="<tr><td>&nbsp;</td>";
         for (const [indice, valor] of proyMap.entries()) {
             th+=`<th class="rotar" >${indice}-${valor.nb} &nbsp;&nbsp; Total:${this.crossObj.getHorasByProject(indice).toFixed(2)}</th>`
+            tfase+=`<td ${this.claseFase(proyectos.getFase(indice))}>${proyectos.getFase(indice)}</td>`;
+           // console.log("fase",indice,projList.getFaseProy(indice));
             i++;
         }
-        th+="</tr></thead>";
+        tfase+="</tr>";
+        th+="<th>Total</th><th>% utilización</th></tr>"+tfase+"</thead>";
         let tr="<tbody>"
         //console.log("consulArr buscando a zuleima",consulArr);
         for(let i=0;i<consulArr.length;i++){
             let no_esta=this.team.buscarPorNombre(consulArr[i].usr)===undefined?"color:red":"color:black"
             tr+="<tr>";
-            tr+=`<td style="${no_esta}">${consulArr[i].usr}</td><td>${this.crossObj.getHorasByConsultor(consulArr[i].usr).toFixed(2)}</td>`;
+            tr+=`<td style="${no_esta}">${consulArr[i].usr}</td>`;
             //console.log("array",consulArr[i].projs,consulArr[i].projs.length)
             //getHorasByConsultor
             for (const [indice, valor] of proyMap.entries()){
@@ -1478,7 +1495,7 @@ class CrossRefView{
                 else
                     tr+="<td>&nbsp;</td>";
             }
-            tr+="</tr>";
+            tr+=`<td>${this.crossObj.getHorasByConsultor(consulArr[i].usr).toFixed(2)}</td><td>${((this.crossObj.getHorasByConsultor(consulArr[i].usr).toFixed(2)/160)*100).toFixed(2)}%</td></tr>`;
             //}
         }
         tr+="</tbody>"

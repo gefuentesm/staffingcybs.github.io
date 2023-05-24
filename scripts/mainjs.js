@@ -33,6 +33,7 @@ var vacationView;
 var userSession;
 var dateOfChanged;
 var crossRef;
+var proyectos;
 var crossRefView;
 titulo=["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
 var oHistField=new Field();
@@ -644,7 +645,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             //console.log("msg staffing",msg);
             //projList.createMesStruct();
             if(msg=="ok"){
-                projList=new ProjList(fetchData);
+                projList=new ProjList(datareal,fetchData);
                 staffing=new StaffingView2("contenido","mes",projList);
                 staffing.createStaffingView();
                 staffing.createMonStruct();
@@ -831,7 +832,28 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             })        
             
 
+    }  
+    function loadProyectos(){
+        util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getproyectos`,myToken,myTime).then(function(fetchData){
+            //console.log("fetch data getProjectSummary",fetchData);
+                if(typeof fetchData.msg=="undefined")
+                    msg="ok"
+                else
+                    msg=fetchData.msg
+                if(msg=="ok"){
+                    proyectos=new Proyectos(fetchData.data);
+                    console.log("proyectos",proyectos);
+                }
+                
+            })
+            .catch(error=>{
+                document.getElementById("loader").style.visibility = "none";
+                console.log(error)
+            })        
+            
+
     }   
+
     function loadCrossRefData(){
         var alarmView
         util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getclocki4weeks`,myToken,myTime).then(function(fetchData){
@@ -959,6 +981,8 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             loadVacation();
 
             loadAlarms();
+            
+            loadProyectos();
             
             loadStaff1();
                         

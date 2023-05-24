@@ -12,6 +12,7 @@
   --color-fase-facturado:lightblue;
   --color-fase-leadsincont:#7d3636;
   --color-fase-propnoacep:black;
+  --color-fase-cierre-int:#9966ff;
 
 }
 .enproceso{
@@ -20,6 +21,18 @@
 }
 .prop-activa{
   background-color: var(--color-fase-propuesta);
+  color:white;
+}
+.proycerrado{
+  background-color: var(--color-fase-cerrado);
+  color:white;
+}
+.cierre-interno{
+  background-color: var(--color-fase-cierre-int);
+  color:white;
+}
+.prop-no-acep{
+  background-color: var(--color-fase-propnoacep);
   color:white;
 }
 .sow-contrato{
@@ -32,6 +45,10 @@
 }
 .lead{
   background-color: var(--color-fase-lead);
+  color:white;
+}
+.lead-sin{
+  background-color: var(--color-fase-leadsincont);
   color:white;
 }
 .tooltip {

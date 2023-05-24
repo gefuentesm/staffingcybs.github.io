@@ -1,6 +1,6 @@
 class ProjList{
     
-    constructor(data){
+    constructor(datareal,data){
         this.mesProjStruct=Array.from({length: 24}, function() { return []; });
         this.mesStruct=Array.from({length: 24}, function() { return []; });
         this.data=data.data;   
@@ -382,9 +382,33 @@ class HistoricChanges{
         //console.log("update data",this.Hdata);
     }
 }
+class Proyectos{
+    constructor(data){
+        console.log("data",data)
+        this.proyectos=data.data;
+        this.proyMap=this.createProyectosMap(data);
+    }
+    createProyectosMap(data){
+        let proyectMap=new Map();
+        let dataArr=data;
+        dataArr.forEach(({idProy,nb_proyecto,gerente,pais,Fase})=>{
+
+            if(!proyectMap.has(idProy)){
+                proyectMap.set(idProy,{nb_proyecto,gerente,pais,Fase});
+            }
+            
+        });
+        return proyectMap;
+    }
+    getFase(pid){
+        return this.proyMap.has(pid)?this.proyMap.get(pid).Fase:"";
+    }
+}
 class CrossReference{
     constructor(data){
+        this.resto=this.filtrarResto(data);
         this.data=this.filterSoloProy(data); 
+
         this.fechaObj=data.fecha[0];
         //console.log("objeto fecha",this.fechaObj);
         this.currentMonth=new Date().getMonth();
@@ -438,6 +462,24 @@ class CrossReference{
     }
     getSemanaHasta(){
         return this.fechaObj.semana_hasta;
+    }
+    filtrarResto(data){
+        let arrayProy=data.data;
+        let persSinA=new Map();
+        let Proy = arrayProy.filter(function(arrayProy) {
+            return arrayProy.Project!== "Categoría - Proyecto";
+          });
+        Proy.forEach(({ usr, project,horas }) => {
+            if(project!=="Categoría - Proyecto"){
+                if (persSinA.has(usr)) {
+                    persSinA.set(usr, persSinA.get(usr) + horas);
+                } else {
+                    persSinA.set(usr, horas);
+                }
+            }
+          });
+          console.log("resto",persSinA);
+        return persSinA;
     }
     filterSoloProy(data){
         let arrayProy=data.data;
