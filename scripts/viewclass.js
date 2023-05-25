@@ -1441,6 +1441,27 @@ class CrossRefView{
         }
         return esta;
     }
+    toDelProject2hide(){
+        this.crossObj.delProjectHide()
+    }
+    toShowProject(){
+        let arr=this.crossObj.getProjectHide();
+        arr.forEach(el=>{
+            let proy2hide=document.getElementsByName(el);
+            proy2hide.forEach(node => {
+                node.style.display="";
+              });
+        })
+    }
+    toHideProject(){
+        let arr=this.crossObj.getProjectHide();
+        arr.forEach(el=>{
+            let proy2hide=document.getElementsByName(el);
+            proy2hide.forEach(node => {
+                node.style.display="none"
+              });
+        })
+    }
     colorear(v){
         let color=""
         if(v<=4) color="var(--color-sem-normal);"
@@ -1462,6 +1483,16 @@ class CrossRefView{
         if(f=="Lead sin Continuidad")clasef="lead-sin";
         return "class='"+clasef+"'";
     }
+    showProjectSelector(){
+        let proyMap=this.crossObj.getProjMap();
+        let lbel=`<label for="proyectos" style="display:table-cell;vertical-align:middle">Selecciona proyecto</label>`
+        let sel=`<select id="hideProyectos" multiple name="hideProyectos[]">`
+        let opt="";
+        for (const [indice, valor] of proyMap.entries()) {
+            opt+= `<option value="${indice}">${indice}-${valor.nb}</option>`
+        }
+        return lbel+sel+opt+"</select>";
+    }
     showCrossRef(){
         let proyMap=this.crossObj.getProjMap();
 
@@ -1471,8 +1502,8 @@ class CrossRefView{
         let th="<thead><tr style='width:120px'><th class='rotar'>Consultor</th>";
         let tfase="<tr><td>&nbsp;</td>";
         for (const [indice, valor] of proyMap.entries()) {
-            th+=`<th class="rotar" >${indice}-${valor.nb} &nbsp;&nbsp; Total:${this.crossObj.getHorasByProject(indice).toFixed(2)}</th>`
-            tfase+=`<td ${this.claseFase(proyectos.getFase(indice))}>${proyectos.getFase(indice)}</td>`;
+            th+=`<th class="rotar" name="${indice}" >${indice}-${valor.nb} &nbsp;&nbsp; Total:${this.crossObj.getHorasByProject(indice).toFixed(2)}</th>`
+            tfase+=`<td name="${indice}" ${this.claseFase(proyectos.getFase(indice))}>${proyectos.getFase(indice)}</td>`;
            // console.log("fase",indice,projList.getFaseProy(indice));
             i++;
         }
@@ -1491,7 +1522,7 @@ class CrossRefView{
                 let hrs=this.crossObj.getHoras(indice,consulArr[i].usr)
                 //console.log("pos",hrs,indice,consulArr[i].usr)
                 if(hrs!=-1)
-                    tr+=`<td style="${this.colorear(hrs)};"><b>${hrs}</b></td>`;
+                    tr+=`<td name="${indice}" style="${this.colorear(hrs)};"><b>${hrs}</b></td>`;
                 else
                     tr+="<td>&nbsp;</td>";
             }
@@ -1504,6 +1535,5 @@ class CrossRefView{
         let finweek=this.crossObj.getSemanaHasta();
         document.getElementById("periodCross").innerHTML=`(desde la semana: ${iniweek} hasta ${finweek}- última fecha ${fecha} )`
         document.getElementById(this.tablename).innerHTML=th+tr;
-        
     }
 }

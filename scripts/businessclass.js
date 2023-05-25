@@ -405,10 +405,11 @@ class Proyectos{
     }
 }
 class CrossReference{
-    constructor(data){
+    constructor(data,proyectos){
         this.resto=this.filtrarResto(data);
         this.data=this.filterSoloProy(data); 
-
+        this.proyectos=proyectos;
+        //console.log("proyectos obj",proyectos);
         this.fechaObj=data.fecha[0];
         //console.log("objeto fecha",this.fechaObj);
         this.currentMonth=new Date().getMonth();
@@ -419,6 +420,7 @@ class CrossReference{
         this.createCrossRef();
         this.horasTxConsultor= this.createDedicacionTotal();
         this.horasTxProject=this.createCargaTotal();
+        this.proyectHide=[];
     }
     createDedicacionTotal(){
         const personHours = new Map();
@@ -466,6 +468,24 @@ class CrossReference{
     getSemanaHasta(){
         return this.fechaObj.semana_hasta;
     }
+    isProjectHide(idProy){
+        let hide=false;
+        this.proyectHide.forEach((el)=>{
+            if(el==idProy){
+                hide=true;
+            }
+        })
+        return hide;
+    }
+    delProjectHide(){
+        this.proyectHide=[];
+    }
+    getProjectHide(){
+        return this.proyectHide;
+    }
+    setProjectHide(idProy){
+        this.proyectHide.push(idProy);
+    }
     filtrarResto(data){
         let arrayProy=data.data;
         let persSinA=new Map();
@@ -495,9 +515,11 @@ class CrossReference{
     getProjMap(){
         let p=this.projs
         const sortedMap = new Map(
-            Array.from(p).sort((a, b) => parseInt(a) > parseInt(b) ? 1 : -1)
+            Array.from(p).sort((a, b) => parseInt(a[1].orden) > parseInt(b[1].orden) ? 1 : -1)
           );
-        return sortedMap;//this.projs;
+
+        console.log("projMap sorted",sortedMap);
+        return sortedMap;//this.projs;  
     }
     getCrossArr(){
         return this.crossArr;
@@ -511,6 +533,16 @@ class CrossReference{
             }
         }
         return horas;
+    }
+    ordenProyByFase(proyFase){
+        let orden=7;
+        if(proyFase=="Cierre Interno") orden=1;
+        if(proyFase=="En Proceso") orden=2;
+        if(proyFase=="SOW/Contrato") orden=3;
+        if(proyFase=="Propuesta Activa") orden=4;
+        if(proyFase=="Propuesta Detenida") orden=5;
+        if(proyFase=="Lead") orden=6;
+        return orden;
     }
     createCrossRef(){
         this.data.sort(function(a, b) {
@@ -536,8 +568,12 @@ class CrossReference{
             }
             
             //if(usrBreak=="Zuleima Silva"||i>155) console.log("entro",i,this.data[i].usr,this.data[i].idProy,this.projs.get(this.data[i].idProy))
-            if(this.projs.get(this.data[i].idProy)===undefined)
-                this.projs.set(this.data[i].idProy,{nb:this.data[i].nb_proyecto,fase:this.data[i].fase});
+            if(this.projs.get(this.data[i].idProy)===undefined){
+                let proyFase=this.proyectos.getFase(this.data[i].idProy);
+                let orden=this.ordenProyByFase(proyFase);
+                //console.log("orden",proyFase,orden);
+                this.projs.set(this.data[i].idProy,{nb:this.data[i].nb_proyecto,fase:this.data[i].fase,orden:orden});
+            }
             if(this.data[i].usr!=usrBreak){
                 //console.log("rompe",this.data[i].usr,usrBreak,proj)
                 this.crossArr.push({usr:usrBreak,projs:proj})
