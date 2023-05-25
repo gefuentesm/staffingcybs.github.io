@@ -448,6 +448,9 @@ class CrossReference{
         //console.log("proyecto horas",projHours);
         return projHours;
     }
+    getHorasRestoByConsultor(usr){
+        return this.resto.has(usr)?this.resto.get(usr):0;
+    }
     getHorasByConsultor(usr){
         return this.horasTxConsultor.get(usr);
     }

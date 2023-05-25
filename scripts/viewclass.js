@@ -1477,7 +1477,7 @@ class CrossRefView{
             i++;
         }
         tfase+="</tr>";
-        th+="<th>Total</th><th>% utilización</th></tr>"+tfase+"</thead>";
+        th+="<th>Total proyectos</th><th>% utilización</th><th>Total otros</th><th>% utilización</th></tr>"+tfase+"</thead>";
         let tr="<tbody>"
         //console.log("consulArr buscando a zuleima",consulArr);
         for(let i=0;i<consulArr.length;i++){
@@ -1495,7 +1495,7 @@ class CrossRefView{
                 else
                     tr+="<td>&nbsp;</td>";
             }
-            tr+=`<td>${this.crossObj.getHorasByConsultor(consulArr[i].usr).toFixed(2)}</td><td>${((this.crossObj.getHorasByConsultor(consulArr[i].usr).toFixed(2)/160)*100).toFixed(2)}%</td></tr>`;
+            tr+=`<td>${this.crossObj.getHorasByConsultor(consulArr[i].usr).toFixed(2)}</td><td>${((this.crossObj.getHorasByConsultor(consulArr[i].usr).toFixed(2)/160)*100).toFixed(2)}%</td><td>${this.crossObj.getHorasRestoByConsultor(consulArr[i].usr).toFixed(2)}</td><td>${((this.crossObj.getHorasRestoByConsultor(consulArr[i].usr)/160)*100).toFixed(2)}%</td></tr>`;
             //}
         }
         tr+="</tbody>"
