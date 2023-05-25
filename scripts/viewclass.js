@@ -912,6 +912,15 @@ class TeamView{
         let consultor=this.data
         return consultor.find((consultor) => consultor.name === nombre);
     };
+    faltan(arr){
+        let consultor=this.data;
+        let agregar=[];
+        consultor.forEach((el)=>{
+            if(arr.find((pers)=>pers.usr===el.name)===undefined)
+                agregar.push(el.name)
+        });
+        return agregar;
+    }
     show(){
         //teamStruct=fetchData.data
         var contenedor=document.getElementById(this.container);
@@ -1493,10 +1502,13 @@ class CrossRefView{
         }
         return lbel+sel+opt+"</select>";
     }
+
     showCrossRef(){
         let proyMap=this.crossObj.getProjMap();
 
         let consulArr=this.crossObj.getCrossArr();
+        let faltantes=this.team.faltan(consulArr);
+        console.log("faltantes",faltantes);
         let posicion = -1;
         let i=0;
         let th="<thead><tr style='width:120px'><th class='rotar'>Consultor</th>";
@@ -1529,7 +1541,12 @@ class CrossRefView{
             tr+=`<td>${this.crossObj.getHorasByConsultor(consulArr[i].usr).toFixed(2)}</td><td>${((this.crossObj.getHorasByConsultor(consulArr[i].usr).toFixed(2)/160)*100).toFixed(2)}%</td><td>${this.crossObj.getHorasRestoByConsultor(consulArr[i].usr).toFixed(2)}</td><td>${((this.crossObj.getHorasRestoByConsultor(consulArr[i].usr)/160)*100).toFixed(2)}%</td></tr>`;
             //}
         }
-        tr+="</tbody>"
+        let trfaltan="<tr>"
+        faltantes.forEach((el)=>{
+            trfaltan+=`<tr><td>${el}</td></tr>`
+        });
+        //console.log("trfaltan",trfaltan);
+        tr+=trfaltan+"</tbody>"
         let fecha=this.crossObj.getUltimaFechaRep();
         let iniweek=this.crossObj.getSemanaDesde();
         let finweek=this.crossObj.getSemanaHasta();
