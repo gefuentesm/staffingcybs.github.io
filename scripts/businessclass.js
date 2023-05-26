@@ -385,8 +385,10 @@ class HistoricChanges{
 class Proyectos{
     constructor(data){
         console.log("data",data)
-        this.proyectos=data.data;
+        this.proyectos=data;
         this.proyMap=this.createProyectosMap(data);
+        this.activeProj=this.createActiveProj();
+        //console.log("Active",this.activeProj);
     }
     createProyectosMap(data){
         let proyectMap=new Map();
@@ -399,6 +401,24 @@ class Proyectos{
             
         });
         return proyectMap;
+    }
+    createActiveProj(){
+        //,'SOW/Contrato','Detenido'
+        let arrayProy=[]
+        arrayProy= this.proyectos;
+        let proy = arrayProy.filter(function(arrayProy) {
+            return arrayProy.Fase== "En Proceso" ||
+                   arrayProy.Fase== "Cierre Interno" ||
+                   arrayProy.Fase== "Lead" ||
+                   arrayProy.Fase== "Propuesta Activa"||
+                   arrayProy.Fase== "SOW/Contrato" ||
+                   arrayProy.Fase== "Detenido";
+            
+          });
+          return proy;
+    }
+    getActiveProj(){
+        return this.activeProj;
     }
     getFase(pid){
         return this.proyMap.has(pid)?this.proyMap.get(pid).Fase:"";
@@ -418,6 +438,7 @@ class CrossReference{
         this.crossArr=[];
         this.projs=new Map();
         this.createCrossRef();
+        this.projex=this.addProjNonExisten();
         this.horasTxConsultor= this.createDedicacionTotal();
         this.horasTxProject=this.createCargaTotal();
         this.proyectHide=[];
@@ -454,10 +475,10 @@ class CrossReference{
         return this.resto.has(usr)?this.resto.get(usr):0;
     }
     getHorasByConsultor(usr){
-        return this.horasTxConsultor.get(usr);
+        return this.horasTxConsultor.has(usr)?this.horasTxConsultor.get(usr):0;
     }
     getHorasByProject(prodid){
-        return this.horasTxProject.get(prodid);
+        return this.horasTxProject.has(prodid)?this.horasTxProject.get(prodid):0;
     }
     getUltimaFechaRep(){
         return this.fechaObj.ultima_fecha.substring(0,10);
@@ -512,8 +533,23 @@ class CrossReference{
         //console.log("solo proyectos",soloProy);
         return soloProy;
     }
+    addProjNonExisten(){
+        let ap=this.proyectos.getActiveProj();
+        let p=this.projs;
+        let i=0;
+        ap.forEach((el)=>{
+            if(!p.has(el.idProy)){
+                let o=this.ordenProyByFase(el.Fase);
+                p.set(el.idProy,{nb:el.nb_proyecto,fase:el.Fase,orden:o});
+                i++;
+            }
+        })
+        console.log("no estaban",i,p);
+        return p;
+    }
     getProjMap(){
-        let p=this.projs
+        let p=this.projex;
+        
         const sortedMap = new Map(
             Array.from(p).sort((a, b) => parseInt(a[1].orden) > parseInt(b[1].orden) ? 1 : -1)
           );

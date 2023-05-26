@@ -1479,6 +1479,14 @@ class CrossRefView{
         else if(v>16) color="var(--color-sem-red)";
         return "color:"+color;
     }
+    semaforo(v){
+        let vv=(v/160)*100
+        let sem="";
+        if(vv<=80) sem="sem-amarillo.svg";
+        else if(vv>80 && vv<=100) sem="sem-verde.svg";
+        else if(vv>100 ) sem="sem-rojo.svg";
+        return `<img src="image/${sem}" width="12px"><img>`;
+    }
     claseFase(f){
         let clasef="";
         if(f=="En Proceso") clasef = "enproceso";
@@ -1519,8 +1527,8 @@ class CrossRefView{
            // console.log("fase",indice,projList.getFaseProy(indice));
             i++;
         }
-        tfase+="</tr>";
-        th+="<th>Total proyectos</th><th>% utilización</th><th>Total otros</th><th>% utilización</th></tr>"+tfase+"</thead>";
+        tfase+="<td style='color:black'>Total Proyectos</td><td style='color:black'>% Proyecto/total</td><td style='color:black'>% utilización Proyectos</td><td style='color:black'>Total Otra Categoías</td><td style='color:black'>% Otros/total</td><td style='color:black'>% utilización Otros</td></tr>";
+        th+="<th colspan='3'>Proyectos</th><th colspan='3'>Otros</th></tr>"+tfase+"</thead>";
         let tr="<tbody>"
         //console.log("consulArr buscando a zuleima",consulArr);
         for(let i=0;i<consulArr.length;i++){
@@ -1538,7 +1546,10 @@ class CrossRefView{
                 else
                     tr+="<td>&nbsp;</td>";
             }
-            tr+=`<td>${this.crossObj.getHorasByConsultor(consulArr[i].usr).toFixed(2)}</td><td>${((this.crossObj.getHorasByConsultor(consulArr[i].usr).toFixed(2)/160)*100).toFixed(2)}%</td><td>${this.crossObj.getHorasRestoByConsultor(consulArr[i].usr).toFixed(2)}</td><td>${((this.crossObj.getHorasRestoByConsultor(consulArr[i].usr)/160)*100).toFixed(2)}%</td></tr>`;
+            let horaConsul=this.crossObj.getHorasByConsultor(consulArr[i].usr);
+            let horasResto=this.crossObj.getHorasRestoByConsultor(consulArr[i].usr);
+            let totalHoras=horaConsul+horasResto;
+            tr+=`<td>${horaConsul.toFixed(2)}</td><td>${((horaConsul/totalHoras)*100).toFixed(2)}%</td><td>${this.semaforo(horaConsul)}${((horaConsul/160)*100).toFixed(2)}%</td><td>${horasResto.toFixed(2)}</td><td>${((horasResto/totalHoras)*100).toFixed(2)}%</td><td>${this.semaforo(horasResto)}${((horasResto/160)*100).toFixed(2)}%</td></tr>`;
             //}
         }
         let trfaltan="<tr>"
