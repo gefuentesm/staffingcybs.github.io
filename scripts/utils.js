@@ -146,8 +146,8 @@ class Render{
                                 }
                                 return `<div class="${o.clase}" style="${vac}">
                                 <span class="nb">${o.key}</span>
-                                <input class="dedi" ${o.horasPlan>=160?'style="color:red"':''} readonly id="sp-${o.key}-${o.mes}" value="${o.horasPlan}">
-                                <input class="dedi" ${o.horasReal>=160?'style="color:red"':''} readonly id="spr-${o.key}-${o.mes}" value="${o.horasReal}">
+                                <input class="dedi" ${o.horasPlan>=160?'style="color:red"':''} readonly id="sp-${o.key}-${o.mes}" value="${o.horasPlan.toFixed(1)}">
+                                <input class="dedi" ${o.horasReal>=160?'style="color:red"':''} readonly id="spr-${o.key}-${o.mes}" value="${o.horasReal.toFixed(1)}">
                                 <span>H</span>
                                </div>`
                                 }                      

@@ -167,7 +167,6 @@ class ProjList{
     createMesProjStruct(){
         //console.log("createMesProjStruct-data",this.data)
         this.mesProjStruct=this.data;
-
     }
     updateMesProjStruct(m){
         //console.log("updateMesProjStruct")
@@ -210,20 +209,20 @@ class ProjList{
 
                         let hreal=member.horasReal?parseFloat(member.horasReal):0.0;
                         p.horasPlan+=parseFloat(hplan);
-                        p.horasPlan=Math.round(p.horasPlan);
-                        p.horasReal+=Math.round(parseFloat(hreal));
+                        p.horasPlan=p.horasPlan;
+                        p.horasReal+=parseFloat(hreal);
 
                         people.set(member.nombre,p);
                     }else{
                         let hplan=member.horasPlan?parseFloat(member.horasPlan):0.0;
                         let hreal=member.horasReal?parseFloat(member.horasReal):0.0;  
-                        people.set(member.nombre,{horasPlan:Math.round(hplan),horasReal:Math.round(hreal)})
+                        people.set(member.nombre,{horasPlan:hplan,horasReal:hreal})
                     }
                 })
             });
             this.mesStruct[i]=people;
         }
-        //console.log("mesStruct",this.mesStruct);
+        console.log("mesStruct",this.mesStruct);
     }
     updateMesProjStructByImprob(IDp){
         let meses=[];
