@@ -1500,9 +1500,22 @@ class CrossRefView{
         if(f=="Lead sin Continuidad")clasef="lead-sin";
         return "class='"+clasef+"'";
     }
+    colorFase(f){
+        let color="";
+        if(f=="En Proceso") color = "var(--color-fase-enproceso)";
+        if(f=="Propuesta Activa") color = "var(--color-fase-propuesta)";
+        if(f=="SOW/Contrato") color = "var(--color-fase-sow-contrato)";
+        if(f=="Detenido") color = "var(--color-fase-detenido)";
+        if(f=="Lead") color = "var(--color-fase-lead)";
+        if(f=="Propuesta no Aceptada")color="var(--color-fase-propnoacep)";
+        if(f=="Cerrado")color="var(--color-fase-cerrado)";
+        if(f=="Cierre Interno")color="var(--color-fase-cierre-int)";
+        if(f=="Lead sin Continuidad")color="var(--color-fase-leadsincont)";
+        return "style='z-index:0;background-color:"+color+";'";
+    }
     showProjectSelector(){
         let proyMap=this.crossObj.getProjMap();
-        let lbel=`<label for="proyectos" style="display:table-cell;vertical-align:middle">Selecciona proyecto</label>`
+        let lbel=`<label for="proyectos" style="display:table-cell;vertical-align:middle">Selecciona los proyectos a ocultar - </label>`
         let sel=`<select id="hideProyectos" multiple name="hideProyectos[]">`
         let opt="";
         for (const [indice, valor] of proyMap.entries()) {
@@ -1516,25 +1529,25 @@ class CrossRefView{
 
         let consulArr=this.crossObj.getCrossArr();
         let faltantes=this.team.faltan(consulArr);
-        console.log("faltantes",faltantes);
+        //console.log("faltantes",faltantes);
         let posicion = -1;
         let i=0;
-        let th="<thead><tr style='width:120px'><th class='rotar'>Consultor</th>";
-        let tfase="<tr><td>&nbsp;</td>";
+        let th="<thead><tr ><th class='rotar' style='width:250px'>Consultor</th>";
+        let tfase="<tr><th style='z-index:2;width:250px'>&nbsp;</th>";
         for (const [indice, valor] of proyMap.entries()) {
             th+=`<th class="rotar" name="${indice}" >${indice}-${valor.nb} &nbsp;&nbsp; Total:${this.crossObj.getHorasByProject(indice).toFixed(2)}</th>`
-            tfase+=`<td name="${indice}" ${this.claseFase(proyectos.getFase(indice))}>${proyectos.getFase(indice)}</td>`;
+            tfase+=`<th  name="${indice}" ${this.colorFase(proyectos.getFase(indice))}>${proyectos.getFase(indice)}</th>`;
            // console.log("fase",indice,projList.getFaseProy(indice));
             i++;
         }
-        tfase+="<td style='color:black'>Total Proyectos</td><td style='color:black'>% Proyecto/total</td><td style='color:black'>% utilización Proyectos</td><td style='color:black'>Total Otra Categoías</td><td style='color:black'>% Otros/total</td><td style='color:black'>% utilización Otros</td></tr>";
-        th+="<th colspan='3'>Proyectos</th><th colspan='3'>Otros</th></tr>"+tfase+"</thead>";
+        tfase+="<th style='color:black;z-index:0'>Total Proyectos</th><th style='color:black;z-index:0'>% Proyecto/total</th><th style='color:black;z-index:0'>% utilización Proyectos</th><th style='color:black;z-index:0'>Total Otra Categoías</th><th style='color:black;z-index:0'>% Otros/total</th><th style='color:black;z-index:0'>% utilización Otros</th></tr>";
+        th+="<th colspan='3' style='z-index:2'>Proyectos</th><th colspan='3' style='z-index:2'>Otros</th></tr>"+tfase+"</thead>";
         let tr="<tbody>"
         //console.log("consulArr buscando a zuleima",consulArr);
         for(let i=0;i<consulArr.length;i++){
             let no_esta=this.team.buscarPorNombre(consulArr[i].usr)===undefined?"color:red":"color:black"
             tr+="<tr>";
-            tr+=`<td style="${no_esta}">${consulArr[i].usr}</td>`;
+            tr+=`<th style="${no_esta};width:250px">${consulArr[i].usr}</th>`;
             //console.log("array",consulArr[i].projs,consulArr[i].projs.length)
             //getHorasByConsultor
             for (const [indice, valor] of proyMap.entries()){
@@ -1542,9 +1555,9 @@ class CrossRefView{
                 let hrs=this.crossObj.getHoras(indice,consulArr[i].usr)
                 //console.log("pos",hrs,indice,consulArr[i].usr)
                 if(hrs!=-1)
-                    tr+=`<td name="${indice}" style="${this.colorear(hrs)};"><b>${hrs}</b></td>`;
+                    tr+=`<td name="${indice}" style="${this.colorear(hrs)};border-bottom:1px dotted #9966ff"><b>${hrs}</b></td>`;
                 else
-                    tr+="<td>&nbsp;</td>";
+                    tr+=`<td name="${indice}" style="border-bottom:1px dotted #9966ff">&nbsp;</td>`;
             }
             let horaConsul=this.crossObj.getHorasByConsultor(consulArr[i].usr);
             let horasResto=this.crossObj.getHorasRestoByConsultor(consulArr[i].usr);
@@ -1554,7 +1567,7 @@ class CrossRefView{
         }
         let trfaltan="<tr>"
         faltantes.forEach((el)=>{
-            trfaltan+=`<tr><td>${el}</td></tr>`
+            trfaltan+=`<tr><th style="width:250px">${el}</th></tr>`
         });
         //console.log("trfaltan",trfaltan);
         tr+=trfaltan+"</tbody>"

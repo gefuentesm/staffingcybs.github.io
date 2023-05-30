@@ -957,8 +957,12 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             document.getElementById('contenido').style.display = "block";
         }
         if(viewToOpen=="Project") {        
-            //alert("En desarrollo");     
-            show_ProjContainer();
+            //alert("En desarrollo"); 
+            if(proyectos===undefined) alert("La data no ha terminado de cargar. Espere unos segundos e intente de nuevo");
+            else{  
+                document.getElementById("team").style.display="none";  
+                show_ProjContainer();
+            }
             //document.getElementById('container-project').style.display = "block";
         }
         if(viewToOpen=="People") {   

@@ -1,38 +1,87 @@
 <!DOCTYPE html>
 <head>
     <style>
-.row {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100px;
+.table-scroll {
+  position: relative;
+  width:100%;
+  z-index: 1;
+  margin: auto;
+  overflow: auto;
+  height: 350px;
+}
+.table-scroll table {
+  width: 100%;
+  min-width: 1280px;
+  margin: auto;
+  border-collapse: separate;
+  border-spacing: 0;
 }
 
-.rectangle {
-  width: 100px;
-  height: 50px;
-  background-color: blue;
+.table-scroll th,
+.table-scroll td {
+  padding: 5px 10px;
+  background: #fff;
+  vertical-align: top;
 }
-.rotar {
-    transform: rotateZ(-90deg);
-    transform-origin: -120px;
-   
-  }
+.table-scroll thead th {
+  background: #333;
+  color: #fff;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+}
+
+
+
+.table-scroll th:first-child {
+  position: -webkit-sticky;
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: #ccc;
+}
+.table-scroll thead th:first-child {
+  z-index: 5;
+}
     </style>
+
 </head>
 <html>
     <body>
         <img src="image/edo-enproceso.svg" width="16px"></img>
         <img src="image/edo-propuesta.svg" width="16px"></img>
         <img src="image/edo-detenido.svg" width="16px"></img>
-        <table>
+        <div id="table-scroll" class="table-scroll">
+        <table >
           <thead>
             <tr>
-              <th class="rotar">esto es </th>
-              <th class="rotar">esto es una prueba</th>
-              <th class="rotar">esto es una prueba</th>
+              <th >col1 a fijar</th>
+              <th >col 2</th>
+              <th >col 3</th>
+              <th >col 4</th>
+              <th >col 5</th>
             </tr>
           </thead>
+          <tbody>
+            <tr>
+              <th >valores fijados</th>
+              <td >Esto es un contenido de prueba al estilo loren lipsum</th>
+              <td >col 3 Esto es un contenido de prueba al estilo loren lipsum</th>
+              <td >col 4 Esto es un contenido de prueba al estilo loren lipsum</th>
+              <td >col 5 Esto es un contenido de prueba al estilo loren lipsum</th>
+            </tr>
+            <tr>
+              <th >valores fijados 2</th>
+              <td >2. Esto es un contenido de prueba al estilo loren lipsum</th>
+              <td >2. col 3 Esto es un contenido de prueba al estilo loren lipsum</th>
+              <td >2. col 4 Esto es un contenido de prueba al estilo loren lipsum</th>
+              <td >2. col 5 Esto es un contenido de prueba al estilo loren lipsum</th>
+            </tr>
+          </tbody>
         </table>
+      </div>
+      <script>
+
+      </script>
     </body>
 </html>

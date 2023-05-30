@@ -308,7 +308,7 @@ class Render{
             rango="var(--color-sem-green)"
         else rango="var(--color-sem-red)";
          
-        return v==0?`style="background-color:white;color:var(--color-sem-normal);"`:`style="background-color:${rango};"`;
+        return v==0?`style="background-color:white;color:var(--color-sem-normal);padding:10px"`:`style="background-color:${rango};padding:10px"`;
    }
    getArrDistict(arr,par){
         let b=""
