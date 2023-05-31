@@ -991,7 +991,7 @@ class StaffingView2{
                     //proyectosArr[i].forEach((o)=>{
                     this.projList.getProjectByMonth(i).forEach(o=>{
                         if(o.inStaffing==1||o.Fase=="En Proceso"){
-                            if(o.inStaffing==0 && o.Fase=="En Proceso") console.log("en proceso inStaffing 0",o.IDp)
+                            //if(o.inStaffing==0 && o.Fase=="En Proceso") console.log("en proceso inStaffing 0",o.IDp)
                             aux=render.send(o,"proyecto_calendarior");
                             var tw=`<div class="teamWrapper" id="w-${o.IDp}.${o.fase}.${o.mesi}" style="display: none;">`;
                             aux+=render.sendTableComp(o,o.equipo,"team_staffingr",tw,"</div>","","");
@@ -1526,7 +1526,9 @@ class CrossRefView{
 
     showCrossRef(){
         let proyMap=this.crossObj.getProjMap();
-
+        let csv_head=[];
+        csv_head.push("Consultores");
+        let csv_filas=[];
         let consulArr=this.crossObj.getCrossArr();
         let faltantes=this.team.faltan(consulArr);
         //console.log("faltantes",faltantes);
@@ -1535,9 +1537,10 @@ class CrossRefView{
         let th="<thead><tr ><th class='rotar' style='width:250px'>Consultor</th>";
         let tfase="<tr><th style='z-index:2;width:250px'>&nbsp;</th>";
         for (const [indice, valor] of proyMap.entries()) {
-            th+=`<th class="rotar" name="${indice}" >${indice}-${valor.nb} &nbsp;&nbsp; Total:${this.crossObj.getHorasByProject(indice).toFixed(2)}</th>`
+            th+=`<th class="rotar" name="${indice===null?0:indice}" >${indice===null?"":indice}-${valor.nb===null?"":valor.nb} &nbsp;&nbsp; Total:${this.crossObj.getHorasByProject(indice).toFixed(2)}</th>`
             tfase+=`<th  name="${indice}" ${this.colorFase(proyectos.getFase(indice))}>${proyectos.getFase(indice)}</th>`;
-           // console.log("fase",indice,projList.getFaseProy(indice));
+            csv_head.push(indice+"-"+valor.nb+" total:"+this.crossObj.getHorasByProject(indice).toFixed(2))
+            //console.log("fase",indice,projList.getFaseProy(indice));
             i++;
         }
         tfase+="<th style='color:black;z-index:0'>Total Proyectos</th><th style='color:black;z-index:0'>% Proyecto/total</th><th style='color:black;z-index:0'>% utilización Proyectos</th><th style='color:black;z-index:0'>Total Otra Categoías</th><th style='color:black;z-index:0'>% Otros/total</th><th style='color:black;z-index:0'>% utilización Otros</th></tr>";
@@ -1545,26 +1548,38 @@ class CrossRefView{
         let tr="<tbody>"
         //console.log("consulArr buscando a zuleima",consulArr);
         for(let i=0;i<consulArr.length;i++){
+            let csv_cons=[];
             let no_esta=this.team.buscarPorNombre(consulArr[i].usr)===undefined?"color:red":"color:black"
             tr+="<tr>";
             tr+=`<th style="${no_esta};width:250px">${consulArr[i].usr}</th>`;
+            csv_cons.push(consulArr[i].usr);
             //console.log("array",consulArr[i].projs,consulArr[i].projs.length)
             //getHorasByConsultor
             for (const [indice, valor] of proyMap.entries()){
                 //let esta=this.buscarPosicion(consulArr[i].projs,indice);
                 let hrs=this.crossObj.getHoras(indice,consulArr[i].usr)
                 //console.log("pos",hrs,indice,consulArr[i].usr)
-                if(hrs!=-1)
+                if(hrs!=-1){
                     tr+=`<td name="${indice}" style="${this.colorear(hrs)};border-bottom:1px dotted #9966ff"><b>${hrs}</b></td>`;
-                else
+                    csv_cons.push(hrs);
+                }else{
                     tr+=`<td name="${indice}" style="border-bottom:1px dotted #9966ff">&nbsp;</td>`;
+                    csv_cons.push(0);
+                }
             }
             let horaConsul=this.crossObj.getHorasByConsultor(consulArr[i].usr);
             let horasResto=this.crossObj.getHorasRestoByConsultor(consulArr[i].usr);
             let totalHoras=horaConsul+horasResto;
             tr+=`<td>${horaConsul.toFixed(2)}</td><td>${((horaConsul/totalHoras)*100).toFixed(2)}%</td><td>${this.semaforo(horaConsul)}${((horaConsul/160)*100).toFixed(2)}%</td><td>${horasResto.toFixed(2)}</td><td>${((horasResto/totalHoras)*100).toFixed(2)}%</td><td>${this.semaforo(horasResto)}${((horasResto/160)*100).toFixed(2)}%</td></tr>`;
+            csv_filas.push(csv_cons);
             //}
         }
+        console.log("probable estructura de csv ",csv_head,csv_filas);
+        let csv="'"+csv_head.join("','")+"'\n";
+        csv_filas.forEach((el)=>{
+            csv+="'"+el.join("','")+"'\n";
+        })
+        console.log("csv",csv);
         let trfaltan="<tr>"
         faltantes.forEach((el)=>{
             trfaltan+=`<tr><th style="width:250px">${el}</th></tr>`

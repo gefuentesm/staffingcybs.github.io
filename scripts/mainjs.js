@@ -493,6 +493,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         //}
     }
     function loadStaff(){
+        console.log("inicio loadstaff");
         document.getElementById("loader").style.display = ""
         util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getstaffinghttp`,myToken,myTime).then(function(fetchData){
                 //console.log("fetchdata",fetchData);
@@ -509,6 +510,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                         staffing.createStaffingView();
                         staffing.createMonStruct();
                     }
+                    console.log("fin loadstaff");
                     document.getElementById("loader").style.display = "none"
                 }catch(e){
                     //console.log("asynGetFromDB",e);
@@ -672,7 +674,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         }
     }
     function loadStaff1(){
-       
+        console.log("inicio loadstaff1");
         document.getElementById("loader").style.display = "";
         document.getElementById("loader").style.visibility = "visible";
         util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/gethorasplanreal`,myToken,myTime).then(function(fetchData){
@@ -689,6 +691,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                         convertAlternativeStaffData(fetchData);
                         //console.log("se cargo la data")
                     }
+                    console.log("fin loadstaff1");
                     document.getElementById("loader").style.display = "none";
                     document.getElementById("loader").style.visibility = "none";
                 }catch(e){
@@ -707,6 +710,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
     
     }
     function loadConsultant(){
+        console.log("inicio loadconsultant");
         util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getconsultant`,myToken,myTime).then(function(fetchData){
             if(typeof fetchData.msg=="undefined")
                     msg="ok"
@@ -717,6 +721,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                 teamView=new TeamView(fetchData,"team");
                 teamView.show();
             }
+            console.log("fin loadconsultant");
         })
         .catch(error=>{
             document.getElementById("loader").style.visibility = "none";
@@ -724,6 +729,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         })
     }
     function loadAllProjects(){
+        console.log("inicio loadallprojects");
         util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getallprojects`,myToken,myTime).then(function(fetchData){
             //console.log("fetch data getAllProjects",fetchData);
             if(typeof fetchData.msg=="undefined")
@@ -732,6 +738,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                     msg=fetchData.msg
             if(msg=="ok")
                 projectFilterView=new ProjectFilterView(fetchData.data,"projectsBox");
+            console.log("fin loadallprojects");
         })
         .catch(error=>{
             document.getElementById("loader").style.visibility = "none";
@@ -739,6 +746,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         })
     }
     function loadProjectMonthly(){
+        console.log("inicio loadProjectMonthly");
         util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getfactprojmonthy`,myToken,myTime).then(function(fetchData){
             //console.log("fetch data getAllProjects",fetchData);
             if(typeof fetchData.msg=="undefined")
@@ -752,6 +760,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                 projView = new ProjView(fetchData.data,"container-project","tab-proj-01");
                 projView.mostrarProyMonthly(0);
             }
+            console.log("fin loadProjectMonthly");
         })
         .catch(error=>{
             document.getElementById("loader").style.visibility = "none";
@@ -759,6 +768,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         })
     }
     function loadProjectPlanReal(){
+        console.log("inicio loadProjectPlanReal");
         util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/gethorasplanreal`,myToken,myTime).then(function(fetchData){
             //console.log("fetch data loadProjectPlanReal",fetchData);
             if(typeof fetchData.msg=="undefined")
@@ -778,7 +788,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                     }
                 })
                 //console.log("arrPru===",arrPru);
-                
+                console.log("fin loadProjectPlanReal");
                 document.getElementById("loader").style.display = "none"                
             }
         })
@@ -788,6 +798,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         })
     }
     function loadProjectSummary(){
+        console.log("inicio loadProjectSummary");
         util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getprojectsummary`,myToken,myTime).then(function(fetchData){
             //console.log("fetch data getProjectSummary",fetchData);
                 if(typeof fetchData.msg=="undefined")
@@ -796,6 +807,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                     msg=fetchData.msg
                 if(msg=="ok")
                     projSummary= new ProjSummaryView(fetchData,"projSumm","div-content-head");
+                    console.log("fin loadProjectSummary");
             })
             .catch(error=>{
                 document.getElementById("loader").style.visibility = "none";
@@ -803,7 +815,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             })
     }
     function loadVacation(){
-        
+        console.log("inicio loadVacation");
         util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getvacation`,myToken,myTime).then(function(fetchData){
             //console.log("fetch data getProjectSummary",fetchData);
                 if(typeof fetchData.msg=="undefined")
@@ -815,7 +827,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                     vacationView.createVacationMonth();
                     vacationView.createView();
                 }
-                
+                console.log("fin loadVacation");
             })
             .catch(error=>{
                 document.getElementById("loader").style.visibility = "none";
@@ -824,7 +836,24 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             
 
     }
+    async function loadVacation1(){
+        console.log("inicio loadVacation");
+        let fetchData=await util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getvacation`,myToken,myTime)
+
+        //console.log("fetch data getProjectSummary",fetchData);
+        if(typeof fetchData.msg=="undefined")
+            msg="ok"
+        else
+            msg=fetchData.msg
+        if(msg=="ok"){
+            vacationView=new VacationView(fetchData.data);
+            vacationView.createVacationMonth();
+            vacationView.createView();
+        }
+        console.log("fin loadVacation");    
+    }
     function loadAlarms(){
+        console.log("inicio loadAlarms");
         var alarmView
         util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getalarms`,myToken,myTime).then(function(fetchData){
             //console.log("fetch data getProjectSummary",fetchData);
@@ -836,7 +865,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                     alarmView=new AlarmView(fetchData.data);
                     alarmView.createView();
                 }
-                
+                console.log("fin loadAlarms");
             })
             .catch(error=>{
                 document.getElementById("loader").style.visibility = "none";
@@ -846,6 +875,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
 
     }  
     function loadProyectos(){
+        console.log("inicio loadProyectos");
         util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getproyectos`,myToken,myTime).then(function(fetchData){
             //console.log("fetch data getProjectSummary",fetchData);
                 if(typeof fetchData.msg=="undefined")
@@ -854,9 +884,9 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                     msg=fetchData.msg
                 if(msg=="ok"){
                     proyectos=new Proyectos(fetchData.data);
-                    console.log("proyectos",proyectos);
+                    //console.log("proyectos",proyectos);
                 }
-                
+                console.log("fin loadProyectos");
             })
             .catch(error=>{
                 document.getElementById("loader").style.visibility = "none";
@@ -864,9 +894,25 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             })        
             
 
-    }   
+    } 
+    async function loadProyectos1(){
+        console.log("inicio loadProyectos1");
+        let fetchData=await util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getproyectos`,myToken,myTime);
+            //console.log("fetch data getProjectSummary",fetchData);
+        if(typeof fetchData.msg=="undefined")
+            msg="ok"
+        else
+            msg=fetchData.msg
+        if(msg=="ok"){
+            proyectos=new Proyectos(fetchData.data);
+            //console.log("proyectos",proyectos);
+        }
+        console.log("fin loadProyectos1");   
+
+    }    
 
     function loadCrossRefData(){
+        console.log("inicio loadCrossRefData");
         var alarmView
         util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getclocki4weeks`,myToken,myTime).then(function(fetchData){
             //console.log("fetch data getProjectSummary",fetchData);
@@ -881,7 +927,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                     let ps=crossRefView.showProjectSelector();
                     document.getElementById("projSel").innerHTML=ps;
                 }
-                
+                console.log("fin loadCrossRefData");
             })
             .catch(error=>{
                 document.getElementById("loader").style.visibility = "none";
@@ -983,7 +1029,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         }
     }
   
-    function setProy(){ 
+    async function setProy(){ 
         //console.log("setProy");
         //console.log("auth",myToken,myTime)
         let msg="";
@@ -996,11 +1042,11 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         if(myToken && myTime) {
             
             //loadStaff() ;
-            loadVacation();
+            await loadVacation1();
 
             loadAlarms();
             
-            loadProyectos();
+            await loadProyectos1();
             
             loadStaff1();
                         

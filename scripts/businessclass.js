@@ -222,7 +222,7 @@ class ProjList{
             });
             this.mesStruct[i]=people;
         }
-        console.log("mesStruct",this.mesStruct);
+        //console.log("mesStruct",this.mesStruct);
     }
     updateMesProjStructByImprob(IDp){
         let meses=[];
@@ -383,7 +383,7 @@ class HistoricChanges{
 }
 class Proyectos{
     constructor(data){
-        console.log("data",data)
+        //console.log("data",data)
         this.proyectos=data;
         this.proyMap=this.createProyectosMap(data);
         this.activeProj=this.createActiveProj();
@@ -521,7 +521,7 @@ class CrossReference{
                 }
             }
           });
-          console.log("resto",persSinA);
+          //console.log("resto",persSinA);
         return persSinA;
     }
     filterSoloProy(data){
@@ -538,12 +538,14 @@ class CrossReference{
         let i=0;
         ap.forEach((el)=>{
             if(!p.has(el.idProy)){
-                let o=this.ordenProyByFase(el.Fase);
-                p.set(el.idProy,{nb:el.nb_proyecto,fase:el.Fase,orden:o});
-                i++;
+                if(el.Fase!="Cerrado"||el.Fase!="Lead Sin Continuidad"||el.Fase!="Propuesta no Aceptada"){
+                    let o=this.ordenProyByFase(el.Fase);
+                    p.set(el.idProy,{nb:el.nb_proyecto,fase:el.Fase,orden:o});
+                    i++;
+                }
             }
         })
-        console.log("no estaban",i,p);
+        //console.log("no estaban",i,p);
         return p;
     }
     getProjMap(){
@@ -553,7 +555,7 @@ class CrossReference{
             Array.from(p).sort((a, b) => parseInt(a[1].orden) > parseInt(b[1].orden) ? 1 : -1)
           );
 
-        console.log("projMap sorted",sortedMap);
+        //console.log("projMap sorted",sortedMap);
         return sortedMap;//this.projs;  
     }
     getCrossArr(){
@@ -602,7 +604,7 @@ class CrossReference{
                 this.cross[this.data[i].usr]={}
             }
             
-            //if(usrBreak=="Zuleima Silva"||i>155) console.log("entro",i,this.data[i].usr,this.data[i].idProy,this.projs.get(this.data[i].idProy))
+            //if(usrBreak=="Zuleima Silva"||i>155) //console.log("entro",i,this.data[i].usr,this.data[i].idProy,this.projs.get(this.data[i].idProy))
             if(this.projs.get(this.data[i].idProy)===undefined){
                 let proyFase=this.proyectos.getFase(this.data[i].idProy);
                 let orden=this.ordenProyByFase(proyFase);
@@ -617,7 +619,7 @@ class CrossReference{
                 this.cross[this.data[i].usr]={}
                 this.cross[this.data[i].usr][this.data[i].idProy]=0;
                 usrBreak=this.data[i].usr;
-                //if(i===157) console.log("rompe zuleima",i,this.data[i].usr,this.crossArr)
+                //if(i===157) //console.log("rompe zuleima",i,this.data[i].usr,this.crossArr)
             }else{
                 proj.push(this.data[i].idProy);
                 //this.cross[this.data[i].usr]={}

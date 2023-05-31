@@ -45,12 +45,15 @@
 }
     </style>
 
+
 </head>
 <html>
     <body>
         <img src="image/edo-enproceso.svg" width="16px"></img>
         <img src="image/edo-propuesta.svg" width="16px"></img>
         <img src="image/edo-detenido.svg" width="16px"></img>
+        <textarea id="editor" cols="30" rows="10"></textarea>
+        <input type="button" id="guardar1" value="Guardar en un archivo">
         <div id="table-scroll" class="table-scroll">
         <table >
           <thead>
@@ -80,8 +83,9 @@
           </tbody>
         </table>
       </div>
-      <script>
-
-      </script>
+      <script >
+        var fso = new ActiveXObject("Scripting.FileSystemObject");
+        console.log(fso)
+        </script>
     </body>
 </html>
