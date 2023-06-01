@@ -102,9 +102,18 @@
             <b>CROSSREFERENCE VIEW</b><br>
             Cruza Consultores vs Proyectos en las últimas 4 semanas <span id="periodCross"></span>
         </div>
-        <div>
-            <div id="projSel" style="display: table;"></div>
-            <button onclick="hideProject()">Procesar selección</button>
+        <div class="grid-container">
+            <div class="grid-item">
+                <div id="projSel" style="display: table;"></div>
+                <button onclick="hideProject()">Procesar selección</button>
+            </div>
+            <div class="grid-item">
+                <div style="display: table;">
+                    <label for="nombre-csv" style="display:table-cell;vertical-align:middle">Indique un nombre al archivo</label>
+                    <input type="text" id="nombre-csv" value="archivo2023"></input>
+                </div>
+                <button onclick="btn_saveCsv()">Guardar CSV</button>
+            </div>
         </div>
         <div id="table-scroll" class="table-scroll">
             <table id="tab-proj-01"  style="width:100%;margin-left: 10px;" class='paleBlueRows'>

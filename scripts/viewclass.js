@@ -1574,12 +1574,14 @@ class CrossRefView{
             csv_filas.push(csv_cons);
             //}
         }
-        console.log("probable estructura de csv ",csv_head,csv_filas);
-        let csv="'"+csv_head.join("','")+"'\n";
+        //console.log("probable estructura de csv ",csv_head,csv_filas);
+        
+        csv.push(""+csv_head.join(",")+"\n");
         csv_filas.forEach((el)=>{
-            csv+="'"+el.join("','")+"'\n";
+            csv.push(`${el.join(",")}\n`);
         })
-        console.log("csv",csv);
+        //console.log("csv",csv);
+
         let trfaltan="<tr>"
         faltantes.forEach((el)=>{
             trfaltan+=`<tr><th style="width:250px">${el}</th></tr>`

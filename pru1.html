@@ -88,15 +88,15 @@ function generarXml(datos) {
   
 window.addEventListener('DOMContentLoaded', function(){
  
-document.getElementById('boton-xml').addEventListener('click', function () {
-var datos = obtenerDatos();
-descargarArchivo(generarXml(datos), 'archivo.xml');
-}, false);
- 
-document.getElementById('boton-txt').addEventListener('click', function () {
-var datos = obtenerDatos();
-descargarArchivo(generarTexto(datos), 'archivo.txt');
-}, false);
+    document.getElementById('boton-xml').addEventListener('click', function () {
+    var datos = obtenerDatos();
+    descargarArchivo(generarXml(datos), 'archivo.xml');
+    }, false);
+    
+    document.getElementById('boton-txt').addEventListener('click', function () {
+    var datos = obtenerDatos();
+    descargarArchivo(generarTexto(datos), 'archivo.txt');
+    }, false);
  
 }, false);
 </script>

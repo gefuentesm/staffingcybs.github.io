@@ -34,6 +34,7 @@ var userSession;
 var dateOfChanged;
 var crossRef;
 var proyectos;
+var csv=[];
 var crossRefView;
 titulo=["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
 var oHistField=new Field();
@@ -187,6 +188,20 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         rows=render.sendTable(hcArr,"historial_cambios","","","","");
         return encabChgh+rows+endEncabh;
     } 
+    function btn_saveCsv(){
+        const name=document.getElementById("nombre-csv").value;
+        const blob = new Blob(csv, { type: 'text/plain' });
+
+        const enlaceDescarga = document.createElement('a');
+        enlaceDescarga.href = URL.createObjectURL(blob);
+        enlaceDescarga.download = name+'.csv';
+        var clicEvent = new MouseEvent('click', {
+          'view': window,
+          'bubbles': true,
+          'cancelable': true
+        });
+        enlaceDescarga.dispatchEvent(clicEvent);
+    }
     function btn_cerrarModal(){
         let genModal=document.getElementById("genericModal");
         genModal.style.display="none"
@@ -709,24 +724,20 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             })
     
     }
-    function loadConsultant(){
+    async function loadConsultant(){
         console.log("inicio loadconsultant");
-        util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getconsultant`,myToken,myTime).then(function(fetchData){
-            if(typeof fetchData.msg=="undefined")
-                    msg="ok"
-                else
-                    msg=fetchData.msg
-            if(msg=="ok"){
-                teamStruct=fetchData.data
-                teamView=new TeamView(fetchData,"team");
-                teamView.show();
-            }
-            console.log("fin loadconsultant");
-        })
-        .catch(error=>{
-            document.getElementById("loader").style.visibility = "none";
-            console.log(error)
-        })
+        let fetchData=await util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getconsultant`,myToken,myTime);
+        if(typeof fetchData.msg=="undefined")
+                msg="ok"
+            else
+                msg=fetchData.msg
+        if(msg=="ok"){
+            teamStruct=fetchData.data
+            teamView=new TeamView(fetchData,"team");
+            teamView.show();
+        }
+        console.log("fin loadconsultant");
+
     }
     function loadAllProjects(){
         console.log("inicio loadallprojects");
@@ -1050,7 +1061,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             
             loadStaff1();
                         
-            loadConsultant();
+            await loadConsultant();
 
             loadAllProjects();
             
