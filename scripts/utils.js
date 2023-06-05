@@ -226,11 +226,11 @@ class Render{
                               
                             }  
         let f13=(obj)    => {   
-                               
                                 let edo=obj.Fase;
                                 let color=(edo=='Propuesta Activa'?'darkorange':'#006080;');
                                 let clas=this.claseFase(edo);
                                 let ima=this.imageFase(edo);
+                                //if(obj.IDp==331) console.log("estado",edo,ima)
                                 clas=clas==""?"":"class='"+clas+"'"
                                 let prop=edo.indexOf("Lead")>=0 ||edo.indexOf("Propuesta")>=0?"style='font-weight:normal;color:orange'":"style='font-weight:bold;'";
                                 let box="<label for='probable-"+obj.IDp+"'>Staffing:</label>  <input type='checkbox' checked='true' id='probable-"+obj.IDp+"-"+obj.mesi+"' name='probable-"+obj.IDp+"' onclick='probable(event,"+obj.mes+")'>"
@@ -280,7 +280,9 @@ class Render{
         else if(edo=="Propuesta Activa") klass="edo-propuesta.svg";
         else if(edo=="SOW/Contrato") klass="edo-sowcontrato.svg";
         else if(edo=="Detenido") klass="edo-detenido.svg";
-        else if(edo="Lead") klass="edo-lead.svg"
+        else if(edo=="Lead") klass="edo-lead.svg";
+        else if(edo=="Cerrado") klass="edo-cerrado.svg"
+        else if(edo=="Cierre Interno") klass="edo-cierre-interno.svg"
         return klass;
    }
    claseFase(edo){
