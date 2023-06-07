@@ -1453,6 +1453,7 @@ class Acumulador{
     // si algún proyecto asociado a row, está entre los seleccionados los reduce del total
     recount(row,arrSelect){
         let current=this.dataRow.get(row);
+        if(current===undefined) return current;
         //console.log("current is not defined",current,row);
         let proyArr=current.cols.split(",");
         let c=0;
@@ -1470,6 +1471,7 @@ class Acumulador{
     }
     recountadd(row,arrSelect){
         let current=this.dataRow.get(row);
+        if(current===undefined) return current;
         //console.log("current is not defined",current,row);
         let proyArr=current.cols.split(",");
         let c=0;
@@ -1513,12 +1515,13 @@ class CrossRefView{
         this.container=container;
         this.tablename=tablename;
         this.team=team;
-        this.countProjActv=new Acumulador("Cuenta proyectos activos",["En Proceso","Cierre Interno"],undefined);
-        this.countOther=new Acumulador("Cuenta proyectos no activos",["Propuesta Activa","Lead","Detendido","SOW/Contrato"],undefined);
-        this.countProjNS=new Acumulador("Cuenta todos los proyectos (no sel)",["En Proceso","Cierre Interno","Propuesta Activa","Lead","Detendido","SOW/Contrato"],false);
-        this.countProjS=new Acumulador("Cuenta todos los proyectos (sel)",["En Proceso","Cierre Interno","Propuesta Activa","Lead","Detendido","SOW/Contrato","Cerrado"],true);
-        this.hoursProjPropS=new Acumulador("suma horas todos los proyectos",["En Proceso","Cierre Interno","Propuesta Activa","Lead","Detendido","SOW/Contrato","Cerrado"],true);
-        this.hoursProjPropNS=new Acumulador("suma horas todos los proyectos",["En Proceso","Cierre Interno","Propuesta Activa","Lead","Detendido","SOW/Contrato","Cerrado"],false);
+        this.cantProyProp=new Acumulador("Cuenta proyectos + propuestas",["En Proceso","Cierre Interno","Propuesta Activa","Lead","Detendido","SOW/Contrato","Propuesta no Aceptada"],undefined);
+        this.countProjActv=new Acumulador("Cuenta proyectos activos",["En Proceso","Cierre Interno"],false);
+        this.countOther=new Acumulador("Cuenta proyectos no activos",["Propuesta Activa","Lead","Detendido","SOW/Contrato","Propuesta no Aceptada"],false);
+        this.countProjNS=new Acumulador("Cuenta todos los proyectos - considerados",["En Proceso","Cierre Interno","Propuesta Activa","Lead","Detendido","SOW/Contrato","Propuesta no Aceptada"],false);
+        this.countProjS=new Acumulador("Cuenta todos los proyectos - no considerados",["En Proceso","Cierre Interno","Propuesta Activa","Lead","Detendido","SOW/Contrato","Cerrado"],true);
+        this.hoursProjPropS=new Acumulador("suma horas todos los proyectos-No considerados",["En Proceso","Cierre Interno","Propuesta Activa","Lead","Detendido","SOW/Contrato","Cerrado"],true);// se encuentra en la lista de selección para ocultar
+        this.hoursProjPropNS=new Acumulador("suma horas todos los proyectos-Considerar",["En Proceso","Cierre Interno","Propuesta Activa","Lead","Detendido","SOW/Contrato","Cerrado"],false);  // NO se encuentra en la lista de selección para ocultar
     }
 
     setContainerHide(){
@@ -1571,12 +1574,12 @@ class CrossRefView{
         let arrNoSelect=this.crossObj.getProjectList();
         console.log("arrSelect",arrSelect,arrNoSelect.length);
         consulArr.forEach(el=>{
-            let newProjs=this.countProjS.recount(el.usr,arrSelect);
-            let newProjsNS=this.countProjNS.recount(el.usr,arrNoSelect);
+            let newProjs=this.countProjActv.recount(el.usr,arrNoSelect);
+            let newProjsNS=this.countOther.recount(el.usr,arrNoSelect);
             let newHoursS=this.hoursProjPropS.recalc(el.usr,this.crossObj,arrSelect);
             let newHoursNS=this.hoursProjPropNS.recalc(el.usr,this.crossObj,arrNoSelect);
-            if(newProjs!==undefined)document.getElementById("selecto-"+el.usr).innerHTML=newProjs;
-            if(newProjsNS!==undefined)document.getElementById("excluido-"+el.usr).innerHTML=newProjsNS;
+            if(newProjs!==undefined)document.getElementById("totProyAct-"+el.usr).innerHTML=newProjs;
+            if(newProjsNS!==undefined)document.getElementById("totProp-"+el.usr).innerHTML=newProjsNS;
             if(newHoursS!==undefined)document.getElementById("hrincl-"+el.usr).innerHTML=newHoursS;
             if(newHoursNS!==undefined)document.getElementById("hrexcl-"+el.usr).innerHTML=newHoursNS;
             
@@ -1586,12 +1589,13 @@ class CrossRefView{
         //hrexcl-name y excluido
         let consulArr=this.crossObj.getCrossArr();
         let arrSelect=this.crossObj.getProjectHide();
+        let arrNoSelect=this.crossObj.getProjectList();
         consulArr.forEach(el=>{
-            let newProjs=this.countProjS.recountadd(el.usr,arrSelect);
-            let newHoursS=this.hoursProjPropS.recalcadd(el.usr,this.crossObj,arrSelect);
+            let newProjs=this.countProjActv.recountadd(el.usr,arrNoSelect);
+            let newHoursS=this.countOther.recountadd(el.usr,arrNoSelect);
             let newHoursNS=this.hoursProjPropNS.recalcadd(el.usr,this.crossObj,arrSelect);
-            if(newProjs!==undefined)document.getElementById("excluido-"+el.usr).innerHTML=newProjs;
-            if(newHoursS!==undefined)document.getElementById("hrincl-"+el.usr).innerHTML=newHoursS;
+            if(newProjs!==undefined)document.getElementById("totProyAct-"+el.usr).innerHTML=newProjs;
+            if(newHoursS!==undefined)document.getElementById("totProp-"+el.usr).innerHTML=newHoursS;
             if(newHoursNS!==undefined)document.getElementById("hrexcl-"+el.usr).innerHTML=newHoursNS;
             
         })
@@ -1670,23 +1674,25 @@ class CrossRefView{
             //console.log("fase",indice,projList.getFaseProy(indice));
             i++;
         }
-        tfase+=`<th style='color:black;z-index:0'>Total Proyectos</th>
-                <th style='color:black;z-index:0'>% Proyecto/total</th>
-                <th style='color:black;z-index:0'>% utilización Proyectos</th>
-                <th style='color:black;z-index:0'>Cant. Proyectos Activos</th>
-                <th style='color:black;z-index:0'>Cant. Propuestas Cercanas</th>
-                <th style='color:black;z-index:0'>Cant. Proyectos (excluidos)</th>
-                <th style='color:black;z-index:0'>Cant. Proyectos (selectos)</th>
-                <th style='color:black;z-index:0'>Horas Proyectos y Propuestas (Incluidos)</th>
-                <th style='color:black;z-index:0'>Horas Proyectos y Propuestas (excluidos)</th>
-                <th style='color:black;z-index:0'>Total Otra Categoías</th>
-                <th style='color:black;z-index:0'>% Otros/total</th>
-                <th style='color:black;z-index:0'>% utilización Otros</th>
-                <th style='color:black;z-index:0'>Horas</th>
+        tfase+=`<th style='color:black;z-index:0'>Considerados</th>
+                <th style='color:black;z-index:0'>Considerados</th>
+                <th style='color:black;z-index:0'>No Considerados</th>
+                <th style='color:black;z-index:0'>Considerar</th>
+                <th style='color:black;z-index:0'>No Considerados</th>
+                <th style='color:black;z-index:0'>Todos</th>
+                <th style='color:black;z-index:0'>Todos</th>
+                <th style='color:black;z-index:0'>Todos</th>
+                <th style='color:black;z-index:0'>Todos</th>
                 </tr>`;
-        th+=`<th colspan='9' style='z-index:2'>Proyectos</th>
-             <th colspan='3' style='z-index:2'>Otras Categorías</th>
-             <th  style='z-index:2'>Total</th>
+        th+=`<th  style='z-index:2'>Cantidad de Proyectos con Horas Reportadas</th>
+             <th  style='z-index:2'>Cantidad de Proyectos y Propuestas con Horas Reportadas</th>
+             <th  style='z-index:2'>Cantidad de Proyectos con Horas Reportadas (Incluye los proyectos - propuestas - lead - )</th>
+             <th  style='z-index:2'>TOTAL DE HORAS Proyectos - Propuestas - Lead</th>
+             <th  style='z-index:2'>TOTAL DE HORAS Proyectos - Propuestas - Lead</th>
+             <th  style='z-index:2'>TOTAL DE HORAS Otras Categorías</th>
+             <th  style='z-index:2'>TOTAL DE HORAS Reportadas en Clockify</th>
+             <th  style='z-index:2'>% Utilización Proyectos</th>
+             <th  style='z-index:2'>% Utilización Otros</th>
              </tr>`+tfase+"</thead>";
         let tr="<tbody>"
         //console.log("consulArr buscando a zuleima",consulArr);
@@ -1704,7 +1710,8 @@ class CrossRefView{
                 //console.log("pos",hrs,indice,consulArr[i].usr)
                 if(hrs!=-1){
                     tr+=`<td name="${indice}" style="${this.colorear(hrs)};border-bottom:1px dotted #9966ff"><b>${hrs}</b></td>`;
-                    csv_cons.push(hrs);                    
+                    csv_cons.push(hrs);  
+                    this.cantProyProp.add(indice,proyectos.getFase(indice),consulArr[i].usr,1);                  
                     this.countProjActv.add(indice,proyectos.getFase(indice),consulArr[i].usr,1);
                     this.countOther.add(indice,proyectos.getFase(indice),consulArr[i].usr,1);
                     this.countProjS.add(indice,proyectos.getFase(indice),consulArr[i].usr,1);
@@ -1719,19 +1726,15 @@ class CrossRefView{
             let horaConsul=this.crossObj.getHorasByConsultor(consulArr[i].usr);
             let horasResto=this.crossObj.getHorasRestoByConsultor(consulArr[i].usr);
             let totalHoras=horaConsul+horasResto;
-            tr+=`<td>${horaConsul.toFixed(2)}</td>
-                 <td>${((horaConsul/totalHoras)*100).toFixed(2)}%</td>
-                 <td>${this.semaforo(horaConsul)}${((horaConsul/160)*100).toFixed(2)}%</td>
-                 <td id="totProyAct-${consulArr[i].usr}">${this.countProjActv.get(consulArr[i].usr).toFixed(0)}</td>
-                 <td>${this.countOther.get(consulArr[i].usr)}</td>
-                 <td id="excluido-${consulArr[i].usr}">0</td>
-                 <td id="selecto-${consulArr[i].usr}">0</td>
-                 <td id="hrincl-${consulArr[i].usr}">0</td>
+            tr+=`<td id="totProyAct-${consulArr[i].usr}">${this.countProjActv.get(consulArr[i].usr).toFixed(0)}</td>
+                 <td id="totProp-${consulArr[i].usr}">${this.countOther.get(consulArr[i].usr)}</td>
+                 <td>${this.cantProyProp.get(consulArr[i].usr).toFixed(0)}</td>
                  <td id="hrexcl-${consulArr[i].usr}">${this.hoursProjPropNS.get(consulArr[i].usr).toFixed(2)}</td>
+                 <td id="hrincl-${consulArr[i].usr}">0</td>
                  <td>${horasResto.toFixed(2)}</td>
-                 <td>${((horasResto/totalHoras)*100).toFixed(2)}%</td>
-                 <td>${this.semaforo(horasResto)}${((horasResto/160)*100).toFixed(2)}%</td>
                  <td>${(parseFloat(horaConsul)+parseFloat(horasResto)).toFixed(2)}</td>
+                 <td>${this.semaforo(horaConsul)}${((horaConsul/160)*100).toFixed(2)}%</td>
+                 <td>${this.semaforo(horasResto)}${((horasResto/160)*100).toFixed(2)}%</td>
                  </tr>`;
             csv_filas.push(csv_cons);
             //}

@@ -15,22 +15,6 @@ class ProjList{
     } 
     cleanChanged(){
         this.chngStruct=[];
-        // la nueva estructura no requiere manejo de dirty
-        /*
-        for(let i=INITIALMONTH;i<INITIALMONTH+MONTHTOSHOW;i++){
-            if(this.mesProjStruct[i]!==undefined)
-            this.mesProjStruct[i].forEach((el)=>{
-                    el.equipo.forEach((mem)=>{
-                        if(mem.dirty!==undefined)
-                            if(mem.dirty==1){
-                                mem.dirty=0;
-                                //console.log("cleanChanged",mem);
-                            }
-                                
-                    });
-                
-            })        
-        }*/
     }   
     getData(){
         return this.data;
@@ -550,7 +534,7 @@ class CrossReference{
             if(!p.has(el.idProy)){
                 if(el.Fase!="Cerrado"||el.Fase!="Lead Sin Continuidad"||el.Fase!="Propuesta no Aceptada"){
                     let o=this.ordenProyByFase(el.Fase);
-                    p.set(el.idProy,{nb:el.nb_proyecto,fase:el.Fase,orden:o});
+                    p.set(el.idProy,{id:el.idProy,nb:el.nb_proyecto,fase:el.Fase,orden:o});
                     i++;
                 }
             }
@@ -558,11 +542,18 @@ class CrossReference{
         //console.log("no estaban",i,p);
         return p;
     }
+
     getProjMap(){
         let p=this.projex;
-        
+
         const sortedMap = new Map(
-            Array.from(p).sort((a, b) => parseInt(a[1].orden) > parseInt(b[1].orden) ? 1 : -1)
+            Array.from(p).sort((a, b) => {
+                if(parseInt(a[1].orden) < parseInt(b[1].orden)) return -1;
+                if(parseInt(a[1].orden) > parseInt(b[1].orden)) return 1;
+                if(parseInt(a[1].id) < parseInt(b[1].id)) return -1;
+                if(parseInt(a[1].id) > parseInt(b[1].id)) return 1;
+                return 0;
+            })
           );
 
         //console.log("projMap sorted",sortedMap);
@@ -589,6 +580,10 @@ class CrossReference{
         if(proyFase=="Propuesta Activa") orden=4;
         if(proyFase=="Propuesta Detenida") orden=5;
         if(proyFase=="Lead") orden=6;
+        if(proyFase=="Lead sin Continuidad") orden=7;
+        if(proyFase=="Propuesta no Aceptada") orden=8;
+        if(proyFase=="Detenido") orden=9;
+        if(proyFase=="Cerrado") orden=10;
         return orden;
     }
     createCrossRef(){
@@ -619,7 +614,7 @@ class CrossReference{
                 let proyFase=this.proyectos.getFase(this.data[i].idProy);
                 let orden=this.ordenProyByFase(proyFase);
                 //console.log("orden",proyFase,orden);
-                this.projs.set(this.data[i].idProy,{nb:this.data[i].nb_proyecto,fase:this.data[i].fase,orden:orden});
+                this.projs.set(this.data[i].idProy,{id:this.data[i].idProy ,nb:this.data[i].nb_proyecto,fase:this.data[i].fase,orden:orden});
             }
             if(this.data[i].usr!=usrBreak){
                 //console.log("rompe",this.data[i].usr,usrBreak,proj)
