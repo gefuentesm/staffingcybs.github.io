@@ -1696,7 +1696,16 @@ class CrossRefView{
              <th  style='z-index:2'>% Utilización Proyectos</th>
              <th  style='z-index:2'>% Utilización Otros</th>
              </tr>`+tfase+"</thead>";
-        let tr="<tbody>"
+        let tr="<tbody>";
+        csv_head.push("Cantidad de Proyectos con Horas Reportadas");
+        csv_head.push("Cantidad de Proyectos y Propuestas cercanas con Horas Reportadas");
+        csv_head.push("Cantidad de Proyectos con Horas Reportadas (Incluye los proyectos - propuestas - lead - )");
+        csv_head.push("TOTAL DE HORAS Proyectos - Propuestas - Lead");
+        csv_head.push("TOTAL DE HORAS Proyectos - Propuestas - Lead");
+        csv_head.push("TOTAL DE HORAS Otras Categorías");
+        csv_head.push("TOTAL DE HORAS Reportadas en Clockify");
+        csv_head.push("% Utilización Proyectos");
+        csv_head.push("% Utilización Otros");
         //console.log("consulArr buscando a zuleima",consulArr);
         for(let i=0;i<consulArr.length;i++){
             let csv_cons=[];
@@ -1738,6 +1747,15 @@ class CrossRefView{
                  <td>${this.semaforo(horaConsul)}${((horaConsul/160)*100).toFixed(2)}%</td>
                  <td>${this.semaforo(horasResto)}${((horasResto/160)*100).toFixed(2)}%</td>
                  </tr>`;
+            csv_cons.push(this.countProjActv.get(consulArr[i].usr).toFixed(0));
+            csv_cons.push(this.countOther.get(consulArr[i].usr));
+            csv_cons.push(this.cantProyProp.get(consulArr[i].usr).toFixed(0));
+            csv_cons.push(this.hoursProjPropNS.get(consulArr[i].usr).toFixed(2));
+            csv_cons.push("0");
+            csv_cons.push(horasResto.toFixed(2));
+            csv_cons.push((parseFloat(horaConsul)+parseFloat(horasResto)).toFixed(2));
+            csv_cons.push(((horaConsul/160)*100).toFixed(2));
+            csv_cons.push(((horasResto/160)*100).toFixed(2));
             csv_filas.push(csv_cons);
             //}
         }
