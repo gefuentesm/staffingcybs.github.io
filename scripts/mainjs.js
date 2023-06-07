@@ -480,8 +480,9 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
     function hideProject(){
 
         const select = document.getElementById("hideProyectos");
-        crossRefView.toShowProject();
         crossRefView.toDelProject2hide();
+        crossRefView.toShowProject();
+    
         for (let i = 0; i < select.options.length; i++) {
             if (select.options[i].selected) {
                 crossRef.setProjectHide(select.options[i].value);

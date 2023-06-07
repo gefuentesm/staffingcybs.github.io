@@ -1437,6 +1437,9 @@ class Acumulador{
     isInclude(){
         return this.include;
     }
+    del(){
+        this.dataRow=new Map();
+    }
     //row es cualquier fila, por ejemplo, consultores
     //val puede ser horas, o simplemente 1 para contar
     add(idp,fase,row,val){
@@ -1567,12 +1570,20 @@ class CrossRefView{
         });
         this.excludProj();
     }
+   encontrarDuplicados(arr) {
+        const noDuplicados = arr.filter((elemento, index) => arr.indexOf(elemento) === index);
+        const duplicados = arr.filter((elemento, index) => arr.indexOf(elemento) !== index);
+      
+        return duplicados;
+      }
     excludProj(){
         //hrexcl-name y excluido -hrincl
         let consulArr=this.crossObj.getCrossArr();
         let arrSelect=this.crossObj.getProjectHide();
         let arrNoSelect=this.crossObj.getProjectList();
-        console.log("arrSelect",arrSelect,arrNoSelect.length);
+        let dup1=this.encontrarDuplicados(arrSelect);
+        let dup2=this.encontrarDuplicados(arrNoSelect);
+        console.log("arrSelect",arrSelect,arrNoSelect.length,dup1.length,dup2.length);
         consulArr.forEach(el=>{
             let newProjs=this.countProjActv.recount(el.usr,arrNoSelect);
             let newProjsNS=this.countOther.recount(el.usr,arrNoSelect);
@@ -1663,7 +1674,13 @@ class CrossRefView{
         let csv_filas=[];
         let consulArr=this.crossObj.getCrossArr();
         let faltantes=this.team.faltan(consulArr);
-        
+        this.cantProyProp.del();                  
+        this.countProjActv.del();
+        this.countOther.del();
+        this.countProjS.del();
+        this.countProjNS.del();
+        this.hoursProjPropS.del();
+        this.hoursProjPropNS.del();
         //console.log("faltantes",faltantes);
         let posicion = -1;
         let i=0;
