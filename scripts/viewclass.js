@@ -1682,8 +1682,12 @@ class CrossRefView{
                 <th style='color:black;z-index:0'>Total Otra Categoías</th>
                 <th style='color:black;z-index:0'>% Otros/total</th>
                 <th style='color:black;z-index:0'>% utilización Otros</th>
+                <th style='color:black;z-index:0'>Horas</th>
                 </tr>`;
-        th+="<th colspan='9' style='z-index:2'>Proyectos</th><th colspan='3' style='z-index:2'>Otros</th></tr>"+tfase+"</thead>";
+        th+=`<th colspan='9' style='z-index:2'>Proyectos</th>
+             <th colspan='3' style='z-index:2'>Otras Categorías</th>
+             <th  style='z-index:2'>Total</th>
+             </tr>`+tfase+"</thead>";
         let tr="<tbody>"
         //console.log("consulArr buscando a zuleima",consulArr);
         for(let i=0;i<consulArr.length;i++){
@@ -1723,10 +1727,11 @@ class CrossRefView{
                  <td id="excluido-${consulArr[i].usr}">0</td>
                  <td id="selecto-${consulArr[i].usr}">0</td>
                  <td id="hrincl-${consulArr[i].usr}">0</td>
-                 <td id="hrexcl-${consulArr[i].usr}">0</td>
+                 <td id="hrexcl-${consulArr[i].usr}">${this.hoursProjPropNS.get(consulArr[i].usr).toFixed(2)}</td>
                  <td>${horasResto.toFixed(2)}</td>
                  <td>${((horasResto/totalHoras)*100).toFixed(2)}%</td>
                  <td>${this.semaforo(horasResto)}${((horasResto/160)*100).toFixed(2)}%</td>
+                 <td>${(parseFloat(horaConsul)+parseFloat(horasResto)).toFixed(2)}</td>
                  </tr>`;
             csv_filas.push(csv_cons);
             //}
