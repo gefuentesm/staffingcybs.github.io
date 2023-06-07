@@ -1592,12 +1592,14 @@ class CrossRefView{
         let arrNoSelect=this.crossObj.getProjectList();
         consulArr.forEach(el=>{
             let newProjs=this.countProjActv.recountadd(el.usr,arrNoSelect);
-            let newHoursS=this.countOther.recountadd(el.usr,arrNoSelect);
-            let newHoursNS=this.hoursProjPropNS.recalcadd(el.usr,this.crossObj,arrSelect);
-            if(newProjs!==undefined)document.getElementById("totProyAct-"+el.usr).innerHTML=newProjs;
-            if(newHoursS!==undefined)document.getElementById("totProp-"+el.usr).innerHTML=newHoursS;
-            if(newHoursNS!==undefined)document.getElementById("hrexcl-"+el.usr).innerHTML=newHoursNS;
+            let newProjsNS=this.countOther.recountadd(el.usr,arrNoSelect);
             
+            let newHoursS=this.hoursProjPropS.recalcadd(el.usr,this.crossObj,arrSelect);
+            let newHoursNS=this.hoursProjPropNS.recalcadd(el.usr,this.crossObj,arrNoSelect);
+            if(newProjs!==undefined)document.getElementById("totProyAct-"+el.usr).innerHTML=newProjs;
+            if(newProjsNS!==undefined)document.getElementById("totProp-"+el.usr).innerHTML=newProjsNS;
+            if(newHoursS!==undefined)document.getElementById("hrincl-"+el.usr).innerHTML=newHoursS;
+            if(newHoursNS!==undefined)document.getElementById("hrexcl-"+el.usr).innerHTML=newHoursNS;
         })
     }
     
