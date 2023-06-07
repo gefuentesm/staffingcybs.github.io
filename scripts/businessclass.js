@@ -441,6 +441,7 @@ class CrossReference{
         this.horasTxConsultor= this.createDedicacionTotal();
         this.horasTxProject=this.createCargaTotal();
         this.proyectHide=[];
+        this.projectList=[];
     }
     createDedicacionTotal(){
         const personHours = new Map();
@@ -500,11 +501,20 @@ class CrossReference{
     delProjectHide(){
         this.proyectHide=[];
     }
+    delProjectList(){
+        this.projectList=[];
+    }
     getProjectHide(){
         return this.proyectHide;
     }
     setProjectHide(idProy){
         this.proyectHide.push(idProy);
+    }
+    setProjectList(idProy){
+        this.projectList.push(idProy);
+    }
+    getProjectList(){
+        return this.projectList;
     }
     filtrarResto(data){
         let arrayProy=data.data;

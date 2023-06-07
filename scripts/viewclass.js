@@ -1423,6 +1423,89 @@ class PeopleView{
         tab.innerHTML = rowHead+rows+endEncabh;
     } 
 }
+class Acumulador{
+    constructor(whatcount,fases,include){
+        this.fases=[];
+        this.fases=fases;
+        this.whatcount=whatcount;
+        this.dataRow=new Map();
+        this.include=include;  //boolean
+    }
+    get(row){
+        return this.dataRow.get(row)===undefined?0:this.dataRow.get(row).valor;
+    }
+    isInclude(){
+        return this.include;
+    }
+    //row es cualquier fila, por ejemplo, consultores
+    //val puede ser horas, o simplemente 1 para contar
+    add(idp,fase,row,val){
+        //if(row=="Keila Machado")console.log("add",idp,fase,row,val)
+        if(this.fases.find((el) => el === fase)!==undefined)
+            if(this.dataRow.has(row)){
+                this.dataRow.set(row,{valor:this.dataRow.get(row).valor+val,
+                                      cols:this.dataRow.get(row).cols+","+idp})
+            }else{
+                this.dataRow.set(row,{valor:val,cols:idp.toString()});
+                //console.log("this.dataRow",this.dataRow);
+            }
+    }
+    // si algún proyecto asociado a row, está entre los seleccionados los reduce del total
+    recount(row,arrSelect){
+        let current=this.dataRow.get(row);
+        //console.log("current is not defined",current,row);
+        let proyArr=current.cols.split(",");
+        let c=0;
+        arrSelect.forEach((el)=>{
+            if(proyArr.find((proy)=>proy===el)!==undefined)
+                c++;
+            /*if(this.include){
+                if(proyArr.find((proy)=>proy===el)===undefined)
+                    c++;
+            }else
+                if(proyArr.find((proy)=>proy===el)!==undefined)
+                    c++;*/
+        })
+        return (c).toFixed(0);//(current.valor-c).toFixed(2);
+    }
+    recountadd(row,arrSelect){
+        let current=this.dataRow.get(row);
+        //console.log("current is not defined",current,row);
+        let proyArr=current.cols.split(",");
+        let c=0;
+        arrSelect.forEach((el)=>{
+            if(proyArr.find((proy)=>proy===el)!==undefined)
+                c++;
+
+        })
+        return (c).toFixed(0);//(current.valor+c).toFixed(2);
+    }
+    recalc(row,crossObj,arrSelect){
+        let current=this.dataRow.get(row);
+        if(current===undefined) return current;
+        //console.log("current is not defined",this.dataRow,current,row);
+        let proyArr=current.cols.split(",");
+        let hrs=0
+        arrSelect.forEach((el)=>{
+            if(proyArr.find((proy)=>proy===el)!==undefined)
+                hrs+=crossObj.getHoras(el,row);
+        })
+        return (hrs).toFixed(2);//(current.valor-hrs).toFixed(2);
+    }
+    recalcadd(row,crossObj,arrSelect){
+        let current=this.dataRow.get(row);
+        if(current===undefined) return current;
+        //console.log("current is not defined",this.dataRow,current,row);
+        let proyArr=current.cols.split(",");
+        let hrs=0
+        arrSelect.forEach((el)=>{
+            if(proyArr.find((proy)=>proy===el)!==undefined)
+                hrs+=crossObj.getHoras(el,row);
+        })
+        return (hrs).toFixed(2);//(current.valor+hrs).toFixed(2);
+    }
+
+}
 
 class CrossRefView{
     constructor(crossObj,container,tablename,team){
@@ -1430,7 +1513,14 @@ class CrossRefView{
         this.container=container;
         this.tablename=tablename;
         this.team=team;
+        this.countProjActv=new Acumulador("Cuenta proyectos activos",["En Proceso","Cierre Interno"],undefined);
+        this.countOther=new Acumulador("Cuenta proyectos no activos",["Propuesta Activa","Lead","Detendido","SOW/Contrato"],undefined);
+        this.countProjNS=new Acumulador("Cuenta todos los proyectos (no sel)",["En Proceso","Cierre Interno","Propuesta Activa","Lead","Detendido","SOW/Contrato"],false);
+        this.countProjS=new Acumulador("Cuenta todos los proyectos (sel)",["En Proceso","Cierre Interno","Propuesta Activa","Lead","Detendido","SOW/Contrato","Cerrado"],true);
+        this.hoursProjPropS=new Acumulador("suma horas todos los proyectos",["En Proceso","Cierre Interno","Propuesta Activa","Lead","Detendido","SOW/Contrato","Cerrado"],true);
+        this.hoursProjPropNS=new Acumulador("suma horas todos los proyectos",["En Proceso","Cierre Interno","Propuesta Activa","Lead","Detendido","SOW/Contrato","Cerrado"],false);
     }
+
     setContainerHide(){
         let content = document.getElementById(this.container);
         content.style.display="none";
@@ -1440,7 +1530,7 @@ class CrossRefView{
         content.style.display="block";
     }
     buscarPosicion(projs,proyid){
-        let proyMap=this.crossObj.getProjMap();
+        //let proyMap=this.crossObj.getProjMap();
         let esta=false;
         for(let j=0;j<projs.length;j++){
             if(projs[j]==proyid){
@@ -1451,7 +1541,8 @@ class CrossRefView{
         return esta;
     }
     toDelProject2hide(){
-        this.crossObj.delProjectHide()
+        this.crossObj.delProjectHide();
+        this.crossObj.delProjectList();
     }
     toShowProject(){
         let arr=this.crossObj.getProjectHide();
@@ -1461,6 +1552,7 @@ class CrossRefView{
                 node.style.display="";
               });
         })
+        this.backProj();
     }
     toHideProject(){
         let arr=this.crossObj.getProjectHide();
@@ -1469,8 +1561,42 @@ class CrossRefView{
             proy2hide.forEach(node => {
                 node.style.display="none"
               });
+        });
+        this.excludProj();
+    }
+    excludProj(){
+        //hrexcl-name y excluido -hrincl
+        let consulArr=this.crossObj.getCrossArr();
+        let arrSelect=this.crossObj.getProjectHide();
+        let arrNoSelect=this.crossObj.getProjectList();
+        console.log("arrSelect",arrSelect,arrNoSelect.length);
+        consulArr.forEach(el=>{
+            let newProjs=this.countProjS.recount(el.usr,arrSelect);
+            let newProjsNS=this.countProjNS.recount(el.usr,arrNoSelect);
+            let newHoursS=this.hoursProjPropS.recalc(el.usr,this.crossObj,arrSelect);
+            let newHoursNS=this.hoursProjPropNS.recalc(el.usr,this.crossObj,arrNoSelect);
+            if(newProjs!==undefined)document.getElementById("selecto-"+el.usr).innerHTML=newProjs;
+            if(newProjsNS!==undefined)document.getElementById("excluido-"+el.usr).innerHTML=newProjsNS;
+            if(newHoursS!==undefined)document.getElementById("hrincl-"+el.usr).innerHTML=newHoursS;
+            if(newHoursNS!==undefined)document.getElementById("hrexcl-"+el.usr).innerHTML=newHoursNS;
+            
         })
     }
+    backProj(){
+        //hrexcl-name y excluido
+        let consulArr=this.crossObj.getCrossArr();
+        let arrSelect=this.crossObj.getProjectHide();
+        consulArr.forEach(el=>{
+            let newProjs=this.countProjS.recountadd(el.usr,arrSelect);
+            let newHoursS=this.hoursProjPropS.recalcadd(el.usr,this.crossObj,arrSelect);
+            let newHoursNS=this.hoursProjPropNS.recalcadd(el.usr,this.crossObj,arrSelect);
+            if(newProjs!==undefined)document.getElementById("excluido-"+el.usr).innerHTML=newProjs;
+            if(newHoursS!==undefined)document.getElementById("hrincl-"+el.usr).innerHTML=newHoursS;
+            if(newHoursNS!==undefined)document.getElementById("hrexcl-"+el.usr).innerHTML=newHoursNS;
+            
+        })
+    }
+    
     colorear(v){
         let color=""
         if(v<=4) color="var(--color-sem-normal);"
@@ -1531,6 +1657,7 @@ class CrossRefView{
         let csv_filas=[];
         let consulArr=this.crossObj.getCrossArr();
         let faltantes=this.team.faltan(consulArr);
+        
         //console.log("faltantes",faltantes);
         let posicion = -1;
         let i=0;
@@ -1543,8 +1670,20 @@ class CrossRefView{
             //console.log("fase",indice,projList.getFaseProy(indice));
             i++;
         }
-        tfase+="<th style='color:black;z-index:0'>Total Proyectos</th><th style='color:black;z-index:0'>% Proyecto/total</th><th style='color:black;z-index:0'>% utilización Proyectos</th><th style='color:black;z-index:0'>Total Otra Categoías</th><th style='color:black;z-index:0'>% Otros/total</th><th style='color:black;z-index:0'>% utilización Otros</th></tr>";
-        th+="<th colspan='3' style='z-index:2'>Proyectos</th><th colspan='3' style='z-index:2'>Otros</th></tr>"+tfase+"</thead>";
+        tfase+=`<th style='color:black;z-index:0'>Total Proyectos</th>
+                <th style='color:black;z-index:0'>% Proyecto/total</th>
+                <th style='color:black;z-index:0'>% utilización Proyectos</th>
+                <th style='color:black;z-index:0'>Cant. Proyectos Activos</th>
+                <th style='color:black;z-index:0'>Cant. Propuestas Cercanas</th>
+                <th style='color:black;z-index:0'>Cant. Proyectos (excluidos)</th>
+                <th style='color:black;z-index:0'>Cant. Proyectos (selectos)</th>
+                <th style='color:black;z-index:0'>Horas Proyectos y Propuestas (Incluidos)</th>
+                <th style='color:black;z-index:0'>Horas Proyectos y Propuestas (excluidos)</th>
+                <th style='color:black;z-index:0'>Total Otra Categoías</th>
+                <th style='color:black;z-index:0'>% Otros/total</th>
+                <th style='color:black;z-index:0'>% utilización Otros</th>
+                </tr>`;
+        th+="<th colspan='9' style='z-index:2'>Proyectos</th><th colspan='3' style='z-index:2'>Otros</th></tr>"+tfase+"</thead>";
         let tr="<tbody>"
         //console.log("consulArr buscando a zuleima",consulArr);
         for(let i=0;i<consulArr.length;i++){
@@ -1561,7 +1700,13 @@ class CrossRefView{
                 //console.log("pos",hrs,indice,consulArr[i].usr)
                 if(hrs!=-1){
                     tr+=`<td name="${indice}" style="${this.colorear(hrs)};border-bottom:1px dotted #9966ff"><b>${hrs}</b></td>`;
-                    csv_cons.push(hrs);
+                    csv_cons.push(hrs);                    
+                    this.countProjActv.add(indice,proyectos.getFase(indice),consulArr[i].usr,1);
+                    this.countOther.add(indice,proyectos.getFase(indice),consulArr[i].usr,1);
+                    this.countProjS.add(indice,proyectos.getFase(indice),consulArr[i].usr,1);
+                    this.countProjNS.add(indice,proyectos.getFase(indice),consulArr[i].usr,1);
+                    this.hoursProjPropS.add(indice,proyectos.getFase(indice),consulArr[i].usr,hrs);
+                    this.hoursProjPropNS.add(indice,proyectos.getFase(indice),consulArr[i].usr,hrs);
                 }else{
                     tr+=`<td name="${indice}" style="border-bottom:1px dotted #9966ff">&nbsp;</td>`;
                     csv_cons.push(0);
@@ -1570,12 +1715,27 @@ class CrossRefView{
             let horaConsul=this.crossObj.getHorasByConsultor(consulArr[i].usr);
             let horasResto=this.crossObj.getHorasRestoByConsultor(consulArr[i].usr);
             let totalHoras=horaConsul+horasResto;
-            tr+=`<td>${horaConsul.toFixed(2)}</td><td>${((horaConsul/totalHoras)*100).toFixed(2)}%</td><td>${this.semaforo(horaConsul)}${((horaConsul/160)*100).toFixed(2)}%</td><td>${horasResto.toFixed(2)}</td><td>${((horasResto/totalHoras)*100).toFixed(2)}%</td><td>${this.semaforo(horasResto)}${((horasResto/160)*100).toFixed(2)}%</td></tr>`;
+            tr+=`<td>${horaConsul.toFixed(2)}</td>
+                 <td>${((horaConsul/totalHoras)*100).toFixed(2)}%</td>
+                 <td>${this.semaforo(horaConsul)}${((horaConsul/160)*100).toFixed(2)}%</td>
+                 <td id="totProyAct-${consulArr[i].usr}">${this.countProjActv.get(consulArr[i].usr).toFixed(0)}</td>
+                 <td>${this.countOther.get(consulArr[i].usr)}</td>
+                 <td id="excluido-${consulArr[i].usr}">0</td>
+                 <td id="selecto-${consulArr[i].usr}">0</td>
+                 <td id="hrincl-${consulArr[i].usr}">0</td>
+                 <td id="hrexcl-${consulArr[i].usr}">0</td>
+                 <td>${horasResto.toFixed(2)}</td>
+                 <td>${((horasResto/totalHoras)*100).toFixed(2)}%</td>
+                 <td>${this.semaforo(horasResto)}${((horasResto/160)*100).toFixed(2)}%</td>
+                 </tr>`;
             csv_filas.push(csv_cons);
             //}
         }
         //console.log("probable estructura de csv ",csv_head,csv_filas);
-        
+        //let newval=hoursProjProp.recalc("Alexeis Perera",this.crossObj,["65","350"])
+        //let recount=countProjActv.recount("Alexeis Perera",["65","350"]);
+        //console.log("contadores",countProjActv,recount,hoursProjProp,newval);
+        //generar csv
         csv.push(""+csv_head.join(",")+"\n");
         csv_filas.forEach((el)=>{
             csv.push(`${el.join(",")}\n`);

@@ -484,7 +484,9 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         crossRefView.toDelProject2hide();
         for (let i = 0; i < select.options.length; i++) {
             if (select.options[i].selected) {
-              crossRef.setProjectHide(select.options[i].value)
+                crossRef.setProjectHide(select.options[i].value);
+            }else{
+                crossRef.setProjectList(select.options[i].value);
             }
           }
         crossRefView.toHideProject();
@@ -493,15 +495,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         //if(confirm("Desea re-cargar los proyectos")==true){ 
             document.getElementById("loader").style.display = "";
             document.getElementById("loader").style.visibility = "visible";
-           /* projList=[]
-            //loadStaff();
-            document.getElementById("projectsBox").value="Seleccione...";
-            loadStaff1();
-            loadProjectMonthly();
-            loadProjectSummary();
-            //el histórico, refresh busca en la BD y Show muestra el historial
-            propertyBar.refreshHist();
-            propertyBar.showHistorial();*/
+
             setProy();
             document.getElementById("loader").style.display = "none";
             document.getElementById("loader").style.visibility = "none";
