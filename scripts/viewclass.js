@@ -1670,6 +1670,7 @@ class CrossRefView{
     showCrossRef(){
         let proyMap=this.crossObj.getProjMap();
         let csv_head=[];
+        let csv_fases=[];
         csv_head.push("Consultores");
         let csv_filas=[];
         let consulArr=this.crossObj.getCrossArr();
@@ -1686,10 +1687,12 @@ class CrossRefView{
         let i=0;
         let th="<thead><tr ><th class='rotar' style='width:250px'>Consultor</th>";
         let tfase="<tr><th style='z-index:2;width:250px'>&nbsp;</th>";
+        csv_fases.push("");
         for (const [indice, valor] of proyMap.entries()) {
             th+=`<th class="rotar" name="${indice===null?0:indice}" >${indice===null?"":indice}-${valor.nb===null?"":valor.nb} &nbsp;&nbsp; Total:${this.crossObj.getHorasByProject(indice).toFixed(2)}</th>`
             tfase+=`<th  name="${indice}" ${this.colorFase(proyectos.getFase(indice))}>${proyectos.getFase(indice)}</th>`;
             csv_head.push(indice+"-"+valor.nb+" total:"+this.crossObj.getHorasByProject(indice).toFixed(2))
+            csv_fases.push(proyectos.getFase(indice));
             //console.log("fase",indice,projList.getFaseProy(indice));
             i++;
         }
@@ -1781,7 +1784,17 @@ class CrossRefView{
         //let recount=countProjActv.recount("Alexeis Perera",["65","350"]);
         //console.log("contadores",countProjActv,recount,hoursProjProp,newval);
         //generar csv
+        csv_fases.push("Considerados");
+        csv_fases.push("Considerados");
+        csv_fases.push("No Considerados");
+        csv_fases.push("Considerados");
+        csv_fases.push("No Considerados");
+        csv_fases.push("Todos");
+        csv_fases.push("Todos");
+        csv_fases.push("Todos");
+        csv_fases.push("Todos");
         csv.push(""+csv_head.join(",")+"\n");
+        csv.push(csv_fases.join(",")+"\n");  //agregando las fases
         csv_filas.forEach((el)=>{
             csv.push(`${el.join(",")}\n`);
         })
