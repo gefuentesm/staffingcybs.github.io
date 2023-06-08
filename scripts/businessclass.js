@@ -394,6 +394,7 @@ class Proyectos{
                    arrayProy.Fase== "Cierre Interno" ||
                    arrayProy.Fase== "Lead" ||
                    arrayProy.Fase== "Propuesta Activa"||
+                   arrayProy.Fase== "Propuesta Detenida"||
                    arrayProy.Fase== "SOW/Contrato" ||
                    arrayProy.Fase== "Detenido";
             
@@ -527,11 +528,15 @@ class CrossReference{
         return soloProy;
     }
     addProjNonExisten(){
+        
         let ap=this.proyectos.getActiveProj();
+        console.log("addProjNonExisten",ap);
         let p=this.projs;
         let i=0;
         ap.forEach((el)=>{
+            if(el.idProy===101) console.log("101",el);
             if(!p.has(el.idProy)){
+                
                 if(el.Fase!="Cerrado"||el.Fase!="Lead Sin Continuidad"||el.Fase!="Propuesta no Aceptada"){
                     let o=this.ordenProyByFase(el.Fase);
                     p.set(el.idProy,{id:el.idProy,nb:el.nb_proyecto,fase:el.Fase,orden:o});
