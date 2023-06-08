@@ -283,6 +283,7 @@ class Render{
         else if(edo=="Lead") klass="edo-lead.svg";
         else if(edo=="Cerrado") klass="edo-cerrado.svg"
         else if(edo=="Cierre Interno") klass="edo-cierre-interno.svg"
+        else if(edo=="Propuesta Detenida") klass="edo-prop-detenida.svg"
         return klass;
    }
    claseFase(edo){

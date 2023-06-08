@@ -530,11 +530,11 @@ class CrossReference{
     addProjNonExisten(){
         
         let ap=this.proyectos.getActiveProj();
-        console.log("addProjNonExisten",ap);
+        //console.log("addProjNonExisten",ap);
         let p=this.projs;
         let i=0;
         ap.forEach((el)=>{
-            if(el.idProy===101) console.log("101",el);
+            //if(el.idProy===101) console.log("101",el);
             if(!p.has(el.idProy)){
                 
                 if(el.Fase!="Cerrado"||el.Fase!="Lead Sin Continuidad"||el.Fase!="Propuesta no Aceptada"){

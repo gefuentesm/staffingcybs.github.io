@@ -1647,6 +1647,7 @@ class CrossRefView{
         let color="";
         if(f=="En Proceso") color = "var(--color-fase-enproceso)";
         if(f=="Propuesta Activa") color = "var(--color-fase-propuesta)";
+        if(f=="Propuesta Detenida") color = "var(--color-fase-prop-detenida)";
         if(f=="SOW/Contrato") color = "var(--color-fase-sow-contrato)";
         if(f=="Detenido") color = "var(--color-fase-detenido)";
         if(f=="Lead") color = "var(--color-fase-lead)";
