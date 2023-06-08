@@ -477,7 +477,18 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         }
 
     }
-    function hideProject(){
+    function showProjectsel(){
+        //console.log("show ",crossRef.getProjectHide())
+        crossRefView.toShowProject();
+    }
+    function hideProj(id){
+        //alert(id);
+        crossRefView.toDelProject2hide(id);
+        crossRef.setProjectHide(id);
+        //console.log("hide ",crossRef.getProjectHide())
+        crossRefView.toHideProject();
+    }
+    /*function hideProject(){
 
         const select = document.getElementById("hideProyectos");
         crossRefView.toDelProject2hide();
@@ -491,7 +502,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             }
           }
         crossRefView.toHideProject();
-    }
+    }*/
     function btn_reload(){
         //if(confirm("Desea re-cargar los proyectos")==true){ 
             document.getElementById("loader").style.display = "";

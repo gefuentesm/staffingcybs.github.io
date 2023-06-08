@@ -483,6 +483,9 @@ class CrossReference{
         })
         return hide;
     }
+    delProjectHideById(id){
+        this.proyectHide = this.proyectHide.filter((idp) => parseInt(idp) != parseInt(id))
+    }
     delProjectHide(){
         this.proyectHide=[];
     }
