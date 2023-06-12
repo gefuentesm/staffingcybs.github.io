@@ -468,6 +468,9 @@ class CrossReference{
     getUltimaFechaRep(){
         return this.fechaObj.ultima_fecha.substring(0,10);
     }
+    getPrimeraFechaRep(){
+        return this.fechaObj.fecha_inicio.substring(0,10);
+    }
     getSemanaDesde(){
         return this.fechaObj.semana_desde;
     }

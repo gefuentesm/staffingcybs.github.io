@@ -1833,9 +1833,10 @@ class CrossRefView{
         //console.log("trfaltan",trfaltan);
         tr+=trfaltan+"</tbody>"
         let fecha=this.crossObj.getUltimaFechaRep();
+        let primera=this.crossObj.getPrimeraFechaRep();
         let iniweek=this.crossObj.getSemanaDesde();
         let finweek=this.crossObj.getSemanaHasta();
-        document.getElementById("periodCross").innerHTML=`(desde la semana: ${iniweek} hasta ${finweek}- última fecha ${fecha} )`
+        document.getElementById("periodCross").innerHTML=`(desde la semana: ${iniweek} hasta ${finweek}- Desde ${primera} hasta ${fecha} )`
         document.getElementById(this.tablename).innerHTML=th+tr;
     }
 }
