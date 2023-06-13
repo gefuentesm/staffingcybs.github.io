@@ -1121,7 +1121,7 @@ class StaffingView{
                 cont.innerHTML+=aux;
                 totDedic=projList.getTeamDedication(o.IDp,o.fase,o.mes);
                 //console.log("aqui da el error",`ref-${o.IDp}.${o.fase}.${o.mes}`);
-                document.getElementById(`ref-${o.IDp}.${o.fase}.${o.mes}`).innerHTML=totDedic.toFixed(2);
+                document.getElementById(`ref-${o.IDp}.${o.fase}.${o.mes}`).innerHTML=totDedic.toFixed(1);
             })  
         }
     }
@@ -1497,7 +1497,7 @@ class Acumulador{
             if(proyArr.find((proy)=>parseInt(proy)==parseInt(el))!==undefined)
                 hrs+=crossObj.getHoras(el,row);
         })
-        return (hrs).toFixed(2);//(current.valor-hrs).toFixed(2);
+        return (hrs).toFixed(1);//(current.valor-hrs).toFixed(2);
     }
     recalcadd(row,crossObj,arrSelect){
         let current=this.dataRow.get(row);
@@ -1509,7 +1509,7 @@ class Acumulador{
             if(proyArr.find((proy)=>proy==el)!==undefined)
                 hrs+=crossObj.getHoras(el,row);
         })
-        return (hrs).toFixed(2);//(current.valor+hrs).toFixed(2);
+        return (hrs).toFixed(1);//(current.valor+hrs).toFixed(2);
     }
 
 }
@@ -1712,9 +1712,9 @@ class CrossRefView{
         let tfase="<tr><th style='z-index:2;width:250px'>&nbsp;</th>";
         csv_fases.push("");
         for (const [indice, valor] of proyMap.entries()) {
-            th+=`<th class="rotar" name="${indice===null?0:indice}" >${indice===null?"":indice}-${valor.nb===null?"":valor.nb} &nbsp;&nbsp; Total:${this.crossObj.getHorasByProject(indice).toFixed(2)}<button onclick="hideProj(${indice})">Ocultar</button></th>`
+            th+=`<th class="rotar" name="${indice===null?0:indice}" >${indice===null?"":indice}-${valor.nb===null?"":valor.nb} &nbsp;&nbsp; Total:${this.crossObj.getHorasByProject(indice).toFixed(1)}<button onclick="hideProj(${indice})">Ocultar</button></th>`
             tfase+=`<th  name="${indice}" ${this.colorFase(proyectos.getFase(indice))}>${proyectos.getFase(indice)}</th>`;
-            csv_head.push(indice+"-"+valor.nb+" total:"+this.crossObj.getHorasByProject(indice).toFixed(2))
+            csv_head.push(indice+"-"+valor.nb+" total:"+this.crossObj.getHorasByProject(indice).toFixed(1))
             csv_fases.push(proyectos.getFase(indice));
             //console.log("fase",indice,projList.getFaseProy(indice));
             i++;
@@ -1765,8 +1765,8 @@ class CrossRefView{
                 let hrs=this.crossObj.getHoras(indice,consulArr[i].usr)
                 //console.log("pos",hrs,indice,consulArr[i].usr)
                 if(hrs!=-1){
-                    tr+=`<td name="${indice}" style="${this.colorear(hrs)};border-bottom:1px dotted #9966ff"><b>${hrs}</b></td>`;
-                    csv_cons.push(hrs);  
+                    tr+=`<td name="${indice}" style="${this.colorear(hrs)};border-bottom:1px dotted #9966ff"><b>${hrs.toFixed(1)}</b></td>`;
+                    csv_cons.push(hrs.toFixed(1));  
                     this.cantProyProp.add(indice,proyectos.getFase(indice),consulArr[i].usr,1);                  
                     this.countProjActv.add(indice,proyectos.getFase(indice),consulArr[i].usr,1);
                     this.countOther.add(indice,proyectos.getFase(indice),consulArr[i].usr,1);
@@ -1785,23 +1785,23 @@ class CrossRefView{
             tr+=`<td id="totProyAct-${consulArr[i].usr}">${this.countProjActv.get(consulArr[i].usr).toFixed(0)}</td>
                  <td id="totProp-${consulArr[i].usr}">${this.countOther.get(consulArr[i].usr)}</td>
                  <td>${this.cantProyProp.get(consulArr[i].usr).toFixed(0)}</td>
-                 <td id="hrexcl-${consulArr[i].usr}">${this.hoursProjPropNS.get(consulArr[i].usr).toFixed(2)}</td>
+                 <td id="hrexcl-${consulArr[i].usr}">${this.hoursProjPropNS.get(consulArr[i].usr).toFixed(1)}</td>
                  <td id="hrincl-${consulArr[i].usr}">0</td>
-                 <td>${horasResto.toFixed(2)}</td>
-                 <td>${(parseFloat(horaConsul)+parseFloat(horasResto)).toFixed(2)}</td>
-                 <td>${this.semaforo(horaConsul)}${((horaConsul/160)*100).toFixed(2)}%</td>
-                 <td>${this.semaforo(horasResto)}${((horasResto/160)*100).toFixed(2)}%</td>
-                 <td>${this.semaforo(horaConsul+horasResto)}${((horaConsul/160)*100+(horasResto/160)*100).toFixed(2)}%</td>
+                 <td>${horasResto.toFixed(1)}</td>
+                 <td>${(parseFloat(horaConsul)+parseFloat(horasResto)).toFixed(1)}</td>
+                 <td>${this.semaforo(horaConsul)}${((horaConsul/160)*100).toFixed(1)}%</td>
+                 <td>${this.semaforo(horasResto)}${((horasResto/160)*100).toFixed(1)}%</td>
+                 <td>${this.semaforo(horaConsul+horasResto)}${((horaConsul/160)*100+(horasResto/160)*100).toFixed(1)}%</td>
                  </tr>`;
             csv_cons.push(this.countProjActv.get(consulArr[i].usr).toFixed(0));
             csv_cons.push(this.countOther.get(consulArr[i].usr));
             csv_cons.push(this.cantProyProp.get(consulArr[i].usr).toFixed(0));
-            csv_cons.push(this.hoursProjPropNS.get(consulArr[i].usr).toFixed(2));
+            csv_cons.push(this.hoursProjPropNS.get(consulArr[i].usr).toFixed(1));
             csv_cons.push("0");
-            csv_cons.push(horasResto.toFixed(2));
-            csv_cons.push((parseFloat(horaConsul)+parseFloat(horasResto)).toFixed(2));
-            csv_cons.push(((horaConsul/160)*100).toFixed(2));
-            csv_cons.push(((horasResto/160)*100).toFixed(2));
+            csv_cons.push(horasResto.toFixed(1));
+            csv_cons.push((parseFloat(horaConsul)+parseFloat(horasResto)).toFixed(1));
+            csv_cons.push(((horaConsul/160)*100).toFixed(1));
+            csv_cons.push(((horasResto/160)*100).toFixed(1));
             csv_filas.push(csv_cons);
             //}
         }
