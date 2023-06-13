@@ -1714,7 +1714,7 @@ class CrossRefView{
         for (const [indice, valor] of proyMap.entries()) {
             th+=`<th class="rotar" name="${indice===null?0:indice}" >${indice===null?"":indice}-${valor.nb===null?"":valor.nb} &nbsp;&nbsp; Total:${this.crossObj.getHorasByProject(indice).toFixed(1)}<button onclick="hideProj(${indice})">Ocultar</button></th>`
             tfase+=`<th  name="${indice}" ${this.colorFase(proyectos.getFase(indice))}>${proyectos.getFase(indice)}</th>`;
-            csv_head.push(indice+"-"+valor.nb+" total:"+this.crossObj.getHorasByProject(indice).toFixed(1))
+            csv_head.push(indice+"-"+valor.nb.replace(",","")+" total:"+this.crossObj.getHorasByProject(indice).toFixed(1))
             csv_fases.push(proyectos.getFase(indice));
             //console.log("fase",indice,projList.getFaseProy(indice));
             i++;
@@ -1751,6 +1751,7 @@ class CrossRefView{
         csv_head.push("TOTAL DE HORAS Reportadas en Clockify");
         csv_head.push("% Utilización Proyectos");
         csv_head.push("% Utilización Otros");
+        csv_head.push("% Utilización Total");
         //console.log("consulArr buscando a zuleima",consulArr);
         for(let i=0;i<consulArr.length;i++){
             let csv_cons=[];
@@ -1802,6 +1803,7 @@ class CrossRefView{
             csv_cons.push((parseFloat(horaConsul)+parseFloat(horasResto)).toFixed(1));
             csv_cons.push(((horaConsul/160)*100).toFixed(1));
             csv_cons.push(((horasResto/160)*100).toFixed(1));
+            csv_cons.push(((horaConsul/160)*100+(horasResto/160)*100).toFixed(1));
             csv_filas.push(csv_cons);
             //}
         }
@@ -1815,6 +1817,7 @@ class CrossRefView{
         csv_fases.push("No Considerados");
         csv_fases.push("Considerados");
         csv_fases.push("No Considerados");
+        csv_fases.push("Todos");
         csv_fases.push("Todos");
         csv_fases.push("Todos");
         csv_fases.push("Todos");

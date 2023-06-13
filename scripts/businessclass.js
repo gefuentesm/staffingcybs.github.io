@@ -528,7 +528,7 @@ class CrossReference{
     filterSoloProy(data){
         let arrayProy=data.data;
         let soloProy = arrayProy.filter(function(arrayProy) {
-            return arrayProy.Project== "Categoría - Proyecto";
+            return arrayProy.Project== "Categoría - Proyecto" && arrayProy.idProy!=null;
           });
         //console.log("solo proyectos",soloProy);
         return soloProy;
