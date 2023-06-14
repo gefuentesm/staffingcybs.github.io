@@ -144,6 +144,30 @@ class ProjViewReal{
         else rango="#ff6699";
         return "style='color:"+rango+"'";
     }
+    calcTotalProj(proj,fecha){
+        let arr=this.factprojmonthy.filter((e)=>e.idProy==proj);
+        let mes=fecha.getMonth()+1;
+        let anio=fecha.getFullYear();
+        let nbmes=(mes==1?"Ene":(mes==2?"Feb":(mes==3?"Mar":(mes==4?"Abr":(mes==5?"May":(mes==6?"Jun":(mes==7?"Jul":(mes==8?"Ago":(mes==9?"Sep":(mes==10?"Oct":(mes==11?"Nov":"Dic")))))))))))
+        let objrcy="r"+nbmes;  // obj r(eal)c(urrent)y(ear)
+        let objrny="r_"+nbmes;  // obj r(eal)n(ext)y(ear)
+        let objpcy="p"+nbmes;
+        let objpny="p_"+nbmes;
+        let totmes=0;
+        let totmesp=0;
+        arr.forEach((e)=>{
+            if(anio==CURRYEAR){
+                totmes+=e[objrcy];
+                totmesp+=e[objpcy];
+            }else{
+                totmesp+=e[objpny];
+            }
+        })
+        //console.log("arreglo filtrado por proyecto",proj,mes,anio,totmes,totmesp);
+        return "plan:"+totmesp.toFixed(1)+" <b>Real:"+totmes.toFixed(1)+"</b>";
+        
+        
+    }
     mostrarProyReal(pproy){
         var contenedor = document.getElementById(this.tabContainer);
         var rowHead=``;
@@ -153,7 +177,7 @@ class ProjViewReal{
         var rows="";        
         var arr=this.factprojmonthy;
 
-        //console.log("mostrarProyReal",pproy,arr.length);
+        console.log("mostrarProyReal",pproy,arr);
         let inHead=true;
         let primera=true;
         let projHead="";
@@ -187,7 +211,7 @@ class ProjViewReal{
                     for(let j=INITIALMONTH;j<INITIALMONTH+MONTHTOSHOW;j++){
                         let fe2Test=j<=12?new Date(CURRYEAR+"-"+j+"-01"):new Date((CURRYEAR+1)+"-"+(j-12)+"-01")
                         if(fe2Test>=feiniR && fe2Test<=fefinR){ 
-                            periodo+=`<td class='head-cell-left' ${bgc} >&nbsp;</td>`;
+                            periodo+=`<td class='head-cell-left' ${bgc} >&nbsp;${this.calcTotalProj(arr[i].idProy,fe2Test)}</td>`;
                         }else periodo+="<td></td>";
                     } 
                     projHead+=periodo;
