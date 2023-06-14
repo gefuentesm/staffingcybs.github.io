@@ -285,6 +285,8 @@ class Render{
         else if(edo=="Cierre Interno") klass="edo-cierre-interno.svg"
         else if(edo=="Propuesta Detenida") klass="edo-prop-detenida.svg"
         else if(edo=="Propuesta no Aceptada") klass="edo-propno.svg"
+        else if(edo=="Lead sin Continuidad") klass="edo-leadsinc.svg"
+        
         return klass;
    }
    claseFase(edo){
