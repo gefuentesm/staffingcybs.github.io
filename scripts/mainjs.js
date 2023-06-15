@@ -784,7 +784,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             console.log(error)
         })
     }
-    function loadProjectPlanReal(){
+    async function loadProjectPlanReal(){
         console.log("inicio loadProjectPlanReal");
         util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/gethorasplanreal`,myToken,myTime).then(function(fetchData){
             //console.log("fetch data loadProjectPlanReal",fetchData);
@@ -805,6 +805,10 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                     }
                 })
                 //console.log("arrPru===",arrPru);
+                document.getElementById("btnStaffingV").disabled=false;
+                document.getElementById("btnProjectV").disabled=false;
+                document.getElementById("btnPeopleV").disabled=false;
+                document.getElementById("btnDetailV").disabled=false;
                 console.log("fin loadProjectPlanReal");
                 document.getElementById("loader").style.display = "none"                
             }
@@ -1054,6 +1058,11 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         propertyBar=new PropertyView("bar");
         util=new Util();
         cal.createBaseTable();
+    
+        document.getElementById("btnStaffingV").disabled=true;
+        document.getElementById("btnProjectV").disabled=true;
+        document.getElementById("btnPeopleV").disabled=true;
+        document.getElementById("btnDetailV").disabled=true;
         render = new Render();
         document.getElementById("loader").style.display = "";
         if(myToken && myTime) {
@@ -1073,7 +1082,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             
             //loadProjectMonthly();
 
-            loadProjectPlanReal();
+            await loadProjectPlanReal();
 
             loadCrossRefData();
 
