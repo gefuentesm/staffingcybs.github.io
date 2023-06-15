@@ -407,6 +407,18 @@ class Proyectos{
     getFase(pid){
         return this.proyMap.has(pid)?this.proyMap.get(pid).Fase:"";
     }
+    getPorDisp(idp){
+        //console.log("proyectos",idp,this.proyectos);
+        let proy=this.proyectos
+        let objp=proy.find((e)=>e.idProy==idp);
+        return objp===undefined?0:objp.po_Disp.toFixed(1)+"%";
+    }
+    getPorConsumido(idp){
+        //console.log("proyectos",idp,this.proyectos);
+        let proy=this.proyectos
+        let objp=proy.find((e)=>e.idProy==idp);
+        return objp===undefined?0:objp.po_Consumido.toFixed(1)+"%";
+    }
 }
 class CrossReference{
     constructor(data,proyectos){

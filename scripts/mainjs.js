@@ -796,7 +796,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             {
                 factprojmonthy=fetchData.data;
                 //console.log("en el load de loadProjectPlanReal",fetchData.data)
-                projViewReal = new ProjViewReal(fetchData.data,"container-project-real","tab-proj-02");
+                projViewReal = new ProjViewReal(fetchData.data,"container-project-real","tab-proj-02",proyectos);
                 //projView.mostrarProyMonthly(0);
                 let arrPru=[];
                 fetchData.data.forEach((el)=>{

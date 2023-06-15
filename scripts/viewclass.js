@@ -92,16 +92,18 @@ class ProjSummaryView{
     }
 }
 class ProjViewReal{
-    constructor(data,container,tab_container){
+    constructor(data,container,tab_container,proyectos){
         this.factprojmonthy=data;
+        this.projects=proyectos;
         this.containerProject=container;
         this.tabContainer=tab_container;
         this.totalProj=new Map();
         this.contMap=new Map();
         this.param=-1;
         //this.makeTotalMap();
-        //console.log("total proj",this.totalProj);
+        console.log("ProjViewReal",this.factprojmonthy,this.totalProj);
     }
+
     isVisible(){
         let content = document.getElementById(this.containerProject);
         //console.log("content.style.display",content.style.display);
@@ -132,6 +134,18 @@ class ProjViewReal{
                 el.style.display="";
             }else el.style.display="none";
         });
+    }
+    formtSem(v,fase){
+        let cons=parseFloat(v);
+        if(cons<=70){
+            if(fase=="En Proceso"||fase=="Detenido")
+                return "#ffcc00";
+            else return "Green";
+        }
+        if(cons>70 && cons<=100)
+            return "green";
+        else return "red"
+
     }
     formtRango=(v)=>{
         let rango="";
@@ -171,7 +185,7 @@ class ProjViewReal{
     mostrarProyReal(pproy){
         var contenedor = document.getElementById(this.tabContainer);
         var rowHead=``;
-        var rowName=['<thead><tr><th width="140px" style="background-color:#6666ff; width:140px">ID</th><th style="background-color:#6666ff;width:420px">Nombre</th><th style="background-color:#6666ff;width:20px">Semanas Plan</th><th style="background-color:#6666ff;width:20px">Horas Plan</th><th style="background-color:#6666ff;width:80px">Inicio</th><th style="background-color:#6666ff;width:80px">Cierre</th>','<th style="background-color:#6666ff;width:400px">Ene</th>','<th style="background-color:#6666ff;width:400px">Feb</th>','<th style="background-color:#6666ff;width:400px">Mar</th>','<th style="background-color:#6666ff;width:400px">Abr</th>','<th style="background-color:#6666ff;width:400px">May</th>','<th style="background-color:#6666ff;width:400px">Jun</th>','<th style="background-color:#6666ff;width:400px">Jul</th>','<th style="background-color:#6666ff;width:400px">Ago</th>','<th style="background-color:#6666ff;width:400px">Sep</th>','<th style="background-color:#6666ff;width:400px">Oct</th>','<th style="background-color:#6666ff;width:400px">Nov</th>','<th style="background-color:#6666ff;width:400px">Dic</th>','<th style="background-color:#6666ff;width:400px">Ene_</th>','<th style="background-color:#6666ff;width:400px">Feb_</th>','<th style="background-color:#6666ff;width:400px">Mar_</th>','<th style="background-color:#6666ff;width:400px">Abr_</th>','<th style="background-color:#6666ff;width:400px">May_</th>','<th style="background-color:#6666ff;width:400px">Jun_</th>','<th style="background-color:#6666ff;width:400px">Jul_</th>','<th style="background-color:#6666ff;width:400px">Ago_</th>','<th style="background-color:#6666ff;width:400px">Sep_</th>','<th style="background-color:#6666ff;width:400px">Oct_</th>','<th style="background-color:#6666ff;width:400px">Nov_</th>','<th style="background-color:#6666ff;width:400px">Dic_</th>']
+        var rowName=['<thead><tr><th width="140px" style="background-color:#6666ff; width:140px">ID</th><th style="background-color:#6666ff;width:420px">Nombre</th><th style="background-color:#6666ff;width:20px">Semanas Plan</th><th style="background-color:#6666ff;width:20px">Horas Plan</th><th style="background-color:#6666ff;width:80px">Inicio</th><th style="background-color:#6666ff;width:80px">Cierre</th><th style="background-color:#6666ff;width:80px">%Hrs Consumidas</th>','<th style="background-color:#6666ff;width:400px">Ene</th>','<th style="background-color:#6666ff;width:400px">Feb</th>','<th style="background-color:#6666ff;width:400px">Mar</th>','<th style="background-color:#6666ff;width:400px">Abr</th>','<th style="background-color:#6666ff;width:400px">May</th>','<th style="background-color:#6666ff;width:400px">Jun</th>','<th style="background-color:#6666ff;width:400px">Jul</th>','<th style="background-color:#6666ff;width:400px">Ago</th>','<th style="background-color:#6666ff;width:400px">Sep</th>','<th style="background-color:#6666ff;width:400px">Oct</th>','<th style="background-color:#6666ff;width:400px">Nov</th>','<th style="background-color:#6666ff;width:400px">Dic</th>','<th style="background-color:#6666ff;width:400px">Ene_</th>','<th style="background-color:#6666ff;width:400px">Feb_</th>','<th style="background-color:#6666ff;width:400px">Mar_</th>','<th style="background-color:#6666ff;width:400px">Abr_</th>','<th style="background-color:#6666ff;width:400px">May_</th>','<th style="background-color:#6666ff;width:400px">Jun_</th>','<th style="background-color:#6666ff;width:400px">Jul_</th>','<th style="background-color:#6666ff;width:400px">Ago_</th>','<th style="background-color:#6666ff;width:400px">Sep_</th>','<th style="background-color:#6666ff;width:400px">Oct_</th>','<th style="background-color:#6666ff;width:400px">Nov_</th>','<th style="background-color:#6666ff;width:400px">Dic_</th>']
         this.param=pproy;
         contenedor.innerHTML=rowHead;
         var rows="";        
@@ -201,13 +215,18 @@ class ProjViewReal{
                 let bgc="";
                 let periodo="";
                 if(arr[i].idProy!=projBreak){
-                    projHead=`<tr name="o.${arr[i].nb_proyecto}" ><td class="head-cell-left" colspan="4"><button onclick="mostrarProyReal('p.${arr[i].idProy}')">+</button>${arr[i].idProy}-${arr[i].nb_proyecto}</td><td>${(arr[i].inicio_mon?arr[i].inicio_mon.substring(0,10):'')}</td><td>${(arr[i].cierre_mon?arr[i].cierre_mon.substring(0,10):'')}</td>`;
+                    let cons=this.projects.getPorConsumido(arr[i].idProy);
+                    let fase=this.projects.getFase(arr[i].idProy);
+                    let color=this.formtSem(cons,fase);
+                    console.log("color sem",arr[i].idProy,cons,color);
+                    projHead=`<tr name="o.${arr[i].nb_proyecto}" ><td class="head-cell-left" colspan="4"><button onclick="mostrarProyReal('p.${arr[i].idProy}')">+</button>${arr[i].idProy}-${arr[i].nb_proyecto} (${fase})</td><td>${(arr[i].inicio_mon?arr[i].inicio_mon.substring(0,10):'')}</td><td>${(arr[i].cierre_mon?arr[i].cierre_mon.substring(0,10):'')}</td><td style="color:${color};background-color:white;">${cons}</td>`;
                     let feiniR=new Date(arr[i].inicio_mon.substring(0,8)+"01");
                     let fefinR=new Date(arr[i].cierre_mon.substring(0,10));
                     //console.log("Rango fechas",arr[i].idProy,feiniR,fefinR)
                     bgc="";
-                    if(arr[i].fase=="Propuesta Activa"||arr[i].fase=="SOW/Contrato") bgc="style='background-color:orange;'";
-                    if(arr[i].fase=="Detenido") bgc="style='background-color:red;'";
+                    //if(arr[i].fase=="Propuesta Activa"||arr[i].fase=="SOW/Contrato") bgc="style='background-color:orange;'";
+                    //if(arr[i].fase=="Detenido") bgc="style='background-color:red;'";
+                    bgc=`style='background-color:${color};'`;
                     for(let j=INITIALMONTH;j<INITIALMONTH+MONTHTOSHOW;j++){
                         let fe2Test=j<=12?new Date(CURRYEAR+"-"+j+"-01"):new Date((CURRYEAR+1)+"-"+(j-12)+"-01")
                         if(fe2Test>=feiniR && fe2Test<=fefinR){ 
@@ -221,7 +240,7 @@ class ProjViewReal{
                 if(teamView.buscarPorNombre(arr[i].usr)===undefined){
                     ex="color:red;"
                 }
-                tds.push(`<tr name="p.${arr[i].idProy}" style="display:none;"><td>&nbsp;</td><td style="${ex}">${arr[i].usr}</td><td>${arr[i].dura_plan_week?arr[i].dura_plan_week:0}</td><td>${arr[i].hrs_dedica_plan?arr[i].hrs_dedica_plan:0}</td><td>${(arr[i].inicio_mon?arr[i].inicio_mon.substring(0,10):'')}</td><td>${(arr[i].cierre_mon?arr[i].cierre_mon.substring(0,10):'')}</td>`)
+                tds.push(`<tr name="p.${arr[i].idProy}" style="display:none;"><td>&nbsp;</td><td style="${ex}">${arr[i].usr}</td><td>${arr[i].dura_plan_week?arr[i].dura_plan_week:0}</td><td>${arr[i].hrs_dedica_plan?arr[i].hrs_dedica_plan:0}</td><td>${(arr[i].inicio_mon?arr[i].inicio_mon.substring(0,10):'')}</td><td>${(arr[i].cierre_mon?arr[i].cierre_mon.substring(0,10):'')}</td><td>&nbsp;</td>`)
                 tds.push(`<td width='170px'${arr[i].pEne||arr[i].rEne?'class="cell1"':''}>${(arr[i].pEne?`<span class="plan" ${this.formtRango(arr[i].pEne)}>Plan:`+arr[i].pEne.toFixed(1)+'H</span>':'')}${(arr[i].rEne?`<div class="real" ${this.formtRango(arr[i].rEne)}>Real:`+arr[i].rEne.toFixed(1)+'H</div>':'')}</td>`);
                 tds.push(`<td width='170px'${arr[i].pFeb||arr[i].rFeb?'class="cell1"':''}>${(arr[i].pFeb?`<span class="plan"  ${this.formtRango(arr[i].pFeb)}>Plan:`+arr[i].pFeb.toFixed(1)+'H</span>':'')}${(arr[i].rFeb?`<div class="real" ${this.formtRango(arr[i].rFeb)}>Real:`+arr[i].rFeb.toFixed(1)+'H</div>':'')}</td>`);
                 tds.push(`<td width='170px'${arr[i].pMar||arr[i].rMar?'class="cell1"':''}>${(arr[i].pMar?`<span class="plan" ${this.formtRango(arr[i].pMar)}>Plan:`+arr[i].pMar.toFixed(1)+'H</span>':'')}${(arr[i].rMar?`<div class="real" ${this.formtRango(arr[i].rMar)}>Real:`+arr[i].rMar.toFixed(1)+'H</div>':'')}</td>`);
