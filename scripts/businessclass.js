@@ -404,6 +404,9 @@ class Proyectos{
     getActiveProj(){
         return this.activeProj;
     }
+    getProy(pid){
+        return this.proyMap.get(pid);
+    }
     getFase(pid){
         return this.proyMap.has(pid)?this.proyMap.get(pid).Fase:"";
     }
@@ -417,7 +420,7 @@ class Proyectos{
         //console.log("proyectos",idp,this.proyectos);
         let proy=this.proyectos
         let objp=proy.find((e)=>e.idProy==idp);
-        return objp===undefined?0:objp.po_Consumido.toFixed(1)+"%";
+        return objp===undefined?0:(objp.po_Consumido===null?0:objp.po_Consumido.toFixed(1)+"%");
     }
 }
 class CrossReference{

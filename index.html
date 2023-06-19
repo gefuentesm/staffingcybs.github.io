@@ -103,16 +103,17 @@
             Cruza Consultores vs Proyectos en las últimas 4 semanas <span id="periodCross"></span>
         </div>
         <div class="grid-container">
-            <div class="grid-item">
+            <div class="grid-item" style="padding:3px">
                 <div id="projSel" style="display: table;"></div>
-                <button onclick="showProjectsel()">Procesar selección</button>
+                
             </div>
             <div class="grid-item">
                 <div style="display: table;">
                     <label for="nombre-csv" style="display:table-cell;vertical-align:middle">Indique un nombre al archivo</label>
                     <input type="text" id="nombre-csv" value="archivo2023"></input>
+                    <button onclick="btn_saveCsv()">Guardar CSV</button>
                 </div>
-                <button onclick="btn_saveCsv()">Guardar CSV</button>
+                
             </div>
         </div>
         <div id="table-scroll" class="table-scroll">

@@ -189,6 +189,8 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         return encabChgh+rows+endEncabh;
     } 
     function btn_saveCsv(){
+        csv=crossRefView.generateCSV();
+        
         const name=document.getElementById("nombre-csv").value;
         const blob = new Blob(csv, { type: 'text/plain' });
 
@@ -1018,22 +1020,28 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         
         evt.currentTarget.className += " active";
         //console.log(viewToOpen);
-        if(viewToOpen=="Staffing") {   
+        if(viewToOpen=="Staffing") {  
+            document.getElementById("sidebar").style.display="block"; 
+            document.getElementById("container-project").style.marginLeft="206px";
             document.getElementById("team").style.display="block";         
             show_StaffContainer();
             document.getElementById('contenido').style.display = "block";
         }
-        if(viewToOpen=="Project") {        
+        if(viewToOpen=="Project") {   //cross view     
             //alert("En desarrollo"); 
             if(proyectos===undefined) alert("La data no ha terminado de cargar. Espere unos segundos e intente de nuevo");
             else{  
+                document.getElementById("sidebar").style.display="none";
+                document.getElementById("container-project").style.marginLeft="2px";
                 document.getElementById("team").style.display="none";  
                 show_ProjContainer();
             }
             //document.getElementById('container-project').style.display = "block";
         }
         if(viewToOpen=="People") {   
-            //alert("En desarrollo");          
+            //alert("En desarrollo");    
+            document.getElementById("sidebar").style.display="block"; 
+            document.getElementById("container-project").style.marginLeft="206px";      
             show_PeopleContainer();
             document.getElementById("team").style.display="none";
         }
@@ -1042,6 +1050,8 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             if(projViewReal===undefined) alert("La data no ha terminado de cargar. Espere un momento")
             else{
                 document.getElementById("team").style.display="none";
+                document.getElementById("sidebar").style.display="block"; 
+                document.getElementById("container-project").style.marginLeft="206px";
                 projViewReal.setContainerShow();
                 if(!projViewReal.previousCalledNoZero())
                     projViewReal.mostrarProyReal(0);

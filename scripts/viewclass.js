@@ -1730,15 +1730,63 @@ class CrossRefView{
             this.allProject.push(indice);
             //opt+= `<option value="${indice}">${indice}-${valor.nb}</option>`
         }
-        return lbel+sel+opt+"</select>";
+        return lbel+sel+opt+"</select><button onclick='showProjectsel()'>Procesar selección</button>";
     }
+    generateCSV(){
+        // Obtener una referencia a la tabla
+        const tabla = document.getElementById("tab-proj-01");
 
+        // Crear un array para almacenar los datos
+        const datos = [];
+        const filaArr=[];
+
+        // Recorrer las filas de la tabla
+        for (let i = 0; i < tabla.rows.length; i++) {
+            const fila = tabla.rows[i];
+
+            // Crear un objeto para almacenar los datos de la fila
+            const filaDatos = [];
+            
+            let filaContent="";
+
+            // Recorrer las celdas de la fila
+                for (let j = 0; j < fila.cells.length; j++) {
+                    const celda = fila.cells[j];
+
+                    // Verificar si la celda está visible
+                    const estilos = window.getComputedStyle(celda);
+                    if (estilos.getPropertyValue("display") !== "none") {
+                    // Acceder al contenido de la celda y guardarlo en el objeto
+                        filaDatos[celda.cellIndex] = celda.innerHTML;
+                        let cel=celda.innerHTML=="&nbsp;"?"":celda.innerHTML;
+                        let pos=cel.indexOf("g>");
+                        if(pos>0)cel=cel.substring(pos+2);
+                        let pos2=cel.indexOf("j(")
+                        let pos3=cel.indexOf(')">O')
+                        if(pos2>0){ pos2=pos2+1;
+                            cel=cel.replace(cel.substring(pos2,pos3),"");
+                        }
+                        cel=cel.replace('<button onclick="hideProj',"")
+                        cel=cel.replace(')">Ocultar</button>',"");
+                        cel=cel.replace('&nbsp;',"");
+                        cel=cel.replace('&nbsp;',"");
+                        cel=cel.replace(",",";")
+                        filaContent+=j==0?cel:","+cel;
+                    }
+                }
+
+            // Añadir los datos de la fila al array
+            datos.push(filaDatos);
+            filaArr.push(filaContent+"\n");
+        }
+        //console.log("archivo csv",datos,filaArr);
+        return filaArr;
+        // Generar el archivo CSV utilizando la librería Papaparse
+        //const csv = Papa.unparse(datos);
+
+    }
     showCrossRef(){
         let proyMap=this.crossObj.getProjMap();
-        let csv_head=[];
-        let csv_fases=[];
-        csv_head.push("Consultores");
-        let csv_filas=[];
         let consulArr=this.crossObj.getCrossArr();
         let faltantes=this.team.faltan(consulArr);
         this.cantProyProp.del();                  
@@ -1753,12 +1801,10 @@ class CrossRefView{
         let i=0;
         let th="<thead><tr ><th class='rotar' style='width:250px'>Consultor</th>";
         let tfase="<tr><th style='z-index:2;width:250px'>&nbsp;</th>";
-        csv_fases.push("");
         for (const [indice, valor] of proyMap.entries()) {
             th+=`<th class="rotar" name="${indice===null?0:indice}" >${indice===null?"":indice}-${valor.nb===null?"":valor.nb} &nbsp;&nbsp; Total:${this.crossObj.getHorasByProject(indice).toFixed(1)}<button onclick="hideProj(${indice})">Ocultar</button></th>`
             tfase+=`<th  name="${indice}" ${this.colorFase(proyectos.getFase(indice))}>${proyectos.getFase(indice)}</th>`;
-            csv_head.push(indice+"-"+valor.nb.replace(",","")+" total:"+this.crossObj.getHorasByProject(indice).toFixed(1))
-            csv_fases.push(proyectos.getFase(indice));
+            if(proyectos.getFase(indice)=="") console.log("proyectos sin fase",indice,proyectos.getProy(indice))
             //console.log("fase",indice,projList.getFaseProy(indice));
             i++;
         }
@@ -1785,23 +1831,12 @@ class CrossRefView{
              <th  style='z-index:2'>% Utilización Total</th>
              </tr>`+tfase+"</thead>";
         let tr="<tbody>";
-        csv_head.push("Cantidad de Proyectos con Horas Reportadas");
-        csv_head.push("Cantidad de Proyectos y Propuestas cercanas con Horas Reportadas");
-        csv_head.push("Cantidad de Proyectos con Horas Reportadas (Incluye los proyectos - propuestas - lead - )");
-        csv_head.push("TOTAL DE HORAS Proyectos - Propuestas - Lead");
-        csv_head.push("TOTAL DE HORAS Proyectos - Propuestas - Lead");
-        csv_head.push("TOTAL DE HORAS Otras Categorías");
-        csv_head.push("TOTAL DE HORAS Reportadas en Clockify");
-        csv_head.push("% Utilización Proyectos");
-        csv_head.push("% Utilización Otros");
-        csv_head.push("% Utilización Total");
+
         //console.log("consulArr buscando a zuleima",consulArr);
         for(let i=0;i<consulArr.length;i++){
-            let csv_cons=[];
             let no_esta=this.team.buscarPorNombre(consulArr[i].usr)===undefined?"color:red":"color:black"
             tr+="<tr>";
             tr+=`<th style="${no_esta};width:250px">${consulArr[i].usr}</th>`;
-            csv_cons.push(consulArr[i].usr);
             //console.log("array",consulArr[i].projs,consulArr[i].projs.length)
             //getHorasByConsultor
             for (const [indice, valor] of proyMap.entries()){
@@ -1809,8 +1844,7 @@ class CrossRefView{
                 let hrs=this.crossObj.getHoras(indice,consulArr[i].usr)
                 //console.log("pos",hrs,indice,consulArr[i].usr)
                 if(hrs!=-1){
-                    tr+=`<td name="${indice}" style="${this.colorear(hrs)};border-bottom:1px dotted #9966ff"><b>${hrs.toFixed(1)}</b></td>`;
-                    csv_cons.push(hrs.toFixed(1));  
+                    tr+=`<td name="${indice}" style="${this.colorear(hrs)};border-bottom:1px dotted #9966ff;font-weight: bold">${hrs.toFixed(1)}</td>`; 
                     this.cantProyProp.add(indice,proyectos.getFase(indice),consulArr[i].usr,1);                  
                     this.countProjActv.add(indice,proyectos.getFase(indice),consulArr[i].usr,1);
                     this.countOther.add(indice,proyectos.getFase(indice),consulArr[i].usr,1);
@@ -1820,7 +1854,6 @@ class CrossRefView{
                     this.hoursProjPropNS.add(indice,proyectos.getFase(indice),consulArr[i].usr,hrs);
                 }else{
                     tr+=`<td name="${indice}" style="border-bottom:1px dotted #9966ff">&nbsp;</td>`;
-                    csv_cons.push(0);
                 }
             }
             let horaConsul=this.crossObj.getHorasByConsultor(consulArr[i].usr);
@@ -1837,39 +1870,9 @@ class CrossRefView{
                  <td>${this.semaforo(horasResto)}${((horasResto/160)*100).toFixed(1)}%</td>
                  <td>${this.semaforo(horaConsul+horasResto)}${((horaConsul/160)*100+(horasResto/160)*100).toFixed(1)}%</td>
                  </tr>`;
-            csv_cons.push(this.countProjActv.get(consulArr[i].usr).toFixed(0));
-            csv_cons.push(this.countOther.get(consulArr[i].usr));
-            csv_cons.push(this.cantProyProp.get(consulArr[i].usr).toFixed(0));
-            csv_cons.push(this.hoursProjPropNS.get(consulArr[i].usr).toFixed(1));
-            csv_cons.push("0");
-            csv_cons.push(horasResto.toFixed(1));
-            csv_cons.push((parseFloat(horaConsul)+parseFloat(horasResto)).toFixed(1));
-            csv_cons.push(((horaConsul/160)*100).toFixed(1));
-            csv_cons.push(((horasResto/160)*100).toFixed(1));
-            csv_cons.push(((horaConsul/160)*100+(horasResto/160)*100).toFixed(1));
-            csv_filas.push(csv_cons);
+
             //}
         }
-        //console.log("probable estructura de csv ",csv_head,csv_filas);
-        //let newval=hoursProjProp.recalc("Alexeis Perera",this.crossObj,["65","350"])
-        //let recount=countProjActv.recount("Alexeis Perera",["65","350"]);
-        //console.log("contadores",countProjActv,recount,hoursProjProp,newval);
-        //generar csv
-        csv_fases.push("Considerados");
-        csv_fases.push("Considerados");
-        csv_fases.push("No Considerados");
-        csv_fases.push("Considerados");
-        csv_fases.push("No Considerados");
-        csv_fases.push("Todos");
-        csv_fases.push("Todos");
-        csv_fases.push("Todos");
-        csv_fases.push("Todos");
-        csv_fases.push("Todos");
-        csv.push(""+csv_head.join(",")+"\n");
-        csv.push(csv_fases.join(",")+"\n");  //agregando las fases
-        csv_filas.forEach((el)=>{
-            csv.push(`${el.join(",")}\n`);
-        })
         //console.log("csv",csv);
 
         let trfaltan="<tr>"
