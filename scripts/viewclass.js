@@ -1844,7 +1844,7 @@ class CrossRefView{
                 let hrs=this.crossObj.getHoras(indice,consulArr[i].usr)
                 //console.log("pos",hrs,indice,consulArr[i].usr)
                 if(hrs!=-1){
-                    tr+=`<td name="${indice}" style="${this.colorear(hrs)};border-bottom:1px dotted #9966ff;font-weight: bold">${hrs.toFixed(1)}</td>`; 
+                    tr+=`<td name="${indice}" style="${this.colorear(hrs)};border-bottom:1px dotted #9966ff;font-weight: bold">${hrs!==null?hrs.toFixed(1):0}</td>`; 
                     this.cantProyProp.add(indice,proyectos.getFase(indice),consulArr[i].usr,1);                  
                     this.countProjActv.add(indice,proyectos.getFase(indice),consulArr[i].usr,1);
                     this.countOther.add(indice,proyectos.getFase(indice),consulArr[i].usr,1);

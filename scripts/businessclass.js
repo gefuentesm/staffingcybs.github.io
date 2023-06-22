@@ -468,7 +468,7 @@ class CrossReference{
             projHours.set(idProy, horas);
         }
         });
-        //console.log("proyecto horas",projHours);
+        console.log("proyecto horas",projHours);
         return projHours;
     }
     getHorasRestoByConsultor(usr){
@@ -478,7 +478,8 @@ class CrossReference{
         return this.horasTxConsultor.has(usr)?this.horasTxConsultor.get(usr):0;
     }
     getHorasByProject(prodid){
-        return this.horasTxProject.has(prodid)?this.horasTxProject.get(prodid):0;
+        console.log("getHorasByProject",prodid)
+        return this.horasTxProject.has(prodid)?(this.horasTxProject.get(prodid)!==null?this.horasTxProject.get(prodid):0):0;
     }
     getUltimaFechaRep(){
         return this.fechaObj.ultima_fecha.substring(0,10);
