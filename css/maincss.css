@@ -703,7 +703,7 @@
 }
 .grid-container {
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: auto auto auto;
   background-color: silver;
   padding: 5px;
 }
@@ -752,6 +752,12 @@
 }
 .table-scroll thead th:first-child {
   z-index: 5;
+}
+.considerartrue{
+  z-index:2;
+}
+.considerarfalse{
+  z-index:2;
 }
   @-webkit-keyframes spin {
     0% { -webkit-transform: rotate(0deg); }

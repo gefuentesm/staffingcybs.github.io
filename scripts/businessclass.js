@@ -401,6 +401,10 @@ class Proyectos{
           });
           return proy;
     }
+    getConsiderar(idP){
+        let considerArr=this.proyectos;
+        return considerArr.find((el)=>el.idProy===idP).in_relevante_staffing===1
+    }
     getActiveProj(){
         return this.activeProj;
     }
@@ -426,7 +430,9 @@ class Proyectos{
 class CrossReference{
     constructor(data,proyectos){
         this.resto=this.filtrarResto(data);
+        this.propuesta=this.filterSoloProp(data);
         this.data=this.filterSoloProy(data); 
+
         this.proyectos=proyectos;
         //console.log("proyectos obj",proyectos);
         this.fechaObj=data.fecha[0];
@@ -439,13 +445,44 @@ class CrossReference{
         this.createCrossRef();
         this.projex=this.addProjNonExisten();
         this.horasTxConsultor= this.createDedicacionTotal();
+        this.horasPropuestaXCons=this.createDedicacionPropuestas();
         this.horasTxProject=this.createCargaTotal();
         this.proyectHide=[];
         this.projectList=[];
     }
     createDedicacionTotal(){
+        //horas por persona en todos los proyectos reportados
         const personHours = new Map();
-        let projects=this.data;
+        let projects=this.data;  // solo proyectos
+
+        projects.forEach(({ usr, horas }) => {
+        if (personHours.has(usr)) {
+            personHours.set(usr, personHours.get(usr) + horas);
+        } else {
+            personHours.set(usr, horas);
+        }
+        });
+        //console.log("persona horas",personHours);
+        return personHours;
+    }
+    getDuplicados(usr){
+
+        const idsPropuestas = this.propuesta
+            .filter(propuesta => propuesta.usr==usr)
+            .map(propuesta => propuesta.idProy);
+        
+        const idsProys = this.data
+            .filter(proy => proy.usr==usr)
+            .map(proy => proy.idProy);
+        if(usr=="Eglantina Norato") {
+            console.log("duplicados",idsPropuestas,idsProys)
+        }
+        return idsPropuestas.filter(id => idsProys.includes(id)).length;
+    }
+    createDedicacionPropuestas(){
+        //horas por persona en todas las propuestas reportadas
+        const personHours = new Map();
+        let projects=this.propuesta;  // solo propuestas
 
         projects.forEach(({ usr, horas }) => {
         if (personHours.has(usr)) {
@@ -468,9 +505,31 @@ class CrossReference{
             projHours.set(idProy, horas);
         }
         });
-        console.log("proyecto horas",projHours);
+        //console.log("proyecto horas",projHours);
         return projHours;
     }
+    getCantProy(usr){
+        let projects=this.data;
+        const total = projects
+            .filter(p => p.usr === usr)
+            .reduce((acumulador) => {
+            return acumulador + 1;
+            }, 0);
+        return total;
+    }
+    getCantProp(usr){
+        let projects=this.propuesta;
+        const total = projects
+            .filter(p => p.usr === usr)
+            .reduce((acumulador) => {
+            return acumulador + 1;
+            }, 0);
+        return total;
+    }
+    getHorasPropuesta(usr){
+        return this.horasPropuestaXCons.has(usr)?this.horasPropuestaXCons.get(usr):0;
+    }
+    
     getHorasRestoByConsultor(usr){
         return this.resto.has(usr)?this.resto.get(usr):0;
     }
@@ -478,7 +537,7 @@ class CrossReference{
         return this.horasTxConsultor.has(usr)?this.horasTxConsultor.get(usr):0;
     }
     getHorasByProject(prodid){
-        console.log("getHorasByProject",prodid)
+        //console.log("getHorasByProject",prodid)
         return this.horasTxProject.has(prodid)?(this.horasTxProject.get(prodid)!==null?this.horasTxProject.get(prodid):0):0;
     }
     getUltimaFechaRep(){
@@ -527,10 +586,10 @@ class CrossReference{
         let arrayProy=data.data;
         let persSinA=new Map();
         let Proy = arrayProy.filter(function(arrayProy) {
-            return arrayProy.Project!== "Categoría - Proyecto";
+            return arrayProy.Project!== "Categoría - Proyecto" && arrayProy.Project!=="Categoría - Propuesta";
           });
         Proy.forEach(({ usr, project,horas }) => {
-            if(project!=="Categoría - Proyecto"){
+            if(project!=="Categoría - Proyecto" && project!=="Categoría - Propuesta"){
                 if (persSinA.has(usr)) {
                     persSinA.set(usr, persSinA.get(usr) + horas);
                 } else {
@@ -538,7 +597,7 @@ class CrossReference{
                 }
             }
           });
-          //console.log("resto",persSinA);
+          console.log("resto",persSinA);
         return persSinA;
     }
     filterSoloProy(data){
@@ -546,8 +605,16 @@ class CrossReference{
         let soloProy = arrayProy.filter(function(arrayProy) {
             return arrayProy.Project== "Categoría - Proyecto" && arrayProy.idProy!=null;
           });
-        //console.log("solo proyectos",soloProy);
+        console.log("solo proyectos",soloProy);
         return soloProy;
+    }
+    filterSoloProp(data){
+        let arrayProy=data.data;
+        let soloProp= arrayProy.filter(function(arrayProy) {
+            return arrayProy.Project== "Categoría - Propuesta" && arrayProy.idProy!=null;
+          });
+        console.log("solo prop",soloProp);
+        return soloProp;
     }
     addProjNonExisten(){
         

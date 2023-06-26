@@ -1599,6 +1599,9 @@ class CrossRefView{
         this.allProject=idFiltrados;
         
     }
+    hideShowConsiderar(){
+        
+    }
     toShowProject(){        
         const select = document.getElementById("hideProyectos");
         const selectedOptions = select.selectedOptions;
@@ -1801,35 +1804,34 @@ class CrossRefView{
         let i=0;
         let th="<thead><tr ><th class='rotar' style='width:250px'>Consultor</th>";
         let tfase="<tr><th style='z-index:2;width:250px'>&nbsp;</th>";
+        tfase+=`<th style='color:black;z-index:0'>Considerados</th>
+            <th style='color:black;z-index:0'>Considerados</th>
+            <th style='color:black;z-index:0'>No Considerados</th>
+            <th style='color:black;z-index:0'>Considerar</th>
+            <th style='color:black;z-index:0'>No Considerados</th>
+            <th style='color:black;z-index:0'>Todos</th>
+            <th style='color:black;z-index:0'>Todos</th>
+            <th style='color:black;z-index:0'>Todos</th>`;
+        th+=`<th  style='z-index:2'>% Utilización Proyectos</th>
+            <th  style='z-index:2'>HORAS Categoría Proyectos</th>
+            <th  style='z-index:2'>HORAS Categoría Propuesta</th>
+            <th  style='z-index:2'>HORAS Resto de Categorías</th>
+            <th  style='z-index:2'>TOTAL DE HORAS </th>
+            <th  style='z-index:2'>CANTIDAD Proyectos</th>
+            <th  style='z-index:2'>CANTIDAD Propuestas</th>
+            <th  style='z-index:2'>CANTIDAD TOTAL</th>`
+        let considera;
         for (const [indice, valor] of proyMap.entries()) {
-            th+=`<th class="rotar" name="${indice===null?0:indice}" >${indice===null?"":indice}-${valor.nb===null?"":valor.nb} &nbsp;&nbsp; Total:${this.crossObj.getHorasByProject(indice).toFixed(1)}<button onclick="hideProj(${indice})">Ocultar</button></th>`
-            tfase+=`<th  name="${indice}" ${this.colorFase(proyectos.getFase(indice))}>${proyectos.getFase(indice)}</th>`;
+            considera=proyectos.getConsiderar(indice)
+            th+=`<th class="considerar${considera}" name="${indice===null?0:indice}" >${indice===null?"":indice}-${valor.nb===null?"":valor.nb} &nbsp;&nbsp; Total:${this.crossObj.getHorasByProject(indice).toFixed(1)}<button onclick="hideProj(${indice})">Ocultar</button></th>`
+            tfase+=`<th  name="${indice}" class="considerar${considera}" ${this.colorFase(proyectos.getFase(indice))}>${proyectos.getFase(indice)}</th>`;
             if(proyectos.getFase(indice)=="") console.log("proyectos sin fase",indice,proyectos.getProy(indice))
             //console.log("fase",indice,projList.getFaseProy(indice));
             i++;
         }
-        tfase+=`<th style='color:black;z-index:0'>Considerados</th>
-                <th style='color:black;z-index:0'>Considerados</th>
-                <th style='color:black;z-index:0'>No Considerados</th>
-                <th style='color:black;z-index:0'>Considerar</th>
-                <th style='color:black;z-index:0'>No Considerados</th>
-                <th style='color:black;z-index:0'>Todos</th>
-                <th style='color:black;z-index:0'>Todos</th>
-                <th style='color:black;z-index:0'>Todos</th>
-                <th style='color:black;z-index:0'>Todos</th>
-                <th style='color:black;z-index:0'>Todos</th>
-                </tr>`;
-        th+=`<th  style='z-index:2'>Cantidad de Proyectos con Horas Reportadas</th>
-             <th  style='z-index:2'>Cantidad de Proyectos y Propuestas cercanas con Horas Reportadas</th>
-             <th  style='z-index:2'>Cantidad de Proyectos con Horas Reportadas (Incluye los proyectos - propuestas - lead - )</th>
-             <th  style='z-index:2'>TOTAL DE HORAS Proyectos - Propuestas - Lead</th>
-             <th  style='z-index:2'>TOTAL DE HORAS Proyectos - Propuestas - Lead</th>
-             <th  style='z-index:2'>TOTAL DE HORAS Otras Categorías</th>
-             <th  style='z-index:2'>TOTAL DE HORAS Reportadas en Clockify</th>
-             <th  style='z-index:2'>% Utilización Proyectos</th>
-             <th  style='z-index:2'>% Utilización Otros</th>
-             <th  style='z-index:2'>% Utilización Total</th>
-             </tr>`+tfase+"</thead>";
+        
+
+         th+=tfase+"</thead>";
         let tr="<tbody>";
 
         //console.log("consulArr buscando a zuleima",consulArr);
@@ -1837,14 +1839,29 @@ class CrossRefView{
             let no_esta=this.team.buscarPorNombre(consulArr[i].usr)===undefined?"color:red":"color:black"
             tr+="<tr>";
             tr+=`<th style="${no_esta};width:250px">${consulArr[i].usr}</th>`;
+            let horaConsul=this.crossObj.getHorasByConsultor(consulArr[i].usr);
+            let horaPropUsr=this.crossObj.getHorasPropuesta(consulArr[i].usr);
+            let horasResto=this.crossObj.getHorasRestoByConsultor(consulArr[i].usr);
+            let totalHoras=horaConsul+horasResto+horaPropUsr;
+            let cantProy=this.crossObj.getCantProy(consulArr[i].usr)
+            let cantProp=this.crossObj.getCantProp(consulArr[i].usr)
+            tr+=`<td>${this.semaforo(horaConsul)}${((horaConsul/160)*100).toFixed(1)}%</td>
+                <td>${horaPropUsr.toFixed(1)}</td>
+                <td>${horaConsul.toFixed(1)}</td>
+                <td>${horasResto.toFixed(1)}</td>
+                <td>${totalHoras.toFixed(1)}</td>
+                 <td>${cantProy}</td>
+                 <td>${cantProp}</td>
+                 <td>${cantProy+cantProp-this.crossObj.getDuplicados(consulArr[i].usr)}</td>`;
             //console.log("array",consulArr[i].projs,consulArr[i].projs.length)
             //getHorasByConsultor
             for (const [indice, valor] of proyMap.entries()){
                 //let esta=this.buscarPosicion(consulArr[i].projs,indice);
+                considera=proyectos.getConsiderar(indice)
                 let hrs=this.crossObj.getHoras(indice,consulArr[i].usr)
                 //console.log("pos",hrs,indice,consulArr[i].usr)
                 if(hrs!=-1){
-                    tr+=`<td name="${indice}" style="${this.colorear(hrs)};border-bottom:1px dotted #9966ff;font-weight: bold">${hrs!==null?hrs.toFixed(1):0}</td>`; 
+                    tr+=`<td name="${indice}" class="considerar${considera}" style="${this.colorear(hrs)};border-bottom:1px dotted #9966ff;font-weight: bold">${hrs!==null?hrs.toFixed(1):0}</td>`; 
                     this.cantProyProp.add(indice,proyectos.getFase(indice),consulArr[i].usr,1);                  
                     this.countProjActv.add(indice,proyectos.getFase(indice),consulArr[i].usr,1);
                     this.countOther.add(indice,proyectos.getFase(indice),consulArr[i].usr,1);
@@ -1853,23 +1870,11 @@ class CrossRefView{
                     this.hoursProjPropS.add(indice,proyectos.getFase(indice),consulArr[i].usr,hrs);
                     this.hoursProjPropNS.add(indice,proyectos.getFase(indice),consulArr[i].usr,hrs);
                 }else{
-                    tr+=`<td name="${indice}" style="border-bottom:1px dotted #9966ff">&nbsp;</td>`;
+                    tr+=`<td name="${indice}" class="considerar${considera}" style="border-bottom:1px dotted #9966ff">&nbsp;</td>`;
                 }
+            
             }
-            let horaConsul=this.crossObj.getHorasByConsultor(consulArr[i].usr);
-            let horasResto=this.crossObj.getHorasRestoByConsultor(consulArr[i].usr);
-            let totalHoras=horaConsul+horasResto;
-            tr+=`<td id="totProyAct-${consulArr[i].usr}">${this.countProjActv.get(consulArr[i].usr).toFixed(0)}</td>
-                 <td id="totProp-${consulArr[i].usr}">${this.countOther.get(consulArr[i].usr)}</td>
-                 <td>${this.cantProyProp.get(consulArr[i].usr).toFixed(0)}</td>
-                 <td id="hrexcl-${consulArr[i].usr}">${this.hoursProjPropNS.get(consulArr[i].usr).toFixed(1)}</td>
-                 <td id="hrincl-${consulArr[i].usr}">0</td>
-                 <td>${horasResto.toFixed(1)}</td>
-                 <td>${(parseFloat(horaConsul)+parseFloat(horasResto)).toFixed(1)}</td>
-                 <td>${this.semaforo(horaConsul)}${((horaConsul/160)*100).toFixed(1)}%</td>
-                 <td>${this.semaforo(horasResto)}${((horasResto/160)*100).toFixed(1)}%</td>
-                 <td>${this.semaforo(horaConsul+horasResto)}${((horaConsul/160)*100+(horasResto/160)*100).toFixed(1)}%</td>
-                 </tr>`;
+            tr+="</tr>"
 
             //}
         }

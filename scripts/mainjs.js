@@ -188,6 +188,25 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         rows=render.sendTable(hcArr,"historial_cambios","","","","");
         return encabChgh+rows+endEncabh;
     } 
+   function btn_noconsiderar(){
+        let btn=document.getElementById("btconsiderar");
+        let clase="considerarfalse"
+        let display=""
+        if(btn.textContent.indexOf("Ocultar")>=0){
+            btn.textContent="Mostrar todos"
+            display="none";
+        }else{
+            btn.textContent="Ocultar Proyectos marcados No Considerar"
+            display="";   
+        }
+        let proyec=document.getElementsByClassName(clase);
+        console.log("no considerar",proyec);
+        for (let i = 0; i < proyec.length; i++) {
+            proyec[i].style.display = display;
+        }
+  
+
+    }
     function btn_saveCsv(){
         csv=crossRefView.generateCSV();
         
