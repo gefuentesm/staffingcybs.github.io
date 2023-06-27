@@ -365,6 +365,39 @@ class HistoricChanges{
         //console.log("update data",this.Hdata);
     }
 }
+class TasaConsumo{
+    constructor(data){
+        this.tasaConsumo=this.crearEstructura(data);
+        //console.log("Tasa consumo",data);
+    }
+    crearEstructura(data){
+        let mapatem=new Map()
+        data.forEach((el)=>{
+            mapatem.set(el.idProy,el)
+        })
+        console.log(mapatem)
+        return mapatem;
+    }
+    getTasaConsumoById(idProy){
+        return this.tasaConsumo.has(idProy)?this.tasaConsumo.get(idProy).tasa_consumo_plan.toFixed(1):0
+    }
+    getTasaConsumoRealById(idProy){
+        return this.tasaConsumo.has(idProy)?this.tasaConsumo.get(idProy).tasa_consumo_real.toFixed(1):0
+    }
+    getDiasConsumoTotal(idProy){
+        if(this.tasaConsumo.has(idProy)){
+            let obj=this.tasaConsumo.get(idProy);
+            console.log("data dias consumo total",obj);
+            if(obj.hhquedan>0 && obj.Fase==="En Proceso")
+                return obj.dias_consumir_todo.toFixed(0);
+            if(obj.Fase!=="En Proceso")
+                return "P/C"
+            if(obj.hhquedan<0) 
+                return "N/T";
+        }
+        return "N/D";
+    }
+}
 class Proyectos{
     constructor(data){
         //console.log("data",data)

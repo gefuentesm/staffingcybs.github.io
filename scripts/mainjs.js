@@ -34,6 +34,7 @@ var userSession;
 var dateOfChanged;
 var crossRef;
 var proyectos;
+var tasaConsumo;
 var csv=[];
 var crossRefView;
 titulo=["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
@@ -878,6 +879,22 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             
 
     }
+    async function getTasaConsumo(){
+        console.log("inicio getTasaConsumo");
+        let fetchData=await util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/gettasaconsumoproy`,myToken,myTime)
+
+        //console.log("fetch data getProjectSummary",fetchData);
+        if(typeof fetchData.msg=="undefined")
+            msg="ok"
+        else
+            msg=fetchData.msg
+        if(msg=="ok"){
+            
+            tasaConsumo=new TasaConsumo(fetchData.data);
+
+        }
+        console.log("fin getTasaConsumo");    
+    }
     async function loadVacation1(){
         console.log("inicio loadVacation");
         let fetchData=await util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getvacation`,myToken,myTime)
@@ -1078,7 +1095,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             //console.log("People",document.getElementById('container-project-real').style.display)
         }
     }
-  
+
     async function setProy(){ 
         //console.log("setProy");
         //console.log("auth",myToken,myTime)
@@ -1096,6 +1113,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         document.getElementById("loader").style.display = "";
         if(myToken && myTime) {
             
+            getTasaConsumo();
             //loadStaff() ;
             await loadVacation1();
 
