@@ -238,8 +238,10 @@ class ProjViewReal{
                     //if(arr[i].fase=="Propuesta Activa"||arr[i].fase=="SOW/Contrato") bgc="style='background-color:orange;'";
                     //if(arr[i].fase=="Detenido") bgc="style='background-color:red;'";
                     bgc=`style='background-color:${color};'`;
+                    //console.log ("solución para safari",new Date('2011-04-12'),new Date('2011-04-12'.replace(/-/g, "/")));
                     for(let j=INITIALMONTH;j<INITIALMONTH+MONTHTOSHOW;j++){
-                        let fe2Test=j<=12?new Date(CURRYEAR+"-"+j+"-01"):new Date((CURRYEAR+1)+"-"+(j-12)+"-01")
+                        let fe2Test=j<=12?new Date(CURRYEAR+"/"+j+"/01"):new Date((CURRYEAR+1)+"/"+(j-12)+"/01");
+                        //console.log("problema en safari",arr[i].idProy,CURRYEAR+"/"+j+"/01",(CURRYEAR+1)+"/"+(j-12)+"/01",fe2Test)
                         if(fe2Test>=feiniR && fe2Test<=fefinR){ 
                             periodo+=`<td class='head-cell-left' ${bgc} >&nbsp;${this.calcTotalProj(arr[i].idProy,fe2Test)}</td>`;
                         }else periodo+="<td></td>";
