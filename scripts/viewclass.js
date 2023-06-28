@@ -224,7 +224,7 @@ class ProjViewReal{
                     let diasConsumirTodo=tasaConsumo?tasaConsumo.getDiasConsumoTotal(arr[i].idProy):"N/d"
                     console.log("color sem",arr[i].idProy,cons,color);
                     projHead=`<tr name="o.${arr[i].nb_proyecto}" >
-                                  <td class="head-cell-left" colspan="4"><button onclick="mostrarProyReal('p.${arr[i].idProy}')">+</button>${arr[i].idProy}-${arr[i].nb_proyecto} (${fase})</td>
+                                  <td class="head-cell-left" style="background-color:var(--color-head)" colspan="4"><button onclick="mostrarProyReal('p.${arr[i].idProy}')">+</button>${arr[i].idProy}-${arr[i].nb_proyecto} (${fase})</td>
                                   <td>${(arr[i].inicio_mon?arr[i].inicio_mon.substring(0,10):'')}</td>
                                   <td>${(arr[i].cierre_mon?arr[i].cierre_mon.substring(0,10):'')}</td>
                                   <td style="color:${color};background-color:white;">${cons}</td>
@@ -1462,7 +1462,7 @@ class PeopleView{
             ind++;
         }
         //console.log("tiene ind",dataArr);
-        var rowName=["<div id='people'><table class='paleBlueRows'><thead><tr><th>Nombre</th><th>proyecto</th><th>Fase</th>","<th>Ene</th>","<th>Feb</th>","<th>Mar</th>","<th>Abr</th>","<th>May</th>","<th>Jun</th>","<th>Jul</th>","<th>Ago</th>","<th>Sep</th>","<th>Oct</th>","<th>Nov</th>","<th>Dic</th></tr></thead><tbody>"]
+        var rowName=["<div id='people'><div id='table-scroll' class='table-scroll'><table class='paleBlueRows'><thead><tr><th>Nombre</th><th>proyecto</th><th>Fase</th>","<th>Ene</th>","<th>Feb</th>","<th>Mar</th>","<th>Abr</th>","<th>May</th>","<th>Jun</th>","<th>Jul</th>","<th>Ago</th>","<th>Sep</th>","<th>Oct</th>","<th>Nov</th>","<th>Dic</th></tr></thead><tbody>"]
         let rowHead=rowName[0];
         for(let m=INITIALMONTH;m<INITIALMONTH+MONTHTOSHOW;m++){
             if(m!=0)
@@ -1470,8 +1470,8 @@ class PeopleView{
                     rowHead=rowHead+rowName[m];
         }
         //console.log("rowHead",rowHead);
-        let encabChgh="<div id='people'><table class='paleBlueRows'><thead><tr><th>Nombre</th><th>proyecto</th><th>Fase</th><th>Ene</th><th>Feb</th><th>Mar</th><th>Abr</th><th>May</th><th>Jun</th><th>Jul</th><th>Ago</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dic</th></tr></thead><tbody>"
-        let endEncabh="</tbody></table></div>";
+        let encabChgh="<div id='people'><div id='table-scroll' class='table-scroll'><table class='paleBlueRows'><thead><tr><th>Nombre</th><th>proyecto</th><th>Fase</th><th>Ene</th><th>Feb</th><th>Mar</th><th>Abr</th><th>May</th><th>Jun</th><th>Jul</th><th>Ago</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dic</th></tr></thead><tbody>"
+        let endEncabh="</tbody></table></div></div>";
         let rows="";
         //rows=render.sendTable(hcArr,"fact_personas","","","","");
         //console.log("people",dataArr);
@@ -1787,7 +1787,8 @@ class CrossRefView{
                         cel=cel.replace(')">Ocultar</button>',"");
                         cel=cel.replace('&nbsp;',"");
                         cel=cel.replace('&nbsp;',"");
-                        cel=cel.replace(",",";")
+                        cel=cel.replace(","," ");
+                        cel=cel.replace(";"," ")
                         filaContent+=j==0?cel:","+cel;
                     }
                 }
@@ -1818,14 +1819,14 @@ class CrossRefView{
         let i=0;
         let th="<thead><tr ><th class='rotar' style='width:250px'>Consultor</th>";
         let tfase="<tr><th style='z-index:2;width:250px'>&nbsp;</th>";
-        tfase+=`<th style='color:black;z-index:0'>Considerados</th>
-            <th style='color:black;z-index:0'>Considerados</th>
-            <th style='color:black;z-index:0'>No Considerados</th>
-            <th style='color:black;z-index:0'>Considerar</th>
-            <th style='color:black;z-index:0'>No Considerados</th>
-            <th style='color:black;z-index:0'>Todos</th>
-            <th style='color:black;z-index:0'>Todos</th>
-            <th style='color:black;z-index:0'>Todos</th>`;
+        tfase+=`<th style='color:black;z-index:0'></th>
+            <th style='color:black;z-index:0'></th>
+            <th style='color:black;z-index:0'></th>
+            <th style='color:black;z-index:0'></th>
+            <th style='color:black;z-index:0'></th>
+            <th style='color:black;z-index:0'></th>
+            <th style='color:black;z-index:0'></th>
+            <th style='color:black;z-index:0'></th>`;
         th+=`<th  style='z-index:2'>% Utilización Proyectos</th>
             <th  style='z-index:2'>HORAS Categoría Proyectos</th>
             <th  style='z-index:2'>HORAS Categoría Propuesta</th>

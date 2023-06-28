@@ -172,9 +172,9 @@ class Render{
                                     travel='<img src="image/avion.svg" width="18px">'
                                 if(o.inTeam){
                                     rowMo.set(0,`<tr name="${o.ind==0?'o.'+o.usr:'h.'+o.usr}" class="${o.ind==0?'head-cell':''}" style="${o.ind==0?'':'display:none'}">
-                                        <td class="${o.ind==0?'head-cell-left':''}" >${btn_plus} ${o.usr} ${travel}</td>
-                                        <td class="${o.ind==0?'head-cell':''}" >${o.idProy}-${o.nb_proyecto}</td>
-                                        <td class="${o.ind==0?'head-cell':''}" >${o.fase}</td>`);
+                                        <td class="${o.ind==0?'head-cell-left':''}" style="font-size:14px;background-color:var(--color-sem-normal)" >${btn_plus} ${o.usr} ${travel}</td>
+                                        <td class="${o.ind==0?'head-cell':''}" style="font-size:12px;background-color:var(--color-sem-normal)" >${o.idProy}-${o.nb_proyecto}</td>
+                                        <td class="${o.ind==0?'head-cell':''}" style="font-size:12px;background-color:var(--color-sem-normal)" >${o.fase}</td>`);
                                     rowMo.set(1,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rEne,o.pEne)} >${o.pEne==null?0.00:(o.pEne).toFixed(1)}H<br/>(${o.rEne==null?0.00:(o.rEne).toFixed(1)}H )</td>`);
                                     rowMo.set(2,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rFeb,o.pFeb)}>${o.pFeb==null?0.00:(o.pFeb).toFixed(1)}H<br/>( ${o.rFeb==null?0.00:(o.rFeb).toFixed(1)}H )</td>`);
                                     rowMo.set(3,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rMar,o.pMar)}>${o.pMar==null?0.00:(o.pMar).toFixed(1)}H<br/>( ${o.rMar==null?0.00:(o.rMar).toFixed(1)}H )</td>`);
