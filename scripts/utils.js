@@ -250,11 +250,10 @@ class Render{
                                         <div >
                                             <button type="button" class="btn_lite" style="margin-left:1px;" onclick="bw_mostrar(${obj.IDp},${obj.fase},${obj.mesi})" name="bw-${obj.IDp}.${obj.fase}.${obj.mesi}" id="bw-${obj.IDp}.${obj.fase}.${obj.mesi}">detail &#62;</button>
                                             <button type="button" class="btn_lite" onclick="bwi_info(${obj.IDp},${obj.fase},${obj.mesi})" name="bwi-${obj.IDp}.${obj.fase}.${obj.mesi}" id="bwi-${obj.IDp}.${obj.fase}.${obj.mesi}">info &#62;</button> 
-                                            <button type="button" class="btn_lite" style="margin-left:1px;" onclick="bpv_show(${obj.IDp},${obj.fase},${obj.mesi})" name="bpv-${obj.IDp}.${obj.fase}.${obj.mesi}" id="bpv-${obj.IDp}.${obj.fase}.${obj.mesi}">project &#62;</button>                                                                                             
                                         </div>
                                    </div>
                                    `;
-                               
+                               //<button type="button" class="btn_lite" style="margin-left:1px;" onclick="bpv_show(${obj.IDp},${obj.fase},${obj.mesi})" name="bpv-${obj.IDp}.${obj.fase}.${obj.mesi}" id="bpv-${obj.IDp}.${obj.fase}.${obj.mesi}">project &#62;</button>                                                                                             
                             }             
         let f14=(o)      =>  `<option value="${o}">${o}</option>`;                                             
                                                      
