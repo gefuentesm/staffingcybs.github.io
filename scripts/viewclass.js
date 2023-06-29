@@ -101,7 +101,7 @@ class ProjViewReal{
         this.contMap=new Map();
         this.param=-1;
         //this.makeTotalMap();
-        console.log("ProjViewReal",this.factprojmonthy,this.totalProj);
+        //console.log("ProjViewReal",this.factprojmonthy,this.totalProj);
     }
 
     isVisible(){

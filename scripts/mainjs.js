@@ -311,11 +311,15 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             util.asynGetFromDB(`https://getmondayproject.azurewebsites.net/api/getmondayproject`,myToken,myTime).then(function(fetchData){
                 //console.log("people view data",fetchData);
                 proyRest=fetchData;
-                //console.log("proyRest",fetchData);
+                console.log("proyRest",fetchData,proyRest.data.code,proyRest.data.ETL);
                 util.asynGetFromDB(`https://getmondayfases.azurewebsites.net/api/getmodayfases`,myToken,myTime).then(function(fetchData){
                     //console.log("people view data",fetchData);
                     proyFases=fetchData;
-                    //console.log("proyFases",fetchData);
+                    if(proyFases.code==0 && proyFases.ETL==0 && proyRest.data.code==0 && proyRest.data.ETL==0)
+                        alert("Se cargaron "+proyRest.data.rowAffected+" proyectos y "+proyFases.rowAffected+" Fases de proyectos");
+                    else
+                        alert("Se produjo un error intente de nuevo, si en el segundo intento recibe este mensaje contacte un soporte técnico")
+                    console.log("proyFases",fetchData);
                     loadAlarms();
                     btn_reload();
                     

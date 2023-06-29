@@ -375,7 +375,7 @@ class TasaConsumo{
         data.forEach((el)=>{
             mapatem.set(el.idProy,el)
         })
-        console.log(mapatem)
+        //console.log(mapatem)
         return mapatem;
     }
     getTasaConsumoById(idProy){
@@ -507,9 +507,6 @@ class CrossReference{
         const idsProys = this.data
             .filter(proy => proy.usr==usr)
             .map(proy => proy.idProy);
-        if(usr=="Eglantina Norato") {
-            console.log("duplicados",idsPropuestas,idsProys)
-        }
         return idsPropuestas.filter(id => idsProys.includes(id)).length;
     }
     createDedicacionPropuestas(){
@@ -630,7 +627,7 @@ class CrossReference{
                 }
             }
           });
-          console.log("resto",persSinA);
+          //console.log("resto",persSinA);
         return persSinA;
     }
     filterSoloProy(data){
@@ -638,7 +635,7 @@ class CrossReference{
         let soloProy = arrayProy.filter(function(arrayProy) {
             return arrayProy.Project== "Categoría - Proyecto" && arrayProy.idProy!=null;
           });
-        console.log("solo proyectos",soloProy);
+        //console.log("solo proyectos",soloProy);
         return soloProy;
     }
     filterSoloProp(data){
@@ -646,7 +643,7 @@ class CrossReference{
         let soloProp= arrayProy.filter(function(arrayProy) {
             return arrayProy.Project== "Categoría - Propuesta" && arrayProy.idProy!=null;
           });
-        console.log("solo prop",soloProp);
+        //console.log("solo prop",soloProp);
         return soloProp;
     }
     addProjNonExisten(){
