@@ -182,36 +182,38 @@ class ProjList{
             var dat=this.mesProjStruct[i];
             //console.log("createMesStruct var dat",dat)
             dat.forEach(element =>{
-                if(element.equipo !== undefined)
-                element.equipo.forEach(member=>{
-                    if(people.has(member.nombre)){
+                if(element.equipo !== undefined){
+                    let inBudget=proyectos.getHasBudget(element.IDp)
+                    element.equipo.forEach(member=>{
+                        if(people.has(member.nombre)){
+                            
+                            var p=people.get(member.nombre);
+                            let dedi=member.dedicacion==""?0.0:parseFloat(member.dedicacion)   
                         
-                        var p=people.get(member.nombre);
-                        let dedi=member.dedicacion==""?0.0:parseFloat(member.dedicacion)   
-                       
-                        let hplan=member.horasPlan?parseFloat(member.horasPlan):0.0;    
-                        let real=member.real?parseFloat(member.real):0.0;  
-                        //horasReal                
+                            let hplan=member.horasPlan?parseFloat(member.horasPlan):0.0;    
+                            let real=member.real?parseFloat(member.real):0.0;  
+                            //horasReal                
 
-                        let hreal=element.duraPlanMeses!==null?(member.horasReal?parseFloat(member.horasReal):0.0):0.0;
-                        p.horasPlan+=parseFloat(hplan);
-                        p.horasPlan=p.horasPlan;
-                        p.horasReal+=parseFloat(hreal);
-                       /* if(member.nombre=="Arleen Aponte" && i==6){
-                            console.log("tiene presupuesto",element.duraPlanMeses)  
-                            console.log("datos arleen",i,element.IDp,hreal)
-                        }*/
-                        people.set(member.nombre,p);
-                    }else{
-                        let hplan=member.horasPlan?parseFloat(member.horasPlan):0.0;
-                        let hreal=element.duraPlanMeses!==null?(member.horasReal?parseFloat(member.horasReal):0.0):0.0;  
-                       /* if(member.nombre=="Arleen Aponte" && i==6){
-                            console.log("tiene presupuesto",element.duraPlanMeses) 
-                            console.log("datos arleen",i,element.IDp,hreal)
-                        }*/
-                        people.set(member.nombre,{horasPlan:hplan,horasReal:hreal})
-                    }
-                })
+                            let hreal=inBudget?(member.horasReal?parseFloat(member.horasReal):0.0):0.0;
+                            p.horasPlan+=parseFloat(hplan);
+                            p.horasPlan=p.horasPlan;
+                            p.horasReal+=parseFloat(hreal);
+                            if(member.nombre=="Eglantina Norato" && i==4){
+                                console.log("tiene presupuesto",inBudget)  
+                                console.log("datos arleen",i,element.IDp,hreal)
+                            }
+                            people.set(member.nombre,p);
+                        }else{
+                            let hplan=member.horasPlan?parseFloat(member.horasPlan):0.0;
+                            let hreal=inBudget?(member.horasReal?parseFloat(member.horasReal):0.0):0.0;  
+                            if(member.nombre=="Eglantina Norato" && i==4){
+                                console.log("tiene presupuesto",inBudget) 
+                                console.log("datos arleen",i,element.IDp,hreal)
+                            }
+                            people.set(member.nombre,{horasPlan:hplan,horasReal:hreal})
+                        }
+                    })
+                }
             });
             this.mesStruct[i]=people;
         }
@@ -442,6 +444,10 @@ class Proyectos{
             
           });
           return proy;
+    }
+    getHasBudget(idp){
+        let considerArr=this.proyectos;
+        return considerArr.find((el)=>el.idProy===idp).plan!==null;
     }
     getConsiderar(idP){
         let considerArr=this.proyectos;
