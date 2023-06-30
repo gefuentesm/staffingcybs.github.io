@@ -670,6 +670,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                                         "mes": currMon,
                                         "mesi":mesi,
                                         "horas": 0,
+                                        "duraPlanMeses":arrPru[0].dura_plan_meses,
                                         "totHorasPlan":totHPlan,
                                         "totHorasReal":totHReal,
                                         "meses":arrPru[0].dura_plan_meses,
