@@ -473,6 +473,7 @@ class CrossReference{
     constructor(data,proyectos){
         this.resto=this.filtrarResto(data);
         this.propuesta=this.filterSoloProp(data);
+        this.noDisponible=this.filterSoloNoDisp(data);
         this.data=this.filterSoloProy(data); 
 
         this.proyectos=proyectos;
@@ -488,6 +489,7 @@ class CrossReference{
         this.projex=this.addProjNonExisten();
         this.horasTxConsultor= this.createDedicacionTotal();
         this.horasPropuestaXCons=this.createDedicacionPropuestas();
+        this.horasNoDispobibles=this.createHorasNoDisponibles();
         this.horasTxProject=this.createCargaTotal();
         this.proyectHide=[];
         this.projectList=[];
@@ -522,6 +524,21 @@ class CrossReference{
         //horas por persona en todas las propuestas reportadas
         const personHours = new Map();
         let projects=this.propuesta;  // solo propuestas
+
+        projects.forEach(({ usr, horas }) => {
+        if (personHours.has(usr)) {
+            personHours.set(usr, personHours.get(usr) + horas);
+        } else {
+            personHours.set(usr, horas);
+        }
+        });
+        //console.log("persona horas",personHours);
+        return personHours;
+    }
+    createHorasNoDisponibles(){
+        //horas por persona cuando no esta disponible
+        const personHours = new Map();
+        let projects=this.noDisponible;  //solo NoDisponibles
 
         projects.forEach(({ usr, horas }) => {
         if (personHours.has(usr)) {
@@ -568,7 +585,9 @@ class CrossReference{
     getHorasPropuesta(usr){
         return this.horasPropuestaXCons.has(usr)?this.horasPropuestaXCons.get(usr):0;
     }
-    
+    getHorasNoDisponibles(usr){
+        return this.horasNoDispobibles.has(usr)?this.horasNoDispobibles.get(usr):0;
+    }
     getHorasRestoByConsultor(usr){
         return this.resto.has(usr)?this.resto.get(usr):0;
     }
@@ -628,7 +647,7 @@ class CrossReference{
             return arrayProy.Project!== "Categoría - Proyecto" && arrayProy.Project!=="Categoría - Propuesta";
           });
         Proy.forEach(({ usr, project,horas }) => {
-            if(project!=="Categoría - Proyecto" && project!=="Categoría - Propuesta"){
+            if(project!=="Categoría - Proyecto" && project!=="Categoría - Propuesta" && project!=="Categoría - No Disponible"){
                 if (persSinA.has(usr)) {
                     persSinA.set(usr, persSinA.get(usr) + horas);
                 } else {
@@ -654,6 +673,14 @@ class CrossReference{
           });
         //console.log("solo prop",soloProp);
         return soloProp;
+    }
+    filterSoloNoDisp(data){
+        let arrayProy=data.data;
+        let soloNoD = arrayProy.filter(function(arrayProy) {
+            return arrayProy.Project== "Categoría - No Disponible" ;
+          });
+        console.log("solo no disponible",soloNoD);
+        return soloNoD;
     }
     addProjNonExisten(){
         
