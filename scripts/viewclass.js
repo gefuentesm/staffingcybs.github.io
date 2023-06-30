@@ -1348,7 +1348,9 @@ class PeopleView{
                 tene=parseFloat(hcArr[i].pEne==null?0.0:hcArr[i].pEne)
                 tfeb=parseFloat(hcArr[i].pFeb==null?0.0:hcArr[i].pFeb)
                 tmar=parseFloat(hcArr[i].pMar==null?0.0:hcArr[i].pMar)  
-
+                /*  if(hcArr[i].usr=="Eglantina Norato"){
+                    console.log("Tina people view",hcArr[i].idProy,tmar)
+                  }*/
                 tabr=parseFloat(hcArr[i].pAbr==null?0.0:hcArr[i].pAbr)
                 tmay=parseFloat(hcArr[i].pMay==null?0.0:hcArr[i].pMay)
                 tjun=parseFloat(hcArr[i].pJun==null?0.0:hcArr[i].pJun)
@@ -1381,7 +1383,9 @@ class PeopleView{
                 tene=tene+parseFloat(hcArr[i].pEne==null?0.0:hcArr[i].pEne)
                 tfeb=tfeb+parseFloat(hcArr[i].pFeb==null?0.0:hcArr[i].pFeb)
                 tmar=tmar+parseFloat(hcArr[i].pMar==null?0.0:hcArr[i].pMar)
-
+                /*if(hcArr[i].usr=="Eglantina Norato"){
+                    console.log("Tina people view",hcArr[i].idProy,hcArr[i].pMar)
+                  }*/
                 tabr= tabr+ parseFloat(hcArr[i].pAbr==null?0.0:hcArr[i].pAbr)
                 tmay= tmay+ parseFloat(hcArr[i].pMay==null?0.0:hcArr[i].pMay)
                 tjun= tjun+ parseFloat(hcArr[i].pJun==null?0.0:hcArr[i].pJun)
