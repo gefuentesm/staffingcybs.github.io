@@ -787,7 +787,25 @@ class Calendario{
                 let div = document.createElement("DIV")
                 let titulodiv="mes"+numes+"totales"
                 div.setAttribute("id", titulodiv);
+                //
+                let nomb=document.createElement("div");
+                nomb.appendChild(document.createTextNode("Nombre"));
+                let plan=document.createElement("div");
+                plan.appendChild(document.createTextNode("Plan"));
+                let real=document.createElement("div");
+                real.appendChild(document.createTextNode("Real"));
+                let vac=document.createElement("div");
+                vac.appendChild(document.createTextNode(" "));
+                let divh=document.createElement("div");
+                divh.setAttribute("class","grid-container-head");
+                divh.appendChild(nomb);
+                divh.appendChild(plan);
+                divh.appendChild(real);
+                divh.appendChild(vac);
+                div.appendChild(divh);
+                //
                 td.appendChild(div);
+
                 document.getElementById("totales").appendChild(td);
                 document.getElementById("but-mes"+j).addEventListener("click", function() {
                     //console.log("el id",this.id)
@@ -1041,7 +1059,7 @@ class StaffingView2{
                 if(i>CURRENTMONTH){
                         cont.className="future-mes";
                 }
-                totcont.innerHTML="";
+                //totcont.innerHTML="";
                 //projList.getProjectByMonth(i).forEach(o=>{
                 //if(proyectosArr[i]!==undefined)
                 if(this.projList.getProjectByMonth(i)!==undefined)

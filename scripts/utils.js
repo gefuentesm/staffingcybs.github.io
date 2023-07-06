@@ -1,3 +1,4 @@
+
 class Util{
     allowDrop(ev) {
        ev.preventDefault();
@@ -175,18 +176,18 @@ class Render{
                                         <td class="${o.ind==0?'head-cell-left':''}" style="font-size:14px;background-color:var(--color-sem-normal)" >${btn_plus} ${o.usr} ${travel}</td>
                                         <td class="${o.ind==0?'head-cell':''}" style="font-size:12px;background-color:var(--color-sem-normal)" >${o.idProy}-${o.nb_proyecto}</td>
                                         <td class="${o.ind==0?'head-cell':''}" style="font-size:12px;background-color:var(--color-sem-normal)" >${o.fase}</td>`);
-                                    rowMo.set(1,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rEne,o.pEne)} >${o.pEne==null?0.00:(o.pEne).toFixed(1)}H<br/>(${o.rEne==null?0.00:(o.rEne).toFixed(1)}H )</td>`);
-                                    rowMo.set(2,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rFeb,o.pFeb)}>${o.pFeb==null?0.00:(o.pFeb).toFixed(1)}H<br/>( ${o.rFeb==null?0.00:(o.rFeb).toFixed(1)}H )</td>`);
-                                    rowMo.set(3,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rMar,o.pMar)}>${o.pMar==null?0.00:(o.pMar).toFixed(1)}H<br/>( ${o.rMar==null?0.00:(o.rMar).toFixed(1)}H )</td>`);
-                                    rowMo.set(4,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rAbr,o.pAbr)}>${o.pAbr==null?0:(o.pAbr).toFixed(1)}H<br/>( ${o.rAbr==null?0.00:(o.rAbr).toFixed(1)}H )</td>`);
-                                    rowMo.set(5,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rMay,o.pMay)}>${o.pMay==null?0:(o.pMay).toFixed(1)}H<br/>( ${o.rMay==null?0.00:(o.rMay).toFixed(1)}H )</td>`);
-                                    rowMo.set(6,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rJun,o.pJun)}>${o.pJun==null?0:(o.pJun).toFixed(1)}H<br/>( ${o.rJun==null?0.00:(o.rJun).toFixed(1)}H )</td>`);
-                                    rowMo.set(7,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rJul,o.pJul)}>${o.pJul==null?0:(o.pJul).toFixed(1)}H<br/>( ${o.rJul==null?0.00:(o.rJul).toFixed(1)}H )</td>`);
-                                    rowMo.set(8,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rAgo,o.pAgo)}>${o.pAgo==null?0:(o.pAgo).toFixed(1)}H<br/>( ${o.rAgo==null?0.00:(o.rAgo).toFixed(1)}H )</td>`);
-                                    rowMo.set(9,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rSep,o.pSep)}>${o.pSep==null?0:(o.pSep).toFixed(1)}H<br/>( ${o.rSep==null?0.00:(o.rSep).toFixed(1)}H )</td>`);
-                                    rowMo.set(10,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rOct,o.pOct)}>${o.pOct==null?0:(o.pOct).toFixed(1)}H<br/>( ${o.rOct==null?0.00:(o.rOct).toFixed(1)}H )</td>`);
-                                    rowMo.set(11,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rNov,o.pNov)}>${o.pNov==null?0:(o.pNov).toFixed(1)}H<br/>( ${o.rNov==null?0.00:(o.rNov).toFixed(1)}H )</td>`);
-                                    rowMo.set(12,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rDic,o.pDic)}>${o.pDic==null?0:(o.pDic).toFixed(1)}H<br/> ${o.rDic==null?0.00:(o.rDic).toFixed(1)}H )</td>`);
+                                    rowMo.set(1,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rEne,o.pEne)} >P:${o.pEne==null?0.00:(o.pEne).toFixed(1)}H<br/>R:(${o.rEne==null?0.00:(o.rEne).toFixed(1)}H )</td>`);
+                                    rowMo.set(2,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rFeb,o.pFeb)}>P:${o.pFeb==null?0.00:(o.pFeb).toFixed(1)}H<br/>R:( ${o.rFeb==null?0.00:(o.rFeb).toFixed(1)}H )</td>`);
+                                    rowMo.set(3,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rMar,o.pMar)}>P:${o.pMar==null?0.00:(o.pMar).toFixed(1)}H<br/>R:( ${o.rMar==null?0.00:(o.rMar).toFixed(1)}H )</td>`);
+                                    rowMo.set(4,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rAbr,o.pAbr)}>P:${o.pAbr==null?0:(o.pAbr).toFixed(1)}H<br/>R:( ${o.rAbr==null?0.00:(o.rAbr).toFixed(1)}H )</td>`);
+                                    rowMo.set(5,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rMay,o.pMay)}>P:${o.pMay==null?0:(o.pMay).toFixed(1)}H<br/>R:( ${o.rMay==null?0.00:(o.rMay).toFixed(1)}H )</td>`);
+                                    rowMo.set(6,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rJun,o.pJun)}>P:${o.pJun==null?0:(o.pJun).toFixed(1)}H<br/>R:( ${o.rJun==null?0.00:(o.rJun).toFixed(1)}H )</td>`);
+                                    rowMo.set(7,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rJul,o.pJul)}>P:${o.pJul==null?0:(o.pJul).toFixed(1)}H<br/>R:( ${o.rJul==null?0.00:(o.rJul).toFixed(1)}H )</td>`);
+                                    rowMo.set(8,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rAgo,o.pAgo)}>P:${o.pAgo==null?0:(o.pAgo).toFixed(1)}H<br/>R:( ${o.rAgo==null?0.00:(o.rAgo).toFixed(1)}H )</td>`);
+                                    rowMo.set(9,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rSep,o.pSep)}>P:${o.pSep==null?0:(o.pSep).toFixed(1)}H<br/>R:( ${o.rSep==null?0.00:(o.rSep).toFixed(1)}H )</td>`);
+                                    rowMo.set(10,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rOct,o.pOct)}>P:${o.pOct==null?0:(o.pOct).toFixed(1)}H<br/>R:( ${o.rOct==null?0.00:(o.rOct).toFixed(1)}H )</td>`);
+                                    rowMo.set(11,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rNov,o.pNov)}>P:${o.pNov==null?0:(o.pNov).toFixed(1)}H<br/>R:( ${o.rNov==null?0.00:(o.rNov).toFixed(1)}H )</td>`);
+                                    rowMo.set(12,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rDic,o.pDic)}>P:${o.pDic==null?0:(o.pDic).toFixed(1)}H<br/>R:( ${o.rDic==null?0.00:(o.rDic).toFixed(1)}H )</td>`);
                                 
                                     let rows=rowMo.get(0);
                                     for(let m=INITIALMONTH;m<INITIALMONTH+MONTHTOSHOW;m++){
@@ -244,7 +245,7 @@ class Render{
                                    <div id="edit-${obj.IDp}-${obj.mes}" class="edit-block" style="display:none">${tcheck}
                                     <div>
                                         <span class="horas-plan" ${obj.totHorasPlan>0?'':'style="color:LightSlateGrey"'}>${obj.totHorasPlan.toFixed(1)}</span><span class="horas-real" ${obj.totHorasReal>0?'':'style="color:Gainsboro"'} > ${obj.totHorasReal.toFixed(1)}</span><span class="horas-plan" style="color:white;background-color:${(obj.totHorasPlan-obj.totHorasReal)<0?'red':'green'}"> ${(obj.totHorasPlan-obj.totHorasReal).toFixed(1)}</span>
-                                        <span id="ref-${obj.IDp}.${obj.fase}.${obj.mesi}" style="color:green"></span>&nbsp;&nbsp;cambio por:&nbsp;&nbsp;
+                                        <span id="ref-${obj.IDp}.${obj.fase}.${obj.mesi}" style="color:green">${obj.totHorasPlan.toFixed(1)}</span>&nbsp;&nbsp;cambio por:&nbsp;&nbsp;
                                         <span id="chng-${obj.IDp}.${obj.fase}.${obj.mesi}" style="color:green"></span>   
                                     </div>
                                         <div >

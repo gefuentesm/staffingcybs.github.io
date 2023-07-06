@@ -20,19 +20,21 @@ class ProjList{
         return this.data;
     }   
     getTeamDedication(IDp,fase,mes){
-        //console.log("getTeamDedication",IDp,fase,mes);
+        console.log("getTeamDedication",IDp,fase,mes,this.data, this.data[mes]);
         let sumDedication=0.0;
         var existe=false;
-        for(let i in this.data){  
-            if(this.data[i].IDp==IDp && this.data[i].fase==fase && this.data[i].mes==mes){
-                for(let j in this.data[i].equipo){  
-                    sumDedication += parseFloat(this.data[i].equipo[j].horasPlan);
-                }
-                return sumDedication;
+        let arr=this.data[mes]
+        arr.forEach((e)=>{
+            //console.log("buscando a nemo",e.IDp,e.mes)
+            if(e.IDp==IDp &&  e.mes==mes){
+                
+                e.equipo.forEach((t)=>{
+                    sumDedication += parseFloat(t.horasPlan);
+                })
+                
             }
-            
-        }
-        return -1;
+        }) 
+        return sumDedication;
     }
     setInStaffing(proj){
         for(let i=0;i<24;i++){
@@ -379,7 +381,7 @@ class HistoricChanges{
 class TasaConsumo{
     constructor(data){
         this.tasaConsumo=this.crearEstructura(data);
-        //console.log("Tasa consumo",data);
+        console.log("Tasa consumo",data);
     }
     crearEstructura(data){
         let mapatem=new Map()

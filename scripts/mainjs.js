@@ -346,16 +346,25 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         else
             if( document.getElementById(wrappid))
                 currentInOnsite=document.getElementById(wrappid).style.backgroundColor=="blue"?1:0;
-        //console.log("current onsite",IDp,fase,mes,id,currentInOnsite);
-        //console.log("on Change",document.getElementById(id).value);
+        console.log("current onsite",IDp,fase,mes,id,currentInOnsite);
+        console.log("on Change",document.getElementById(id).value);
         projList.setAllStruct(IDp,fase,nb,document.getElementById(id).value,mes,currentInOnsite);
         //console.log("dedichange",nb,IDp,mes,currentInOnsite,document.getElementById(id).value);
         let totDedic=projList.getTeamDedication(IDp,fase,mes);
-        let origDedi=document.getElementById(`ref-${IDp}.${fase}.${mes}`).innerHTML;
-        //console.log("cambios",totDedic,origDedi);
-        let xcolor=totDedic==origDedi ? "orange" : "red";
+        //let origDedi=document.getElementById(`ref-${IDp}.${fase}.${mes}`).innerHTML;
+        let origDedi=document.getElementById(`ref-${IDp}.0.${mes}`).innerHTML;
+        origDedi=parseFloat(origDedi).toFixed(1)
+        console.log("cambios",totDedic,origDedi, (totDedic-origDedi).toFixed(1));
+        let xcolor=totDedic.toFixed(1)==origDedi ? "green" : "red";
+        if(totDedic.toFixed(1)==origDedi){
+            alert("Ya es posible Guardar - Botón Save");
+            document.getElementById("btSave").disabled=false;
+        }else{
+            alert("Dedido a que los cambios provocan un cambio en el presupuesto, se desabilita temporalmente la capacidad de Guardar - botón Save");
+            document.getElementById("btSave").disabled=true;
+        }
         let chgDedi=document.getElementById(`chng-${IDp}.${fase}.${mes}`);
-        chgDedi.innerHTML=totDedic.toFixed(2);
+        chgDedi.innerHTML=totDedic.toFixed(1);
         chgDedi.style.color=xcolor;
         // cambio en la estructura de mes, debe cambiar en la capa de presentación - totales
         // staffing ---depend-->projList, ya que en projList está la data
