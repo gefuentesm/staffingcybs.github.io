@@ -1100,7 +1100,10 @@ class StaffingView2{
         var id="mes"+parseInt(m)+"totales";
         //console.log("mon",id);
         var mon=document.getElementById(id);
-        mon.innerHTML="";
+        //let conthead=document.getElementsByClassName("grid-container-head").item(0);
+        //console.log("updateStructByMonth",mon,id,conthead)
+        let encab="<div class='grid-container-head'><div>Nombre</div><div>Plan</div><div>Real</div><div>&nbsp;</div></div>"
+        mon.innerHTML=encab;
         //var pers=mesStruct[m];
         let pers=this.projList.getStructByMonth(m);
         //console.log("updateStructByMonth pers",pers);

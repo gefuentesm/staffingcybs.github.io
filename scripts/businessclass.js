@@ -29,7 +29,8 @@ class ProjList{
             if(e.IDp==IDp &&  e.mes==mes){
                 
                 e.equipo.forEach((t)=>{
-                    sumDedication += parseFloat(t.horasPlan);
+                    let hrs=t.horasPlan===null?0:isNaN(t.horasPlan)?0.0:parseFloat(t.horasPlan);
+                    sumDedication += hrs;
                 })
                 
             }

@@ -218,10 +218,13 @@ class Render{
                                     real=(arr.avgReal/160)*100;
                                     futuro=true;
                                 }
-                                
+                                let fec=new Date();
+                                let mes=fec.getMonth()+1;
+                                let disabled="";
+                                if(obj.mes<mes) disabled="disabled=''"
                                 return  `<div id="c-${arr.nombre}-${obj.IDp}.${obj.fase}.${obj.mesi}-${arr.inOnSite}" dragable="false"  class="card" style="background-color:${arr.inOnSite==1?'blue':'#e6f9ff'}">
                                 <input type="text" name="nombre" readonly style="width: 110px;${vac}" value="${arr.nombre}">
-                                <input type="text" id="id-${arr.nombre}-${obj.IDp}.${obj.fase}.${obj.mesi}-${arr.inOnSite}" onchange="tx_dedichange('${arr.nombre}','${obj.IDp}','${obj.fase}','${obj.mesi}',${arr.inOnSite})" class="horas-plan" style="width: 27px;font-size:9px;" value="${arr.horasPlan?arr.horasPlan.toFixed(1):0}">
+                                <input type="text" id="id-${arr.nombre}-${obj.IDp}.${obj.fase}.${obj.mesi}-${arr.inOnSite}" ${disabled} onchange="tx_dedichange('${arr.nombre}','${obj.IDp}','${obj.fase}','${obj.mesi}',${arr.inOnSite})" class="horas-plan" style="width: 27px;font-size:9px;"  value="${arr.horasPlan?arr.horasPlan.toFixed(1):0}">
                                 <input type="text" id="id-${arr.nombre}-${obj.IDp}.${obj.fase}.${obj.mesi}-${arr.inOnSite}" onchange="tx_dedichange('${arr.nombre}','${obj.IDp}','${obj.fase}','${obj.mesi}',${arr.inOnSite})" class="horas-real" style="width: 27px;font-size:9px;${futuro?'color:hsl(240, 100%, 50%)':''}" value="${horasReal?horasReal.toFixed(1):0}">
                                 </div>`;
                               

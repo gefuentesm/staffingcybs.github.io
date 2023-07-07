@@ -37,6 +37,8 @@ var proyectos;
 var tasaConsumo;
 var csv=[];
 var crossRefView;
+var intento=0;
+var preserveBudget=[];
 titulo=["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
 var oHistField=new Field();
 oHistField.add(1,"b1","usr");
@@ -334,12 +336,20 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         }
     }
    
-    function tx_dedichange(nb,IDp,fase,mes,inOnSite){
-        //id-${o.nombre}-${o.IDp}.${o.fase}.${o.mes}-${o.inOnSite}        
+    function tx_dedichange(nb,IDp,fase,mes,inOnSite,valor){
+        //id-${o.nombre}-${o.IDp}.${o.fase}.${o.mes}-${o.inOnSite}     
+
         let id="id-"+nb+"-"+IDp+"."+fase+"."+mes+"-"+inOnSite;
         var wrappid="t-"+nb+"-"+IDp+"."+fase+"."+mes+"-"+inOnSite;
         var wrappid2="c-"+nb+"-"+IDp+"."+fase+"."+mes+"-"+inOnSite;
+        let idMes=IDp+"."+mes;
         let currentInOnsite=0;
+        console.log("valor",document.getElementById(id).value);
+        if(isNaN(document.getElementById(id).value)){
+
+            alert("El valor introducido no es un número: "+parseFloat(document.getElementById(id).value));
+            return false;
+        }  
         //console.log("tx_dedichange",document.getElementById(wrappid),wrappid,document.getElementById(wrappid2),wrappid2);  //c-Gustavo Fuentes-40.2.2-0
         if( document.getElementById(wrappid2))
             currentInOnsite=document.getElementById(wrappid2).style.backgroundColor=="blue"?1:0;
@@ -357,11 +367,29 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         console.log("cambios",totDedic,origDedi, (totDedic-origDedi).toFixed(1));
         let xcolor=totDedic.toFixed(1)==origDedi ? "green" : "red";
         if(totDedic.toFixed(1)==origDedi){
-            alert("Ya es posible Guardar - Botón Save");
-            document.getElementById("btSave").disabled=false;
+            
+            const index = preserveBudget.indexOf(idMes);
+            if (index > -1) {
+                preserveBudget.splice(index, 1);
+            }
+            if(preserveBudget.length===0){
+                document.getElementById("btSave").disabled=false;
+                alert("Ya es posible Guardar - Botón Save");
+            }else{
+                let msg="Están pendientes:\n"
+                preserveBudget.forEach((e)=>{
+                    let temp=e.split(".")
+                    msg+=`proyecto ${temp[0]} en el mes ${temp[1]}\n`
+                })
+                alert(msg)
+            }
+               
         }else{
-            alert("Dedido a que los cambios provocan un cambio en el presupuesto, se desabilita temporalmente la capacidad de Guardar - botón Save");
+            if(preserveBudget.length===0)
+                alert("Dedido a que los cambios afectan el presupuesto, se desabilita temporalmente la capacidad de Guardar - botón Save");
             document.getElementById("btSave").disabled=true;
+            if(preserveBudget.find((el) => el === idMes)===undefined)
+                preserveBudget.push(idMes);
         }
         let chgDedi=document.getElementById(`chng-${IDp}.${fase}.${mes}`);
         chgDedi.innerHTML=totDedic.toFixed(1);
@@ -550,9 +578,9 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             document.getElementById("loader").style.visibility = "none";
         //}
     }
-    function loadStaff(){
+    async function loadStaff(){
         console.log("inicio loadstaff");
-        document.getElementById("loader").style.display = ""
+        //document.getElementById("loader").style.display = ""
         util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getstaffinghttp`,myToken,myTime).then(function(fetchData){
                 //console.log("fetchdata",fetchData);
                 try{                    
@@ -569,17 +597,17 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                         staffing.createMonStruct();
                     }
                     console.log("fin loadstaff");
-                    document.getElementById("loader").style.display = "none"
+                    //document.getElementById("loader").style.display = "none"
                 }catch(e){
                     //console.log("asynGetFromDB",e);
-                    document.getElementById("loader").style.display = "none"
+                    //document.getElementById("loader").style.display = "none"
                     alert("Error en la carga, intente de nuevo");
                     //console.log("loadStaff",e);
                 }
                 
             })
             .catch(error=>{
-                document.getElementById("loader").style.visibility = "none";
+                //document.getElementById("loader").style.visibility = "none";
                 console.log(error)
             })
     }
@@ -723,19 +751,20 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                 staffing.createStaffingView();
                 staffing.createMonStruct();
             }
-            document.getElementById("loader").style.display = "none";
+            //document.getElementById("loader").style.display = "none";
             //document.getElementById("maintab").style.display="";
         }catch(e){
             //console.log("asynGetFromDB",e);
-            document.getElementById("loader").style.display = "none"
+            //document.getElementById("loader").style.display = "none"
             alert("Error en la carga, intente de nuevo");
             console.log("convertAlternativeStaffData",e)
         }
     }
-    function loadStaff1(){
+    async function loadStaff1(){
         console.log("inicio loadstaff1");
-        document.getElementById("loader").style.display = "";
-        document.getElementById("loader").style.visibility = "visible";
+        //document.getElementById("loader").style.display = "";
+        //document.getElementById("loader").style.visibility = "visible";
+        
         util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/gethorasplanreal`,myToken,myTime).then(function(fetchData){
                 //console.log("fetchdata",fetchData);
                 try{                    
@@ -750,20 +779,25 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                         convertAlternativeStaffData(fetchData);
                         //console.log("se cargo la data")
                     }
+                    intento=0;
                     console.log("fin loadstaff1");
-                    document.getElementById("loader").style.display = "none";
+                    //document.getElementById("loader").style.display = "none";
                     document.getElementById("loader").style.visibility = "none";
                 }catch(e){
                     //console.log("asynGetFromDB",e);
-                    document.getElementById("loader").style.display = "none";
-                    document.getElementById("loader").style.visibility = "none";
+                    //document.getElementById("loader").style.display = "none";
+                    //document.getElementById("loader").style.visibility = "none";
+                    if(intento==0){
+                        btn_reload();
+                        intento++;
+                    }
                     alert("Error en la carga, intente de nuevo");
                     console.log("loadStaff1",e)
                 }
                 
             })
             .catch(error=>{
-                document.getElementById("loader").style.visibility = "none";
+                //document.getElementById("loader").style.visibility = "none";
                 console.log(error);                
             })
     
@@ -783,7 +817,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         console.log("fin loadconsultant");
 
     }
-    function loadAllProjects(){
+    async function loadAllProjects(){
         console.log("inicio loadallprojects");
         util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getallprojects`,myToken,myTime).then(function(fetchData){
             //console.log("fetch data getAllProjects",fetchData);
@@ -796,11 +830,11 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             console.log("fin loadallprojects");
         })
         .catch(error=>{
-            document.getElementById("loader").style.visibility = "none";
+            //document.getElementById("loader").style.visibility = "none";
             console.log(error)
         })
     }
-    function loadProjectMonthly(){
+    async function loadProjectMonthly(){
         console.log("inicio loadProjectMonthly");
         util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getfactprojmonthy`,myToken,myTime).then(function(fetchData){
             //console.log("fetch data getAllProjects",fetchData);
@@ -818,7 +852,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             console.log("fin loadProjectMonthly");
         })
         .catch(error=>{
-            document.getElementById("loader").style.visibility = "none";
+            //document.getElementById("loader").style.visibility = "none";
             console.log(error)
         })
     }
@@ -848,15 +882,15 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                 document.getElementById("btnPeopleV").disabled=false;
                 document.getElementById("btnDetailV").disabled=false;
                 console.log("fin loadProjectPlanReal");
-                document.getElementById("loader").style.display = "none"                
+                //document.getElementById("loader").style.display = "none"                
             }
         })
         .catch(error=>{
-            document.getElementById("loader").style.visibility = "none";
+            //document.getElementById("loader").style.visibility = "none";
             console.log(error)
         })
     }
-    function loadProjectSummary(){
+    async function loadProjectSummary(){
         console.log("inicio loadProjectSummary");
         util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getprojectsummary`,myToken,myTime).then(function(fetchData){
             //console.log("fetch data getProjectSummary",fetchData);
@@ -869,11 +903,11 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                     console.log("fin loadProjectSummary");
             })
             .catch(error=>{
-                document.getElementById("loader").style.visibility = "none";
+                //document.getElementById("loader").style.visibility = "none";
                 console.log(error)
             })
     }
-    function loadVacation(){
+    async function loadVacation(){
         console.log("inicio loadVacation");
         util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getvacation`,myToken,myTime).then(function(fetchData){
             //console.log("fetch data getProjectSummary",fetchData);
@@ -889,7 +923,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                 console.log("fin loadVacation");
             })
             .catch(error=>{
-                document.getElementById("loader").style.visibility = "none";
+                //document.getElementById("loader").style.visibility = "none";
                 console.log(error)
             })        
             
@@ -927,7 +961,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         }
         console.log("fin loadVacation");    
     }
-    function loadAlarms(){
+    async function loadAlarms(){
         console.log("inicio loadAlarms");
         var alarmView
         util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getalarms`,myToken,myTime).then(function(fetchData){
@@ -943,13 +977,13 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                 console.log("fin loadAlarms");
             })
             .catch(error=>{
-                document.getElementById("loader").style.visibility = "none";
+                //document.getElementById("loader").style.visibility = "none";
                 console.log(error)
             })        
             
 
     }  
-    function loadProyectos(){
+    async function loadProyectos(){
         console.log("inicio loadProyectos");
         util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getproyectos`,myToken,myTime).then(function(fetchData){
             //console.log("fetch data getProjectSummary",fetchData);
@@ -964,7 +998,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                 console.log("fin loadProyectos");
             })
             .catch(error=>{
-                document.getElementById("loader").style.visibility = "none";
+                //document.getElementById("loader").style.visibility = "none";
                 console.log(error)
             })        
             
@@ -986,7 +1020,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
 
     }    
 
-    function loadCrossRefData(){
+    async function loadCrossRefData(){
         console.log("inicio loadCrossRefData");
         var alarmView
         util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getclocki4weeks`,myToken,myTime).then(function(fetchData){
@@ -1005,7 +1039,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                 console.log("fin loadCrossRefData");
             })
             .catch(error=>{
-                document.getElementById("loader").style.visibility = "none";
+                //document.getElementById("loader").style.visibility = "none";
                 console.log(error)
             })  
     } 
@@ -1026,7 +1060,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                 
             })
             .catch(error=>{
-                document.getElementById("loader").style.visibility = "none";
+                //document.getElementById("loader").style.visibility = "none";
                 console.log(error);
                 return {};
             })        
@@ -1053,7 +1087,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                 
             })
             .catch(error=>{
-                document.getElementById("loader").style.visibility = "none";
+                //document.getElementById("loader").style.visibility = "none";
                 console.log(error)
             })        
             
@@ -1127,37 +1161,42 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         document.getElementById("btnDetailV").disabled=true;
         render = new Render();
         document.getElementById("loader").style.display = "";
+        document.getElementById("loader").style.visibility = "visible";
+       
         if(myToken && myTime) {
             
-            getTasaConsumo();
+            await getTasaConsumo();
             //loadStaff() ;
             await loadVacation1();
 
-            loadAlarms();
+            await loadAlarms();
             
             await loadProyectos1();
             
-            loadStaff1();
+            await loadStaff1();
                         
             await loadConsultant();
 
-            loadAllProjects();
+            await loadAllProjects();
             
             //loadProjectMonthly();
 
             await loadProjectPlanReal();
 
-            loadCrossRefData();
+            await loadCrossRefData();
 
-            loadProjectSummary();
+            await loadProjectSummary();
+            
            
         }
         document.getElementById("loader").style.display = "none";
+        document.getElementById("loader").style.visibility = "none"
         document.getElementById("btnStaffingV").click();
     }
     let asynGetToken = async (usr,pwd) => { 
         //console.log("en async get Token function",usr,pwd)
         let data={username:usr,password:pwd}
+        document.getElementById("loader").style.visibility = "visible";
         //console.log("json",JSON.stringify(data));
         const fetchData= await fetch(`https://cybs-isauth.azurewebsites.net/api/cybs_login`, {
             method: 'POST',
@@ -1185,6 +1224,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
     }
     function auth(){    
         document.getElementById("loader").style.display = "";
+        document.getElementById("loader").style.visibility = "visible";
         let usr=document.getElementById("username")
         let pwd=document.getElementById("password")
         
@@ -1193,11 +1233,13 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
 
             if(fetchData===undefined){
                 document.getElementById("loader").style.display = "none";
+                document.getElementById("loader").style.visibility = "none";
                 alert("Intente mas tarde");
             } 
             else
             if(fetchData.cod==0){
                 document.getElementById("container").style.display="";
+                document.getElementById("loader").style.visibility = "visible"
                 myToken=fetchData.data;
                 myTime=fetchData.time;
                 dateOfChanged=fetchData.dateOfChanged;
@@ -1208,17 +1250,21 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                 userSession=inicial+"."+n[1];     
                 //console.log("usersession",userSession,dateOfChanged);
                 document.getElementById("signin").style.display="none";
+                document.getElementById("loader").style.visibility = "none";
                 setProy();
                 //console.log("myToken,myTime loaded")
                 document.getElementById("loader").style.display = "none";
+                document.getElementById("loader").style.visibility = "none";
                 
             }else {
                 document.getElementById("loader").style.diplay = "none";
+                çdocument.getElementById("loader").style.visibility = "none";
                 alert(fetchData.data);
             }
             
         }).catch(error=>{
             document.getElementById("loader").style.display = "none";
+            document.getElementById("loader").style.visibility = "none";
             console.log(error)
         })
     }
