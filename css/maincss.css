@@ -721,7 +721,7 @@
   background-color: silver;
   padding: 2px;
 }
-.grid-container-head > div {
+.grid-container-head > span {
   background-color: rgba(255, 255, 255, 0.8);
   text-align: center;
   padding: 0;

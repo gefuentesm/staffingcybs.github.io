@@ -788,13 +788,13 @@ class Calendario{
                 let titulodiv="mes"+numes+"totales"
                 div.setAttribute("id", titulodiv);
                 //
-                let nomb=document.createElement("div");
+                let nomb=document.createElement("span");
                 nomb.appendChild(document.createTextNode("Nombre"));
-                let plan=document.createElement("div");
+                let plan=document.createElement("span");
                 plan.appendChild(document.createTextNode("Plan"));
-                let real=document.createElement("div");
+                let real=document.createElement("span");
                 real.appendChild(document.createTextNode("Real"));
-                let vac=document.createElement("div");
+                let vac=document.createElement("span");
                 vac.appendChild(document.createTextNode(" "));
                 let divh=document.createElement("div");
                 divh.setAttribute("class","grid-container-head");
@@ -821,7 +821,9 @@ class Calendario{
                         //console.log("cardmini",totCols[i].style,totCols[i].style.display)
                         if(totCols[i].style==""||totCols[i].style.display==""){
                             totCols[i].style.visibility="visble";
-                            totCols[i].style.display="block";
+                            //console.log("clase",totCols[i].className)
+                            if(totCols[i].className!="grid-container-head")
+                                totCols[i].style.display="block";
                         }else{
                             totCols[i].style.visibility="none";
                             totCols[i].style.display="";
