@@ -819,10 +819,13 @@ class Calendario{
                     let totCols=document.getElementById(mes+"totales").children;                    
                     for (let i = 0; i < totCols.length; i++) {
                         //console.log("cardmini",totCols[i].style,totCols[i].style.display)
-                        if(totCols[i].style==""||totCols[i].style.display=="")
+                        if(totCols[i].style==""||totCols[i].style.display==""){
+                            totCols[i].style.visibility="visble";
                             totCols[i].style.display="block";
-                        else
+                        }else{
+                            totCols[i].style.visibility="none";
                             totCols[i].style.display="";
+                        }
                     }
                     /*totArr.forEach((el)=>{
                         if(el.style.display=="block")
