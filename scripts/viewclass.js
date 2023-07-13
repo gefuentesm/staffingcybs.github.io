@@ -1857,6 +1857,7 @@ class CrossRefView{
             <th style='color:black;z-index:0'></th>
             <th style='color:black;z-index:0'></th>
             <th style='color:black;z-index:0'></th>
+            <th style='color:black;z-index:0'></th>
             <th style='color:black;z-index:0'></th>`;
         th+=`<th  style='z-index:2'>% Utilización Proyectos + Propuestas</th>
             <th  style='z-index:2'>% Utilización Total (Todas las Categorías)</th>
