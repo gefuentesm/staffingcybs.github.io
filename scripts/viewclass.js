@@ -1858,7 +1858,8 @@ class CrossRefView{
             <th style='color:black;z-index:0'></th>
             <th style='color:black;z-index:0'></th>
             <th style='color:black;z-index:0'></th>`;
-        th+=`<th  style='z-index:2'>% Utilización Proyectos</th>
+        th+=`<th  style='z-index:2'>% Utilización Proyectos + Propuestas</th>
+            <th  style='z-index:2'>% Utilización Total (Todas las Categorías)</th>
             <th  style='z-index:2'>HORAS Categoría Proyectos</th>
             <th  style='z-index:2'>HORAS Categoría Propuesta</th>
             <th  style='z-index:2'>HORAS No Disponibles</th>
@@ -1888,12 +1889,14 @@ class CrossRefView{
             tr+=`<th style="${no_esta};width:250px">${consulArr[i].usr}</th>`;
             let horaConsul=this.crossObj.getHorasByConsultor(consulArr[i].usr);
             let horaPropUsr=this.crossObj.getHorasPropuesta(consulArr[i].usr);
+            let hrsConsYProps=horaConsul+horaPropUsr;
             let horaNoDisp=this.crossObj.getHorasNoDisponibles(consulArr[i].usr);
             let horasResto=this.crossObj.getHorasRestoByConsultor(consulArr[i].usr);
             let totalHoras=horaConsul+horasResto+horaPropUsr+horaNoDisp;
             let cantProy=this.crossObj.getCantProy(consulArr[i].usr)
             let cantProp=this.crossObj.getCantProp(consulArr[i].usr)
-            tr+=`<td>${this.semaforo(horaConsul)}${((horaConsul/(160-horaNoDisp))*100).toFixed(1)}%</td>
+            tr+=`<td>${this.semaforo(hrsConsYProps)}${((hrsConsYProps/(160-horaNoDisp))*100).toFixed(1)}%</td>
+                <td>${this.semaforo(totalHoras)}${((totalHoras/(160-horaNoDisp))*100).toFixed(1)}%</td>
                 <td>${horaConsul.toFixed(1)}</td>
                 <td>${horaPropUsr.toFixed(1)}</td>
                 <td>${horaNoDisp.toFixed(1)}</td>
