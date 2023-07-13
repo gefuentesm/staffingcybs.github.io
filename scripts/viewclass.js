@@ -1893,10 +1893,11 @@ class CrossRefView{
             let horaNoDisp=this.crossObj.getHorasNoDisponibles(consulArr[i].usr);
             let horasResto=this.crossObj.getHorasRestoByConsultor(consulArr[i].usr);
             let totalHoras=horaConsul+horasResto+horaPropUsr+horaNoDisp;
+            let totalSinNodsip=horaConsul+horasResto+horaPropUsr;
             let cantProy=this.crossObj.getCantProy(consulArr[i].usr)
             let cantProp=this.crossObj.getCantProp(consulArr[i].usr)
             tr+=`<td>${this.semaforo(hrsConsYProps)}${((hrsConsYProps/(160-horaNoDisp))*100).toFixed(1)}%</td>
-                <td>${this.semaforo(totalHoras)}${((totalHoras/(160-horaNoDisp))*100).toFixed(1)}%</td>
+                <td>${this.semaforo(totalSinNodsip)}${((totalSinNodsip/(160-horaNoDisp))*100).toFixed(1)}%</td>
                 <td>${horaConsul.toFixed(1)}</td>
                 <td>${horaPropUsr.toFixed(1)}</td>
                 <td>${horaNoDisp.toFixed(1)}</td>
