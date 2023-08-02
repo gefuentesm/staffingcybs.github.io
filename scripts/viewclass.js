@@ -408,7 +408,7 @@ class VacationView{
                     }
                 })
                 
-                vac.innerHTML=item;
+                vac.innerHTML="<div>Días de Descanso"+item+"</div>";
             }
         }
     }
