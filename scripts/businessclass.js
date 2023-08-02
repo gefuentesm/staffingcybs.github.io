@@ -457,7 +457,7 @@ class Proyectos{
     }
     getConsiderar(idP){
         let considerArr=this.proyectos;
-        return considerArr.find((el)=>el.idProy===idP).in_relevante_staffing===1
+        return considerArr.find((el)=>el.idProy===idP)?.in_relevante_staffing===1
     }
     getActiveProj(){
         return this.activeProj;
