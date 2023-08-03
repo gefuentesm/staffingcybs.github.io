@@ -20,7 +20,7 @@
             <img src="image/cybs-llogo-new-blanco.png" style="padding-top: 15px;" width="80px"></img>
         </div>
         <div style="float: left;width:300px;margin-left: 130px;">
-            <span style="width: 600px;text-align: left;"><h2 style="color:white">Staffing v1.00.04</h2></span>
+            <span style="width: 600px;text-align: left;"><h2 style="color:white">Staffing v1.00.03</h2></span>
             <div>
                 <div class="card">   
                     <button onclick="open_close()">Sign in</button>                         
@@ -43,16 +43,12 @@
     </div>
     <div id="container" style="display:none">
     <input type="checkbox" id="abrir-cerrar" name="abrir-cerrar" value="">
-    <label style="margin-left:206px;top:10px;position:fixed;z-index:4;" for="abrir-cerrar">☰ <span class="abrir">Abrir</span><span class="cerrar">Cerrar</span>&nbsp;&nbsp;
+    <label style="margin-left:206px;top:10px;position:fixed;" for="abrir-cerrar">☰ <span class="abrir">Abrir</span><span class="cerrar">Cerrar</span>&nbsp;&nbsp;
         <button id="btSave" type="button" style="color:white" onclick="btn_save()">Save</button>&nbsp;|&nbsp;
         <button type="button" style="color:white" onclick="btn_reload()">Reload</button> 
         <button type="button" style="color:white" onclick="btn_updateMonday()">Update Monday</button> &nbsp;|&nbsp;
           <button type="button" style="color:white" onclick="">Review</button> 
-          <div id="alarm-container" class="tooltip"style="visibility: hidden;">
-            <span id="alarma1" class="alarma">10</span>
-            <div id="alarm-text" class="tooltiptext">
-            </div>
-        </div>
+
           <div id="session-container" class="sesiones" style="visibility: visible">
 
           </div>        
@@ -65,8 +61,13 @@
         </div>
     </label>
     
-    <div id="sidebar" class="sidebar" style="z-index: 4;" >
+    <div id="sidebar" class="sidebar" style="z-index:2" >
         <img src="image/cybs-llogo-new-blanco.png" width="80px"></img>
+        <div id="alarm-container" class="tooltip"style="visibility: hidden">
+            <span id="alarma1" class="alarma">10</span>
+            <div id="alarm-text" class="tooltiptext">
+            </div>
+        </div>
         <div class="totales">
             <div>Project Manager Filter</div>
             <select id="projectsBox" onchange="projectFilterView.filterByManager()" style="width: 185px;height: 30px;">
@@ -150,14 +151,12 @@
         <div style="font-family: Verdana, Geneva, Tahoma, sans-serif;font-size: 10pt;padding-top:110px;padding-bottom: 10px;">
             <b>STAFFING VIEW</b>
         </div>
-        
-    
-        <div id="bar"  style="z-index: 20;height:0;width:0;background-color:#fff2e6;top:0;left:0;position: fixed;
-    transition: height 1s;"></div>
+        <div id="bar"  style="z-index: 20;height:0;width:0;background-color:#fff2e6;top:0;left:0;position: fixed; transition: height 1s;">
+        </div>
         <div id="legendaSV" style="margin:14px">
             <span>Leyenda:</span> <img src="image/edo-enproceso.svg"></img>En Proceso<img src="image/edo-sowcontrato.svg"></img>SOW/Contrato<img src="image/edo-propuesta.svg"></img>Propuesta Activa<img src="image/edo-lead.svg"></img>Lead<img src="image/edo-detenido.svg"></img>Detenido<img src="image/edo-cerrado.svg"></img>Cerrado<img src="image/edo-cierre-interno.svg"></img>Cierre Interno<img src="image/edo-prop-detenida.svg"></img>Propuesta Detenida<img src="image/edo-propno.svg"></img>Propuesta no Aceptada<img src="image/edo-leadsinc.svg"></img>Lead sin Continuidad
         </div>
-        <div id="menuMeses" class="flex-container-meses" style="padding-top:16px;">
+        <div id="menuMeses" class="flex-container-meses">
             <div id="stk-1">1</div>
             <div id="stk-2">2</div>
             <div id="stk-3">3</div>  
@@ -179,9 +178,10 @@
             <div id="stk-19">19</div>  
             <div id="stk-20">20</div>
             <div id="stk-21">21</div>                 
-        </div>   
+        </div>        
         <div id="div3" style="display: none;" ></div>
     </div>
+
     <div id="genericModal" class="modal">
 
         <!-- Modal content -->
@@ -206,6 +206,14 @@
             document.getElementById("bar").style.marginLeft=(window.innerWidth-500)+"px";
             document.getElementById("bar").style.height=window.window.innerHeight+"px"
         }, true);   
+
+        window.addEventListener("scroll", function(event) {
+            var doc = document.getElementById("menuMeses");
+            var left = (window.pageXOffset || doc.scrollLeft) - (doc.clientLeft || 0);
+            var top = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
+            console.log("scroll pos",window.pageXOffset,doc.scrollLeft,doc.clientLeft)
+            doc.left=doc.left-window.pageXOffset
+            })
         </script>
 
 </body>

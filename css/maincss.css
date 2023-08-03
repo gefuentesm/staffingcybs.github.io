@@ -54,9 +54,10 @@
   color:white;
 }
 .tooltip {
-  position: relative;
+  position: sticky;
   display: inline-block;
   border-bottom: 1px dotted black;
+  z-index: 3;
 }
 .sesiones{
   position: relative;
@@ -70,10 +71,10 @@
   text-align: center;
   border-radius: 6px;
   padding: 5px 0;
+  z-index: 3;
 
   /* Position the tooltip */
   position: absolute;
-  z-index: 1;
 }
 
 .tooltip:hover .tooltiptext {
@@ -81,6 +82,7 @@
 }
   .alarma {
     border-radius: 50%;
+    position: relative;
     background: red;
     padding: 5px 10px; 
     color:white;
@@ -88,6 +90,7 @@
     text-align:center;
     width: 10px;
     height: 10px;  
+    z-index: 3;
   }
   .session {
     border-radius: 25%;
@@ -151,6 +154,7 @@
   
   #sidebar {
       width:206px;
+
   }
   #team {
     width:0;
@@ -772,6 +776,29 @@
 .considerarfalse{
   z-index:2;
 }
+.flex-container-meses {
+  position: sticky;
+  margin-left: 0px;
+  width: fit-content;
+  top: 100px;
+  left: 0;
+  display: flex;
+  flex-wrap: nowrap;
+  background-color: white;
+  opacity: 0.99999;
+  z-index: 1;
+}
+
+.flex-container-meses > div {
+  background-color: #f1f1f1;
+  width: 256px;
+  margin: 1px;
+  text-align: center;
+  line-height: 25px;
+  font-size: 12px;
+  z-index: 1;
+}
+
   @-webkit-keyframes spin {
     0% { -webkit-transform: rotate(0deg); }
     100% { -webkit-transform: rotate(360deg); }

@@ -757,6 +757,7 @@ class Calendario{
         document.getElementById("tmeses").appendChild(nombres);
         let topm=12
         let yearadd=0;
+        let stickymes=0;
         for(let i=INITIALMONTH;i<INITIALMONTH+MONTHTOSHOW;i++){
                 var z = document.createElement("TD");
                 
@@ -770,7 +771,12 @@ class Calendario{
                 }
                 var t = document.createTextNode(titulo[numes] +"-" + y);
                 z.appendChild(t);
-                document.getElementById("titulo").appendChild(z);
+              //  document.getElementById("titulo").appendChild(z);
+                stickymes++;
+                console.log("stk-"+stickymes,document.getElementById("stk-"+stickymes),titulo[numes] +"-" + y);
+                document.getElementById("stk-"+stickymes).innerHTML=titulo[numes] +"-" + y;
+                //document.getElementById("stk-"+stickymes)?.innerHTML=titulo[numes] +"-" + y;
+                
         }
         var totales = document.createElement("TR"); // area de totales
         totales.setAttribute("id", "totales");
