@@ -222,7 +222,7 @@ class ProjViewReal{
                     let tasaConsPlan=tasaConsumo?parseFloat(tasaConsumo.getTasaConsumoById(arr[i].idProy)):"N/D";
                     let tasaConsReal=tasaConsumo?parseFloat(tasaConsumo.getTasaConsumoRealById(arr[i].idProy)):"N/D";
                     let diasConsumirTodo=tasaConsumo?tasaConsumo.getDiasConsumoTotal(arr[i].idProy):"N/d"
-                    console.log("color sem",arr[i].idProy,cons,color);
+                    console.log("color sem",arr[i].idProy,cons,color,arr[i].nb_proyecto);
                     projHead=`<tr name="o.${arr[i].nb_proyecto}" >
                                   <td class="head-cell-left" style="background-color:var(--color-head)" colspan="4"><button onclick="mostrarProyReal('p.${arr[i].idProy}')">+</button>${arr[i].idProy}-${arr[i].nb_proyecto} (${fase})</td>
                                   <td>${(arr[i].inicio_mon?arr[i].inicio_mon.substring(0,10):'')}</td>
@@ -274,7 +274,7 @@ class ProjViewReal{
                 projHead="";
                 //console.log("data arr",arr[i],tds);
                 for(let j=INITIALMONTH;j<INITIALMONTH+MONTHTOSHOW;j++){
-                    if(typeof tds[j]!="undefined" )
+                    if(typeof tds[j]!=="undefined" )
                         rows=rows+tds[j];
                 }
             }
