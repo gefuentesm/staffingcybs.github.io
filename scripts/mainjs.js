@@ -930,7 +930,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
 
     }
     async function getTasaConsumo(){
-        console.log("inicio getTasaConsumo");
+        //console.log("inicio getTasaConsumo");
         let fetchData=await util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/gettasaconsumoproy`,myToken,myTime)
 
         //console.log("fetch data getProjectSummary",fetchData);
@@ -943,7 +943,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             tasaConsumo=new TasaConsumo(fetchData.data);
 
         }
-        console.log("fin getTasaConsumo");    
+        //console.log("fin getTasaConsumo");    
     }
     async function loadVacation1(){
         console.log("inicio loadVacation");
@@ -1162,7 +1162,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         render = new Render();
         document.getElementById("loader").style.display = "";
         document.getElementById("loader").style.visibility = "visible";
-       
+
         if(myToken && myTime) {
             
             await getTasaConsumo();

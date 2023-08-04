@@ -457,6 +457,7 @@ class Proyectos{
     }
     getConsiderar(idP){
         let considerArr=this.proyectos;
+        if(considerArr.find((el)=>el.idProy===idP)===null) console.log("proyecto no existe",idP)
         return considerArr.find((el)=>el.idProy===idP)?.in_relevante_staffing===1
     }
     getActiveProj(){
@@ -691,7 +692,7 @@ class CrossReference{
         let soloNoD = arrayProy.filter(function(arrayProy) {
             return arrayProy.Project== "Categoría - No Disponible" ;
           });
-        console.log("solo no disponible",soloNoD);
+        //console.log("solo no disponible",soloNoD);
         return soloNoD;
     }
     addProjNonExisten(){

@@ -191,7 +191,7 @@ class ProjViewReal{
         var rows="";        
         var arr=this.factprojmonthy;
 
-        console.log("mostrarProyReal",pproy,arr);
+        //console.log("mostrarProyReal",pproy,arr);
         let inHead=true;
         let primera=true;
         let projHead="";
@@ -202,9 +202,13 @@ class ProjViewReal{
                     rowHead=rowName[0];
                     //console.log()
                     for(let m=INITIALMONTH;m<INITIALMONTH+MONTHTOSHOW;m++){
-                        if(m!=0)
-                            rowHead=rowHead+rowName[m];
+                        if(m!=0){
+                            if(rowName[m]!== undefined){
+                                rowHead=rowHead+rowName[m];
+                            }else console.log("rowName m no definido",m)
+                        }else console.log("mes es 0");
                     }
+                    //if(rowHead===undefined) console.log("rowHead is undefined",i)
                     rowHead=rowHead+"</tr></thead>"
                     inHead=false;
                    
@@ -222,7 +226,7 @@ class ProjViewReal{
                     let tasaConsPlan=tasaConsumo?parseFloat(tasaConsumo.getTasaConsumoById(arr[i].idProy)):"N/D";
                     let tasaConsReal=tasaConsumo?parseFloat(tasaConsumo.getTasaConsumoRealById(arr[i].idProy)):"N/D";
                     let diasConsumirTodo=tasaConsumo?tasaConsumo.getDiasConsumoTotal(arr[i].idProy):"N/d"
-                    console.log("color sem",arr[i].idProy,cons,color,arr[i].nb_proyecto);
+                    //console.log("color sem",arr[i].idProy,cons,color,arr[i].nb_proyecto);
                     projHead=`<tr name="o.${arr[i].nb_proyecto}" >
                                   <td class="head-cell-left" style="background-color:var(--color-head)" colspan="4"><button onclick="mostrarProyReal('p.${arr[i].idProy}')">+</button>${arr[i].idProy}-${arr[i].nb_proyecto} (${fase})</td>
                                   <td>${(arr[i].inicio_mon?arr[i].inicio_mon.substring(0,10):'')}</td>
@@ -246,6 +250,7 @@ class ProjViewReal{
                             periodo+=`<td class='head-cell-left' ${bgc} >&nbsp;${this.calcTotalProj(arr[i].idProy,fe2Test)}</td>`;
                         }else periodo+="<td></td>";
                     } 
+                    if(projHead===undefined || periodo===undefined) console.log("projHead + periodo undefined")
                     projHead+=periodo;
                     //tds.push(`<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>`);
                     projBreak=arr[i].idProy;
@@ -270,16 +275,18 @@ class ProjViewReal{
                 tds.push(`<td width='170px'${arr[i].p_Ene||arr[i].r_Ene?'class="cell1"':''}>${(arr[i].p_Ene?`<span class="plan" ${this.formtRango(arr[i].p_Ene)}>Plan:`+arr[i].p_Ene.toFixed(1)+'H</span>':'')}${(arr[i].r_Ene?`<div class="real" ${this.formtRango(arr[i].r_Ene)}>Real:`+arr[i].r_Ene.toFixed(1)+'H</div>':'')}</td>`);
                 tds.push(`<td width='170px'${arr[i].p_Feb||arr[i].r_Feb?'class="cell1"':''}>${(arr[i].p_Feb?`<span class="plan" ${this.formtRango(arr[i].p_Feb)}>Plan:`+arr[i].p_Feb.toFixed(1)+'H</span>':'')}${(arr[i].r_Feb?`<div class="real" ${this.formtRango(arr[i].r_Feb)}>Real:`+arr[i].r_Feb.toFixed(1)+'H</div>':'')}</td>`);
                 tds.push(`<td width='170px'${arr[i].p_Mar||arr[i].r_Mar?'class="cell1"':''}>${(arr[i].p_Mar?`<span class="plan" ${this.formtRango(arr[i].p_Mar)}>Plan:`+arr[i].p_Mar.toFixed(1)+'H</span>':'')}${(arr[i].r_Mar?`<div class="real" ${this.formtRango(arr[i].r_Mar)}>Real:`+arr[i].r_Mar.toFixed(1)+'H</div>':'')}</td>`);
+                if(rows===undefined || tdh === undefined || projHead === undefined || tds[0] === undefined)
+                    console.log("alguno undefined rows, tdh, projHead,tds[0]",rows, tdh, projHead,tds[0])
                 rows=rows+tdh+projHead+tds[0];
                 projHead="";
                 //console.log("data arr",arr[i],tds);
                 for(let j=INITIALMONTH;j<INITIALMONTH+MONTHTOSHOW;j++){
-                    if(typeof tds[j]!=="undefined" )
+                    if(tds[j]!==undefined )
                         rows=rows+tds[j];
                 }
             }
         }
-        contenedor.innerHTML=rowHead+rows;
+        contenedor.innerHTML=rowHead +rows;
     }
 }
 class AlarmView{
@@ -773,7 +780,7 @@ class Calendario{
                 z.appendChild(t);
               //  document.getElementById("titulo").appendChild(z);
                 stickymes++;
-                console.log("stk-"+stickymes,document.getElementById("stk-"+stickymes),titulo[numes] +"-" + y);
+                //console.log("stk-"+stickymes,document.getElementById("stk-"+stickymes),titulo[numes] +"-" + y);
                 document.getElementById("stk-"+stickymes).innerHTML=titulo[numes] +"-" + y;
                 //document.getElementById("stk-"+stickymes)?.innerHTML=titulo[numes] +"-" + y;
                 
@@ -1070,9 +1077,7 @@ class StaffingView2{
                 if(i>CURRENTMONTH){
                         cont.className="future-mes";
                 }
-                //totcont.innerHTML="";
-                //projList.getProjectByMonth(i).forEach(o=>{
-                //if(proyectosArr[i]!==undefined)
+
                 if(this.projList.getProjectByMonth(i)!==undefined)
                     //proyectosArr[i].forEach((o)=>{
                     this.projList.getProjectByMonth(i).forEach(o=>{
@@ -1086,9 +1091,7 @@ class StaffingView2{
                         }
                         //else
                           //console.log("staffing 0",o);
-                        //totDedic=projList.getTeamDedication(o.IDp,o.fase,o.mes);
-                        //console.log("aqui da el error",`ref-${o.IDp}.${o.fase}.${o.mes}`);
-                        //document.getElementById(`ref-${o.IDp}.${o.fase}.${o.mes}`).innerHTML=totDedic.toFixed(2);
+
                     })
             }
         }
@@ -1141,6 +1144,7 @@ class StaffingView2{
                 //console.log("mon",id);
                 var mon=document.getElementById(id);
                 if(mon!=null){ 
+                    mon.innerHTML=""
                     var pers=mesStruct[r];
                     pers.forEach(function(value,key){
                         var div=document.createElement("div");
