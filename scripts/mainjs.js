@@ -368,7 +368,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         let xcolor=totDedic.toFixed(1)==origDedi ? "green" : "red";
         if(totDedic.toFixed(1)==origDedi){
             
-            const index = preserveBudget.indexOf(idMes);
+            let index = preserveBudget.indexOf(idMes);
             if (index > -1) {
                 preserveBudget.splice(index, 1);
             }
@@ -533,12 +533,13 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         }
     }
     async function btn_save(){
-        //console.log("save")
+        console.log("save")
         let r=await util.sendToServer();  
         if(r==0){
             //console.log("recarga la data del servidor-save")
             propertyBar.cleanChng();         
             btn_reload();   
+           
         }
 
     }

@@ -901,8 +901,11 @@ class PropertyView{
         return !(bar.style.width=="0"||bar.style.width=="0px");
     }
     cleanChng(){
-
-        var len=document.getElementById("chng-table").rows.length; 
+        var chg=document.getElementById("chng-table");
+        console.log("cleanChng",chg);
+        var len=0;
+        if(chg)
+            len=document.getElementById("chng-table").rows.length; 
         for(let i=len;i>1;i--){
             document.getElementById("chng-table").deleteRow(i-1); 
         }

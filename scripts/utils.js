@@ -74,7 +74,7 @@ class Util{
         document.getElementById("loader").style.display = "";
        let modifyData=projList.getChanged();
        let retcode=0
-       //console.log("modify data",modifyData);
+       console.log("modify data",modifyData);
        if(modifyData.length>0){
            var objToSend={data:modifyData,usr:userSession,token:myToken,time:myTime}
            //console.log("enviar a server",objToSend);
@@ -224,7 +224,7 @@ class Render{
                                 if(obj.mes<mes) disabled="disabled=''"
                                 return  `<div id="c-${arr.nombre}-${obj.IDp}.${obj.fase}.${obj.mesi}-${arr.inOnSite}" dragable="false"  class="card" style="background-color:${arr.inOnSite==1?'blue':'#e6f9ff'}">
                                 <input type="text" name="nombre" readonly style="width: 110px;${vac}" value="${arr.nombre}">
-                                <input type="text" id="id-${arr.nombre}-${obj.IDp}.${obj.fase}.${obj.mesi}-${arr.inOnSite}" ${disabled} onchange="tx_dedichange('${arr.nombre}','${obj.IDp}','${obj.fase}','${obj.mesi}',${arr.inOnSite})" class="horas-plan" style="width: 27px;font-size:9px;"  value="${arr.horasPlan?arr.horasPlan.toFixed(1):0}">
+                                <input type="text" id="id-${arr.nombre}-${obj.IDp}.${obj.fase}.${obj.mesi}-${arr.inOnSite}" ${disabled} onchange="tx_dedichange('${arr.nombre}','${obj.IDp}','${obj.fase}','${obj.mesi}',${arr.inOnSite})" class="horas-plan" style="width: 27px;font-size:9px;"  value="${arr.horasPlan?arr.horasPlan.toFixed(2):0}">
                                 <input type="text" id="id-${arr.nombre}-${obj.IDp}.${obj.fase}.${obj.mesi}-${arr.inOnSite}" onchange="tx_dedichange('${arr.nombre}','${obj.IDp}','${obj.fase}','${obj.mesi}',${arr.inOnSite})" class="horas-real" style="width: 27px;font-size:9px;${futuro?'color:hsl(240, 100%, 50%)':''}" value="${horasReal && !futuro?horasReal.toFixed(1):0}">
                                 </div>`;
                                 // agrega la capacidad de poner valores estimados                             
