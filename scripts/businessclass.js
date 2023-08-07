@@ -376,7 +376,7 @@ class HistoricChanges{
     async updateData(){
         let data= await this.util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/gethistchanges`,myToken,myTime);
         this.Hdata=data.data;
-        //console.log("update data",this.Hdata);
+        console.log("update data",this.Hdata);
     }
 }
 class TasaConsumo{

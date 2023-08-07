@@ -910,7 +910,7 @@ class PropertyView{
     }
     showHistorial(){
         let hcArr= this.getHistoricData();
-        //console.log("showHistorial",hcArr);
+        console.log("showHistorial",hcArr);
         let rows="";
         let enc="<table class='paleBlueRows'><thead><tr><th>Nombre<br><button id='b1' onClick='ordena(1)'>-</botton></th><th>IdP<br><button id='b2' onClick='ordena(2)'>-</botton></th><th>Proyecto</th><th>Nuevas Hrs.</th><th>Orig.</th><th>Dif.</th><th>Acción</th></tr></thead><tbody>"
         let endEnc="</tbody></table>";
