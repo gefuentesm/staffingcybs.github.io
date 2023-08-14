@@ -719,13 +719,13 @@
   font-size: 14px;
   text-align: center;
 }
-.grid-container-head {
+.grid3-container-head {
   display: grid;
   grid-template-columns: 110px 40px 40px 50px;
   background-color: silver;
   padding: 2px;
 }
-.grid-container-head > span {
+.grid3-container-head > span {
   background-color: rgba(255, 255, 255, 0.8);
   text-align: center;
   padding: 0;

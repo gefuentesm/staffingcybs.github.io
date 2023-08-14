@@ -20,7 +20,7 @@ class ProjList{
         return this.data;
     }   
     getTeamDedication(IDp,fase,mes){
-        console.log("getTeamDedication",IDp,fase,mes,this.data, this.data[mes]);
+        //console.log("getTeamDedication",IDp,fase,mes,this.data, this.data[mes]);
         let sumDedication=0.0;
         var existe=false;
         let arr=this.data[mes]
@@ -183,10 +183,11 @@ class ProjList{
         for(let i in this.mesProjStruct){
             var people = new Map();
             var dat=this.mesProjStruct[i];
-            //console.log("createMesStruct var dat",dat)
+            //if(i==7) console.log("createMesStruct var dat",dat)
             dat.forEach(element =>{
                 if(element.equipo !== undefined){
                     let cumple=proyectos.isMeetRequirement(element.IDp)
+                    //if(element.IDp==394) console.log("isMeetRequirement cumple",cumple)
                     element.equipo.forEach(member=>{
                         if(people.has(member.nombre)){
                             
@@ -382,7 +383,7 @@ class HistoricChanges{
 class TasaConsumo{
     constructor(data){
         this.tasaConsumo=this.crearEstructura(data);
-        console.log("Tasa consumo",data);
+        //console.log("Tasa consumo",data);
     }
     crearEstructura(data){
         let mapatem=new Map()
@@ -657,10 +658,12 @@ class CrossReference{
         let arrayProy=data.data;
         let persSinA=new Map();
         let Proy = arrayProy.filter(function(arrayProy) {
-            return arrayProy.Project!== "Categoría - Proyecto" && arrayProy.Project!=="Categoría - Propuesta";
+            return arrayProy.Project!== "Categoría - Proyecto" && arrayProy.Project!=="Categoría - Propuesta" && arrayProy.Project!=="Categoría - No Disponible";
           });
+          //console.log("filtrar resto",Proy)
         Proy.forEach(({ usr, project,horas }) => {
             if(project!=="Categoría - Proyecto" && project!=="Categoría - Propuesta" && project!=="Categoría - No Disponible"){
+        
                 if (persSinA.has(usr)) {
                     persSinA.set(usr, persSinA.get(usr) + horas);
                 } else {

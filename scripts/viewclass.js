@@ -93,7 +93,7 @@ class ProjSummaryView{
 }
 class ProjViewReal{
     constructor(data,container,tab_container,proyectos){
-        this.factprojmonthy=data;
+        this.factprojmonthy=data.filter((e)=> proyectos.isMeetRequirement( e.idProy));
         this.projects=proyectos;
         this.containerProject=container;
         this.tabContainer=tab_container;
@@ -101,7 +101,7 @@ class ProjViewReal{
         this.contMap=new Map();
         this.param=-1;
         //this.makeTotalMap();
-        //console.log("ProjViewReal",this.factprojmonthy,this.totalProj);
+        //console.log("ProjViewReal",data);
     }
 
     isVisible(){
@@ -801,6 +801,7 @@ class Calendario{
                 let titulodiv="mes"+numes+"totales"
                 div.setAttribute("id", titulodiv);
                 //
+                /*
                 let nomb=document.createElement("span");
                 nomb.appendChild(document.createTextNode("Nombre"));
                 let plan=document.createElement("span");
@@ -810,15 +811,15 @@ class Calendario{
                 let vac=document.createElement("span");
                 vac.appendChild(document.createTextNode(" "));
                 let divh=document.createElement("div");
-                divh.setAttribute("class","grid-container-head");
+                divh.setAttribute("class","grid3-container-head");
                 divh.appendChild(nomb);
                 divh.appendChild(plan);
                 divh.appendChild(real);
                 divh.appendChild(vac);
-                div.appendChild(divh);
+                div.appendChild(divh);*/
+                
                 //
                 td.appendChild(div);
-
                 document.getElementById("totales").appendChild(td);
                 document.getElementById("but-mes"+j).addEventListener("click", function() {
                     //console.log("el id",this.id)
@@ -1115,6 +1116,7 @@ class StaffingView2{
         */
         //let mesStruct=projList.getStructByMonth(m);
         var id="mes"+parseInt(m)+"totales";
+        let tit=`<div class="grid3-container-head"><span>Nombre</span><span>Plan</span><span>Real</span></div>`
         //console.log("mon",id);
         var mon=document.getElementById(id);
         //let conthead=document.getElementsByClassName("grid-container-head").item(0);
@@ -1135,10 +1137,12 @@ class StaffingView2{
                 mon.innerHTML+=render.send(obj,"total_persona_mes");     
             }           
         })
+        mon.innerHTML=tit+mon.innerHTML;
     }
     createMonStruct(){      
         let mesStruct=this.projList.getAllMonStruct();
         //console.log("createMonStruct - mesStruct",mesStruct);
+        let tit=`<div class="grid3-container-head"><span>Nombre</span><span>Plan</span><span>Real</span></div>`
         for(let r in mesStruct){
             if(mesStruct[r]!= ""){
                 //console.log("r",mesStruct[r].mes)
@@ -1159,6 +1163,7 @@ class StaffingView2{
                         if(obj.horasPlan>0 || obj.horasReal>0)
                             mon.innerHTML+=render.send(obj,"total_persona_mes");          
                     })
+                    mon.innerHTML=tit+mon.innerHTML
                 }
             }
         }
@@ -1377,81 +1382,88 @@ class PeopleView{
         let troct=0.0
         let trnov=0.0
         let trdic=0.0
+        //console.log("peopleView",hcArr);
         for(let i in hcArr){
+            if(!proyectos.isMeetRequirement(hcArr[i].idProy))
+                console.log("No cumple requerimientos",proyectos.isMeetRequirement(hcArr[i].idProy),hcArr[i].idProy)
             if(rompe!=hcArr[i].usr){
                 map1.set(rompe,{ene:tene,feb:tfeb,mar:tmar,abr:tabr,may:tmay,jun:tjun,
                         jul:tjul,ago:tago,sep:tsep,oct:toct,nov:tnov,dic:tdic,
                         rene:trene,rfeb:trfeb,rmar:trmar,rabr:trabr,rmay:trmay,rjun:trjun,
                         rjul:trjul,rago:trago,rsep:trsep,roct:troct,rnov:trnov,rdic:trdic});
                 //console.log("total",rompe,tene,tfeb,tmar,map1);
-                tene=parseFloat(hcArr[i].pEne==null?0.0:hcArr[i].pEne)
-                tfeb=parseFloat(hcArr[i].pFeb==null?0.0:hcArr[i].pFeb)
-                tmar=parseFloat(hcArr[i].pMar==null?0.0:hcArr[i].pMar)  
-                /*  if(hcArr[i].usr=="Eglantina Norato"){
-                    console.log("Tina people view",hcArr[i].idProy,tmar)
-                  }*/
-                tabr=parseFloat(hcArr[i].pAbr==null?0.0:hcArr[i].pAbr)
-                tmay=parseFloat(hcArr[i].pMay==null?0.0:hcArr[i].pMay)
-                tjun=parseFloat(hcArr[i].pJun==null?0.0:hcArr[i].pJun)
+                if(proyectos.isMeetRequirement(hcArr[i].idProy)){
+                    tene=parseFloat(hcArr[i].pEne==null?0.0:hcArr[i].pEne)
+                    tfeb=parseFloat(hcArr[i].pFeb==null?0.0:hcArr[i].pFeb)
+                    tmar=parseFloat(hcArr[i].pMar==null?0.0:hcArr[i].pMar)  
+                    /*  if(hcArr[i].usr=="Eglantina Norato"){
+                        console.log("Tina people view",hcArr[i].idProy,tmar)
+                    }*/
+                    tabr=parseFloat(hcArr[i].pAbr==null?0.0:hcArr[i].pAbr)
+                    tmay=parseFloat(hcArr[i].pMay==null?0.0:hcArr[i].pMay)
+                    tjun=parseFloat(hcArr[i].pJun==null?0.0:hcArr[i].pJun)
 
-                tjul=parseFloat(hcArr[i].pJul==null?0.0:hcArr[i].pJul)
-                tago=parseFloat(hcArr[i].pAgo==null?0.0:hcArr[i].pAgo)
-                tsep=parseFloat(hcArr[i].pSep==null?0.0:hcArr[i].pSep)
+                    tjul=parseFloat(hcArr[i].pJul==null?0.0:hcArr[i].pJul)
+                    tago=parseFloat(hcArr[i].pAgo==null?0.0:hcArr[i].pAgo)
+                    tsep=parseFloat(hcArr[i].pSep==null?0.0:hcArr[i].pSep)
 
-                toct=parseFloat(hcArr[i].pOct==null?0.0:hcArr[i].pOct)
-                tnov=parseFloat(hcArr[i].pNov==null?0.0:hcArr[i].pNov)
-                tdic=parseFloat(hcArr[i].pDic==null?0.0:hcArr[i].pDic)
+                    toct=parseFloat(hcArr[i].pOct==null?0.0:hcArr[i].pOct)
+                    tnov=parseFloat(hcArr[i].pNov==null?0.0:hcArr[i].pNov)
+                    tdic=parseFloat(hcArr[i].pDic==null?0.0:hcArr[i].pDic)
 
-                trene=parseFloat(hcArr[i].rEne==null?0.0:hcArr[i].rEne)
-                trfeb=parseFloat(hcArr[i].rFeb==null?0.0:hcArr[i].rFeb)
-                trmar=parseFloat(hcArr[i].rMar==null?0.0:hcArr[i].rMar)  
+                    trene=parseFloat(hcArr[i].rEne==null?0.0:hcArr[i].rEne)
+                    trfeb=parseFloat(hcArr[i].rFeb==null?0.0:hcArr[i].rFeb)
+                    trmar=parseFloat(hcArr[i].rMar==null?0.0:hcArr[i].rMar)  
 
-                trabr=parseFloat(hcArr[i].rAbr==null?0.0:hcArr[i].rAbr)
-                trmay=parseFloat(hcArr[i].rMay==null?0.0:hcArr[i].rMay)
-                trjun=parseFloat(hcArr[i].rJun==null?0.0:hcArr[i].rJun)
+                    trabr=parseFloat(hcArr[i].rAbr==null?0.0:hcArr[i].rAbr)
+                    trmay=parseFloat(hcArr[i].rMay==null?0.0:hcArr[i].rMay)
+                    trjun=parseFloat(hcArr[i].rJun==null?0.0:hcArr[i].rJun)
 
-                trjul=parseFloat(hcArr[i].rJul==null?0.0:hcArr[i].rJul)
-                trago=parseFloat(hcArr[i].rAgo==null?0.0:hcArr[i].rAgo)
-                trsep=parseFloat(hcArr[i].rSep==null?0.0:hcArr[i].rSep)
+                    trjul=parseFloat(hcArr[i].rJul==null?0.0:hcArr[i].rJul)
+                    trago=parseFloat(hcArr[i].rAgo==null?0.0:hcArr[i].rAgo)
+                    trsep=parseFloat(hcArr[i].rSep==null?0.0:hcArr[i].rSep)
 
-                troct=parseFloat(hcArr[i].rOct==null?0.0:hcArr[i].rOct)
-                trnov=parseFloat(hcArr[i].rNov==null?0.0:hcArr[i].rNov)
-                trdic=parseFloat(hcArr[i].rDic==null?0.0:hcArr[i].rDic)
+                    troct=parseFloat(hcArr[i].rOct==null?0.0:hcArr[i].rOct)
+                    trnov=parseFloat(hcArr[i].rNov==null?0.0:hcArr[i].rNov)
+                    trdic=parseFloat(hcArr[i].rDic==null?0.0:hcArr[i].rDic)
+                }
                 rompe=hcArr[i].usr
             }else{
-                tene=tene+parseFloat(hcArr[i].pEne==null?0.0:hcArr[i].pEne)
-                tfeb=tfeb+parseFloat(hcArr[i].pFeb==null?0.0:hcArr[i].pFeb)
-                tmar=tmar+parseFloat(hcArr[i].pMar==null?0.0:hcArr[i].pMar)
-                /*if(hcArr[i].usr=="Eglantina Norato"){
-                    console.log("Tina people view",hcArr[i].idProy,hcArr[i].pMar)
-                  }*/
-                tabr= tabr+ parseFloat(hcArr[i].pAbr==null?0.0:hcArr[i].pAbr)
-                tmay= tmay+ parseFloat(hcArr[i].pMay==null?0.0:hcArr[i].pMay)
-                tjun= tjun+ parseFloat(hcArr[i].pJun==null?0.0:hcArr[i].pJun)
+                if(proyectos.isMeetRequirement(hcArr[i].idProy)){
+                    tene=tene+parseFloat(hcArr[i].pEne==null?0.0:hcArr[i].pEne)
+                    tfeb=tfeb+parseFloat(hcArr[i].pFeb==null?0.0:hcArr[i].pFeb)
+                    tmar=tmar+parseFloat(hcArr[i].pMar==null?0.0:hcArr[i].pMar)
+                    /*if(hcArr[i].usr=="Eglantina Norato"){
+                        console.log("Tina people view",hcArr[i].idProy,hcArr[i].pMar)
+                    }*/
+                    tabr= tabr+ parseFloat(hcArr[i].pAbr==null?0.0:hcArr[i].pAbr)
+                    tmay= tmay+ parseFloat(hcArr[i].pMay==null?0.0:hcArr[i].pMay)
+                    tjun= tjun+ parseFloat(hcArr[i].pJun==null?0.0:hcArr[i].pJun)
 
-                tjul= tjul+ parseFloat(hcArr[i].pJul==null?0.0:hcArr[i].pJul)
-                tago= tago+ parseFloat(hcArr[i].pAgo==null?0.0:hcArr[i].pAgo)
-                tsep= tsep+ parseFloat(hcArr[i].pSep==null?0.0:hcArr[i].pSep)
+                    tjul= tjul+ parseFloat(hcArr[i].pJul==null?0.0:hcArr[i].pJul)
+                    tago= tago+ parseFloat(hcArr[i].pAgo==null?0.0:hcArr[i].pAgo)
+                    tsep= tsep+ parseFloat(hcArr[i].pSep==null?0.0:hcArr[i].pSep)
 
-                toct= toct+ parseFloat(hcArr[i].pOct==null?0.0:hcArr[i].pOct)
-                tnov= tnov+ parseFloat(hcArr[i].pNov==null?0.0:hcArr[i].pNov)
-                tdic= tdic+ parseFloat(hcArr[i].pDic==null?0.0:hcArr[i].pDic)
+                    toct= toct+ parseFloat(hcArr[i].pOct==null?0.0:hcArr[i].pOct)
+                    tnov= tnov+ parseFloat(hcArr[i].pNov==null?0.0:hcArr[i].pNov)
+                    tdic= tdic+ parseFloat(hcArr[i].pDic==null?0.0:hcArr[i].pDic)
 
-                trene=trene+parseFloat(hcArr[i].rEne==null?0.0:hcArr[i].rEne)
-                trfeb=trfeb+parseFloat(hcArr[i].rFeb==null?0.0:hcArr[i].rFeb)
-                trmar=trmar+parseFloat(hcArr[i].rMar==null?0.0:hcArr[i].rMar) 
+                    trene=trene+parseFloat(hcArr[i].rEne==null?0.0:hcArr[i].rEne)
+                    trfeb=trfeb+parseFloat(hcArr[i].rFeb==null?0.0:hcArr[i].rFeb)
+                    trmar=trmar+parseFloat(hcArr[i].rMar==null?0.0:hcArr[i].rMar) 
 
-                trabr=trabr+parseFloat(hcArr[i].rAbr==null?0.0:hcArr[i].rAbr)
-                trmay=trmay+parseFloat(hcArr[i].rMay==null?0.0:hcArr[i].rMay)
-                trjun=trjun+parseFloat(hcArr[i].rJun==null?0.0:hcArr[i].rJun)
+                    trabr=trabr+parseFloat(hcArr[i].rAbr==null?0.0:hcArr[i].rAbr)
+                    trmay=trmay+parseFloat(hcArr[i].rMay==null?0.0:hcArr[i].rMay)
+                    trjun=trjun+parseFloat(hcArr[i].rJun==null?0.0:hcArr[i].rJun)
 
-                trjul=trjul+parseFloat(hcArr[i].rJul==null?0.0:hcArr[i].rJul)
-                trago=trago+parseFloat(hcArr[i].rAgo==null?0.0:hcArr[i].rAgo)
-                trsep=trsep+parseFloat(hcArr[i].rSep==null?0.0:hcArr[i].rSep)
+                    trjul=trjul+parseFloat(hcArr[i].rJul==null?0.0:hcArr[i].rJul)
+                    trago=trago+parseFloat(hcArr[i].rAgo==null?0.0:hcArr[i].rAgo)
+                    trsep=trsep+parseFloat(hcArr[i].rSep==null?0.0:hcArr[i].rSep)
 
-                troct=troct+parseFloat(hcArr[i].rOct==null?0.0:hcArr[i].rOct)
-                trnov=trnov+parseFloat(hcArr[i].rNov==null?0.0:hcArr[i].rNov)
-                trdic=trdic+parseFloat(hcArr[i].rDic==null?0.0:hcArr[i].rDic)
+                    troct=troct+parseFloat(hcArr[i].rOct==null?0.0:hcArr[i].rOct)
+                    trnov=trnov+parseFloat(hcArr[i].rNov==null?0.0:hcArr[i].rNov)
+                    trdic=trdic+parseFloat(hcArr[i].rDic==null?0.0:hcArr[i].rDic)
+                }
             }
         }
         map1.set(rompe,{ene:tene,feb:tfeb,mar:tmar,abr:tabr,may:tmay,jun:tjun,
@@ -1501,7 +1513,8 @@ class PeopleView{
             }
             hcArr[i].inTeam=inTeam;
             //console.log(aux);
-            dataArr.push(hcArr[i]);
+            if(proyectos.isMeetRequirement(hcArr[i].idProy))
+                dataArr.push(hcArr[i]);
             ind++;
         }
         //console.log("tiene ind",dataArr);
@@ -1518,6 +1531,7 @@ class PeopleView{
         let rows="";
         //rows=render.sendTable(hcArr,"fact_personas","","","","");
         //console.log("people",dataArr);
+        
         rows=render.sendTable(dataArr,"fact_personas","","","","");
         let tab=document.getElementById(this.container)
         tab.innerHTML = rowHead+rows+endEncabh;
