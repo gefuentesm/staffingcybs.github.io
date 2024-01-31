@@ -1,0 +1,20 @@
+@startuml context
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+AddRelTag("externo", $textColor="orange", $lineColor="orange", $lineStyle = DashedLine())
+!define FONTAWESOME https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/font-awesome-5
+!include FONTAWESOME/users.puml
+Person(user, "Gerentes", "Gestionan el staff",$sprite="users")
+Container(aswa, "Staffing", "Azure aswa", "App para la gestión de staffing",$sprite="img:https://www.cybsconsulting.com/assets/img/logos/logo-cybs-white.svg")
+System_Ext(Monday, "Monday Web", "API", "WebAPP",$sprite="img:https://dapulse-res.cloudinary.com/image/upload/f_auto,q_auto/remote_mondaycom_static/img/monday-logo-x2.png{scale=0.3}")
+System_Ext(budget, "Budget Web", "Herramienta de presupuesto", "WebAPP")
+SystemDb_Ext(datamart,"CYBS BD","Contiene datos de proyectos")
+
+Rel(user, aswa, "Uses", "https")
+Rel_R(Monday, aswa, "Uses", "https",$tags="externo")
+Rel_R(budget, datamart, "Reads/Writes",$tags="externo")
+Rel_U(datamart, aswa, "Reads/Writes",$tags="externo")
+
+
+SHOW_LEGEND()
+@enduml

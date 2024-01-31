@@ -1,0 +1,46 @@
+@startuml CYBS_Staffing
+  !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Deployment.puml
+' uncomment the following line and comment the first to use locally
+' !include C4_Deployment.puml
+
+AddElementTag("fallback", $bgColor="#c0c0c0")
+AddRelTag("fallback", $textColor="#c0c0c0", $lineColor="#438DD5")
+
+' calculated legend is used (activated in last line)
+' LAYOUT_WITH_LEGEND()
+
+title Diagrama de despliegue CYBS Staffing
+
+Deployment_Node(plc, "CYBS Staffing", "Azure platform"){
+    Deployment_Node(dn, "getmondayproject", "azurewebsites.net"){
+        Deployment_Node(nodejs, "Nodejs", "Azure Functions"){
+            Container(api, "API Application", "Azure function, NodeJs", "Provee acceso a la Base de datos y Monday, mediante distintas funciones serverless")
+        }
+    }
+    Deployment_Node(sqlserverless, "cybs-srv", "database.windows.net"){
+        Deployment_Node(sql, "Sql Server", "Gen 5, 2 Núcleos virtuales"){
+            ContainerDb(db, "Database", "Relational Database Schema", "Despacha y almacena la información necesaria para gestionar el staffing, así como información de usuarios")
+        }
+    }
+    Deployment_Node(bb2, "ashy-flower-0fa62cc10.2", "azurestaticapps.net"){
+        Deployment_Node(nodejs2, "Nodejs", "Nodejs"){
+            Container(web, "Web Application", "javascript, css, html", "Despacha la información de la página estática, enriquecida con las funciones azure")
+        }
+    }
+}
+
+
+Deployment_Node(comp, "Computador de Gerente", "Microsoft Windows or Apple macOS"){
+    Deployment_Node(browser, "Web Browser", "Google Chrome, Mozilla Firefox, Apple Safari or Microsoft Edge"){
+        Container(spa, "Single Page Application", "JavaScript CSS", "Provee toda la funcionalidad para la gestión de staffing a través del browser")
+    }
+}
+
+
+Rel_R(api,db,"Invocar Stored Procedure","SQL Connect")
+Rel(spa,api,"Peticiones al API","JSON/HTTPS")
+Rel_L(spa,web,"","HTTPS")
+
+
+SHOW_LEGEND()
+@enduml

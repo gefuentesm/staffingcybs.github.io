@@ -2,16 +2,22 @@ var globId=1;
 const GOODTHRESHOLD=160;
 //var INITIALMONTH=new Date().getMonth()+1; <-- esta es la correcta
 var INITIALMONTH=new Date().getMonth()-2;
+
 //INITIALMONTH=INITIALMONTH==0?12:INITIALMONTH;
 
 var MONTHTOSHOW=21;
-var INITIALYEAR=new Date().getFullYear();
+var INITIALYEAR=new Date().getFullYear()+1;
 INITIALYEAR=INITIALMONTH<0?INITIALYEAR-1:INITIALYEAR;
 INITIALMONTH=INITIALMONTH==-1?12:(INITIALMONTH==0?11:INITIALMONTH);
+INITIALMONTH=10
+INITIALYEAR=2023
 var CURRYEAR=new Date().getFullYear();
 var YEARTOSHOW=new Date().getFullYear()+1;
 var CURRENTMONTH=new Date().getMonth()+1;
-console.log(INITIALYEAR,YEARTOSHOW);
+INITIALMONTH=1
+INITIALYEAR=2024
+console.log("parametros",new Date().getMonth(),INITIALMONTH,INITIALYEAR,CURRENTMONTH,CURRYEAR)
+console.log(INITIALYEAR,YEARTOSHOW,CURRENTMONTH);
 let yearInitial= INITIALYEAR;      //2021; 
 let proyectosArr=Array.from({length: 25}, function() { return []; });
 cantidad=10
@@ -776,7 +782,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                     //console.log("msg staffing",msg);
                     //projList.createMesStruct();
                     if(msg=="ok"){
-
+                        console.log("loadStaff",fetchData)
                         convertAlternativeStaffData(fetchData);
                         //console.log("se cargo la data")
                     }

@@ -1,0 +1,31 @@
+@startuml Basic Sample
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+!define FONTAWESOME https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/font-awesome-5
+!include FONTAWESOME/users.puml
+AddElementTag("microService", $shape=EightSidedShape(), $legendText="micro service (eight sided) (no text, no back color)")
+AddElementTag("externo", $fontColor="orange")
+AddRelTag("externo", $textColor="orange", $lineColor="orange", $lineStyle = DashedLine())
+Person(user, "Gerentes", "Generan los Presupuestos",$sprite="users")
+System_Boundary(c1, "Budget") {
+    Container(aswa, "Pagina Web", "Azure aswa", "Interfaz para gestión de staffing"  )
+    Container(API, "microservicio", "Azure Func", "Intercambio de datos con BD y Monday",$tags="microService")
+}
+System_Ext(Monday, "Monday Web", "API", "",$sprite="img:https://dapulse-res.cloudinary.com/image/upload/f_auto,q_auto/remote_mondaycom_static/img/monday-logo-x2.png{scale=0.3}")
+System_Ext(PBI, "Dashboard", "Business Intelligence", "BI")
+System_Ext(budget, "budget Web", "Herramienta presupuesto", "WebAPP")
+System_Ext(etl, "Azure ETL", "Herramienta ETL", "WebAPP")
+System_Ext(clock, "Clockify Wwb", "Herramienta gestión tiempo", "WebAPP",$sprite="img:https://clockify.me/assets/images/clockify-logo.svg")
+SystemDb_Ext(datamart,"CYBS BD","Contiene datos de proyectos")
+
+Rel(user, aswa, "Carga Presupuesto", "HTTPS")
+Rel_R(aswa, API, "Send/Receive data", "HTTPS")
+
+Rel_R(Monday, API, "GraphQL", "HTTPS",$tags="externo")
+Rel_R(datamart, PBI, "Reads", "SQL Connectio",$tags="externo")
+Rel_R(budget, datamart, "Reads/Writes", "SQL Connection",$tags="externo")
+Rel(API, datamart, "stored proc", "SQL Connection",$tags="externo")
+Rel_R(clock, etl, "Reads/Writes", "SQL Connection",$tags="externo")
+Rel_U(etl, datamart, "Reads/Writes", "SQL Connection",$tags="externo")
+Rel(Monday,datamart,"GraphQl","HTTPS",$tags="externo")
+SHOW_LEGEND()
+@enduml

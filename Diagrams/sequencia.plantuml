@@ -1,0 +1,26 @@
+    @startuml patron
+    actor usr
+    boundary page
+    entity render
+    control func
+    database storedproc
+   
+    title Patron de funcionalidad de la página
+    usr -> page ++ #LightBlue : interaction
+    opt isNeeded
+        page -> render ++ #Cyan: acción
+        return componente html
+    end
+    opt  Working and call when needed
+        page -> func ++ #pink : invoke an azure function
+        func -> storedproc ++ #coral : exec procedure
+        return  send output back
+    end
+    group func [prep data in json]
+        func --> page: json data
+
+        page -> render ++ #Cyan: json
+        return componente html
+    end
+    page --> usr: show page
+    @enduml

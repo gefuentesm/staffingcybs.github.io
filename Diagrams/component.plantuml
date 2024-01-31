@@ -1,0 +1,44 @@
+@startuml ASWA
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+!define FONTAWESOME https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/font-awesome-5
+!include FONTAWESOME/users.puml
+AddElementTag("microService", $shape=EightSidedShape(), $legendText="micro service (eight sided) (no text, no back color)")
+AddElementTag("externo", $fontColor="orange")
+AddRelTag("externo", $textColor="orange", $lineColor="orange", $lineStyle = DashedLine())
+Person(user, "Gerentes", "Generan los Presupuestos",$sprite='users')
+Container_Boundary(c1, "Página Web") {
+    Component(staffing, "Vista de Staffing", "Formulario Web"  )
+    Component(people, "Vista de Gente",  "Pagina Web"  )
+    Component(cross, "Vista Cruzada",  "Pagina Web"  )
+    Component(project, "Vista de Proyectos", , "Página Web"  )
+    Component(team, "Miembros de CYBS", "Tabla"  )
+    Component(logica, "Lógica de Negocios", "Clases Javascript"  )
+    Component(render, "Genera las vistas", "Clase Javascript"  )
+}
+Container_Boundary(c2, "Microservicio") {
+    Component(accessMonday, "Accede a Monday", "GraphQL")
+    Component(accessDB, "Accede a BD", "SQL Connect")
+    Component(funcs, "Funciones asociadas a las vistas", "Javascript")
+}
+    ContainerDb(db, "Database", "Microsoft SQL", "Almacena la información de Presupuesto")
+    System_Ext(Monday, "Monday Web", "API", "",$sprite="img:https://dapulse-res.cloudinary.com/image/upload/f_auto,q_auto/remote_mondaycom_static/img/monday-logo-x2.png{scale=0.3}")
+    SystemDb_Ext(datamart,"CYBS BD","Contiene datos de proyectos")
+    Rel(user, staffing, "Form", "HTTPS")
+    Rel(user, people, "Form", "HTTPS")
+    Rel(user, cross, "Form", "HTTPS")
+    Rel(user, project, "Form", "HTTPS")
+     Rel_U(render, staffing, "HTML", "javascript")
+     Rel_U(render, people, "HTML", "javascript")
+     Rel_U(render, cross, "HTML", "javascript")
+     Rel_U(render, project, "HTML", "javascript")
+     Rel_U(render, team, "HTML", "javascript")
+     Rel_L(logica, render, "Form", "HTTPS")
+     Rel_U(accessDB, funcs, "json", "SQL Connect")
+     Rel_U(accessMonday, funcs, "json", "SQL Connect")
+     Rel_U(Monday, accessMonday,"API","GraphQl")
+     Rel_U(datamart,accessDB,"TSQL","SQL Connect")
+     Rel_U(db,accessDB,"TSQL","SQL Connect")
+     Rel_U(funcs,logica,"JSON","HTTPS")
+
+SHOW_LEGEND()
+@enduml
