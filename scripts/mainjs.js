@@ -1,7 +1,7 @@
 var globId=1;
 const GOODTHRESHOLD=160;
 //var INITIALMONTH=new Date().getMonth()+1; <-- esta es la correcta
-var INITIALMONTH=new Date().getMonth()-2;
+var INITIALMONTH=new Date().getMonth()+1;
 
 //INITIALMONTH=INITIALMONTH==0?12:INITIALMONTH;
 
@@ -9,12 +9,11 @@ var MONTHTOSHOW=21;
 var INITIALYEAR=new Date().getFullYear()+1;
 INITIALYEAR=INITIALMONTH<0?INITIALYEAR-1:INITIALYEAR;
 INITIALMONTH=INITIALMONTH==-1?12:(INITIALMONTH==0?11:INITIALMONTH);
-INITIALMONTH=10
-INITIALYEAR=2023
+
 var CURRYEAR=new Date().getFullYear();
 var YEARTOSHOW=new Date().getFullYear()+1;
 var CURRENTMONTH=new Date().getMonth()+1;
-INITIALMONTH=1
+//INITIALMONTH=1
 INITIALYEAR=2024
 console.log("parametros",new Date().getMonth(),INITIALMONTH,INITIALYEAR,CURRENTMONTH,CURRYEAR)
 console.log(INITIALYEAR,YEARTOSHOW,CURRENTMONTH);
@@ -742,7 +741,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                 //console.log("final ciclo",currMon,mesArr,proyectosArr)
             }
         }
-        //console.log("proyectos",proyectosArr);
+        console.log("proyectos",proyectosArr);
         let fetchData={data:proyectosArr,msg:"ok"};
         //console.log("fetchdata",fetchData);
         try{                    
@@ -962,6 +961,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         else
             msg=fetchData.msg
         if(msg=="ok"){
+            console.log("carga de vacaciones",fetchData.data)
             vacationView=new VacationView(fetchData.data);
             vacationView.createVacationMonth();
             vacationView.createView();
@@ -1265,7 +1265,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                 
             }else {
                 document.getElementById("loader").style.diplay = "none";
-                çdocument.getElementById("loader").style.visibility = "none";
+                document.getElementById("loader").style.visibility = "none";
                 alert(fetchData.data);
             }
             

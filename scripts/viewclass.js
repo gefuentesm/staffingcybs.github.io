@@ -403,6 +403,10 @@ class VacationView{
             let arr=this.mesVac.get(i)
             if(arr!==undefined){
                 let vac=document.getElementById("mes"+i+"vacaciones");
+                if(!vac){
+                    let j=i+12
+                    vac=document.getElementById("mes"+j+"vacaciones");
+                }
                 let item="";
                 arr.forEach((v)=>{
                     if(v.horas>0){
@@ -415,7 +419,7 @@ class VacationView{
                     }
                 })
                 
-                vac.innerHTML="<div>Días de Descanso"+item+"</div>";
+                if(vac)vac.innerHTML="<div>Días de Descanso"+item+"</div>";
             }
         }
     }
@@ -1918,7 +1922,7 @@ class CrossRefView{
             let horaConsul=this.crossObj.getHorasByConsultor(consulArr[i].usr);
             let horaPropUsr=this.crossObj.getHorasPropuesta(consulArr[i].usr);
             let hrsConsYProps=horaConsul+horaPropUsr;
-            let horaNoDisp=this.crossObj.getHorasNoDisponibles(consulArr[i].usr);
+            let horaNoDisp=this.crossObj.getHorasNoDisponibles(consulArr[i].usr)===null?0:this.crossObj.getHorasNoDisponibles(consulArr[i].usr);
             let horasResto=this.crossObj.getHorasRestoByConsultor(consulArr[i].usr);
             let totalHoras=horaConsul+horasResto+horaPropUsr+horaNoDisp;
             let totalSinNodsip=horaConsul+horasResto+horaPropUsr;
