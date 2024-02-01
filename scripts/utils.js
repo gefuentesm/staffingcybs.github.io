@@ -190,10 +190,13 @@ class Render{
                                         rowMo.set(12,`<td class="${o.ind==0?'head-cell':''}" ${this.formatCell(o.rDic,o.pDic)}>P:${o.pDic==null?0:(o.pDic).toFixed(1)}H<br/>R:( ${o.rDic==null?0.00:(o.rDic).toFixed(1)}H )</td>`);
                                     
                                     let rows=rowMo.get(0);
-                                    for(let m=INITIALMONTH;m<INITIALMONTH+MONTHTOSHOW;m++){
-                                        if(m!=0)
-                                            if(rowMo.get(m))
-                                                rows=rows+rowMo.get(m);
+                                    for(let m=INITIALMONTH;m<INITIALMONTH+MONTHTOSHOW-3;m++){
+                                        if(m!=0){
+                                            let mes=m>12?m-12:m;
+                                            if(m-12==INITIALMONTH) break;
+                                            if(rowMo.get(mes))
+                                                rows=rows+rowMo.get(mes);
+                                        }
                                     }
                                     return rows+"</tr>"
                                 }

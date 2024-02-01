@@ -1070,7 +1070,7 @@ class StaffingView2{
         this.projList=projListp
     }
     createStaffingView(){
-        for(let i=1;i<25;i++){
+        for(let i=INITIALMONTH;i<INITIALMONTH+MONTHTOSHOW;i++){
             var cont=document.getElementById("mes"+i);
             //console.log("createStaffingView-meses",i,cont)
             if(cont){
@@ -1085,7 +1085,7 @@ class StaffingView2{
                 if(i>CURRENTMONTH){
                         cont.className="future-mes";
                 }
-
+                console.log("createStaffingView",i,this.projList.getProjectByMonth(i))
                 if(this.projList.getProjectByMonth(i)!==undefined)
                     //proyectosArr[i].forEach((o)=>{
                     this.projList.getProjectByMonth(i).forEach(o=>{
@@ -1522,19 +1522,23 @@ class PeopleView{
             ind++;
         }
         //console.log("tiene ind",dataArr);
-        var rowName=["<div id='people'><div id='table-scroll' class='table-scroll'><table class='paleBlueRows'><thead><tr><th>Nombre</th><th>proyecto</th><th>Fase</th>","<th>Ene</th>","<th>Feb</th>","<th>Mar</th>","<th>Abr</th>","<th>May</th>","<th>Jun</th>","<th>Jul</th>","<th>Ago</th>","<th>Sep</th>","<th>Oct</th>","<th>Nov</th>","<th>Dic</th></tr></thead><tbody>"]
+        var rowName=["<div id='people'><div id='table-scroll' class='table-scroll'><table class='paleBlueRows'><thead><tr><th>Nombre</th><th>proyecto</th><th>Fase</th>","<th>Ene</th>","<th>Feb</th>","<th>Mar</th>","<th>Abr</th>","<th>May</th>","<th>Jun</th>","<th>Jul</th>","<th>Ago</th>","<th>Sep</th>","<th>Oct</th>","<th>Nov</th>","<th>Dic</th>","</tr></thead><tbody>"]
         let rowHead=rowName[0];
         for(let m=INITIALMONTH;m<INITIALMONTH+MONTHTOSHOW;m++){
-            if(m!=0)
-                if(rowName[m])
-                    rowHead=rowHead+rowName[m];
+            if(m!=0){
+                let mes=m>12?m-12:m;
+                if(m-12==INITIALMONTH) break;
+                if(rowName[mes])
+                    rowHead=rowHead+rowName[mes];
+            }
         }
+        rowHead+=rowName[13]
         //console.log("rowHead",rowHead);
         let encabChgh="<div id='people'><div id='table-scroll' class='table-scroll'><table class='paleBlueRows'><thead><tr><th>Nombre</th><th>proyecto</th><th>Fase</th><th>Ene</th><th>Feb</th><th>Mar</th><th>Abr</th><th>May</th><th>Jun</th><th>Jul</th><th>Ago</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dic</th></tr></thead><tbody>"
         let endEncabh="</tbody></table></div></div>";
         let rows="";
         //rows=render.sendTable(hcArr,"fact_personas","","","","");
-        //console.log("people",dataArr);
+        console.log("people",dataArr);
         
         rows=render.sendTable(dataArr,"fact_personas","","","","");
         let tab=document.getElementById(this.container)
