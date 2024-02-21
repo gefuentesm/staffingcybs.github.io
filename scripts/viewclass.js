@@ -165,16 +165,25 @@ class ProjViewReal{
         let nbmes=(mes==1?"Ene":(mes==2?"Feb":(mes==3?"Mar":(mes==4?"Abr":(mes==5?"May":(mes==6?"Jun":(mes==7?"Jul":(mes==8?"Ago":(mes==9?"Sep":(mes==10?"Oct":(mes==11?"Nov":"Dic")))))))))))
         let objrcy="r"+nbmes;  // obj r(eal)c(urrent)y(ear)
         let objrny="r_"+nbmes;  // obj r(eal)n(ext)y(ear)
+        let objrpy="r"+nbmes+"_"; // obj r(real)p(revious)y(ear)
         let objpcy="p"+nbmes;
         let objpny="p_"+nbmes;
+        let objppy="p"+nbmes+"_";
         let totmes=0;
         let totmesp=0;
         arr.forEach((e)=>{
+            //if(proj==318) console.log(anio,objrcy,e[objrcy],objrpy,e[objrpy],arr)
             if(anio==CURRYEAR){
-                totmes+=e[objrcy];
-                totmesp+=e[objpcy];
+                totmes+=isNaN(e[objrcy])?0:e[objrcy];
+                totmesp+=(e[objpcy]);
+                
             }else{
-                totmesp+=e[objpny];
+                if(anio<CURRYEAR){
+                    totmes+=isNaN(e[objrpy])?0:e[objrpy];
+                    totmesp+=(e[objppy]);
+                }
+                else
+                    totmesp+=(e[objpny]);
             }
         })
         //console.log("arreglo filtrado por proyecto",proj,mes,anio,totmes,totmesp);
@@ -185,12 +194,12 @@ class ProjViewReal{
     mostrarProyReal(pproy){
         var contenedor = document.getElementById(this.tabContainer);
         var rowHead=``;
-        var rowName=['<thead><tr><th width="140px" style="background-color:#6666ff; width:140px">ID</th><th style="background-color:#6666ff;width:420px">Nombre</th><th style="background-color:#6666ff;width:20px">Semanas Plan</th><th style="background-color:#6666ff;width:20px">Horas Plan</th><th style="background-color:#6666ff;width:80px">Inicio</th><th style="background-color:#6666ff;width:80px">Cierre</th><th style="background-color:#6666ff;width:80px">%Hrs Consumidas</th><th style="background-color:#6666ff;width:80px">Tasa de Consumo (Plan)</th><th style="background-color:#6666ff;width:80px">Tasa Consumo (Real)</th><th style="background-color:#6666ff;width:80px">Dias para consumir las horas</th>','<th style="background-color:#6666ff;width:400px">Ene</th>','<th style="background-color:#6666ff;width:400px">Feb</th>','<th style="background-color:#6666ff;width:400px">Mar</th>','<th style="background-color:#6666ff;width:400px">Abr</th>','<th style="background-color:#6666ff;width:400px">May</th>','<th style="background-color:#6666ff;width:400px">Jun</th>','<th style="background-color:#6666ff;width:400px">Jul</th>','<th style="background-color:#6666ff;width:400px">Ago</th>','<th style="background-color:#6666ff;width:400px">Sep</th>','<th style="background-color:#6666ff;width:400px">Oct</th>','<th style="background-color:#6666ff;width:400px">Nov</th>','<th style="background-color:#6666ff;width:400px">Dic</th>','<th style="background-color:#6666ff;width:400px">Ene_</th>','<th style="background-color:#6666ff;width:400px">Feb_</th>','<th style="background-color:#6666ff;width:400px">Mar_</th>','<th style="background-color:#6666ff;width:400px">Abr_</th>','<th style="background-color:#6666ff;width:400px">May_</th>','<th style="background-color:#6666ff;width:400px">Jun_</th>','<th style="background-color:#6666ff;width:400px">Jul_</th>','<th style="background-color:#6666ff;width:400px">Ago_</th>','<th style="background-color:#6666ff;width:400px">Sep_</th>','<th style="background-color:#6666ff;width:400px">Oct_</th>','<th style="background-color:#6666ff;width:400px">Nov_</th>','<th style="background-color:#6666ff;width:400px">Dic_</th>']
+        var rowName=['<thead><tr><th width="40px" style="background-color:#6666ff; width:40px">ID</th><th style="background-color:#6666ff;width:300px">Nombre</th><th style="background-color:#6666ff;width:40px">Dura Plan Sem</th><th style="background-color:#6666ff;width:40px">Dedica Horas Plan</th><th style="background-color:#6666ff;width:80px">Inicio</th><th style="background-color:#6666ff;width:80px">Cierre</th><th style="background-color:#6666ff;width:80px">%Hrs Consumidas</th><th style="background-color:#6666ff;width:80px">Tasa de Consumo (Plan)</th><th style="background-color:#6666ff;width:80px">Tasa Consumo (Real)</th><th style="background-color:#6666ff;width:80px">Dias para consumir las horas</th>','<th style="background-color:#6666ff;width:80px">Oct_</th>','<th style="background-color:#6666ff;width:80px">Nov_</th>','<th style="background-color:#6666ff;width:80px">Dic_</th>','<th style="background-color:#6666ff;width:80px">Ene</th>','<th style="background-color:#6666ff;width:80px">Feb</th>','<th style="background-color:#6666ff;width:80px">Mar</th>','<th style="background-color:#6666ff;width:80px">Abr</th>','<th style="background-color:#6666ff;width:80px">May</th>','<th style="background-color:#6666ff;width:80px">Jun</th>','<th style="background-color:#6666ff;width:80px">Jul</th>','<th style="background-color:#6666ff;width:80px">Ago</th>','<th style="background-color:#6666ff;width:80px">Sep</th>','<th style="background-color:#6666ff;width:80px">Oct</th>','<th style="background-color:#6666ff;width:80px">Nov</th>','<th style="background-color:#6666ff;width:80px">Dic</th>','<th style="background-color:#6666ff;width:80px">_Ene</th>','<th style="background-color:#6666ff;width:80px">_Feb</th>','<th style="background-color:#6666ff;width:80px">_Mar</th>','<th style="background-color:#6666ff;width:80px">_Abr</th>','<th style="background-color:#6666ff;width:80px">_May</th>','<th style="background-color:#6666ff;width:80px">_Jun</th>','<th style="background-color:#6666ff;width:80px">_Jul</th>','<th style="background-color:#6666ff;width:80px">_Ago</th>','<th style="background-color:#6666ff;width:80px">_Sep</th>','<th style="background-color:#6666ff;width:80px">_Oct</th>','<th style="background-color:#6666ff;width:80px">_Nov</th>','<th style="background-color:#6666ff;width:80px">_Dic</th>']
         this.param=pproy;
         contenedor.innerHTML=rowHead;
         var rows="";        
         var arr=this.factprojmonthy;
-
+        //pproy=382
         //console.log("mostrarProyReal",pproy,arr);
         let inHead=true;
         let primera=true;
@@ -201,10 +210,18 @@ class ProjViewReal{
                 if(inHead){
                     rowHead=rowName[0];
                     //console.log()
+                    let mes=0
                     for(let m=INITIALMONTH;m<INITIALMONTH+MONTHTOSHOW;m++){
-                        if(m!=0){
-                            if(rowName[m]!== undefined){
-                                rowHead=rowHead+rowName[m];
+                        mes=m
+                        if(CURRYEAR==INITIALYEAR){
+                            mes=m+3
+                        }                        
+                        if(CURRYEAR!==INITIALYEAR){
+                            mes=m-9
+                        }
+                        if(mes!=0){
+                            if(rowName[mes]!== undefined){
+                                rowHead=rowHead+rowName[mes];
                             }else console.log("rowName m no definido",m)
                         }else console.log("mes es 0");
                     }
@@ -227,8 +244,17 @@ class ProjViewReal{
                     let tasaConsReal=tasaConsumo?parseFloat(tasaConsumo.getTasaConsumoRealById(arr[i].idProy)):"N/D";
                     let diasConsumirTodo=tasaConsumo?tasaConsumo.getDiasConsumoTotal(arr[i].idProy):"N/d"
                     //console.log("color sem",arr[i].idProy,cons,color,arr[i].nb_proyecto);
+                    let arrDeProyecto=arr.filter((proy)=>proy.idProy==arr[i].idProy);
+                    
+                    let duraPlanWeek = arrDeProyecto.reduce((acumulador,persona)=>{
+                        return acumulador + persona.dura_plan_week
+                    },0)
+                    let hrsDedicaPlan = arrDeProyecto.reduce((acumulador,persona)=>{
+                        return acumulador + persona.hrs_dedica_plan
+                    },0)
+                    //console.log("arrDeProyecto",arrDeProyecto,"duraPlanWeek",duraPlanWeek);
                     projHead=`<tr name="o.${arr[i].nb_proyecto}" >
-                                  <td class="head-cell-left" style="background-color:var(--color-head)" colspan="4"><button onclick="mostrarProyReal('p.${arr[i].idProy}')">+</button>${arr[i].idProy}-${arr[i].nb_proyecto} (${fase})</td>
+                                  <td class="head-cell-left" style="background-color:var(--color-head)" colspan="2"><button onclick="mostrarProyReal('p.${arr[i].idProy}')">+</button>${arr[i].idProy}-${arr[i].nb_proyecto} (${fase})</td><td>${duraPlanWeek.toFixed(1)}</td><td>${hrsDedicaPlan.toFixed(1)}</td>
                                   <td>${(arr[i].inicio_mon?arr[i].inicio_mon.substring(0,10):'')}</td>
                                   <td>${(arr[i].cierre_mon?arr[i].cierre_mon.substring(0,10):'')}</td>
                                   <td style="color:${color};background-color:white;">${cons}</td>
@@ -244,7 +270,11 @@ class ProjViewReal{
                     bgc=`style='background-color:${color};'`;
                     //console.log ("solución para safari",new Date('2011-04-12'),new Date('2011-04-12'.replace(/-/g, "/")));
                     for(let j=INITIALMONTH;j<INITIALMONTH+MONTHTOSHOW;j++){
-                        let fe2Test=j<=12?new Date(CURRYEAR+"/"+j+"/01"):new Date((CURRYEAR+1)+"/"+(j-12)+"/01");
+                        let fe2Test=0
+                        if(CURRYEAR!==INITIALYEAR){
+                            fe2Test=j<=12?new Date((CURRYEAR-1)+"/"+j+"/01"):new Date((CURRYEAR)+"/"+(j-12)+"/01");
+                        }else
+                            fe2Test=j<=12?new Date(CURRYEAR+"/"+j+"/01"):new Date((CURRYEAR+1)+"/"+(j-12)+"/01");
                         //console.log("problema en safari",arr[i].idProy,CURRYEAR+"/"+j+"/01",(CURRYEAR+1)+"/"+(j-12)+"/01",fe2Test)
                         if(fe2Test>=feiniR && fe2Test<=fefinR){ 
                             periodo+=`<td class='head-cell-left' ${bgc} >&nbsp;${this.calcTotalProj(arr[i].idProy,fe2Test)}</td>`;
@@ -258,8 +288,11 @@ class ProjViewReal{
                 if(teamView.buscarPorNombre(arr[i].usr)===undefined){
                     ex="color:red;"
                 }
-                
+                //console.log("semana plan por usuario",projBreak,arr[i].idProy,arr[i].usr,arr[i].dura_plan_week?arr[i].dura_plan_week:0,arr[i].hrs_dedica_plan?arr[i].hrs_dedica_plan:0)
                 tds.push(`<tr name="p.${arr[i].idProy}" style="display:none;"><td>&nbsp;</td><td style="${ex}">${arr[i].usr}</td><td>${arr[i].dura_plan_week?arr[i].dura_plan_week:0}</td><td>${arr[i].hrs_dedica_plan?arr[i].hrs_dedica_plan:0}</td><td>${(arr[i].inicio_mon?arr[i].inicio_mon.substring(0,10):'')}</td><td>${(arr[i].cierre_mon?arr[i].cierre_mon.substring(0,10):'')}</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>`)
+                tds.push(`<td width='170px'${arr[i].pOct_||arr[i].rOct_?'class="cell1"':''}>${(arr[i].pOct_?`<span class="plan" ${this.formtRango(arr[i].pOct_)}>Plan:`+arr[i].pOct_.toFixed(1)+'H</span>':'')}${(arr[i].rOct_?`<div class="real" ${this.formtRango(arr[i].rOct_)}>Real:`+arr[i].rOct_.toFixed(1)+'H</div>':'')}</td>`);                
+                tds.push(`<td width='170px'${arr[i].pNov_||arr[i].rNov_?'class="cell1"':''}>${(arr[i].pNov_?`<span class="plan" ${this.formtRango(arr[i].pNov_)}>Plan:`+arr[i].pNov_.toFixed(1)+'H</span>':'')}${(arr[i].rNov_?`<div class="real" ${this.formtRango(arr[i].rNov_)}>Real:`+arr[i].rNov_.toFixed(1)+'H</div>':'')}</td>`);                
+                tds.push(`<td width='170px'${arr[i].pDic_||arr[i].rDic_?'class="cell1"':''}>${(arr[i].pDic_?`<span class="plan" ${this.formtRango(arr[i].pDic_)}>Plan:`+arr[i].pDic_.toFixed(1)+'H</span>':'')}${(arr[i].rDic_?`<div class="real" ${this.formtRango(arr[i].rDic_)}>Real:`+arr[i].rDic_.toFixed(1)+'H</div>':'')}</td>`);
                 tds.push(`<td width='170px'${arr[i].pEne||arr[i].rEne?'class="cell1"':''}>${(arr[i].pEne?`<span class="plan" ${this.formtRango(arr[i].pEne)}>Plan:`+arr[i].pEne.toFixed(1)+'H</span>':'')}${(arr[i].rEne?`<div class="real" ${this.formtRango(arr[i].rEne)}>Real:`+arr[i].rEne.toFixed(1)+'H</div>':'')}</td>`);
                 tds.push(`<td width='170px'${arr[i].pFeb||arr[i].rFeb?'class="cell1"':''}>${(arr[i].pFeb?`<span class="plan"  ${this.formtRango(arr[i].pFeb)}>Plan:`+arr[i].pFeb.toFixed(1)+'H</span>':'')}${(arr[i].rFeb?`<div class="real" ${this.formtRango(arr[i].rFeb)}>Real:`+arr[i].rFeb.toFixed(1)+'H</div>':'')}</td>`);
                 tds.push(`<td width='170px'${arr[i].pMar||arr[i].rMar?'class="cell1"':''}>${(arr[i].pMar?`<span class="plan" ${this.formtRango(arr[i].pMar)}>Plan:`+arr[i].pMar.toFixed(1)+'H</span>':'')}${(arr[i].rMar?`<div class="real" ${this.formtRango(arr[i].rMar)}>Real:`+arr[i].rMar.toFixed(1)+'H</div>':'')}</td>`);
@@ -279,8 +312,12 @@ class ProjViewReal{
                     console.log("alguno undefined rows, tdh, projHead,tds[0]",rows, tdh, projHead,tds[0])
                 rows=rows+tdh+projHead+tds[0];
                 projHead="";
-                //console.log("data arr",arr[i],tds);
-                for(let j=INITIALMONTH;j<INITIALMONTH+MONTHTOSHOW;j++){
+                //console.log("data arr",tds);
+                let mesInicialArreglo=CURRENTMONTH
+                 mesInicialArreglo=INITIALMONTH==10?1:(INITIALMONTH==11?2:INITIALMONTH==12?3:mesInicialArreglo)
+                 //console.log("mesInicialArreglo",mesInicialArreglo);
+                //for(let j=INITIALMONTH;j<INITIALMONTH+MONTHTOSHOW;j++){
+                for(let j=mesInicialArreglo;j<19;j++){                    
                     if(tds[j]!==undefined )
                         rows=rows+tds[j];
                 }
@@ -399,8 +436,13 @@ class VacationView{
         })
     }
     createView(){
-        for(let i=0;i<25;i++){
-            let arr=this.mesVac.get(i)
+        let factor=0
+        if(INITIALYEAR===CURRYEAR){
+            factor=12
+        }
+        for(let i=1;i<25;i++){
+            let mes=i+factor
+            let arr=this.mesVac.get(mes)
             if(arr!==undefined){
                 let vac=document.getElementById("mes"+i+"vacaciones");
                 if(!vac){
@@ -907,7 +949,7 @@ class PropertyView{
     }
     cleanChng(){
         var chg=document.getElementById("chng-table");
-        console.log("cleanChng",chg);
+        //console.log("cleanChng",chg);
         var len=0;
         if(chg)
             len=document.getElementById("chng-table").rows.length; 
@@ -918,7 +960,7 @@ class PropertyView{
     }
     showHistorial(){
         let hcArr= this.getHistoricData();
-        console.log("showHistorial",hcArr);
+        //console.log("showHistorial",hcArr);
         let rows="";
         let enc="<table class='paleBlueRows'><thead><tr><th>Nombre<br><button id='b1' onClick='ordena(1)'>-</botton></th><th>IdP<br><button id='b2' onClick='ordena(2)'>-</botton></th><th>Proyecto</th><th>Nuevas Hrs.</th><th>Orig.</th><th>Dif.</th><th>Acción</th></tr></thead><tbody>"
         let endEnc="</tbody></table>";
@@ -1070,7 +1112,7 @@ class StaffingView2{
         this.projList=projListp
     }
     createStaffingView(){
-        for(let i=1;i<25;i++){
+        for(let i=INITIALMONTH;i<INITIALMONTH+MONTHTOSHOW;i++){
             var cont=document.getElementById("mes"+i);
             //console.log("createStaffingView-meses",i,cont)
             if(cont){
@@ -1085,7 +1127,7 @@ class StaffingView2{
                 if(i>CURRENTMONTH){
                         cont.className="future-mes";
                 }
-
+                //console.log("createStaffingView",i,this.projList.getProjectByMonth(i))
                 if(this.projList.getProjectByMonth(i)!==undefined)
                     //proyectosArr[i].forEach((o)=>{
                     this.projList.getProjectByMonth(i).forEach(o=>{
@@ -1492,7 +1534,7 @@ class PeopleView{
             //close break for example totals
                 inTeam=true;
                 if(teamView.buscarPorNombre(hcArr[i].usr)===undefined){
-                    console.log(" el usuario no existe",hcArr[i].usr);
+                    //console.log(" el usuario no existe",hcArr[i].usr);
                     inTeam=false;
                 }
                     
@@ -1512,7 +1554,7 @@ class PeopleView{
             hcArr[i].ind=ind;
             inTeam=true;
             if(teamView.buscarPorNombre(hcArr[i].usr)===undefined){
-                console.log(" el usuario no existe",hcArr[i].usr);
+                //console.log(" el usuario no existe",hcArr[i].usr);
                 inTeam=false;
             }
             hcArr[i].inTeam=inTeam;
@@ -1522,13 +1564,17 @@ class PeopleView{
             ind++;
         }
         //console.log("tiene ind",dataArr);
-        var rowName=["<div id='people'><div id='table-scroll' class='table-scroll'><table class='paleBlueRows'><thead><tr><th>Nombre</th><th>proyecto</th><th>Fase</th>","<th>Ene</th>","<th>Feb</th>","<th>Mar</th>","<th>Abr</th>","<th>May</th>","<th>Jun</th>","<th>Jul</th>","<th>Ago</th>","<th>Sep</th>","<th>Oct</th>","<th>Nov</th>","<th>Dic</th></tr></thead><tbody>"]
+        var rowName=["<div id='people'><div id='table-scroll' class='table-scroll'><table class='paleBlueRows'><thead><tr><th>Nombre</th><th>proyecto</th><th>Fase</th>","<th>Ene</th>","<th>Feb</th>","<th>Mar</th>","<th>Abr</th>","<th>May</th>","<th>Jun</th>","<th>Jul</th>","<th>Ago</th>","<th>Sep</th>","<th>Oct</th>","<th>Nov</th>","<th>Dic</th>","</tr></thead><tbody>"]
         let rowHead=rowName[0];
         for(let m=INITIALMONTH;m<INITIALMONTH+MONTHTOSHOW;m++){
-            if(m!=0)
-                if(rowName[m])
-                    rowHead=rowHead+rowName[m];
+            if(m!=0){
+                let mes=m>12?m-12:m;
+                if(m-12==INITIALMONTH) break;
+                if(rowName[mes])
+                    rowHead=rowHead+rowName[mes];
+            }
         }
+        rowHead+=rowName[13]
         //console.log("rowHead",rowHead);
         let encabChgh="<div id='people'><div id='table-scroll' class='table-scroll'><table class='paleBlueRows'><thead><tr><th>Nombre</th><th>proyecto</th><th>Fase</th><th>Ene</th><th>Feb</th><th>Mar</th><th>Abr</th><th>May</th><th>Jun</th><th>Jul</th><th>Ago</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dic</th></tr></thead><tbody>"
         let endEncabh="</tbody></table></div></div>";
@@ -1764,8 +1810,8 @@ class CrossRefView{
         else if(v>16) color="var(--color-sem-red)";
         return "color:"+color;
     }
-    semaforo(v){
-        let vv=(v/160)*100
+    semaforo(v,d){
+        let vv=(v/d)*100
         let sem="";
         if(vv<=80) sem="sem-amarillo.svg";
         else if(vv>80 && vv<=100) sem="sem-verde.svg";
@@ -1919,6 +1965,7 @@ class CrossRefView{
             let no_esta=this.team.buscarPorNombre(consulArr[i].usr)===undefined?"color:red":"color:black"
             tr+="<tr>";
             tr+=`<th style="${no_esta};width:250px">${consulArr[i].usr}</th>`;
+            
             let horaConsul=this.crossObj.getHorasByConsultor(consulArr[i].usr);
             let horaPropUsr=this.crossObj.getHorasPropuesta(consulArr[i].usr);
             let hrsConsYProps=horaConsul+horaPropUsr;
@@ -1928,8 +1975,15 @@ class CrossRefView{
             let totalSinNodsip=horaConsul+horasResto+horaPropUsr;
             let cantProy=this.crossObj.getCantProy(consulArr[i].usr)
             let cantProp=this.crossObj.getCantProp(consulArr[i].usr)
-            tr+=`<td>${this.semaforo(hrsConsYProps)}${((hrsConsYProps/(160-horaNoDisp))*100).toFixed(1)}%</td>
-                <td>${this.semaforo(totalSinNodsip)}${((totalSinNodsip/(160-horaNoDisp))*100).toFixed(1)}%</td>
+           /* if(consulArr[i].usr=="Juan Diaz") {
+                //console.log("juan diaz",hrsConsYProps,horaNoDisp,160-horaNoDisp)
+                //console.log("semaforo1",this.semaforo(hrsConsYProps,160-horaNoDisp),(hrsConsYProps/(160-horaNoDisp))*100)
+                //console.log("juan diaz",totalSinNodsip,horaNoDisp,160-horaNoDisp)
+                //console.log("semaforo2",this.semaforo(totalSinNodsip,160-horaNoDisp),(totalSinNodsip/160-horaNoDisp)*100)
+                //(v/d)*100
+            }*/
+            tr+=`<td>${this.semaforo(hrsConsYProps,(160-horaNoDisp))}${((hrsConsYProps/(160-horaNoDisp))*100).toFixed(1)}%</td>
+                <td>${this.semaforo(totalSinNodsip,(160-horaNoDisp))}${((totalSinNodsip/(160-horaNoDisp))*100).toFixed(1)}%</td>
                 <td>${horaConsul.toFixed(1)}</td>
                 <td>${horaPropUsr.toFixed(1)}</td>
                 <td>${horaNoDisp.toFixed(1)}</td>
