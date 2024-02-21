@@ -6,15 +6,23 @@ var INITIALMONTH=new Date().getMonth()+1;
 //INITIALMONTH=INITIALMONTH==0?12:INITIALMONTH;
 
 var MONTHTOSHOW=21;
-var INITIALYEAR=new Date().getFullYear()+1;
+var INITIALYEAR=new Date().getFullYear();
+//INITIALMONTH=4
+if(INITIALMONTH<=3){
+    console.log("initial ",INITIALMONTH===3?12:INITIALMONTH===2?11:INITIALMONTH===1?10:INITIALMONTH,"INITIALYEAR",INITIALYEAR-1)
+    INITIALMONTH=INITIALMONTH===3?12:INITIALMONTH===2?11:INITIALMONTH===1?10:INITIALMONTH-3
+    INITIALYEAR=INITIALYEAR-1
+}else INITIALMONTH=INITIALMONTH-3
+console.log("initial",INITIALMONTH,INITIALYEAR)
 INITIALYEAR=INITIALMONTH<0?INITIALYEAR-1:INITIALYEAR;
 INITIALMONTH=INITIALMONTH==-1?12:(INITIALMONTH==0?11:INITIALMONTH);
 
 var CURRYEAR=new Date().getFullYear();
 var YEARTOSHOW=new Date().getFullYear()+1;
 var CURRENTMONTH=new Date().getMonth()+1;
-INITIALMONTH=10
-INITIALYEAR=2023
+//INITIALMONTH=12
+//INITIALYEAR=2023
+if(INITIALMONTH>CURRENTMONTH) CURRENTMONTH+=12
 console.log("parametros",new Date().getMonth(),INITIALMONTH,INITIALYEAR,CURRENTMONTH,CURRYEAR)
 console.log(INITIALYEAR,YEARTOSHOW,CURRENTMONTH);
 let yearInitial= INITIALYEAR;      //2021; 
@@ -54,6 +62,14 @@ oHistField.add(5,"","Original");
 oHistField.add(5,"","In Site");
 var oSortHistList=new SortList(oHistField);
 var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
+const urlstaff_prod=`https://staffing-func.azurewebsites.net/api/gethorasplanreal`;
+const urlstaff_test=`http://localhost:7071/api/getHorasPlanReal`;
+let urlstaff=urlstaff_test;
+urlstaff=urlstaff_prod;
+const urlvac_prod=`https://staffing-func.azurewebsites.net/api/getvacation`;
+const urlvac_test=`http://localhost:7071/api/getVacation`;
+let urlvac=urlvac_test;
+urlvac=urlvac_prod;
 // GUI FUNCTIONS
     function getDataMesPlan(mo,year,el){            
         let mon=mo>12?mo-12:mo;
@@ -445,8 +461,8 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         //console.log("peopleView",peopleView);
         if(peopleView===undefined){
             document.getElementById("loader").style.display = ""
-            //`https://staffing-func.azurewebsites.net/api/getfactpeoplemonthly`
-            util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/gethorasplanreal`,myToken,myTime).then(function(fetchData){
+           
+            util.asynGetFromDB(urlstaff,myToken,myTime).then(function(fetchData){
                 console.log("people view data",fetchData);
                 peopleView = new PeopleView(fetchData,"container-people","container-p");
                 peopleView.renderView();
@@ -674,7 +690,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                             arrPru.forEach((el)=>{
                                 if(getDataMesPlan(currMon,currYear,el) || getDataMesReal(currMon,currYear,el)){
                                     hay=true;
-                                    console.log("hay data",hay,currMon,currYear,el);  
+                                    //console.log("hay data",hay,currMon,currYear,el);  
                                 }                              
                                 if(el.usr /* && el.in_staffing==1*/){
                                     
@@ -749,7 +765,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
             }
             moInitial=1;
         }
-        console.log("proyectos",proyectosArr);
+        //console.log("proyectos",proyectosArr);
         let fetchData={data:proyectosArr,msg:"ok"};
         //console.log("fetchdata",fetchData);
         try{                    
@@ -779,7 +795,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         //document.getElementById("loader").style.display = "";
         //document.getElementById("loader").style.visibility = "visible";
         
-        util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/gethorasplanreal`,myToken,myTime).then(function(fetchData){
+        util.asynGetFromDB(urlstaff,myToken,myTime).then(function(fetchData){
                 //console.log("fetchdata",fetchData);
                 try{                    
                     if(typeof fetchData.msg=="undefined")
@@ -789,7 +805,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
                     //console.log("msg staffing",msg);
                     //projList.createMesStruct();
                     if(msg=="ok"){
-                        console.log("loadStaff",fetchData)
+                        //console.log("loadStaff",fetchData)
                         convertAlternativeStaffData(fetchData);
                         //console.log("se cargo la data")
                     }
@@ -872,7 +888,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
     }
     async function loadProjectPlanReal(){
         console.log("inicio loadProjectPlanReal");
-        util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/gethorasplanreal`,myToken,myTime).then(function(fetchData){
+        util.asynGetFromDB(urlstaff,myToken,myTime).then(function(fetchData){
             //console.log("fetch data loadProjectPlanReal",fetchData);
             if(typeof fetchData.msg=="undefined")
                     msg="ok"
@@ -923,13 +939,14 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
     }
     async function loadVacation(){
         console.log("inicio loadVacation");
-        util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getvacation`,myToken,myTime).then(function(fetchData){
+        util.asynGetFromDB(urlvac,myToken,myTime).then(function(fetchData){
             //console.log("fetch data getProjectSummary",fetchData);
                 if(typeof fetchData.msg=="undefined")
                     msg="ok"
                 else
                     msg=fetchData.msg
                 if(msg=="ok"){
+                    console.log("en loadVacation",fetchData.data)
                     vacationView=new VacationView(fetchData.data);
                     vacationView.createVacationMonth();
                     vacationView.createView();
@@ -961,7 +978,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
     }
     async function loadVacation1(){
         console.log("inicio loadVacation");
-        let fetchData=await util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getvacation`,myToken,myTime)
+        let fetchData=await util.asynGetFromDB(urlvac,myToken,myTime)
 
         //console.log("fetch data getProjectSummary",fetchData);
         if(typeof fetchData.msg=="undefined")
@@ -969,7 +986,7 @@ var oHistoricSorter=new SorterTable(oSortHistList,"HistoricTable",mostrar)
         else
             msg=fetchData.msg
         if(msg=="ok"){
-            console.log("carga de vacaciones",fetchData.data)
+            //console.log("carga de vacaciones",fetchData.data)
             vacationView=new VacationView(fetchData.data);
             vacationView.createVacationMonth();
             vacationView.createView();
