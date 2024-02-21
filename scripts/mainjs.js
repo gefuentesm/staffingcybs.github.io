@@ -463,7 +463,7 @@ urlvac=urlvac_prod;
             document.getElementById("loader").style.display = ""
            
             util.asynGetFromDB(urlstaff,myToken,myTime).then(function(fetchData){
-                console.log("people view data",fetchData);
+                //console.log("people view data",fetchData);
                 peopleView = new PeopleView(fetchData,"container-people","container-p");
                 peopleView.renderView();
                 peopleView.setContainerShow();

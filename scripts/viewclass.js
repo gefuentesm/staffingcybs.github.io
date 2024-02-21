@@ -1404,6 +1404,12 @@ class PeopleView{
     sumar(hcArr){
         const map1 = new Map();
         var rompe=hcArr[0].usr;
+        let toct_=0.0
+        let tnov_=0.0
+        let tdic_=0.
+        let troct_=0.0
+        let trnov_=0.0
+        let trdic_=0.0
         let tene=0.0
         let tfeb=0.0
         let tmar=0.0
@@ -1430,15 +1436,23 @@ class PeopleView{
         let trdic=0.0
         //console.log("peopleView",hcArr);
         for(let i in hcArr){
-            if(!proyectos.isMeetRequirement(hcArr[i].idProy))
-                console.log("No cumple requerimientos",proyectos.isMeetRequirement(hcArr[i].idProy),hcArr[i].idProy)
+            //if(!proyectos.isMeetRequirement(hcArr[i].idProy))
+              //  console.log("No cumple requerimientos",proyectos.isMeetRequirement(hcArr[i].idProy),hcArr[i].idProy)
             if(rompe!=hcArr[i].usr){
-                map1.set(rompe,{ene:tene,feb:tfeb,mar:tmar,abr:tabr,may:tmay,jun:tjun,
+                map1.set(rompe,{oct_:toct_,nov_:tnov_,dic_:tdic_,roct_:troct_,rnov_:trnov_,rdic_:trdic_,ene:tene,feb:tfeb,mar:tmar,abr:tabr,may:tmay,jun:tjun,
                         jul:tjul,ago:tago,sep:tsep,oct:toct,nov:tnov,dic:tdic,
                         rene:trene,rfeb:trfeb,rmar:trmar,rabr:trabr,rmay:trmay,rjun:trjun,
                         rjul:trjul,rago:trago,rsep:trsep,roct:troct,rnov:trnov,rdic:trdic});
                 //console.log("total",rompe,tene,tfeb,tmar,map1);
                 if(proyectos.isMeetRequirement(hcArr[i].idProy)){
+                    toct_=parseFloat(hcArr[i].pOct_==null?0.0:hcArr[i].pOct_)
+                    tnov_=parseFloat(hcArr[i].pNov_==null?0.0:hcArr[i].pNov_)
+                    tdic_=parseFloat(hcArr[i].pDic_==null?0.0:hcArr[i].pDic_)
+
+                    troct_=parseFloat(hcArr[i].rOct_==null?0.0:hcArr[i].rOct_)
+                    trnov_=parseFloat(hcArr[i].rNov_==null?0.0:hcArr[i].rNov_)
+                    trdic_=parseFloat(hcArr[i].rDic_==null?0.0:hcArr[i].rDic_)
+
                     tene=parseFloat(hcArr[i].pEne==null?0.0:hcArr[i].pEne)
                     tfeb=parseFloat(hcArr[i].pFeb==null?0.0:hcArr[i].pFeb)
                     tmar=parseFloat(hcArr[i].pMar==null?0.0:hcArr[i].pMar)  
@@ -1475,7 +1489,16 @@ class PeopleView{
                 }
                 rompe=hcArr[i].usr
             }else{
-                if(proyectos.isMeetRequirement(hcArr[i].idProy)){
+                if(proyectos.isMeetRequirement(hcArr[i].idProy)){                    
+                    toct_= toct_ + parseFloat(hcArr[i].pOct_==null?0.0:hcArr[i].pOct_)
+                    tnov_= tnov_ + parseFloat(hcArr[i].pNov_==null?0.0:hcArr[i].pNov_)
+                    tdic_= tdic_ + parseFloat(hcArr[i].pDic_==null?0.0:hcArr[i].pDic_)
+
+                    troct_= troct_ + parseFloat(hcArr[i].rOct_==null?0.0:hcArr[i].rOct_)
+                    trnov_= trnov_ + parseFloat(hcArr[i].rNov_==null?0.0:hcArr[i].rNov_)
+                    trdic_= trdic_ + parseFloat(hcArr[i].rDic_==null?0.0:hcArr[i].rDic_)     
+                    //if(hcArr[i].usr=="Juan Palenzuela")console.log(trdic_,parseFloat(hcArr[i].rDic_==null?0.0:hcArr[i].rDic_))               
+                    
                     tene=tene+parseFloat(hcArr[i].pEne==null?0.0:hcArr[i].pEne)
                     tfeb=tfeb+parseFloat(hcArr[i].pFeb==null?0.0:hcArr[i].pFeb)
                     tmar=tmar+parseFloat(hcArr[i].pMar==null?0.0:hcArr[i].pMar)
@@ -1512,7 +1535,7 @@ class PeopleView{
                 }
             }
         }
-        map1.set(rompe,{ene:tene,feb:tfeb,mar:tmar,abr:tabr,may:tmay,jun:tjun,
+        map1.set(rompe,{oct_:toct_,nov_:tnov_,dic_:tdic_,roct_:troct_,rnov_:trnov_,rdic_:trdic_,ene:tene,feb:tfeb,mar:tmar,abr:tabr,may:tmay,jun:tjun,
                     jul:tjul,ago:tago,sep:tsep,oct:toct,nov:tnov,dic:tdic,
                     rene:trene,rfeb:trfeb,rmar:trmar,rabr:trabr,rmay:trmay,rjun:trjun,
                     rjul:trjul,rago:trago,rsep:trsep,roct:troct,rnov:trnov,rdic:trdic});
@@ -1546,11 +1569,12 @@ class PeopleView{
 
                 //console.log(" obj",obj,hcArr[i].usr,totales)
                 if(obj!==undefined)
-                    dataArr.push({usr:hcArr[i].usr,ind:0,inTeam:inTeam,idProy:'',nb_proyecto:'',fase:'',pEne:obj.ene,pFeb:obj.feb,pMar:obj.mar,pAbr:obj.abr,pMay:obj.may,pJun:obj.jun,pJul:obj.jul,pAgo:obj.ago,pSep:obj.sep,pOct:obj.oct,pNov:obj.nov,pDic:obj.dic,rEne:obj.rene,rFeb:obj.rfeb,rMar:obj.rmar,rAbr:obj.rabr,rMay:obj.rmay,rJun:obj.rjun,rJul:obj.rjul,rAgo:obj.rago,rSep:obj.rsep,rOct:obj.roct,rNov:obj.rnov,rDic:obj.rdic})
+                    dataArr.push({usr:hcArr[i].usr,ind:0,inTeam:inTeam,idProy:'',nb_proyecto:'',fase:'',pOct_:obj.oct_, pNov_:obj.nov_, pDic_:obj.dic_, rOct_:obj.roct_, rNov_:obj.rnov_, rDic_:obj.rdic_,pEne:obj.ene,pFeb:obj.feb,pMar:obj.mar,pAbr:obj.abr,pMay:obj.may,pJun:obj.jun,pJul:obj.jul,pAgo:obj.ago,pSep:obj.sep,pOct:obj.oct,pNov:obj.nov,pDic:obj.dic,rEne:obj.rene,rFeb:obj.rfeb,rMar:obj.rmar,rAbr:obj.rabr,rMay:obj.rmay,rJun:obj.rjun,rJul:obj.rjul,rAgo:obj.rago,rSep:obj.rsep,rOct:obj.roct,rNov:obj.rnov,rDic:obj.rdic})
                 rompe=hcArr[i].usr;
                 hcArr[i].ind=ind;
             //prepare next
             }
+            //if(hcArr[i].usr=="Juan Palenzuela") console.log("hcArr juan",dataArr)
             hcArr[i].ind=ind;
             inTeam=true;
             if(teamView.buscarPorNombre(hcArr[i].usr)===undefined){
