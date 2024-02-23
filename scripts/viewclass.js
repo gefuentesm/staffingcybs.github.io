@@ -453,7 +453,7 @@ class VacationView{
                 arr.forEach((v)=>{
                     if(v.horas>0){
                         item+=`<div class="grid-vacation"style="width:250px">`;
-                        item+=`<div class="grid-vac nbvaca">${v.usr}: ${v.dias} Días</div>`
+                        item+=`<div class="grid-vac nbvaca">${v.usr}: ${v.dias.toFixed(0)} Días</div>`
                         for(let j=0;j<4;j++){
                             item+=`<div class="grid-vac ${j<v.horas/40?'vaca':''}"></div>`
                         }
@@ -1064,10 +1064,20 @@ class TeamView{
         });
         return agregar;
     }
+    getHorasMes(usr,mes){
+        let meses=["","ene_","feb_","mar_","abr_","may_","jun_","jul_","ago_","sep_","oct_","nov_","dic_", 
+        "ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"]
+        let mesSelected=meses[mes]
+        //console.log("mes",mesSelected)
+        let cybsmembers=this.data.filter((mem)=> mem.usr === usr)
+        //if(cybsmembers[0]===undefined)console.log("cybsmember undefined",usr,mes)
+        return cybsmembers[0]===undefined?0:cybsmembers[0][mesSelected]
+    }
     show(){
         //teamStruct=fetchData.data
         var contenedor=document.getElementById(this.container);
-        contenedor.innerHTML= render.sendTable(this.data,"miembros_equipo","","","","");
+        let cybsmembers=this.data.filter((mem)=> mem.name !== null)
+        contenedor.innerHTML= render.sendTable(cybsmembers,"miembros_equipo","","","","");
     }
     setVisibilityToProy(nb,filtrar){
         //console.log("filtrar",nb)
@@ -1083,13 +1093,16 @@ class TeamView{
         if(filtrar){
             let mesArr=projList.getData();
             //console.log("setVisibilityToProy",arr,mesArr);
+            
+
             for(let j in mesArr){
                 //if( YEARTOSHOW>=dataArr[j].year && dataArr[j].mes>=INITIALMONTH && dataArr[j].mes<=INITIALMONTH+MONTHTOSHOW){
                 let dataArr=mesArr[j]
-                for(let m in dataArr){   
-                    var idProj=dataArr[m].IDp+"."+dataArr[m].fase+"."+dataArr[m].mes;
+                let mes=INITIALMONTH
+                for(let m in dataArr){                   
+                    var idProj=dataArr[m].IDp+"."+dataArr[m].fase+"."+j //dataArr[j].mes;
                     var team=dataArr[m].equipo;
-                    //console.log("buscando en",team,idProj)
+                    //console.log("buscando en",j,team,idProj)
                     for(let k in team){
 
                         if(team[k].nombre==nb){
@@ -1099,6 +1112,7 @@ class TeamView{
                                 div.style.display="block"
                         }
                     }
+                    mes++;
                 }
             }
         }
@@ -1112,6 +1126,8 @@ class StaffingView2{
         this.projList=projListp
     }
     createStaffingView(){
+        //let finweek=crossRefView.crossObj.getUltimaFechaRep();
+        //console.log("semana final",finweek)
         for(let i=INITIALMONTH;i<INITIALMONTH+MONTHTOSHOW;i++){
             var cont=document.getElementById("mes"+i);
             //console.log("createStaffingView-meses",i,cont)
@@ -1188,7 +1204,9 @@ class StaffingView2{
     createMonStruct(){      
         let mesStruct=this.projList.getAllMonStruct();
         //console.log("createMonStruct - mesStruct",mesStruct);
-        let tit=`<div class="grid3-container-head"><span>Nombre</span><span>Plan</span><span>Real</span></div>`
+        let tit=`<div class="grid3-container-head">
+            <table style="table-layout:fixed;width:200px"><tr><td style="width:110px">Nombre</td><td style="width:40px">Plan</td><td>Real</td></tr></table>
+        </div>`
         for(let r in mesStruct){
             if(mesStruct[r]!= ""){
                 //console.log("r",mesStruct[r].mes)
@@ -1593,7 +1611,7 @@ class PeopleView{
         for(let m=INITIALMONTH;m<INITIALMONTH+MONTHTOSHOW;m++){
             if(m!=0){
                 let mes=m>12?m-12:m;
-                if(m-12==INITIALMONTH) break;
+                //if(m-12==INITIALMONTH) break;
                 if(rowName[mes])
                     rowHead=rowHead+rowName[mes];
             }

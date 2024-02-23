@@ -224,7 +224,7 @@ urlvac=urlvac_prod;
             display="";   
         }
         let proyec=document.getElementsByClassName(clase);
-        console.log("no considerar",proyec);
+        //console.log("no considerar",proyec);
         for (let i = 0; i < proyec.length; i++) {
             proyec[i].style.display = display;
         }
@@ -334,11 +334,11 @@ urlvac=urlvac_prod;
             util.asynGetFromDB(`https://getmondayproject.azurewebsites.net/api/getmondayproject`,myToken,myTime).then(function(fetchData){
                 //console.log("people view data",fetchData);
                 proyRest=fetchData;
-                console.log("proyRest",proyRest.data.code,proyRest.data.ETL);
+                //console.log("proyRest",proyRest.data.code,proyRest.data.ETL);
                 util.asynGetFromDB(`https://getmondayfases.azurewebsites.net/api/getmodayfases`,myToken,myTime).then(function(fetchData){
                     //console.log("people view data",fetchData);
                     proyFases=fetchData;
-                    console.log("proyFases",fetchData);
+                    //console.log("proyFases",fetchData);
                     if(proyFases.code==0 && proyFases.ETL==0 && proyRest.data.code==0 && proyRest.data.ETL==0){
                         alert("Se cargaron "+proyRest.data.rowAffected+" proyectos y "+proyFases.rowAffected+" Fases de proyectos");
                         loadAlarms();
@@ -365,7 +365,7 @@ urlvac=urlvac_prod;
         var wrappid2="c-"+nb+"-"+IDp+"."+fase+"."+mes+"-"+inOnSite;
         let idMes=IDp+"."+mes;
         let currentInOnsite=0;
-        console.log("valor",document.getElementById(id).value);
+        //console.log("valor",document.getElementById(id).value);
         if(isNaN(document.getElementById(id).value)){
 
             alert("El valor introducido no es un número: "+parseFloat(document.getElementById(id).value));
@@ -377,15 +377,15 @@ urlvac=urlvac_prod;
         else
             if( document.getElementById(wrappid))
                 currentInOnsite=document.getElementById(wrappid).style.backgroundColor=="blue"?1:0;
-        console.log("current onsite",IDp,fase,mes,id,currentInOnsite);
-        console.log("on Change",document.getElementById(id).value);
+        //console.log("current onsite",IDp,fase,mes,id,currentInOnsite);
+        //console.log("on Change",document.getElementById(id).value);
         projList.setAllStruct(IDp,fase,nb,document.getElementById(id).value,mes,currentInOnsite);
         //console.log("dedichange",nb,IDp,mes,currentInOnsite,document.getElementById(id).value);
         let totDedic=projList.getTeamDedication(IDp,fase,mes);
         //let origDedi=document.getElementById(`ref-${IDp}.${fase}.${mes}`).innerHTML;
         let origDedi=document.getElementById(`ref-${IDp}.0.${mes}`).innerHTML;
         origDedi=parseFloat(origDedi).toFixed(1)
-        console.log("cambios",totDedic,origDedi, (totDedic-origDedi).toFixed(1));
+        //console.log("cambios",totDedic,origDedi, (totDedic-origDedi).toFixed(1));
         let xcolor=totDedic.toFixed(1)==origDedi ? "green" : "red";
         if(totDedic.toFixed(1)==origDedi){
             
@@ -554,7 +554,7 @@ urlvac=urlvac_prod;
         }
     }
     async function btn_save(){
-        console.log("save")
+        //console.log("save")
         let r=await util.sendToServer();  
         if(r==0){
             //console.log("recarga la data del servidor-save")
@@ -834,13 +834,16 @@ urlvac=urlvac_prod;
     }
     async function loadConsultant(){
         console.log("inicio loadconsultant");
-        let fetchData=await util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getconsultant`,myToken,myTime);
+        let test_url="http://localhost:7071/api/getConsultant"
+        let prod_url="https://staffing-func.azurewebsites.net/api/getconsultant"
+        let fetchData=await util.asynGetFromDB(prod_url,myToken,myTime);
         if(typeof fetchData.msg=="undefined")
                 msg="ok"
             else
                 msg=fetchData.msg
         if(msg=="ok"){
             teamStruct=fetchData.data
+            //console.log("loadConsultant",fetchData)
             teamView=new TeamView(fetchData,"team");
             teamView.show();
         }
@@ -1143,6 +1146,9 @@ urlvac=urlvac_prod;
             document.getElementById("container-project").style.marginLeft="206px";
             document.getElementById("team").style.display="block";         
             show_StaffContainer();
+            document.getElementById("mesInicial").innerHTML=INITIALMONTH
+            document.getElementById("yearInitial").innerHTML=INITIALYEAR
+            document.getElementById("fechaStaff").innerHTML=crossRefView.crossObj.getUltimaFechaRep();
             document.getElementById('contenido').style.display = "block";
         }
         if(viewToOpen=="Project") {   //cross view     
@@ -1192,10 +1198,12 @@ urlvac=urlvac_prod;
         document.getElementById("btnPeopleV").disabled=true;
         document.getElementById("btnDetailV").disabled=true;
         render = new Render();
-        document.getElementById("loader").style.display = "";
-        document.getElementById("loader").style.visibility = "visible";
+        //document.getElementById("loader").style.display = "";
+        //document.getElementById("loader").style.visibility = "visible";
 
         if(myToken && myTime) {
+            
+            await loadConsultant();
             
             await getTasaConsumo();
             //loadStaff() ;
@@ -1204,10 +1212,10 @@ urlvac=urlvac_prod;
             await loadAlarms();
             
             await loadProyectos1();
-            
-            await loadStaff1();
-                        
-            await loadConsultant();
+
+            await loadCrossRefData();
+
+            await loadStaff1();                                    
 
             await loadAllProjects();
             
@@ -1215,20 +1223,21 @@ urlvac=urlvac_prod;
 
             await loadProjectPlanReal();
 
-            await loadCrossRefData();
+            
 
             await loadProjectSummary();
             
            
         }
-        document.getElementById("loader").style.display = "none";
-        document.getElementById("loader").style.visibility = "none"
+        //document.getElementById("loader").style.display = "none";
+        //document.getElementById("loader").style.visibility = "none"
         document.getElementById("btnStaffingV").click();
     }
     let asynGetToken = async (usr,pwd) => { 
         //console.log("en async get Token function",usr,pwd)
         let data={username:usr,password:pwd}
-        document.getElementById("loader").style.visibility = "visible";
+        //document.getElementById("loader").style.visibility = "visible";
+        //document.getElementById("loader").style.display = "";
         //console.log("json",JSON.stringify(data));
         const fetchData= await fetch(`https://cybs-isauth.azurewebsites.net/api/cybs_login`, {
             method: 'POST',
@@ -1239,7 +1248,8 @@ urlvac=urlvac_prod;
             }
         }).then(r => r.json())
         .catch(error=>{
-            document.getElementById("loader").style.visibility = "none";
+            //document.getElementById("loader").style.visibility = "none";
+            //document.getElementById("loader").style.display = "none";
             console.log(error)
         })
        
