@@ -1,3 +1,4 @@
+// #region ProjList
 class ProjList{
     
     constructor(datareal,data){
@@ -8,12 +9,17 @@ class ProjList{
         this.createMesProjStruct();
         this.createMesStruct();
         this.chngStruct=[];
+        this.chngStructMap = new Map();
     }
     getChanged(){
-        return this.chngStruct;
+        console.log("getChanged",this.chngStruct,this.chngStructMap)
+        let changesOrden = this.chngStruct.sort((a,b)=>a.nb.localeCompare(b.nb))
+        console.log("getChanged",changesOrden,this.chngStruct,this.chngStructMap)
+        return changesOrden;
         
     } 
     cleanChanged(){
+        this.chngStructMap = new Map();
         this.chngStruct=[];
     }   
     getData(){
@@ -66,6 +72,7 @@ class ProjList{
         let origin=0;
         if(mes>12)
             mes=mes-12;
+      
         this.chngStruct.forEach((c)=>{
             //console.log("en el loop",c,c.IDp,IDp,c.IDp==IDp,c.nb,nb,c.nb==nb)
             if(c.IDp==IDp && c.nb==nb && c.mes==mes && c.year==year){
@@ -78,7 +85,7 @@ class ProjList{
             let oChang={IDp:IDp,nb:nb,year:year,mes:mes,horasPlan:horasPlan,original:origin};
             this.chngStruct.push(oChang);
         }
-        //console.log("setChangeStruct - nueva estructura",this.chngStruct)
+        console.log("setChangeStruct - nueva estructura",this.chngStruct)
     }
     setChngStruct(IDp,fase,mes,nb,horasPlan,inOnSite,obj){
         /*
@@ -104,7 +111,7 @@ class ProjList{
         })
         if(!existe)    //si no existe se agregas
             this.chngStruct.push(obj) ; 
-        //console.log("ChngStruct",this.chngStruct);
+        console.log("ChngStruct",this.chngStruct);
     }
     setTeamInData(IDp,fase,mes,nb,horasPlan,inOnSite){
         //console.log("setTeamInData caso existe",IDp,fase,mes,nb,this.mesProjStruct[mes]);
@@ -166,8 +173,16 @@ class ProjList{
         this.mesProjStruct[m]=arr;
         //console.log("this.updateMesProjStruct-"+m,this.mesProjStruct[m]);
     }    
+    updateMesProjStructWithProj(mo,oProjData){
+        this.mesProjStruct[mo].push(oProjData)
+        this.mesStruct=[]
+        this.createMesStruct()
+    }
     getProjectByMonth(mon){
         return this.mesProjStruct[mon];
+    }
+    existeInProjectByMonth(mon,idProy){
+        return this.mesProjStruct[mon].find((p)=>p.IDp==idProy)
     }
     getTeamByProjectMonthFase(idp,mon,fase){
         
@@ -413,6 +428,7 @@ class TasaConsumo{
         return "N/D";
     }
 }
+// #region Proyectos
 class Proyectos{
     constructor(data){
         //console.log("data",data)
@@ -451,10 +467,13 @@ class Proyectos{
     }
     getHasBudget(idp){
         let considerArr=this.proyectos;
-        return considerArr.find((el)=>el.idProy===idp).plan!==null;
+        let planProy = considerArr.find((el)=>el.idProy===idp)
+        return planProy === undefined ? false : (planProy.plan != null)
     }
     isMeetRequirement(idp){
-        return this.getConsiderar(idp) && this.getHasBudget(idp)
+       // if(!(this.getConsiderar(idp)  && this.getHasBudget(idp)))
+       //     console.log("isMeetReq",idp,"considerar",this.getConsiderar(idp),"hasBudget", this.getHasBudget(idp))
+        return this.getConsiderar(idp) // && this.getHasBudget(idp)
     }
     getConsiderar(idP){
         let considerArr=this.proyectos;

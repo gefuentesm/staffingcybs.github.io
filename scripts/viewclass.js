@@ -1,3 +1,4 @@
+// #region ProjSumaryView
 class ProjSummaryView{
     constructor(fetchData,container,containHead){
         this.contenedor=container;
@@ -91,6 +92,7 @@ class ProjSummaryView{
             document.getElementById(this.containHead).style.height="120px";
     }
 }
+// #region ProjViewReal
 class ProjViewReal{
     constructor(data,container,tab_container,proyectos){
         this.factprojmonthy=data.filter((e)=> proyectos.isMeetRequirement( e.idProy));
@@ -285,7 +287,7 @@ class ProjViewReal{
                     //tds.push(`<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>`);
                     projBreak=arr[i].idProy;
                 }
-                if(teamView.buscarPorNombre(arr[i].usr)===undefined){
+                if(teamView.buscarPorNombre(arr[i].name)===undefined){
                     ex="color:red;"
                 }
                 //console.log("semana plan por usuario",projBreak,arr[i].idProy,arr[i].usr,arr[i].dura_plan_week?arr[i].dura_plan_week:0,arr[i].hrs_dedica_plan?arr[i].hrs_dedica_plan:0)
@@ -326,6 +328,7 @@ class ProjViewReal{
         contenedor.innerHTML=rowHead +rows;
     }
 }
+// #region AlarmView
 class AlarmView{
     constructor(data){
         this.alarm=data;
@@ -343,6 +346,7 @@ class AlarmView{
         
     } 
 }
+// #region SessionView
 class SessionView{
     constructor(data,container){
         //console.log("data",data);
@@ -402,6 +406,7 @@ class SessionView{
         
     }
 }
+// #region vacationView
 class VacationView{
     constructor(data){
         this.vacation=data;
@@ -467,6 +472,7 @@ class VacationView{
     }
 
 }
+// #region ProjView
 class ProjView{
     constructor(data,container,tab_container){
         this.factprojmonthy=data;
@@ -676,6 +682,7 @@ class ProjView{
     }
 
 }
+// #region ProjectFilterView
 class ProjectFilterView{
     constructor(data,container){
         this.data=data;
@@ -796,6 +803,7 @@ class ProjectFilterView{
         }
     }
 }
+// #region Calendario
     
 class Calendario{
     createBaseTable() {
@@ -827,7 +835,7 @@ class Calendario{
               //  document.getElementById("titulo").appendChild(z);
                 stickymes++;
                 //console.log("stk-"+stickymes,document.getElementById("stk-"+stickymes),titulo[numes] +"-" + y);
-                document.getElementById("stk-"+stickymes).innerHTML=titulo[numes] +"-" + y;
+                document.getElementById("stk-"+stickymes).innerHTML=titulo[numes] +"-" + y + `<button onclick='btn_addProj(event,${numes+1},${y})'>+</button>`;
                 //document.getElementById("stk-"+stickymes)?.innerHTML=titulo[numes] +"-" + y;
                 
         }
@@ -923,10 +931,12 @@ class Calendario{
                 div.setAttribute("id", titulodiv);
                 div.setAttribute("class", "mes");
                 td.appendChild(div);
+
                 document.getElementById("detalle").appendChild(td);
         }  
     }
 }
+// #region PropertyView
 class PropertyView{
     constructor(container){
         this.container=container;
@@ -1046,6 +1056,7 @@ class PropertyView{
         return this.historicChng.getData();
     }
 }
+// #region TeamView
 class TeamView{
     constructor(data,container){
         this.data=data.data;
@@ -1117,8 +1128,8 @@ class TeamView{
             }
         }
     }    
-
 }
+// #region StaffingView2
 class StaffingView2{
     constructor(container,monthContainer,projListp){
         this.contenedor=container;
@@ -1147,7 +1158,9 @@ class StaffingView2{
                 if(this.projList.getProjectByMonth(i)!==undefined)
                     //proyectosArr[i].forEach((o)=>{
                     this.projList.getProjectByMonth(i).forEach(o=>{
+                        //console.log("CreateStaffingView",o)
                         if(o.inStaffing==1||o.Fase=="En Proceso"){
+                            
                             //if(o.inStaffing==0 && o.Fase=="En Proceso") console.log("en proceso inStaffing 0",o.IDp)
                             aux=render.send(o,"proyecto_calendarior");
                             var tw=`<div class="teamWrapper" id="w-${o.IDp}.${o.fase}.${o.mesi}" style="display: none;">`;
@@ -1161,6 +1174,10 @@ class StaffingView2{
                     })
             }
         }
+    }
+    addProjectToStaffingView(){
+         // add project to projList y this.projList
+
     }
     isVisible(){
         return document.getElementById(this.contenedor).style.display==""
@@ -1232,6 +1249,7 @@ class StaffingView2{
             }
         }
     }
+    // #region DROP
     drop(ev) {
         ev.preventDefault();
         let target_id=ev.target.id;
@@ -1245,25 +1263,44 @@ class StaffingView2{
             //${o.nombre}-${o.IPp}.${o.fase}.${o.mes}-${o.inOnSite}
             var member_toAppend=ev.dataTransfer.getData("text");
             //console.log("en drop",ev.target.id);
-            //console.log("getdata",member_toAppend);
+            console.log("getdata",member_toAppend);
 
             var nombre=member_toAppend.split("-")[1];
             var idABuscar="c-"+nombre+"-"+idProj+"."+faseProj+"-"+mesProj;
        // if(document.getElementById(idABuscar)==null){
-            let obj={nombre:nombre,IDp:idProj,fase:faseProj,mes:mesProj,inOnSite:0,dedicacion:0}
+            let obj={nombre:nombre,IDp:idProj,fase:faseProj,mes:mesProj,inOnSite:0,dedicacion:0}            
             let newMember=render.send(obj,"drop_persona");
+            console.log("drop", target_id, ev.target.dataset.prep)
             ev.target.innerHTML += newMember;
             var h=ev.target.style.height;
             var hh=h.replace("px","");
             var hh=parseInt(hh)+50;
             ev.target.style.height=hh+"px";
+            if(ev.target.dataset.prep=="sin-presupuesto") this.copyPersonMonthToMonth(arrTarget,nombre)
         }else alert("Solo puede cambiar los datos actuales y futuros")
             
         //}else confirm("El consultor ya está asignado al proyecto. Intente con otro") 
 
     }    
+    copyPersonMonthToMonth(arrTarget,nombre){
+        let ini = parseInt(arrTarget[2])
+        ini++;
+        let idProj = arrTarget[0];
+        let faseProj=arrTarget[1];
+        let target = idProj + ".0."+ini;
+        while(document.getElementById(target)!== null){
+            let obj={nombre:nombre,IDp:idProj,fase:faseProj,mes:ini,inOnSite:0,dedicacion:0}            
+            let newMember=render.send(obj,"drop_persona");            
+            document.getElementById(target).innerHTML += newMember;
+            ini++;
+            target = idProj + ".0."+ini;
+            console.log("copyPersonMonthToMonth 2",target)
+        }
+
+    }
 
 }
+
 class StaffingView{
     constructor(container,monthContainer){
         this.contenedor=container;
@@ -1347,6 +1384,7 @@ class StaffingView{
             }
         }
     }
+
     drop(ev) {
         ev.preventDefault();
         let target_id=ev.target.id;
@@ -1377,6 +1415,7 @@ class StaffingView{
     }    
 
 }
+// #region PeopleView
 class PeopleView{
     constructor(peopleObj,container,containerGlob){
       this.peopleArr=[];
@@ -1719,7 +1758,7 @@ class Acumulador{
     }
 
 }
-
+// #region CrossRefView
 class CrossRefView{
     constructor(crossObj,container,tablename,team){
         this.crossObj=crossObj;

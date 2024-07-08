@@ -50,6 +50,7 @@ var proyectos;
 var tasaConsumo;
 var csv=[];
 var crossRefView;
+var oMonday = new Map();
 var intento=0;
 var preserveBudget=[];
 titulo=["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
@@ -228,8 +229,162 @@ urlvac=urlvac_prod;
         for (let i = 0; i < proyec.length; i++) {
             proyec[i].style.display = display;
         }
-  
+    }
+    //#region btn_addProj
+    async function getMondayById(e,mon){
+        e.preventDefault();        
+        let monday = {}
+        let frm = document.getElementById("NewProject");  
+        let id = frm["ID"].value;
+        let oBuscar = projList.existeInProjectByMonth(mon,id)
+        console.log("buscar",mon,id,oBuscar)
+        if(typeof oBuscar == 'object'){
+            alert(`El proyecto ${id} ya existe en el mes ${mon}`);
+            return;
+        }
+        //console.log("getMondayById",mon,id,projList.existeInProjectByMonth(mon,id))
+        //console.log("monday",id, monday)
+        if(oMonday.has(id)){
+            monday = oMonday.get(id);
+            console.log("existe en oMonday",monday);
+            frm["name"].value = monday.data.nbProy;
+            frm["pais"].value = monday.data.Country;
+            frm["inStaffing"].value = monday.data.in_staffing;
+        }else{
+            monday = await getProjFromMonday(id);
+            if(monday.code==0){
+                oMonday.set(id,monday);
+                console.log("NO existe en oMonday. se agrega",monday)
+                frm["name"].value = monday.data.nbProy;
+                frm["pais"].value = monday.data.Country;
+                frm["inStaffing"].value = monday.data.in_staffing;
+            }else{
+                alert(`El proyecto ${id} no existe en Monday`)
+                frm["name"].value = "";
+                frm["pais"].value = "";
+                frm["inStaffing"].value = "";
+            }
+        }        
 
+
+    }
+    function bwc_copy(idp,fase,mes,year){
+        console.log("bwc_copy",document.getElementById(`${idp}.${fase}.${mes}`),idp,fase,year);
+        let padre = document.getElementById(`${idp}.${fase}.${mes}`);
+        let id=""
+        padre.childNodes.forEach((h) => {
+            if(h.className == "card"){ 
+                id = h.id;
+                let arrId=id.split("-");
+                let arrProyMes=arrId[2].split(".")
+                let proyMesOrig = arrProyMes[0]+"."+arrProyMes[1]+"."+arrProyMes[2];
+                idBuscarOrig = "id-"+arrId[1]+"-"+proyMesOrig+"-"+arrId[3];            
+                let valor = document.getElementById(idBuscarOrig).value
+                let mes = parseInt(arrProyMes[2])+1
+                let proyMesBusc = arrProyMes[0]+"."+arrProyMes[1]+"."+mes;
+                idBuscarTarget = "id-"+arrId[1]+"-"+proyMesBusc+"-"+arrId[3];
+                let target = document.getElementById(idBuscarTarget)
+                console.log(target)
+                let i = 0;
+                let inOnSite = 0;
+                while (target !=null){
+                    target.value = valor;
+                    
+                    proyMesBusc = arrProyMes[0]+"."+arrProyMes[1]+"."+mes;
+                    idBuscarTarget = "id-"+arrId[1]+"-"+proyMesBusc+"-"+arrId[3];
+                    target = document.getElementById(idBuscarTarget);
+                    if(target !=null){
+                        console.log("parametros a tx_dedichange",arrId[1],arrProyMes[0],arrProyMes[1],mes,inOnSite,valor)
+                        //tx_dedichange(arrId[1],arrProyMes[0],arrProyMes[1],mes,inOnSite,valor)      
+                        projList.setChangeStruct(arrProyMes[0],year,mes,arrId[1],valor);              
+                        //projList.setChangeStruct(arrProyMes[0],arrProyMes[1],mes,arrId[1],valor,inOnSite,obj)
+                        console.log(target,mes,idBuscarTarget)
+                        mes++;
+                    }
+                    if(i++ > 15) break;
+                }
+            }
+        })
+    
+    }
+    //bwo_ocultar0 
+    function bwo_ocultar0(el,idp,fase,mes){
+        if(el.innerText == "ocultar 0 >"){
+            let wrapper = document.getElementById(`w-${idp}.${fase}.${mes}`)
+            wrapper.childNodes.forEach((h) => {
+                    let ocultar = true;
+                    h.childNodes.forEach((hh) => {
+                        if(hh.className == "horas-plan" && parseInt(hh.value)>0) ocultar = false;
+                        if(hh.className == "horas-real" && parseInt(hh.value)>0) ocultar = false;
+                    })
+                    if(ocultar) h.style.display="none"
+            })
+            el.innerHTML = "Mostrar"
+        }else{
+             el.innerHTML = "ocultar 0 &#62;"
+             let wrapper = document.getElementById(`w-${idp}.${fase}.${mes}`)
+             wrapper.childNodes.forEach((h) => {
+                     h.style.display="block"                  
+             })
+        }
+    }
+    function showForToGetNewProject(mes, y){
+        let form = `<form id='NewProject'>
+        <span style="color:red">*</span><input type="text" name="ID" placeholder="ID"><button onclick="getMondayById(event,${mes})">Traer de Monday</button><br/>
+        <span style="color:red">*</span><input type="text" name="name" placeholder="Nombre del proyecto" style="width:240px" readonly="true" ><br/>
+        <span style="color:red">*</span><span >Agregar Proyecto desde el mes:</span><input type="text" name="mesIni" value="${mes}" placeholder="mes inicio" style="width:24px" readonly="true" ><span >Hasta:</span><input type="text" name="mesFin" value="${mes}" placeholder="mes final" style="width:24px"  ><span style="color:red">*</span><input type="text" name="anio" value="${y}" placeholder="año" readonly="true"><br/>
+        <span style="color:red">*</span><input type="text" name="pais" placeholder="pais" readonly="true"><br/>        
+        <span style="color:red">*</span><input type="text" name="inStaffing"  placeholder="Indicador para staffing"><br/>
+        <div id="mensaje-newProject" style="background-color:#666699;color:white"></div>
+        <button onclick="captureNewProject(event,${mes})">Agregar</button>
+        </form>
+        `
+        document.getElementById("modalContent").innerHTML = form;
+        document.getElementById("modalTittle").innerHTML = "Creación de proyecto en el mes "+mes;
+        document.getElementById("genericModal").style.display="block"
+    }
+    function captureNewProject(e,mes){
+        e.preventDefault();
+        document.getElementById("mensaje-newProject").innerHTML = ""
+        let frm = document.getElementById("NewProject");        
+        var d = new FormData(frm);
+        let o = Object.fromEntries(d);
+        let id= o.ID;
+        let name = o.name;
+        let hrs = 1;        
+        let pais = o.pais;
+        let year = o.anio;
+        let mesFin = parseInt(o.mesFin)
+        let inStaffing = o.inStaffing
+        let hasBudget = proyectos.getHasBudget(parseInt(id))
+        console.log("captureNewProject",hrs,parseFloat(hrs),parseFloat(hrs).toFixed(0),"tiene Presupuesto",id,hasBudget,proyectos);
+        if(hasBudget){
+            document.getElementById("mensaje-newProject").innerHTML = "El proyecto tiene presupuesto. Ajuste en Monday la fecha para extender el proyecto"
+        }
+        else
+            if(inStaffing == "No considerar"){
+                document.getElementById("mensaje-newProject").innerHTML = "En Monday, el proyecto aparece como 'No considerar', cambié en Monday y vuelva a buscar"
+            }else{
+                if(id && name && hrs && pais && year){
+                    document.getElementById("genericModal").style.display="none"
+                    let j = mes - 1
+                    while(j<mesFin){
+                        let data = {IDp:id,Fase:"Lead",duraPlanMeses:null,equipo:[],
+                            fase:"0",horas: 0,improbable: 0,inStaffing: 1,mes: (j+1),meses: null,mesi: (j+1),
+                            pais: pais,proyecto: name, totHorasPlan: hrs, totHorasReal: 0,year: year, tienePresupuesto:0}
+                        console.log("captureNewProject",data,j+1)
+                        projList.updateMesProjStructWithProj(j+1,data);
+                        j++;
+                    }
+                    staffing.createStaffingView();
+                    staffing.createMonStruct();
+                }else document.getElementById("mensaje-newProject").innerHTML = "Ingrese todos los datos del formulario"
+            }
+    }
+    function btn_addProj(e, mes, y){
+        e.preventDefault();
+        console.log("btn_addProj",mes, y)
+        showForToGetNewProject(mes, y)
     }
     function btn_saveCsv(){
         csv=crossRefView.generateCSV();
@@ -361,6 +516,7 @@ urlvac=urlvac_prod;
         //id-${o.nombre}-${o.IDp}.${o.fase}.${o.mes}-${o.inOnSite}     
 
         let id="id-"+nb+"-"+IDp+"."+fase+"."+mes+"-"+inOnSite;
+        console.log("tx_dedichange",id,nb,IDp,fase,mes,inOnSite)
         var wrappid="t-"+nb+"-"+IDp+"."+fase+"."+mes+"-"+inOnSite;
         var wrappid2="c-"+nb+"-"+IDp+"."+fase+"."+mes+"-"+inOnSite;
         let idMes=IDp+"."+mes;
@@ -394,21 +550,21 @@ urlvac=urlvac_prod;
                 preserveBudget.splice(index, 1);
             }
             if(preserveBudget.length===0){
-                document.getElementById("btSave").disabled=false;
-                alert("Ya es posible Guardar - Botón Save");
+                //document.getElementById("btSave").disabled=false;
+                console.log("Ya es posible Guardar - Botón Save");
             }else{
                 let msg="Están pendientes:\n"
                 preserveBudget.forEach((e)=>{
                     let temp=e.split(".")
                     msg+=`proyecto ${temp[0]} en el mes ${temp[1]}\n`
                 })
-                alert(msg)
+                console.log(msg)
             }
                
         }else{
             if(preserveBudget.length===0)
-                alert("Dedido a que los cambios afectan el presupuesto, se desabilita temporalmente la capacidad de Guardar - botón Save");
-            document.getElementById("btSave").disabled=true;
+                console.log("Debido a que los cambios afectan el presupuesto, se deshabilita temporalmente la capacidad de Guardar - botón Save");
+            //document.getElementById("btSave").disabled=true;
             if(preserveBudget.find((el) => el === idMes)===undefined)
                 preserveBudget.push(idMes);
         }
@@ -418,6 +574,7 @@ urlvac=urlvac_prod;
         // cambio en la estructura de mes, debe cambiar en la capa de presentación - totales
         // staffing ---depend-->projList, ya que en projList está la data
         // de la dedicacion cambia se actualizan los totales
+        console.log("resultado de la modificación", mes, IDp, fase, projList.getTeamByProjectMonthFase(IDp,mes,fase))
         staffing.updateStructByMonth(mes);
         if(propertyBar.isPropertyBarVisible()){                // se refrescan los datos con los cambios si las propiedades están visibles
             propertyBar.clear();
@@ -436,6 +593,7 @@ urlvac=urlvac_prod;
     } 
     function show_ProjContainer(){
         document.getElementById("loader").style.display = ""
+        
         /*if(projView) {
             projView.mostrarProyMonthly(0); 
             projView.setContainerShow();
@@ -448,8 +606,9 @@ urlvac=urlvac_prod;
         if(peopleView) peopleView.setContainerHide();
         document.getElementById("loader").style.display = "none"
     }
-    function show_StaffContainer(){
+     function show_StaffContainer(){
         //document.getElementById("loader").style.display = ""
+ 
         if(projView) projView.setContainerHide();
         if(crossRefView) crossRefView.setContainerHide();
         if(staffing) staffing.setContainerShow();
@@ -595,7 +754,7 @@ urlvac=urlvac_prod;
             document.getElementById("loader").style.display = "";
             document.getElementById("loader").style.visibility = "visible";
 
-            setProy();
+            setProy(1);
             document.getElementById("loader").style.display = "none";
             document.getElementById("loader").style.visibility = "none";
         //}
@@ -633,6 +792,14 @@ urlvac=urlvac_prod;
                 console.log(error)
             })
     }
+    async function getProjFromMonday(id){
+        console.log("inicio getProjFromMonday",id);
+        //document.getElementById("loader").style.display = ""
+        let result = await util.asynGetFromDB_(`https://budgetget.azurewebsites.net/api/BudgetGet`,{token:myToken,time:myTime,id:id});
+        console.log("getProjFromMonday",result);
+        return result;
+    }    
+    // #region convertAlternativeStaffData
     function convertAlternativeStaffData(datareal){
         let projAvailable=[];
         let proyectosArr=Array.from({length: 26}, function() { return []; });
@@ -777,6 +944,9 @@ urlvac=urlvac_prod;
             //projList.createMesStruct();
             if(msg=="ok"){
                 projList=new ProjList(datareal,fetchData);
+
+                //projList.updateMesProjStructWithProj(9,{})
+
                 staffing=new StaffingView2("contenido","mes",projList);
                 staffing.createStaffingView();
                 staffing.createMonStruct();
@@ -790,52 +960,47 @@ urlvac=urlvac_prod;
             console.log("convertAlternativeStaffData",e)
         }
     }
-    async function loadStaff1(){
+    async function loadStaff1(reload){
         console.log("inicio loadstaff1");
         //document.getElementById("loader").style.display = "";
         //document.getElementById("loader").style.visibility = "visible";
-        
-        util.asynGetFromDB(urlstaff,myToken,myTime).then(function(fetchData){
-                //console.log("fetchdata",fetchData);
-                try{                    
-                    if(typeof fetchData.msg=="undefined")
-                        msg="ok"
-                    else
-                        msg=fetchData.msg
-                    //console.log("msg staffing",msg);
-                    //projList.createMesStruct();
-                    if(msg=="ok"){
-                        //console.log("loadStaff",fetchData)
-                        convertAlternativeStaffData(fetchData);
-                        //console.log("se cargo la data")
-                    }
-                    intento=0;
-                    console.log("fin loadstaff1");
-                    //document.getElementById("loader").style.display = "none";
-                    document.getElementById("loader").style.visibility = "none";
-                }catch(e){
-                    //console.log("asynGetFromDB",e);
-                    //document.getElementById("loader").style.display = "none";
-                    //document.getElementById("loader").style.visibility = "none";
-                    if(intento==0){
-                        btn_reload();
-                        intento++;
-                    }
-                    alert("Error en la carga, intente de nuevo");
-                    console.log("loadStaff1",e)
-                }
-                
-            })
-            .catch(error=>{
-                //document.getElementById("loader").style.visibility = "none";
-                console.log(error);                
-            })
-    
+        //if(staffing && reload == 0) return;
+        let fetchData = await util.asynGetFromDB(urlstaff,myToken,myTime)
+        //console.log("fetchdata",fetchData);
+        try{                    
+            if(typeof fetchData.msg=="undefined")
+                msg="ok"
+            else
+                msg=fetchData.msg
+            //console.log("msg staffing",msg);
+            //projList.createMesStruct();
+            if(msg=="ok"){
+                //console.log("loadStaff",fetchData)
+                convertAlternativeStaffData(fetchData);
+                //console.log("se cargo la data")
+            }
+            intento=0;
+            console.log("fin loadstaff1");
+            //document.getElementById("loader").style.display = "none";
+            document.getElementById("loader").style.visibility = "none";
+        }catch(e){
+            //console.log("asynGetFromDB",e);
+            //document.getElementById("loader").style.display = "none";
+            //document.getElementById("loader").style.visibility = "none";
+            if(intento==0){
+                btn_reload();
+                intento++;
+            }
+            alert("Error en la carga, intente de nuevo");
+            console.log("loadStaff1",e)
+        }
     }
-    async function loadConsultant(){
+    async function loadConsultant(reload){
+        // Treae el equipo con su horas registradas en clockify
         console.log("inicio loadconsultant");
         let test_url="http://localhost:7071/api/getConsultant"
         let prod_url="https://staffing-func.azurewebsites.net/api/getconsultant"
+        //if(teamView && reload == 0) return;
         let fetchData=await util.asynGetFromDB(prod_url,myToken,myTime);
         if(typeof fetchData.msg=="undefined")
                 msg="ok"
@@ -852,7 +1017,7 @@ urlvac=urlvac_prod;
     }
     async function loadAllProjects(){
         console.log("inicio loadallprojects");
-        util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getallprojects`,myToken,myTime).then(function(fetchData){
+        let fetchData = await util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getallprojects`,myToken,myTime)
             //console.log("fetch data getAllProjects",fetchData);
             if(typeof fetchData.msg=="undefined")
                     msg="ok"
@@ -861,11 +1026,6 @@ urlvac=urlvac_prod;
             if(msg=="ok")
                 projectFilterView=new ProjectFilterView(fetchData.data,"projectsBox");
             console.log("fin loadallprojects");
-        })
-        .catch(error=>{
-            //document.getElementById("loader").style.visibility = "none";
-            console.log(error)
-        })
     }
     async function loadProjectMonthly(){
         console.log("inicio loadProjectMonthly");
@@ -889,9 +1049,10 @@ urlvac=urlvac_prod;
             console.log(error)
         })
     }
-    async function loadProjectPlanReal(){
+    async function loadProjectPlanReal(reload){
         console.log("inicio loadProjectPlanReal");
-        util.asynGetFromDB(urlstaff,myToken,myTime).then(function(fetchData){
+        //if(projViewReal && reload == 0) return;
+        let fetchData = await util.asynGetFromDB(urlstaff,myToken,myTime)
             //console.log("fetch data loadProjectPlanReal",fetchData);
             if(typeof fetchData.msg=="undefined")
                     msg="ok"
@@ -910,22 +1071,18 @@ urlvac=urlvac_prod;
                     }
                 })
                 //console.log("arrPru===",arrPru);
-                document.getElementById("btnStaffingV").disabled=false;
-                document.getElementById("btnProjectV").disabled=false;
-                document.getElementById("btnPeopleV").disabled=false;
-                document.getElementById("btnDetailV").disabled=false;
+                
+
                 console.log("fin loadProjectPlanReal");
+                
                 //document.getElementById("loader").style.display = "none"                
             }
-        })
-        .catch(error=>{
-            //document.getElementById("loader").style.visibility = "none";
-            console.log(error)
-        })
+
     }
-    async function loadProjectSummary(){
-        console.log("inicio loadProjectSummary");
-        util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getprojectsummary`,myToken,myTime).then(function(fetchData){
+    async function loadProjectSummary(reload){
+        console.log("inicio loadProjectSummary",projSummary);
+        //if(projSummary && reload == 0) return;
+        let fetchData = await util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getprojectsummary`,myToken,myTime)
             //console.log("fetch data getProjectSummary",fetchData);
                 if(typeof fetchData.msg=="undefined")
                     msg="ok"
@@ -934,11 +1091,6 @@ urlvac=urlvac_prod;
                 if(msg=="ok")
                     projSummary= new ProjSummaryView(fetchData,"projSumm","div-content-head");
                     console.log("fin loadProjectSummary");
-            })
-            .catch(error=>{
-                //document.getElementById("loader").style.visibility = "none";
-                console.log(error)
-            })
     }
     async function loadVacation(){
         console.log("inicio loadVacation");
@@ -963,8 +1115,10 @@ urlvac=urlvac_prod;
             
 
     }
-    async function getTasaConsumo(){
-        //console.log("inicio getTasaConsumo");
+    async function getTasaConsumo(reload){
+        // Vista: ProjViewReal viewProyReal
+        //console.log("inicio getTasaConsumo",tasaConsumo);
+        if(tasaConsumo && reload == 0) return;
         let fetchData=await util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/gettasaconsumoproy`,myToken,myTime)
 
         //console.log("fetch data getProjectSummary",fetchData);
@@ -979,8 +1133,10 @@ urlvac=urlvac_prod;
         }
         //console.log("fin getTasaConsumo");    
     }
-    async function loadVacation1(){
-        console.log("inicio loadVacation");
+    async function loadVacation1(reload){
+        // staffingView
+        console.log("inicio loadVacation",vacationView);
+        //if(vacationView && reload == 0) return;
         let fetchData=await util.asynGetFromDB(urlvac,myToken,myTime)
 
         //console.log("fetch data getProjectSummary",fetchData);
@@ -996,7 +1152,7 @@ urlvac=urlvac_prod;
         }
         console.log("fin loadVacation");    
     }
-    async function loadAlarms(){
+    async function loadAlarms(reload){
         console.log("inicio loadAlarms");
         var alarmView
         util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getalarms`,myToken,myTime).then(function(fetchData){
@@ -1039,8 +1195,9 @@ urlvac=urlvac_prod;
             
 
     } 
-    async function loadProyectos1(){
+    async function loadProyectos1(reload){
         console.log("inicio loadProyectos1");
+        //if(proyectos && reload == 0) return;
         let fetchData=await util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getproyectos`,myToken,myTime);
             //console.log("fetch data getProjectSummary",fetchData);
         if(typeof fetchData.msg=="undefined")
@@ -1054,18 +1211,19 @@ urlvac=urlvac_prod;
         console.log("fin loadProyectos1");   
 
     }    
-
-    async function loadCrossRefData(){
+  /*  async function loadCrossRefData(){
         console.log("inicio loadCrossRefData");
         var alarmView
         util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getclocki4weeks`,myToken,myTime).then(function(fetchData){
+            //https://staffing-func.azurewebsites.net/api/getclocki4weeks
+            //http://localhost:7071/api/getClocki4weeks
             //console.log("fetch data getProjectSummary",fetchData);
                 if(typeof fetchData.msg=="undefined")
                     msg="ok"
                 else
                     msg=fetchData.msg
                 if(msg=="ok"){
-                    //console.log("crossreference data",fetchData)
+                    console.log("crossreference data",fetchData)
                     crossRef=new CrossReference(fetchData,proyectos);
                     crossRefView=new CrossRefView(crossRef,"container-project","tab-proj-01",teamView);
                     let ps=crossRefView.showProjectSelector();
@@ -1077,6 +1235,24 @@ urlvac=urlvac_prod;
                 //document.getElementById("loader").style.visibility = "none";
                 console.log(error)
             })  
+    } */
+    async function loadCrossRefData(){
+        console.log("inicio loadCrossRefData");
+        var alarmView
+        //if(crossRef && crossRefView && reload == 0) return 
+        let fetchData = await util.asynGetFromDB(`https://staffing-func.azurewebsites.net/api/getclocki4weeks`,myToken,myTime)
+            if(typeof fetchData.msg=="undefined")
+                msg="ok"
+            else
+                msg=fetchData.msg
+            if(msg=="ok"){
+                //console.log("crossreference data",fetchData)
+                crossRef=new CrossReference(fetchData,proyectos);
+                crossRefView=new CrossRefView(crossRef,"container-project","tab-proj-01",teamView);
+                let ps=crossRefView.showProjectSelector();
+                document.getElementById("projSel").innerHTML=ps;
+            }
+            console.log("fin loadCrossRefData");            
     } 
     async function  detailHistChange2Modal  (usr,id){
         //console.log("fetch data detailHistChange2Modal");
@@ -1128,7 +1304,8 @@ urlvac=urlvac_prod;
             
 
     }     
-   function openTab(evt, viewToOpen){
+    // #region OpenTab
+   async function openTab(evt, viewToOpen){
         var i, tabcontent, tablinks;
         tabcontent = document.getElementsByClassName("tabcontent");
         for (i = 0; i < tabcontent.length; i++) {
@@ -1138,10 +1315,16 @@ urlvac=urlvac_prod;
         for (i = 0; i < tablinks.length; i++) {
             tablinks[i].className = tablinks[i].className.replace(" active", "");
         }
-        
+        console.log("openTab",viewToOpen)
         evt.currentTarget.className += " active";
         //console.log(viewToOpen);
         if(viewToOpen=="Staffing") {  
+            /*await loadProyectos1(0);
+            await loadCrossRefData(0);
+            await loadVacation1(0);
+            await loadStaff1(0); 
+            await loadAllProjects(0);
+            await loadProjectSummary(0);*/
             document.getElementById("sidebar").style.display="block"; 
             document.getElementById("container-project").style.marginLeft="206px";
             document.getElementById("team").style.display="block";         
@@ -1153,11 +1336,16 @@ urlvac=urlvac_prod;
         }
         if(viewToOpen=="Project") {   //cross view     
             //alert("En desarrollo"); 
+            /*await loadProyectos1(0);
+            console.log("proyectos cargado")
+            await loadCrossRefData(0);*/
+            console.log("crossref cargado")
             if(proyectos===undefined) alert("La data no ha terminado de cargar. Espere unos segundos e intente de nuevo");
             else{  
                 document.getElementById("sidebar").style.display="none";
                 document.getElementById("container-project").style.marginLeft="2px";
                 document.getElementById("team").style.display="none";  
+                
                 show_ProjContainer();
             }
             //document.getElementById('container-project').style.display = "block";
@@ -1171,6 +1359,9 @@ urlvac=urlvac_prod;
         }
         if(viewToOpen=="Real") {            
             //alert("En desarrollo"); 
+            /*await getTasaConsumo(0);
+            await loadProyectos1(0);
+            await loadProjectPlanReal(0);*/
             if(projViewReal===undefined) alert("La data no ha terminado de cargar. Espere un momento")
             else{
                 document.getElementById("team").style.display="none";
@@ -1183,7 +1374,7 @@ urlvac=urlvac_prod;
             //console.log("People",document.getElementById('container-project-real').style.display)
         }
     }
-
+    // #region setProy
     async function setProy(){ 
         //console.log("setProy");
         //console.log("auth",myToken,myTime)
@@ -1192,46 +1383,57 @@ urlvac=urlvac_prod;
         propertyBar=new PropertyView("bar");
         util=new Util();
         cal.createBaseTable();
-    
-        document.getElementById("btnStaffingV").disabled=true;
-        document.getElementById("btnProjectV").disabled=true;
-        document.getElementById("btnPeopleV").disabled=true;
-        document.getElementById("btnDetailV").disabled=true;
+ 
+        document.getElementById("btnStaffingV").style.color="silver";
+        document.getElementById("btnProjectV").style.color="silver";
+        document.getElementById("btnPeopleV").style.color="silver";
+        document.getElementById("btnDetailV").style.color="silver";
         render = new Render();
         //document.getElementById("loader").style.display = "";
         //document.getElementById("loader").style.visibility = "visible";
 
         if(myToken && myTime) {
+
+                document.getElementById("btnStaffingV").disabled=true;
+                document.getElementById("btnProjectV").disabled=true;
+                document.getElementById("btnPeopleV").disabled=true;
+                document.getElementById("btnDetailV").disabled=true; 
+                await loadConsultant();
+                
+                await getTasaConsumo();
+
+                await loadVacation1();
+
+                await loadAlarms();
+                
+                await loadProyectos1(); // requerido para crossreference y proyectPlanReal
+
+                await loadCrossRefData(); // requerido para crossreference
+
+                await loadStaff1();                                    
+
+                await loadAllProjects();          
+
+                await loadProjectPlanReal();  //proyectPlanReal
+
+                await loadProjectSummary();                 
+            }   
+
             
-            await loadConsultant();
-            
-            await getTasaConsumo();
-            //loadStaff() ;
-            await loadVacation1();
-
-            await loadAlarms();
-            
-            await loadProyectos1();
-
-            await loadCrossRefData();
-
-            await loadStaff1();                                    
-
-            await loadAllProjects();
-            
-            //loadProjectMonthly();
-
-            await loadProjectPlanReal();
-
-            
-
-            await loadProjectSummary();
-            
+            document.getElementById("btnStaffingV").disabled=false;
+            document.getElementById("btnProjectV").disabled=false;
+            document.getElementById("btnPeopleV").disabled=false;
+            document.getElementById("btnDetailV").disabled=false;
+            document.getElementById("btnStaffingV").style.color="white";
+            document.getElementById("btnProjectV").style.color="white";
+            document.getElementById("btnPeopleV").style.color="white";
+            document.getElementById("btnDetailV").style.color="white";
            
-        }
+        
         //document.getElementById("loader").style.display = "none";
         //document.getElementById("loader").style.visibility = "none"
         document.getElementById("btnStaffingV").click();
+            
     }
     let asynGetToken = async (usr,pwd) => { 
         //console.log("en async get Token function",usr,pwd)
@@ -1264,19 +1466,56 @@ urlvac=urlvac_prod;
         if(signin.style.display=="none") signin.style.display=""
         else signin.style.display="none";
     }
-    function auth(){    
+    async function auth(){    
         document.getElementById("loader").style.display = "";
         document.getElementById("loader").style.visibility = "visible";
         let usr=document.getElementById("username")
         let pwd=document.getElementById("password")
-        
-        //console.log("usr",usr.value,pwd.value)
+        let conect=false
+        let intentos=0;
+        while(!conect && intentos<5){
+            intentos++;
+            let fetchData = await asynGetToken(usr.value,pwd.value);
+            if(fetchData===undefined){
+                console.log("Intente mas tarde");
+            } 
+            else
+            if(fetchData.cod==0){
+                document.getElementById("container").style.display="";
+                document.getElementById("signin").style.display="none";
+                //document.getElementById("loader").style.visibility = "visible"
+                myToken=fetchData.data;
+                myTime=fetchData.time;
+                dateOfChanged=fetchData.dateOfChanged;
+                localStorage.setItem("username", usr.value);
+                let l=usr.value.split("@");
+                let n=l[0].split(".");
+                let inicial=n[0][0]
+                userSession=inicial+"."+n[1];     
+                await setProy();
+                conect = true;                
+                document.getElementById("loader").style.display = "none";
+                document.getElementById("loader").style.visibility = "none";                
+            }          
+        }
+        if(!conect && intentos>=5 ){
+            document.getElementById("loader").style.diplay = "none";
+            document.getElementById("loader").style.visibility = "none";
+            alert(fetchData.data);
+        }
+    }
+    function authold(){    
+        document.getElementById("loader").style.display = "";
+        document.getElementById("loader").style.visibility = "visible";
+        let usr=document.getElementById("username")
+        let pwd=document.getElementById("password")
+        let conect=false
         asynGetToken(usr.value,pwd.value).then(function(fetchData){
-
             if(fetchData===undefined){
                 document.getElementById("loader").style.display = "none";
                 document.getElementById("loader").style.visibility = "none";
                 alert("Intente mas tarde");
+                console.log("Intente mas tarde");
             } 
             else
             if(fetchData.cod==0){
@@ -1290,25 +1529,22 @@ urlvac=urlvac_prod;
                 let n=l[0].split(".");
                 let inicial=n[0][0]
                 userSession=inicial+"."+n[1];     
-                //console.log("usersession",userSession,dateOfChanged);
+                setProy(0);
                 document.getElementById("signin").style.display="none";
-                document.getElementById("loader").style.visibility = "none";
-                setProy();
-                //console.log("myToken,myTime loaded")
                 document.getElementById("loader").style.display = "none";
-                document.getElementById("loader").style.visibility = "none";
-                
-            }else {
+                document.getElementById("loader").style.visibility = "none";                
+            }
+            else {
                 document.getElementById("loader").style.diplay = "none";
                 document.getElementById("loader").style.visibility = "none";
                 alert(fetchData.data);
-            }
-            
+            }            
         }).catch(error=>{
             document.getElementById("loader").style.display = "none";
             document.getElementById("loader").style.visibility = "none";
             console.log(error)
         })
+        
     }
     function toggleDropDown() {
         document.getElementById("dropdownView").classList.toggle("show");

@@ -52,6 +52,7 @@ class Util{
        document.getElementById("loader").style.display = "none"
        return fetchData;
    }
+   
    asynGetFromDB_ = async (url,obj) => { 
     //console.log("asynGetFromDB_",JSON.stringify(obj))
     document.getElementById("loader").style.display = ""
@@ -74,7 +75,7 @@ class Util{
         document.getElementById("loader").style.display = "";
        let modifyData=projList.getChanged();
        let retcode=0
-       console.log("modify data",modifyData);
+       console.log("modify data to send",modifyData);
        if(modifyData.length>0){
            var objToSend={data:modifyData,usr:userSession,token:myToken,time:myTime}
            //console.log("enviar a server",objToSend);
@@ -104,7 +105,7 @@ class Util{
 class Render{
    constructor(){
        let f1=(obj)    => { let edo=obj.Fase;
-                            let prop=edo.indexOf("Lead")>0 ||edo.indexOf("Propuesta")>0?"style='font-weight:normal;color:orange'":"style='font-weight:bold;'";
+                            let prop=edo.indexOf("Lead")>0 ||edo.indexOf("Propuesta")>0?"style='font-weight:normal;color:orange'":"style='font-weight:bold;'";                            
                             return `<div class="proyecto" id="${obj.IDp}.${obj.fase}.${obj.mes}"  ondrop="staffing.drop(event)" ondragover="util.allowDrop(event)">
                                
                                <span ${prop}>${obj.IDp}-${obj.proyecto} </span> con la fase: ${obj.fase} en el mes ${obj.mes}  -
@@ -238,6 +239,7 @@ class Render{
                                 }
                                 let fec=new Date();
                                 let mes=fec.getMonth()+1;
+                                if(obj.IDp==500)console.log("horas plan",arr.horasPlan, typeof arr.horasPlan)
                                 let disabled="";
                                 if(obj.mes<mes) disabled="disabled=''"
                                 return  `<div id="c-${arr.nombre}-${obj.IDp}.${obj.fase}.${obj.mesi}-${arr.inOnSite}" dragable="false"  class="card" style="background-color:${arr.inOnSite==1?'blue':'#e6f9ff'}">
@@ -253,7 +255,17 @@ class Render{
                                 let color=(edo=='Propuesta Activa'?'darkorange':'#006080;');
                                 let clas=this.claseFase(edo);
                                 let ima=this.imageFase(edo);
+                                //if(obj.IDp==500) console.log("proy 500",obj)
                                 //if(obj.IDp==331) console.log("estado",edo,ima)
+                                let dataSinPrep = "tiene-presupuesto";
+                                let styloSinPrep = ""
+                                let btn_copiar = ""
+                                if(obj.tienePresupuesto !== undefined ){
+                                    dataSinPrep = "sin-presupuesto";
+                                    styloSinPrep = "border:1px solid orange"
+                                    btn_copiar = `<button type="button" class="btn_lite" onclick="bwc_copy(${obj.IDp},${obj.fase},${obj.mesi},${obj.year})" name="bwc-${obj.IDp}.${obj.fase}.${obj.mesi}" id="bwc-${obj.IDp}.${obj.fase}.${obj.mesi}">copiar &#62;</button> `
+                                }
+                                    
                                 clas=clas==""?"":"class='"+clas+"'"
                                 let prop=edo.indexOf("Lead")>=0 ||edo.indexOf("Propuesta")>=0?"style='font-weight:normal;color:orange'":"style='font-weight:bold;'";
                                 let box="<label for='probable-"+obj.IDp+"'>Staffing:</label>  <input type='checkbox' checked='true' id='probable-"+obj.IDp+"-"+obj.mesi+"' name='probable-"+obj.IDp+"' onclick='probable(event,"+obj.mes+")'>"
@@ -261,7 +273,7 @@ class Render{
                                 if(edo.indexOf("Lead")>=0 ||edo.indexOf("Propuesta")>=0)
                                     tcheck=box;
                                 //console.log("check",box,tcheck,prop,edo.indexOf("Lead"),edo.indexOf("Propuesta"),edo);
-                                return `<div class="proyecto" id="${obj.IDp}.${obj.fase}.${obj.mesi}"  ondrop="staffing.drop(event)" ondragover="util.allowDrop(event)">
+                                return `<div class="proyecto" id="${obj.IDp}.${obj.fase}.${obj.mesi}" data-prep="${dataSinPrep}" style="${styloSinPrep}"  ondrop="staffing.drop(event)" ondragover="util.allowDrop(event)">
                                    
                                    <img src="image/${ima}"></img><a style="cursor: pointer;font-weight:bold;"   onclick="markar(${obj.IDp},${obj.mes})">${obj.IDp}-${obj.proyecto} </a>mes:${obj.mes}-${obj.year}-${obj.pais===null?'':obj.pais} 
                                    <div id="edit-${obj.IDp}-${obj.mes}" class="edit-block" style="display:none">${tcheck}
@@ -273,6 +285,8 @@ class Render{
                                         <div >
                                             <button type="button" class="btn_lite" style="margin-left:1px;" onclick="bw_mostrar(${obj.IDp},${obj.fase},${obj.mesi})" name="bw-${obj.IDp}.${obj.fase}.${obj.mesi}" id="bw-${obj.IDp}.${obj.fase}.${obj.mesi}">detail &#62;</button>
                                             <button type="button" class="btn_lite" onclick="bwi_info(${obj.IDp},${obj.fase},${obj.mesi})" name="bwi-${obj.IDp}.${obj.fase}.${obj.mesi}" id="bwi-${obj.IDp}.${obj.fase}.${obj.mesi}">info &#62;</button> 
+                                            <button type="button" class="btn_lite" onclick="bwo_ocultar0(this,${obj.IDp},${obj.fase},${obj.mesi})" name="bwo-${obj.IDp}.${obj.fase}.${obj.mesi}" id="bwo-${obj.IDp}.${obj.fase}.${obj.mesi}">ocultar 0 &#62;</button> 
+                                            ${btn_copiar}
                                         </div>
                                    </div>
                                    `;
