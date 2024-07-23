@@ -223,7 +223,7 @@ class Render{
                                 let dedi=arr.dedicacion?arr.dedicacion:0;
                                 let real=arr.real?arr.real:0;  //percentage
                                 let futuro=false;
-                                let vac="";
+                                let vac="";                                
                                 let v=vacationView.getVacation(obj.mesi,arr.nombre);
                                 if(v>0){
                                     vac="background-color:yellow;";
@@ -257,12 +257,14 @@ class Render{
                                 let ima=this.imageFase(edo);
                                 //if(obj.IDp==500) console.log("proy 500",obj)
                                 //if(obj.IDp==331) console.log("estado",edo,ima)
+                                let hasBudget = proyectos.getHasBudget(obj.IDp);
                                 let dataSinPrep = "tiene-presupuesto";
                                 let styloSinPrep = ""
                                 let btn_copiar = ""
-                                if(obj.tienePresupuesto !== undefined ){
+                                //if(obj.tienePresupuesto !== undefined ){
+                                if(!hasBudget){
                                     dataSinPrep = "sin-presupuesto";
-                                    styloSinPrep = "border:1px solid orange"
+                                    styloSinPrep = "border:2px solid orange"
                                     btn_copiar = `<button type="button" class="btn_lite" onclick="bwc_copy(${obj.IDp},${obj.fase},${obj.mesi},${obj.year})" name="bwc-${obj.IDp}.${obj.fase}.${obj.mesi}" id="bwc-${obj.IDp}.${obj.fase}.${obj.mesi}">copiar &#62;</button> `
                                 }
                                     
