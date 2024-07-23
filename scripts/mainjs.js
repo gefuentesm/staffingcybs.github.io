@@ -314,8 +314,8 @@ urlvac=urlvac_prod;
             wrapper.childNodes.forEach((h) => {
                     let ocultar = true;
                     h.childNodes.forEach((hh) => {
-                        if(hh.className == "horas-plan" && parseInt(hh.value)>0) ocultar = false;
-                        if(hh.className == "horas-real" && parseInt(hh.value)>0) ocultar = false;
+                        if(hh.className == "horas-plan" && parseFloat(hh.value)>0) ocultar = false;
+                        if(hh.className == "horas-real" && parseFloat(hh.value)>0) ocultar = false;
                     })
                     if(ocultar) h.style.display="none"
             })
