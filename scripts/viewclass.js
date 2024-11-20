@@ -428,7 +428,9 @@ class VacationView{
 
     }
     createVacationMonth(){
+        console.log("createVacationMonth", this.vacation)
         this.vacation.forEach((el)=>{
+            //console.log("vac element",el)
             let mes=el.mes;
             if(this.mesVac.get(mes)===undefined)
                 this.mesVac.set(mes,[{mes:el.mes,usr:el.usr,horas:el.horas,dias:el.dias}]);
@@ -443,7 +445,7 @@ class VacationView{
     createView(){
         let factor=0
         if(INITIALYEAR===CURRYEAR){
-            factor=12
+            factor=0
         }
         for(let i=1;i<25;i++){
             let mes=i+factor

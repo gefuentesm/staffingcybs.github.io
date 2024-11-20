@@ -1095,7 +1095,7 @@ urlvac=urlvac_prod;
     async function loadVacation(){
         console.log("inicio loadVacation");
         util.asynGetFromDB(urlvac,myToken,myTime).then(function(fetchData){
-            //console.log("fetch data getProjectSummary",fetchData);
+               console.log("fetch data loadVacation",fetchData);
                 if(typeof fetchData.msg=="undefined")
                     msg="ok"
                 else
@@ -1139,7 +1139,7 @@ urlvac=urlvac_prod;
         //if(vacationView && reload == 0) return;
         let fetchData=await util.asynGetFromDB(urlvac,myToken,myTime)
 
-        //console.log("fetch data getProjectSummary",fetchData);
+        //console.log("fetch data loadVacation1",fetchData);
         if(typeof fetchData.msg=="undefined")
             msg="ok"
         else
